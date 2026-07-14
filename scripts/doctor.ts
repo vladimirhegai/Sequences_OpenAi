@@ -141,6 +141,7 @@ checks.push({
 
 for (const path of [
   join(root, "fixtures", "release-a", "assets", "vendor", "gsap.min.js"),
+  join(root, "fixtures", "release-a", "assets", "vendor", "gsap-guarded.min.js"),
   join(root, "fixtures", "release-a", "assets", "vendor", "hyperframe.runtime.iife.js"),
   join(root, "data", "projects", "release-a", ".git", "HEAD"),
 ]) {

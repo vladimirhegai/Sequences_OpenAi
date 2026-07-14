@@ -35,6 +35,11 @@ const runtimeAssets = [
     relativeTarget: join("assets", "vendor", "gsap.min.js"),
   },
   {
+    source: join(root, "node_modules", "gsap", "dist", "gsap.min.js"),
+    relativeTarget: join("assets", "vendor", "gsap-guarded.min.js"),
+    guardGlobal: "gsap",
+  },
+  {
     source: join(root, "node_modules", "hyperframes", "dist", "hyperframe.runtime.iife.js"),
     relativeTarget: join("assets", "vendor", "hyperframe.runtime.iife.js"),
   },
@@ -69,7 +74,16 @@ function copyPinnedAssets(targetProject: string): void {
     requireFile(asset.source, "Pinned runtime asset");
     const target = join(targetProject, asset.relativeTarget);
     mkdirSync(dirname(target), { recursive: true });
-    copyFileSync(asset.source, target);
+    if ("guardGlobal" in asset) {
+      const source = readFileSync(asset.source, "utf8");
+      writeFileSync(
+        target,
+        `if (typeof globalThis.${asset.guardGlobal} === "undefined") {\n${source}\n}\n`,
+        "utf8",
+      );
+    } else {
+      copyFileSync(asset.source, target);
+    }
   }
 
   for (const [packageName, fileName] of fontAssets) {
