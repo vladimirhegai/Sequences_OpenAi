@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          color: #f7f5ef;
+          font-family: Montserrat, sans-serif;
+        }
+
+        .scene {
+          position: absolute;
+          inset: 0;
+          padding: 66px 82px 72px;
+          background: #181a1f;
+        }
+
+        .scene::before {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 78% 28%, rgba(49, 87, 246, 0.28), transparent 30%),
+            linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+          background-size: auto, 54px 54px, 54px 54px;
+          content: "";
+        }
+
+        .topline {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 36px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 19px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .topline strong {
+          color: #9db0ff;
+        }
+
+        .live {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #bfc3cd;
+        }
+
+        .live-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #5ccf91;
+        }
+
+        .studio {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          grid-template-columns: 272px minmax(0, 1fr) 308px;
+          grid-template-rows: minmax(0, 1fr) 210px;
+          height: 848px;
+          overflow: hidden;
+          border: 2px solid rgba(255, 255, 255, 0.18);
+          border-radius: 20px;
+          background: #111318;
+          box-shadow: 0 38px 90px rgba(0, 0, 0, 0.3);
+        }
+
+        .rail,
+        .inspector {
+          padding: 28px 24px;
+          background: #15171d;
+        }
+
+        .rail {
+          border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .inspector {
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .panel-label {
+          margin-bottom: 24px;
+          color: #7f8591;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .rail-item {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-bottom: 10px;
+          padding: 16px;
+          border-radius: 10px;
+          color: #aeb3be;
+          font-size: 20px;
+          font-weight: 700;
+        }
+
+        .rail-item.active {
+          color: #ffffff;
+          background: #3157f6;
+        }
+
+        .rail-icon {
+          width: 20px;
+          height: 20px;
+          border: 2px solid currentColor;
+          border-radius: 5px;
+        }
+
+        .viewer {
+          position: relative;
+          display: grid;
+          place-items: center;
+          overflow: hidden;
+          background: #252832;
+        }
+
+        .canvas {
+          position: relative;
+          width: 940px;
+          height: 530px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          background: #f3f0e8;
+          box-shadow: 0 24px 64px rgba(0, 0, 0, 0.36);
+        }
+
+        .canvas-grid {
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(49, 87, 246, 0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(49, 87, 246, 0.06) 1px, transparent 1px);
+          background-size: 32px 32px;
+        }
+
+        .canvas-title {
+          position: absolute;
+          top: 48px;
+          left: 54px;
+          width: 420px;
+          color: #181a1f;
+          font-size: 42px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.05em;
+        }
+
+        .morph-card {
+          position: absolute;
+          right: 86px;
+          bottom: 68px;
+          width: 440px;
+          height: 300px;
+          overflow: hidden;
+          border: 3px solid #181a1f;
+          border-radius: 18px;
+          background: #ffffff;
+          color: #181a1f;
+          transform-origin: 50% 70%;
+        }
+
+        .card-chrome {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 46px;
+          padding: 0 18px;
+          border-bottom: 2px solid #181a1f;
+          background: #dfe5ff;
+        }
+
+        .card-chrome span {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #3157f6;
+        }
+
+        .card-content {
+          position: relative;
+          height: 252px;
+          padding: 26px;
+        }
+
+        .card-state {
+          position: absolute;
+          inset: 26px;
+        }
+
+        .card-state.after {
+          opacity: 0;
+        }
+
+        .micro-label {
+          margin-bottom: 18px;
+          color: #646975;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .card-number {
+          margin-bottom: 18px;
+          font-size: 74px;
+          font-weight: 900;
+          letter-spacing: -0.07em;
+        }
+
+        .card-line {
+          width: 100%;
+          height: 15px;
+          margin-bottom: 12px;
+          border-radius: 8px;
+          background: rgba(24, 26, 31, 0.14);
+        }
+
+        .card-line.short {
+          width: 66%;
+        }
+
+        .result-row {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-top: 16px;
+          font-size: 26px;
+          font-weight: 800;
+        }
+
+        .result-check {
+          display: grid;
+          place-items: center;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: #3157f6;
+          color: #fff;
+        }
+
+        .selection-ring {
+          position: absolute;
+          z-index: 8;
+          right: 76px;
+          bottom: 58px;
+          width: 460px;
+          height: 320px;
+          border: 3px solid #3157f6;
+        }
+
+        .selection-tag {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 7px 11px;
+          background: #3157f6;
+          color: #fff;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .cursor {
+          position: absolute;
+          left: 370px;
+          top: 330px;
+          width: 34px;
+          height: 44px;
+          filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.25));
+        }
+
+        .cursor::before {
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-right: 12px solid transparent;
+          border-bottom: 38px solid #181a1f;
+          border-left: 12px solid transparent;
+          transform: rotate(-24deg);
+          content: "";
+        }
+
+        .ripple {
+          position: absolute;
+          right: 274px;
+          bottom: 188px;
+          width: 60px;
+          height: 60px;
+          border: 4px solid #3157f6;
+          border-radius: 50%;
+          opacity: 0;
+        }
+
+        .field {
+          margin-bottom: 24px;
+        }
+
+        .field-name {
+          margin-bottom: 9px;
+          color: #7f8591;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          text-transform: uppercase;
+        }
+
+        .field-value {
+          padding: 12px 14px;
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 8px;
+          color: #e8eaf0;
+          background: #101216;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+        }
+
+        .identity {
+          color: #9db0ff;
+        }
+
+        .timeline {
+          position: relative;
+          grid-column: 1 / -1;
+          display: grid;
+          grid-template-columns: 84px 1fr;
+          gap: 16px;
+          padding: 28px 32px 24px;
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          background: #0d0f13;
+        }
+
+        .track-labels {
+          display: grid;
+          grid-template-rows: repeat(3, 1fr);
+          color: #7f8591;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+        }
+
+        .track-labels span {
+          display: flex;
+          align-items: center;
+        }
+
+        .tracks {
+          position: relative;
+          display: grid;
+          grid-template-rows: repeat(3, 1fr);
+          gap: 8px;
+          padding-top: 2px;
+          background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+          background-size: 86px 100%;
+        }
+
+        .track {
+          position: relative;
+        }
+
+        .clip-bar {
+          position: absolute;
+          top: 3px;
+          height: 38px;
+          border-radius: 7px;
+          background: #3157f6;
+          color: #fff;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 13px;
+          line-height: 38px;
+          text-indent: 12px;
+        }
+
+        .clip-bar.one {
+          left: 2%;
+          width: 28%;
+        }
+
+        .clip-bar.two {
+          left: 31%;
+          width: 39%;
+          background: #7e94ef;
+          color: #181a1f;
+        }
+
+        .clip-bar.three {
+          left: 71%;
+          width: 25%;
+          background: #bdc9fb;
+          color: #181a1f;
+        }
+
+        .clip-bar.keyframe {
+          left: 24%;
+          width: 52%;
+          background: #3e414b;
+        }
+
+        .playhead {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 34%;
+          width: 3px;
+          background: #f0c36c;
+        }
+
+        .playhead::before {
+          position: absolute;
+          top: -5px;
+          left: -7px;
+          width: 17px;
+          height: 12px;
+          border-radius: 3px;
+          background: #f0c36c;
+          content: "";
+        }
+      </style>
+
+      <div data-hf-id="hf-ktn1" id="root" data-composition-id="compose-workspace" data-width="1920" data-height="1080" data-duration="6.2">
+        <section id="compose-workspace-scene" data-hf-id="hf-compose-workspace-scene" class="clip scene" data-start="0" data-duration="6.2" data-track-index="1">
+          <div data-hf-id="hf-ij9b" id="compose-topline" class="topline">
+            <span data-hf-id="hf-yhnv"><strong data-hf-id="hf-de0k">02</strong> / compose in the real editor</span>
+            <span data-hf-id="hf-0vxr" class="live"><span data-hf-id="hf-d399" class="live-dot"></span>Hyperframes source · live</span>
+          </div>
+
+          <div data-hf-id="hf-tokb" id="compose-studio" class="studio">
+            <aside data-hf-id="hf-4qv7" class="rail">
+              <div data-hf-id="hf-i234" class="panel-label">Project</div>
+              <div data-hf-id="hf-h2qy" class="rail-item"><span data-hf-id="hf-qgc9" class="rail-icon"></span>Sources</div>
+              <div data-hf-id="hf-jx0n" class="rail-item active"><span data-hf-id="hf-jnkd" class="rail-icon"></span>Sequence</div>
+              <div data-hf-id="hf-x0rx" class="rail-item"><span data-hf-id="hf-kuhg" class="rail-icon"></span>Receipts</div>
+            </aside>
+
+            <main data-hf-id="hf-lwum" class="viewer">
+              <div data-hf-id="hf-c9on" id="compose-canvas" class="canvas">
+                <div data-hf-id="hf-7nnh" class="canvas-grid"></div>
+                <div data-hf-id="hf-2c7w" class="canvas-title">One component.<br data-hf-id="hf-x5px">Two real states.</div>
+                <article id="compose-morph-card" data-hf-id="hf-compose-morph-card" class="morph-card">
+                  <div data-hf-id="hf-0nol" class="card-chrome"><span data-hf-id="hf-uckh"></span><span data-hf-id="hf-l73p"></span><span data-hf-id="hf-me0s"></span></div>
+                  <div data-hf-id="hf-3rv6" class="card-content">
+                    <div data-hf-id="hf-al7p" id="compose-before" class="card-state before">
+                      <div data-hf-id="hf-siym" class="micro-label">Before · weekly review</div>
+                      <div data-hf-id="hf-m4nn" class="card-number">14 tabs</div>
+                      <div data-hf-id="hf-mund" class="card-line"></div>
+                      <div data-hf-id="hf-fbo3" class="card-line short"></div>
+                    </div>
+                    <div data-hf-id="hf-cj6f" id="compose-after" class="card-state after">
+                      <div data-hf-id="hf-25me" class="micro-label">After · one release desk</div>
+                      <div data-hf-id="hf-0rki" class="card-number">1 story</div>
+                      <div data-hf-id="hf-pgnf" class="result-row"><span data-hf-id="hf-nvv2" class="result-check">✓</span>Evidence attached</div>
+                    </div>
+                  </div>
+                </article>
+                <div data-hf-id="hf-qqek" id="compose-selection" class="selection-ring">
+                  <span data-hf-id="hf-wxkj" class="selection-tag">hf-compose-morph-card</span>
+                </div>
+                <div data-hf-id="hf-439b" id="compose-cursor" class="cursor"></div>
+                <div data-hf-id="hf-c9f3" id="compose-ripple" class="ripple"></div>
+              </div>
+            </main>
+
+            <aside data-hf-id="hf-viq2" class="inspector">
+              <div data-hf-id="hf-0px3" class="panel-label">Selection</div>
+              <div data-hf-id="hf-0ztw" class="field">
+                <div data-hf-id="hf-bx3j" class="field-name">Stable identity</div>
+                <div data-hf-id="hf-5zd7" class="field-value identity">hf-compose-morph-card</div>
+              </div>
+              <div data-hf-id="hf-bxgc" class="field">
+                <div data-hf-id="hf-8jzx" class="field-name">Source</div>
+                <div data-hf-id="hf-6m12" class="field-value">02-compose.html</div>
+              </div>
+              <div data-hf-id="hf-aqj9" class="field">
+                <div data-hf-id="hf-4skx" class="field-name">Interval</div>
+                <div data-hf-id="hf-ktz6" class="field-value">04.6 → 10.8s</div>
+              </div>
+            </aside>
+
+            <footer data-hf-id="hf-wk5n" class="timeline">
+              <div data-hf-id="hf-27mn" class="track-labels"><span data-hf-id="hf-6m6s">Scenes</span><span data-hf-id="hf-uf7n">Card</span><span data-hf-id="hf-vgxh">Proof</span></div>
+              <div data-hf-id="hf-u5d0" class="tracks">
+                <div data-hf-id="hf-64lp" class="track">
+                  <div data-hf-id="hf-ve8e" class="clip-bar one">01 evidence</div>
+                  <div data-hf-id="hf-gwka" class="clip-bar two">02 compose</div>
+                  <div data-hf-id="hf-ev93" class="clip-bar three">03 receipt</div>
+                </div>
+                <div data-hf-id="hf-gav5" class="track"><div data-hf-id="hf-fylp" class="clip-bar keyframe">morph-card · 4 keyframes</div></div>
+                <div data-hf-id="hf-hhs8" class="track"><div data-hf-id="hf-ijwz" class="clip-bar keyframe">claim-02 · linked</div></div>
+                <div data-hf-id="hf-qeav" id="compose-playhead" class="playhead"></div>
+              </div>
+            </footer>
+          </div>
+        </section>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo("#compose-topline", { opacity: 0, y: -22 }, { opacity: 1, y: 0, duration: 0.46, ease: "power2.out" }, 0.08);
+          tl.fromTo("#compose-studio", { opacity: 0, y: 46, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.72, ease: "expo.out" }, 0.25);
+          tl.fromTo("#compose-cursor", { opacity: 0, x: -80, y: -62 }, { opacity: 1, x: 286, y: 8, duration: 0.9, ease: "power3.inOut" }, 1.25);
+          tl.fromTo("#compose-ripple", { opacity: 0.85, scale: 0.2 }, { opacity: 0, scale: 1.7, duration: 0.55, ease: "power2.out" }, 2.05);
+          tl.to("#compose-morph-card", { scale: 1.08, borderRadius: "8px", backgroundColor: "#eef1ff", duration: 0.78, ease: "power3.inOut" }, 2.15);
+          tl.to("#compose-before", { opacity: 0, y: -14, duration: 0.34, ease: "power2.in" }, 2.28);
+          tl.fromTo("#compose-after", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 2.52);
+          tl.to("#compose-morph-card", { scale: 1, duration: 0.62, ease: "back.out(1.45)" }, 3.0);
+          tl.fromTo("#compose-playhead", { x: 0 }, { x: 560, duration: 3.1, ease: "none" }, 1.2);
+          tl.fromTo("#compose-selection", { borderColor: "#3157f6" }, { borderColor: "#5ccf91", duration: 0.6, ease: "power2.out" }, 3.35);
+          window.__timelines["compose-workspace"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

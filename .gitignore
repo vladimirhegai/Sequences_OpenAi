@@ -1,0 +1,24 @@
+node_modules/
+bun.lockb
+.env
+.env.*
+!.env.example
+
+# The inspected Hyperframes source snapshot is local reference material only.
+vendor/
+
+apps/web/dist/
+coverage/
+test-results/
+
+artifacts/*
+!artifacts/.gitkeep
+
+data/candidates/
+data/runs/
+data/projects/
+fixtures/**/assets/vendor/
+fixtures/**/renders/
+fixtures/**/snapshots/
+fixtures/**/.hyperframes/
+*.log

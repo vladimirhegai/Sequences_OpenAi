@@ -1,0 +1,37 @@
+{
+  "source": "heygen-com/hyperframes",
+  "skills": {
+    "general-video": {
+      "hash": "1aed9f4f68414a45",
+      "files": 1
+    },
+    "hyperframes": {
+      "hash": "fce43b4c3355cde9",
+      "files": 1
+    },
+    "hyperframes-animation": {
+      "hash": "0b137d4d602dda4a",
+      "files": 84
+    },
+    "hyperframes-cli": {
+      "hash": "797fd624f0b83cb5",
+      "files": 7
+    },
+    "hyperframes-core": {
+      "hash": "690ebb3ba5420b90",
+      "files": 14
+    },
+    "hyperframes-creative": {
+      "hash": "1f321f48a15ebb72",
+      "files": 25
+    },
+    "hyperframes-keyframes": {
+      "hash": "040453e302a0e15b",
+      "files": 3
+    },
+    "hyperframes-registry": {
+      "hash": "5f49178cc43e100b",
+      "files": 10
+    }
+  }
+}

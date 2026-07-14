@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Sequences · Release A</title>
+    <script src="./assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 800;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-800-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 900;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-900-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #f3f0e8;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+
+      #release-a-ground {
+        position: absolute;
+        inset: 0;
+        background-color: #f3f0e8;
+        background-image:
+          linear-gradient(rgba(49, 87, 246, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(49, 87, 246, 0.055) 1px, transparent 1px);
+        background-size: 48px 48px;
+      }
+
+      #root > [data-composition-src] {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-hf-id="hf-release-a-root" data-composition-id="release-a" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+      <div id="release-a-ground" data-hf-id="hf-release-a-ground" class="clip" data-start="0" data-duration="15" data-track-index="0"></div>
+
+      <div id="release-a-scene-evidence" data-hf-id="hf-release-a-scene-evidence" class="clip" data-composition-id="evidence-intake" data-composition-src="compositions/01-evidence.html" data-start="0" data-duration="4.6" data-track-index="1" data-width="1920" data-height="1080"></div>
+
+      <div id="release-a-scene-compose" data-hf-id="hf-release-a-scene-compose" class="clip" data-composition-id="compose-workspace" data-composition-src="compositions/02-compose.html" data-start="4.6" data-duration="6.2" data-track-index="1" data-width="1920" data-height="1080"></div>
+
+      <div id="release-a-scene-receipt" data-hf-id="hf-release-a-scene-receipt" class="clip" data-composition-id="verified-receipt" data-composition-src="compositions/03-receipt.html" data-start="10.8" data-duration="4.2" data-track-index="1" data-width="1920" data-height="1080"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["release-a"] = gsap.timeline({ paused: true });
+    </script>
+    <script src="./assets/vendor/hyperframe.runtime.iife.js"></script>
+  </body>
+</html>

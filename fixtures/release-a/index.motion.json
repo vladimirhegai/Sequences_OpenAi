@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "duration": 15,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#evidence-headline", "bySec": 1.4 },
+    { "kind": "before", "a": "#evidence-headline", "b": "#evidence-support" },
+    { "kind": "appearsBy", "selector": "#compose-morph-card", "bySec": 6.2 },
+    { "kind": "staysInFrame", "selector": "#compose-morph-card" },
+    { "kind": "appearsBy", "selector": "#receipt-card", "bySec": 12.2 },
+    { "kind": "staysInFrame", "selector": "#receipt-card" }
+  ]
+}

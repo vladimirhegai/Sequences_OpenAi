@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          color: #181a1f;
+          font-family: Montserrat, sans-serif;
+        }
+
+        .scene {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 660px;
+          gap: 98px;
+          padding: 92px 118px;
+        }
+
+        .copy {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .kicker {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          color: #3157f6;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: 0.11em;
+          text-transform: uppercase;
+        }
+
+        .kicker-mark {
+          display: grid;
+          place-items: center;
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          background: #3157f6;
+          color: #fff;
+          font-size: 20px;
+        }
+
+        .headline {
+          max-width: 980px;
+          margin: 0;
+          font-size: 112px;
+          font-weight: 900;
+          line-height: 0.92;
+          letter-spacing: -0.06em;
+        }
+
+        .headline .underlined {
+          position: relative;
+          display: inline-block;
+          color: #3157f6;
+        }
+
+        .headline .underline-stroke {
+          position: absolute;
+          right: 0;
+          bottom: -14px;
+          left: 0;
+          height: 8px;
+          background: #f0c36c;
+          transform-origin: left center;
+        }
+
+        .footer {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+          color: #606570;
+          font-size: 25px;
+          font-weight: 600;
+        }
+
+        .wordmark {
+          color: #181a1f;
+          font-size: 28px;
+          font-weight: 900;
+          letter-spacing: -0.04em;
+        }
+
+        .receipt-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .receipt-wrap::before {
+          position: absolute;
+          top: 4%;
+          left: -18%;
+          width: 720px;
+          height: 720px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(49, 87, 246, 0.2), rgba(49, 87, 246, 0));
+          content: "";
+        }
+
+        .receipt {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+          border: 3px solid #181a1f;
+          border-radius: 18px;
+          background: #fffdf8;
+          box-shadow: 20px 20px 0 #c8d3ff;
+        }
+
+        .receipt-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 26px 30px;
+          border-bottom: 3px solid #181a1f;
+          background: #3157f6;
+          color: #fff;
+        }
+
+        .receipt-title {
+          font-size: 27px;
+          font-weight: 900;
+        }
+
+        .receipt-id {
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .receipt-body {
+          padding: 32px 30px 36px;
+        }
+
+        .receipt-row {
+          display: grid;
+          grid-template-columns: 36px 1fr auto;
+          gap: 16px;
+          align-items: center;
+          min-height: 76px;
+          border-bottom: 2px solid rgba(24, 26, 31, 0.11);
+        }
+
+        .receipt-row:last-child {
+          border-bottom: 0;
+        }
+
+        .check {
+          display: grid;
+          place-items: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: #d9f2e5;
+          color: #277a50;
+          font-size: 19px;
+          font-weight: 900;
+        }
+
+        .row-name {
+          font-size: 22px;
+          font-weight: 800;
+        }
+
+        .row-value {
+          color: #666b75;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .receipt-result {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 30px;
+          padding: 22px 24px;
+          border-radius: 12px;
+          background: #e9edff;
+        }
+
+        .receipt-result span:first-child {
+          color: #3157f6;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+
+        .receipt-result strong {
+          font-size: 24px;
+        }
+
+        .registration {
+          position: absolute;
+          top: 34px;
+          right: 42px;
+          color: rgba(49, 87, 246, 0.24);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 104px;
+          font-weight: 700;
+        }
+      </style>
+
+      <div data-hf-id="hf-9gco" id="root" data-composition-id="verified-receipt" data-width="1920" data-height="1080" data-duration="4.2">
+        <section id="verified-receipt-scene" data-hf-id="hf-verified-receipt-scene" class="clip scene" data-start="0" data-duration="4.2" data-track-index="1">
+          <div data-hf-id="hf-bdx3" class="copy">
+            <div data-hf-id="hf-zj8y" id="receipt-kicker" class="kicker"><span data-hf-id="hf-6x59" class="kicker-mark">✓</span>Review before apply</div>
+            <h1 id="receipt-headline" data-hf-id="hf-receipt-headline" class="headline">
+              Every change<br data-hf-id="hf-x5px">stays
+              <span data-hf-id="hf-vyvo" id="receipt-underline" class="underlined">inspectable.<span data-hf-id="hf-sk6u" id="receipt-underline-stroke" class="underline-stroke"></span></span>
+            </h1>
+            <div data-hf-id="hf-6ugr" id="receipt-footer" class="footer">
+              <span data-hf-id="hf-z69s" class="wordmark">Sequences</span>
+              <span data-hf-id="hf-hfqy">Evidence → motion → verified release story</span>
+            </div>
+          </div>
+
+          <div data-hf-id="hf-w0fd" class="receipt-wrap">
+            <article id="receipt-card" data-hf-id="hf-receipt-card" class="receipt">
+              <header data-hf-id="hf-lnhn" class="receipt-head">
+                <span data-hf-id="hf-98ho" class="receipt-title">Candidate ready</span>
+                <span data-hf-id="hf-hngf" class="receipt-id">RUN · 7F2A</span>
+              </header>
+              <div data-hf-id="hf-u4zd" class="receipt-body">
+                <div data-hf-id="hf-galn" class="receipt-row">
+                  <span data-hf-id="hf-qb1c" class="check">✓</span><span data-hf-id="hf-b4ro" class="row-name">Hyperframes strict check</span><span data-hf-id="hf-3eau" class="row-value">PASS</span>
+                </div>
+                <div data-hf-id="hf-l1u3" class="receipt-row">
+                  <span data-hf-id="hf-n97c" class="check">✓</span><span data-hf-id="hf-xu7v" class="row-name">Scene scope</span><span data-hf-id="hf-op0t" class="row-value">02 ONLY</span>
+                </div>
+                <div data-hf-id="hf-knj2" class="receipt-row">
+                  <span data-hf-id="hf-m2a9" class="check">✓</span><span data-hf-id="hf-ufpj" class="row-name">Unchanged scenes</span><span data-hf-id="hf-trfg" class="row-value">2 / 2</span>
+                </div>
+                <div data-hf-id="hf-k981" class="receipt-row">
+                  <span data-hf-id="hf-mgla" class="check">✓</span><span data-hf-id="hf-2o1t" class="row-name">Inverse patch</span><span data-hf-id="hf-exai" class="row-value">READY</span>
+                </div>
+                <div data-hf-id="hf-f3nq" class="receipt-result">
+                  <span data-hf-id="hf-17e0">Human decision</span><strong data-hf-id="hf-03u2">Apply or reject</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div data-hf-id="hf-wium" class="registration" data-layout-ignore="" aria-hidden="true">03</div>
+        </section>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo("#receipt-kicker", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.12);
+          tl.fromTo("#receipt-headline", { opacity: 0, y: 58 }, { opacity: 1, y: 0, duration: 0.78, ease: "expo.out" }, 0.35);
+          tl.fromTo("#receipt-card", { opacity: 0, x: 96, rotation: 1.5 }, { opacity: 1, x: 0, rotation: 0, duration: 0.72, ease: "back.out(1.25)" }, 0.52);
+          tl.fromTo("#receipt-card .receipt-row", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.16, ease: "power2.out" }, 1.18);
+          tl.fromTo("#receipt-card .receipt-result", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 2.02);
+          tl.fromTo("#receipt-underline-stroke", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.inOut" }, 1.2);
+          tl.fromTo("#receipt-footer", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.out" }, 2.5);
+          window.__timelines["verified-receipt"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

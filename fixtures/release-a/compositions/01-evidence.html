@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          color: #181a1f;
+          font-family: Montserrat, sans-serif;
+        }
+
+        .scene {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 96px;
+          padding: 92px 118px 96px;
+        }
+
+        .left {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 0;
+        }
+
+        .index-row,
+        .evidence-meta,
+        .proof-kicker {
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 22px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .index-row {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+          color: #3157f6;
+        }
+
+        .index-rule {
+          width: 128px;
+          height: 3px;
+          transform-origin: left center;
+          background: #3157f6;
+        }
+
+        .headline {
+          max-width: 940px;
+          margin: 0;
+          font-size: 104px;
+          font-weight: 900;
+          line-height: 0.94;
+          letter-spacing: -0.055em;
+        }
+
+        .headline .accent {
+          display: inline-block;
+          color: #3157f6;
+        }
+
+        .support {
+          display: grid;
+          grid-template-columns: 84px minmax(0, 560px);
+          gap: 22px;
+          align-items: start;
+          font-size: 30px;
+          font-weight: 500;
+          line-height: 1.34;
+          color: #555964;
+        }
+
+        .support-mark {
+          display: grid;
+          place-items: center;
+          width: 62px;
+          height: 62px;
+          border: 3px solid #181a1f;
+          border-radius: 50%;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 24px;
+          color: #3157f6;
+        }
+
+        .evidence-stack {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        .evidence-stack::before {
+          position: absolute;
+          top: 8%;
+          right: -28%;
+          width: 700px;
+          height: 700px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(49, 87, 246, 0.2), rgba(49, 87, 246, 0));
+          content: "";
+        }
+
+        .evidence-card {
+          position: relative;
+          display: grid;
+          grid-template-columns: 92px 1fr auto;
+          gap: 24px;
+          align-items: center;
+          min-height: 156px;
+          padding: 26px 30px;
+          border: 2px solid rgba(24, 26, 31, 0.2);
+          border-radius: 18px;
+          background: rgba(255, 253, 248, 0.94);
+        }
+
+        .evidence-card:nth-child(2) {
+          margin-left: 52px;
+        }
+
+        .evidence-card:nth-child(3) {
+          margin-left: 16px;
+        }
+
+        .thumb {
+          position: relative;
+          width: 92px;
+          height: 92px;
+          overflow: hidden;
+          border: 2px solid #181a1f;
+          border-radius: 12px;
+          background: #dfe5ff;
+        }
+
+        .thumb::before,
+        .thumb::after {
+          position: absolute;
+          content: "";
+        }
+
+        .thumb::before {
+          inset: 15px 12px auto;
+          height: 12px;
+          background: #3157f6;
+          box-shadow: 0 22px 0 rgba(24, 26, 31, 0.18), 0 44px 0 rgba(24, 26, 31, 0.12);
+        }
+
+        .thumb::after {
+          right: 12px;
+          bottom: 10px;
+          width: 28px;
+          height: 22px;
+          border-radius: 5px;
+          background: #181a1f;
+        }
+
+        .evidence-title {
+          margin-bottom: 10px;
+          font-size: 28px;
+          font-weight: 800;
+          letter-spacing: -0.025em;
+        }
+
+        .evidence-meta {
+          font-size: 17px;
+          color: #686d76;
+        }
+
+        .status {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+          font-weight: 700;
+          color: #277a50;
+        }
+
+        .status-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #34a46d;
+        }
+
+        .status.review {
+          color: #a15a13;
+        }
+
+        .status.review .status-dot {
+          background: #ce7a1d;
+        }
+
+        .corner-mark {
+          position: absolute;
+          right: 54px;
+          bottom: 42px;
+          color: rgba(49, 87, 246, 0.28);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 156px;
+          font-weight: 700;
+          line-height: 1;
+        }
+      </style>
+
+      <div data-hf-id="hf-596v" id="root" data-composition-id="evidence-intake" data-width="1920" data-height="1080" data-duration="4.6">
+        <section id="evidence-intake-scene" data-hf-id="hf-evidence-intake-scene" class="clip scene" data-start="0" data-duration="4.6" data-track-index="1">
+          <div data-hf-id="hf-i0dv" class="left">
+            <div data-hf-id="hf-4x9t" id="evidence-index" class="index-row">
+              <span data-hf-id="hf-xz35">01 / source desk</span>
+              <span data-hf-id="hf-lkhr" id="evidence-index-rule" class="index-rule"></span>
+            </div>
+
+            <h1 id="evidence-headline" data-hf-id="hf-evidence-headline" class="headline">
+              Start with<br data-hf-id="hf-x5px"><span data-hf-id="hf-c5ue" class="accent">product proof.</span>
+            </h1>
+
+            <div data-hf-id="hf-7yka" id="evidence-support" class="support">
+              <div data-hf-id="hf-3c96" class="support-mark">↳</div>
+              <div data-hf-id="hf-pcry">Approved screenshots and facts stay attached to every scene they support.</div>
+            </div>
+          </div>
+
+          <div data-hf-id="hf-zccu" id="evidence-stack" class="evidence-stack">
+            <article id="evidence-card-ui" data-hf-id="hf-evidence-card-ui" class="evidence-card">
+              <div data-hf-id="hf-mixc" class="thumb"></div>
+              <div data-hf-id="hf-yeow">
+                <div data-hf-id="hf-xhyt" class="evidence-title">Dashboard · result state</div>
+                <div data-hf-id="hf-0by2" class="evidence-meta">PNG · 1440 × 900 · SHA 9D31</div>
+              </div>
+              <div data-hf-id="hf-cnnb" class="status"><span data-hf-id="hf-i0ip" class="status-dot"></span>Owned</div>
+            </article>
+
+            <article id="evidence-card-claim" data-hf-id="hf-evidence-card-claim" class="evidence-card">
+              <div data-hf-id="hf-opbc" class="thumb"></div>
+              <div data-hf-id="hf-y7yw">
+                <div data-hf-id="hf-j61h" class="evidence-title">“Review in one place”</div>
+                <div data-hf-id="hf-ksq8" class="evidence-meta">CLAIM 02 · 2 SOURCES</div>
+              </div>
+              <div data-hf-id="hf-6a8p" class="status"><span data-hf-id="hf-5et1" class="status-dot"></span>Approved</div>
+            </article>
+
+            <article id="evidence-card-stale" data-hf-id="hf-evidence-card-stale" class="evidence-card">
+              <div data-hf-id="hf-nie9" class="thumb"></div>
+              <div data-hf-id="hf-x11t">
+                <div data-hf-id="hf-0sbs" class="evidence-title">Unverified launch claim</div>
+                <div data-hf-id="hf-ekln" class="evidence-meta">CLAIM 03 · NO SOURCE</div>
+              </div>
+              <div data-hf-id="hf-qt78" class="status review"><span data-hf-id="hf-anp8" class="status-dot"></span>Held back</div>
+            </article>
+          </div>
+
+          <div data-hf-id="hf-7z4o" class="corner-mark" data-layout-ignore="" aria-hidden="true">+</div>
+        </section>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+          tl.fromTo("#evidence-index", { opacity: 0, x: -32 }, { opacity: 1, x: 0, duration: 0.48, ease: "power3.out" }, 0.12);
+          tl.fromTo("#evidence-index-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.58, ease: "power2.inOut" }, 0.18);
+          tl.fromTo("#evidence-headline", { opacity: 0, y: 54 }, { opacity: 1, y: 0, duration: 0.78, ease: "expo.out" }, 0.42);
+          tl.fromTo("#evidence-support", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.54, ease: "power2.out" }, 1.18);
+          tl.fromTo("#evidence-stack .evidence-card", { opacity: 0, x: 90, scale: 0.96 }, { opacity: 1, x: 0, scale: 1, duration: 0.64, stagger: 0.2, ease: "back.out(1.35)" }, 0.62);
+          tl.fromTo("#evidence-stack", { y: 0 }, { y: -10, duration: 1.3, ease: "sine.inOut" }, 2.7);
+          window.__timelines["evidence-intake"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>
