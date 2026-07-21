@@ -547,6 +547,21 @@ describe("fresh-build component plan", () => {
     );
   });
 
+  it("reports structural and root-state mismatches in one repair packet", async () => {
+    const { root, sequence } = await authoredProject();
+    await mutatePlan(root, (plan) => {
+      plan.components[0]!.usedInBeatIds = ["product-action"];
+      plan.components[0]!.states.push({
+        id: "phantom",
+        description: "This state is declared but not implemented.",
+      });
+    });
+
+    await expect(assertAuthoredComponentPlan(root, sequence)).rejects.toThrow(
+      /found 2 mismatches:[\s\S]*persistent component workflow-panel must bind to at least 2 sequence beats[\s\S]*state workflow-panel\/phantom is not implemented on its root/,
+    );
+  });
+
   it("rejects a used beat that omits the component semantic entity", async () => {
     const { root, sequence } = await authoredProject();
     sequence.beats[1]!.entities = [];

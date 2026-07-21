@@ -379,10 +379,14 @@ export async function assertComponentPlan(
   }
 
   const beatsById = new Map(sequence.beats.map((beat) => [beat.id, beat]));
+  const componentFailures: string[] = [];
+  const reportComponentFailure = (message: string): void => {
+    componentFailures.push(message);
+  };
   for (const binding of plan.sourceImageBindings) {
     for (const beatId of binding.beatIds) {
       if (!beatsById.has(beatId)) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} reference ${binding.imagePath} names unknown story beat ${beatId}`,
         );
       }
@@ -391,7 +395,7 @@ export async function assertComponentPlan(
   if (plan.sourceImageBindings.length > 1) {
     const boundBeatIds = new Set(plan.sourceImageBindings.flatMap((binding) => binding.beatIds));
     if (boundBeatIds.size < 2) {
-      throw new Error(
+      reportComponentFailure(
         `${COMPONENT_PLAN_PATH} must progress multiple supplied references across at least two story beats`,
       );
     }
@@ -405,7 +409,7 @@ export async function assertComponentPlan(
   for (const component of plan.components) {
     if (component.continuity === "persistent") {
       if (component.usedInBeatIds.length < reusableBeatCount) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} persistent component ${component.id} must bind to at least ${reusableBeatCount} sequence beats`,
         );
       }
@@ -415,13 +419,14 @@ export async function assertComponentPlan(
     for (const beatId of component.usedInBeatIds) {
       const beat = beatsById.get(beatId);
       if (!beat) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} component ${component.id} references unknown beat ${beatId}`,
         );
+        continue;
       }
       const entity = beat.entities.find((candidate) => candidate.id === component.id);
       if (!entity) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} component ${component.id} must be a semantic entity in beat ${beatId}`,
         );
       }
@@ -430,16 +435,18 @@ export async function assertComponentPlan(
           beat.implementationFiles.includes(implementationFile),
         )
       ) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} component ${component.id} must share an implementation file with beat ${beatId}`,
         );
       }
-      const entityParts = new Set(entity.parts);
-      for (const part of component.parts) {
-        if (part.morphAnchor && !entityParts.has(part.id)) {
-          throw new Error(
-            `${COMPONENT_PLAN_PATH} morph anchor ${component.id}/${part.id} must be a semantic part in beat ${beatId}`,
-          );
+      if (entity) {
+        const entityParts = new Set(entity.parts);
+        for (const part of component.parts) {
+          if (part.morphAnchor && !entityParts.has(part.id)) {
+            reportComponentFailure(
+              `${COMPONENT_PLAN_PATH} morph anchor ${component.id}/${part.id} must be a semantic part in beat ${beatId}`,
+            );
+          }
         }
       }
     }
@@ -447,39 +454,48 @@ export async function assertComponentPlan(
     const htmlFiles: HtmlEvidence[] = [];
     for (const implementationFile of component.implementationFiles) {
       if (!/^(?:index\.html|(?:compositions|scenes)\/.+\.html?)$/i.test(implementationFile)) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} component ${component.id} must bind to composition HTML`,
         );
+        continue;
       }
       let evidence = htmlByPath.get(implementationFile);
       if (!evidence) {
-        const file = await existingFileWithin(projectRoot, implementationFile);
-        evidence = parseHtmlEvidence(implementationFile, await readFile(file, "utf8"));
-        htmlByPath.set(implementationFile, evidence);
+        try {
+          const file = await existingFileWithin(projectRoot, implementationFile);
+          evidence = parseHtmlEvidence(implementationFile, await readFile(file, "utf8"));
+          htmlByPath.set(implementationFile, evidence);
+        } catch (error) {
+          reportComponentFailure(errorMessage(error));
+          continue;
+        }
       }
       htmlFiles.push(evidence);
     }
+    if (htmlFiles.length === 0) continue;
     const rootMatches = elementsWithAttribute(htmlFiles, "data-hf-id", component.rootHfId);
     if (rootMatches.length !== 1) {
-      throw new Error(
+      reportComponentFailure(
         `${COMPONENT_PLAN_PATH} ${component.id} root must bind to exactly one data-hf-id (found ${rootMatches.length})`,
       );
+      continue;
     }
     const rootMatch = rootMatches[0]!;
     if (rootMatch.element.getAttribute("data-component") !== component.archetype) {
-      throw new Error(
+      reportComponentFailure(
         `${COMPONENT_PLAN_PATH} component ${component.id} root must declare data-component="${component.archetype}"`,
       );
     }
     for (const part of component.parts) {
       const partMatches = elementsWithAttribute(htmlFiles, "data-hf-id", part.hfId);
       if (partMatches.length !== 1) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} ${component.id} part ${part.id} must bind to exactly one data-hf-id (found ${partMatches.length})`,
         );
+        continue;
       }
       if (!rootMatch.element.contains(partMatches[0]!.element)) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} ${component.id} part ${part.id} must be inside its component root`,
         );
       }
@@ -493,9 +509,9 @@ export async function assertComponentPlan(
     }
   }
   if (unimplementedRootStates.length > 0) {
-    throw new Error(
+    reportComponentFailure(
       unimplementedRootStates.length === 1
-        ? unimplementedRootStates[0]
+        ? unimplementedRootStates[0]!
         : `${COMPONENT_PLAN_PATH} has ${unimplementedRootStates.length} unimplemented root states:\n${unimplementedRootStates
             .map((message, index) => `${index + 1}. ${message}`)
             .join("\n")}`,
@@ -509,7 +525,7 @@ export async function assertComponentPlan(
         .filter((src): src is string => src !== null && expectedPaths.has(src)),
     );
     if (renderedReferencePaths.length > 0) {
-      throw new Error(
+      reportComponentFailure(
         `${COMPONENT_PLAN_PATH} host screenshots are reference-only and cannot be rendered as image planes: ${renderedReferencePaths.join(", ")}`,
       );
     }
@@ -528,30 +544,42 @@ export async function assertComponentPlan(
       .map((image) => image.path)
       .filter((imagePath) => !recreatedReferences.has(imagePath));
     if (missingReferences.length > 0) {
-      throw new Error(
+      reportComponentFailure(
         `${COMPONENT_PLAN_PATH} must bind every supplied reference to a code-native recreated state with data-reference-image, data-reference-mode="recreated", and data-reference-beats; missing: ${missingReferences.join(", ")}`,
       );
     }
     for (const binding of plan.sourceImageBindings) {
       const actualBeatIds = recreatedReferences.get(binding.imagePath);
       if (actualBeatIds !== binding.beatIds.join(" ")) {
-        throw new Error(
+        reportComponentFailure(
           `${COMPONENT_PLAN_PATH} recreated reference ${binding.imagePath} must declare data-reference-beats="${binding.beatIds.join(" ")}" in renderable component HTML`,
         );
       }
     }
   }
   if (!hasPersistentComponent) {
-    throw new Error(
+    reportComponentFailure(
       `${COMPONENT_PLAN_PATH} needs at least one persistent component reused across the sequence`,
     );
   }
   if (!hasKnownArchetype) {
-    throw new Error(`${COMPONENT_PLAN_PATH} needs at least one typed SaaS component archetype`);
+    reportComponentFailure(
+      `${COMPONENT_PLAN_PATH} needs at least one typed SaaS component archetype`,
+    );
   }
   if (!hasInvokableState) {
-    throw new Error(
+    reportComponentFailure(
       `${COMPONENT_PLAN_PATH} needs at least one multi-state or interactive product component`,
+    );
+  }
+  const uniqueComponentFailures = [...new Set(componentFailures)];
+  if (uniqueComponentFailures.length > 0) {
+    throw new Error(
+      uniqueComponentFailures.length === 1
+        ? uniqueComponentFailures[0]
+        : `${COMPONENT_PLAN_PATH} found ${uniqueComponentFailures.length} mismatches:\n${uniqueComponentFailures
+            .map((failure, index) => `${index + 1}. ${failure}`)
+            .join("\n")}`,
     );
   }
   return plan;
