@@ -25,6 +25,92 @@ export interface ComponentPlanContainmentNormalization {
   movedParts: Array<{ componentId: string; partId: string; implementationFile: string }>;
 }
 
+export interface ComponentPlanReferenceBindingNormalization {
+  changed: boolean;
+  normalizedBindings: Array<{
+    imagePath: string;
+    implementationFile: string;
+    beforeBeatIds: string | null;
+    afterBeatIds: string;
+  }>;
+}
+
+/**
+ * Reconciles non-rendering reference evidence with the already locked
+ * component plan when exactly one recreated DOM root owns the image binding.
+ * The annotation does not affect pixels or choreography; missing and
+ * ambiguous roots remain author-owned contract failures.
+ */
+export async function normalizeComponentPlanReferenceBindings(
+  projectRoot: string,
+): Promise<ComponentPlanReferenceBindingNormalization> {
+  const unchanged = (): ComponentPlanReferenceBindingNormalization => ({
+    changed: false,
+    normalizedBindings: [],
+  });
+  const planPath = join(projectRoot, "story", "component-plan.json");
+  let plan: ComponentPlanV2;
+  try {
+    const metadata = await stat(planPath);
+    if (!metadata.isFile() || metadata.size > MAX_COMPONENT_PLAN_BYTES) return unchanged();
+    plan = ComponentPlanV2Schema.parse(JSON.parse(await readFile(planPath, "utf8")) as unknown);
+  } catch {
+    return unchanged();
+  }
+  if (plan.sourceImageBindings.length === 0) return unchanged();
+
+  const htmlByPath = new Map<string, HtmlEvidence>();
+  const sourcePaths = new Map<string, string>();
+  try {
+    for (const component of plan.components) {
+      for (const implementationFile of component.implementationFiles) {
+        if (!/^(?:index\.html|(?:compositions|scenes)\/.+\.html?)$/i.test(implementationFile)) {
+          return unchanged();
+        }
+        if (htmlByPath.has(implementationFile)) continue;
+        const sourcePath = await existingFileWithin(projectRoot, implementationFile);
+        htmlByPath.set(
+          implementationFile,
+          parseHtmlEvidence(implementationFile, await readFile(sourcePath, "utf8")),
+        );
+        sourcePaths.set(implementationFile, sourcePath);
+      }
+    }
+  } catch {
+    return unchanged();
+  }
+
+  const normalizedBindings: ComponentPlanReferenceBindingNormalization["normalizedBindings"] = [];
+  for (const binding of plan.sourceImageBindings) {
+    const matches = elementsWithAttribute(
+      [...htmlByPath.values()],
+      "data-reference-image",
+      binding.imagePath,
+    ).filter((match) => match.element.getAttribute("data-reference-mode") === "recreated");
+    if (matches.length !== 1) continue;
+    const match = matches[0]!;
+    const afterBeatIds = binding.beatIds.join(" ");
+    const beforeBeatIds = match.element.getAttribute("data-reference-beats");
+    if (beforeBeatIds === afterBeatIds) continue;
+    match.element.setAttribute("data-reference-beats", afterBeatIds);
+    normalizedBindings.push({
+      imagePath: binding.imagePath,
+      implementationFile: match.file.path,
+      beforeBeatIds,
+      afterBeatIds,
+    });
+  }
+
+  if (normalizedBindings.length === 0) return unchanged();
+  const changedFiles = new Set(normalizedBindings.map((binding) => binding.implementationFile));
+  for (const implementationFile of changedFiles) {
+    const evidence = htmlByPath.get(implementationFile)!;
+    refreshTemplateSerialization(evidence);
+    await writeFile(sourcePaths.get(implementationFile)!, String(evidence.document), "utf8");
+  }
+  return { changed: true, normalizedBindings };
+}
+
 /**
  * Repairs the objective subset of component-containment failures where the
  * authored root and part each exist exactly once in the same HTML tree. The

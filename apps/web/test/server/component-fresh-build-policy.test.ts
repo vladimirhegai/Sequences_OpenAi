@@ -6,6 +6,7 @@ import {
   assertComponentPlan,
   canonicalizeComponentPlanStateClaims,
   normalizeComponentPlanContainment,
+  normalizeComponentPlanReferenceBindings,
 } from "../../src/server/component-plan";
 import { assertDesignCapsule } from "../../src/server/design-capsule";
 import {
@@ -151,6 +152,52 @@ describe("fresh-build component plan", () => {
     const normalized = await readFile(compositionPath, "utf8");
     expect(normalized.match(/data-hf-id="hf-shell-main-title"/g)).toHaveLength(1);
     expect(normalized).toContain("window.__timelines");
+  });
+
+  it("reconciles one unambiguous recreated reference to the locked beat binding", async () => {
+    const { root } = await authoredProject();
+    const imagePath = "assets/derived/reference.png";
+    await mutatePlan(root, (plan) => {
+      plan.mode = "reference-derived";
+      plan.sourceImages = [imagePath];
+      plan.sourceImageBindings = [
+        {
+          imagePath,
+          beatIds: ["product-action", "product-proof"],
+          narrativeRole: "proof",
+          purpose: "The recreated product state proves the action and result.",
+        },
+      ];
+      plan.sourceEvidence = "The supplied reference defines the recreated product state.";
+    });
+    const compositionPath = join(root, "compositions", "02-compose.html");
+    await writeFile(
+      compositionPath,
+      (await readFile(compositionPath, "utf8")).replace(
+        'data-hf-id="hf-shell-window"',
+        `data-hf-id="hf-shell-window" data-reference-image="${imagePath}" data-reference-mode="recreated" data-reference-beats="product-action"`,
+      ),
+      "utf8",
+    );
+
+    await expect(normalizeComponentPlanReferenceBindings(root)).resolves.toEqual({
+      changed: true,
+      normalizedBindings: [
+        {
+          imagePath,
+          implementationFile: "compositions/02-compose.html",
+          beforeBeatIds: "product-action",
+          afterBeatIds: "product-action product-proof",
+        },
+      ],
+    });
+    expect(await readFile(compositionPath, "utf8")).toContain(
+      `data-reference-image="${imagePath}" data-reference-mode="recreated" data-reference-beats="product-action product-proof"`,
+    );
+    await expect(normalizeComponentPlanReferenceBindings(root)).resolves.toEqual({
+      changed: false,
+      normalizedBindings: [],
+    });
   });
 
   it("does not accept an HTML comment as data-hf-id evidence", async () => {

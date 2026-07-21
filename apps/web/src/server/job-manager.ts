@@ -53,6 +53,7 @@ import {
   assertComponentPlan,
   canonicalizeComponentPlanStateClaims,
   normalizeComponentPlanContainment,
+  normalizeComponentPlanReferenceBindings,
 } from "./component-plan";
 import {
   assertDesignCapsule,
@@ -854,6 +855,32 @@ export class JobManager {
               receipt,
               "authoring",
               `Host moved ${containmentNormalization.movedParts.length} unambiguous component part${containmentNormalization.movedParts.length === 1 ? "" : "s"} under the declared DOM owner before contract validation`,
+              { tool: "filesystem" },
+            );
+          }
+          const referenceBindingNormalization =
+            await normalizeComponentPlanReferenceBindings(candidateRoot);
+          if (referenceBindingNormalization.changed) {
+            authoredChangedFiles = (
+              await this.projects.changedFiles(candidateRoot, baseCommit)
+            ).filter((path) => !path.startsWith(".agents/"));
+            assertChangedPaths(authoredChangedFiles, initial.allowedPaths);
+            await inspectChangedFiles(candidateRoot, authoredChangedFiles);
+            hostFinal = reconcileCodexFinalArtifacts(hostFinal, authoredChangedFiles);
+            await writeFile(
+              join(runRoot, "final.json"),
+              `${JSON.stringify(hostFinal, null, 2)}\n`,
+              "utf8",
+            );
+            receipt = await this.runs.update(jobId, (current) => ({
+              ...current,
+              updatedAt: new Date().toISOString(),
+              final: hostFinal,
+            }));
+            await this.event(
+              receipt,
+              "authoring",
+              `Host reconciled ${referenceBindingNormalization.normalizedBindings.length} unambiguous reference-beat annotation${referenceBindingNormalization.normalizedBindings.length === 1 ? "" : "s"} to the locked component plan before contract validation`,
               { tool: "filesystem" },
             );
           }
