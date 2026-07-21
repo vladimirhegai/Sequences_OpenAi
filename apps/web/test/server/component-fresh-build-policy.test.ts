@@ -349,6 +349,33 @@ describe("fresh-build component plan", () => {
     await expect(assertAuthoredComponentPlan(root, sequence)).resolves.toBeDefined();
   });
 
+  it("accepts root states invoked through a shorthand scoped selector helper", async () => {
+    const { root, sequence } = await authoredProject();
+    await mutatePlan(root, (plan) => {
+      plan.components[0]!.states.push(
+        { id: "helper-complete", description: "The workflow shows the result." },
+        { id: "helper-settled", description: "The workflow reaches its hold." },
+      );
+    });
+    const compositionPath = join(root, "compositions", "02-compose.html");
+    await writeFile(
+      compositionPath,
+      (await readFile(compositionPath, "utf8")).replace(
+        "</script>",
+        [
+          `const q = selector => root.querySelector(selector);`,
+          `const other = q('#other'), workflow = q('#shell-window');`,
+          `tl.set(q('#shell-window'), { attr: { 'data-state': 'helper-complete' } }, 4);`,
+          `tl.set(workflow, { attr: { 'data-state': 'helper-settled' } }, 5);`,
+          "</script>",
+        ].join("\n"),
+      ),
+      "utf8",
+    );
+
+    await expect(assertAuthoredComponentPlan(root, sequence)).resolves.toBeDefined();
+  });
+
   it("does not confuse a lookalike id selector with the actual component root", async () => {
     const { root, sequence } = await authoredProject();
     await mutatePlan(root, (plan) => {

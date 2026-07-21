@@ -9,6 +9,7 @@ import {
   normalizeFreshCompositionRoots,
   normalizeFreshClipTracks,
   normalizeFreshGsapLifecycle,
+  normalizeFreshGsapClipExitKills,
   normalizeReadablePointerEvents,
   repairFreshGsapTransformConflicts,
   scopeFreshGsapSelectors,
@@ -412,6 +413,51 @@ describe("fresh build normalization", () => {
     );
 
     await repairFreshGsapTransformConflicts(root);
+    expect(await readFile(join(root, "compositions", "film.html"), "utf8")).toBe(normalized);
+  });
+
+  it("moves CSS percent centering into the first matching GSAP transform tween", async () => {
+    const root = await projectWithComposition(`
+      <style>#composer{position:absolute;left:50%;transform:translateX(-50%)}</style>
+      <main id="root" data-composition-id="film"><div id="composer"></div></main>
+      <script>
+        const productTimeline=gsap.timeline({paused:true})
+          .to("#composer",{y:120,scale:.9,duration:.6},4);
+        window.__timelines["film"]=productTimeline;
+      </script>
+    `);
+
+    await repairFreshGsapTransformConflicts(root);
+
+    const normalized = await readFile(join(root, "compositions", "film.html"), "utf8");
+    expect(normalized).not.toContain("transform:translateX(-50%)");
+    expect(normalized).toContain(
+      '.fromTo("#composer", { xPercent: -50 }, { xPercent: -50,y:120,scale:.9,duration:.6},4)',
+    );
+
+    await repairFreshGsapTransformConflicts(root);
+    expect(await readFile(join(root, "compositions", "film.html"), "utf8")).toBe(normalized);
+  });
+
+  it("adds a seek-safe hard kill to a clip exit at the next clip boundary", async () => {
+    const root = await projectWithComposition(`
+      <main id="root" data-composition-id="film">
+        <section id="product" class="clip" data-start="0" data-duration="17" data-track-index="0"></section>
+        <section id="lockup" class="clip" data-start="17" data-duration="5" data-track-index="1"></section>
+      </main>
+      <script>
+        const productTimeline=gsap.timeline({paused:true});
+        productTimeline.to("#product",{opacity:0,duration:.02},17);
+        window.__timelines["film"]=productTimeline;
+      </script>
+    `);
+
+    await normalizeFreshGsapClipExitKills(root);
+
+    const normalized = await readFile(join(root, "compositions", "film.html"), "utf8");
+    expect(normalized).toContain('productTimeline.set("#product", { opacity: 0 }, 17);');
+
+    await normalizeFreshGsapClipExitKills(root);
     expect(await readFile(join(root, "compositions", "film.html"), "utf8")).toBe(normalized);
   });
 

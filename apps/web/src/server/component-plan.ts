@@ -648,7 +648,7 @@ function hasRootStateScript(
   const state = escapeRegExp(stateId);
   const selectorHelpers = [
     ...script.matchAll(
-      /\b(?:const|let|var)\s+([a-zA-Z_$][\w$]*)\s*=\s*\(\s*([a-zA-Z_$][\w$]*)\s*\)\s*=>\s*(?:\{[\s\S]{0,160}?\breturn\s+)?[a-zA-Z_$][\w$]*(?:\.[a-zA-Z_$][\w$]*)*\.querySelector\(\s*\2\s*\)/gi,
+      /\b(?:const|let|var)\s+([a-zA-Z_$][\w$]*)\s*=\s*(?:\(\s*([a-zA-Z_$][\w$]*)\s*\)|([a-zA-Z_$][\w$]*))\s*=>\s*(?:\{[\s\S]{0,160}?\breturn\s+)?[a-zA-Z_$][\w$]*(?:\.[a-zA-Z_$][\w$]*)*\.querySelector\(\s*(?:\2|\3)\s*\)/gi,
     ),
   ]
     .map((match) => match[1])

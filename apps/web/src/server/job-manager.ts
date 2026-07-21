@@ -1035,6 +1035,7 @@ export class JobManager {
         await normalizeReadablePointerEvents(candidateRoot);
         await ensureFreshGsapTargets(candidateRoot);
         await normalizeFreshGsapLifecycle(candidateRoot);
+        await normalizeFreshGsapClipExitKills(candidateRoot);
         await repairFreshGsapTransformConflicts(candidateRoot);
       }
       await normalizeRootAssetPaths(candidateRoot, authoredChangedFiles);
@@ -1240,6 +1241,7 @@ export class JobManager {
             await normalizeReadablePointerEvents(candidateRoot);
             await ensureFreshGsapTargets(candidateRoot);
             await normalizeFreshGsapLifecycle(candidateRoot);
+            await normalizeFreshGsapClipExitKills(candidateRoot);
             await repairFreshGsapTransformConflicts(candidateRoot);
           }
           if (workflowMode === "balanced") {
@@ -1506,6 +1508,7 @@ export class JobManager {
           await normalizeReadablePointerEvents(candidateRoot);
           await ensureFreshGsapTargets(candidateRoot);
           await normalizeFreshGsapLifecycle(candidateRoot);
+          await normalizeFreshGsapClipExitKills(candidateRoot);
           await repairFreshGsapTransformConflicts(candidateRoot);
           await normalizeRootAssetPaths(candidateRoot, changedDuringTurn);
           if (workflowMode === "balanced") {
@@ -1821,6 +1824,7 @@ export class JobManager {
                   await normalizeReadablePointerEvents(candidateRoot);
                   await ensureFreshGsapTargets(candidateRoot);
                   await normalizeFreshGsapLifecycle(candidateRoot);
+                  await normalizeFreshGsapClipExitKills(candidateRoot);
                   await repairFreshGsapTransformConflicts(candidateRoot);
                   polishChanges = await polishCheckpoint.changedPaths();
                   assertChangedPaths(polishChanges, compositorStagePaths(componentSpecialist));
@@ -3874,8 +3878,126 @@ export async function repairFreshGsapTransformConflicts(candidateRoot: string): 
       );
       changed = true;
     }
+    const centeredRulePattern =
+      /(#[-\w]+)\s*\{([^{}]*?\btransform\s*:\s*translateX\(\s*(-?(?:\d+(?:\.\d*)?|\.\d+))%\s*\)\s*;?[^{}]*?)\}/gi;
+    const centeredRules = [...html.matchAll(centeredRulePattern)];
+    for (const match of centeredRules) {
+      const selector = match[1];
+      const initial = match[3];
+      if (!selector || initial === undefined) continue;
+      const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const tweenPattern = new RegExp(
+        `\\.to\\(\\s*([\\"'])${escapedSelector}\\1\\s*,\\s*\\{([\\s\\S]*?)\\}\\s*,`,
+      );
+      const tween = tweenPattern.exec(html);
+      if (
+        !tween ||
+        !/\b(?:x|y|xPercent|yPercent|scale|scaleX|scaleY|rotation|rotationX|rotationY|skewX|skewY)\s*:/i.test(
+          tween[2] ?? "",
+        )
+      ) {
+        continue;
+      }
+      const quote = tween[1];
+      const toBody = tween[2] ?? "";
+      const centeredToBody = /\bxPercent\s*:/i.test(toBody)
+        ? toBody
+        : ` xPercent: ${initial},${toBody}`;
+      const replacement = `.fromTo(${quote}${selector}${quote}, { xPercent: ${initial} }, {${centeredToBody}},`;
+      html = html.replace(tween[0], replacement);
+      html = html.replace(
+        match[0],
+        match[0].replace(/\btransform\s*:\s*translateX\([^)]*\)\s*;?/i, ""),
+      );
+      changed = true;
+    }
     if (changed) await writeFile(filePath, html, "utf8");
   }
+}
+
+/**
+ * Timed clip visibility is framework-owned, but an authored exit tween that
+ * lands on another clip boundary still needs a seek-safe hard kill for the
+ * pinned linter. Add only the redundant hidden-state set for an id-addressed
+ * clip at an exact numeric boundary; creative exit motion stays untouched.
+ */
+export async function normalizeFreshGsapClipExitKills(candidateRoot: string): Promise<void> {
+  for (const relativePath of await freshCompositionHtmlFiles(candidateRoot)) {
+    const filePath = await existingFileWithin(candidateRoot, relativePath);
+    const source = await readFile(filePath, "utf8");
+    const clipIds = new Set<string>();
+    const clipBoundaries = new Set<number>();
+    for (const opening of source.matchAll(/<([a-z][\w:-]*)\b[^>]*>/gi)) {
+      const tag = opening[0];
+      const classes = simpleHtmlAttribute(tag, "class")?.split(/\s+/) ?? [];
+      if (!classes.includes("clip")) continue;
+      const id = simpleHtmlAttribute(tag, "id");
+      if (id) clipIds.add(id);
+      const start = Number(simpleHtmlAttribute(tag, "data-start"));
+      if (Number.isFinite(start) && start > 0) clipBoundaries.add(start);
+    }
+    if (clipIds.size === 0 || clipBoundaries.size === 0) continue;
+
+    const hardKills = new Set<string>();
+    for (const setCall of source.matchAll(
+      /([A-Za-z_$][\w$]*)\.set\(\s*(["'])(#[\w-]+)\2\s*,\s*\{([^{}]*)\}\s*,\s*([^)]+?)\s*\)/g,
+    )) {
+      const position = numericTimelinePosition(setCall[5] ?? "");
+      if (position === null || !hiddenGsapState(setCall[4] ?? "")) continue;
+      hardKills.add(`${setCall[1]}\u0000${setCall[3]}\u0000${position.toFixed(3)}`);
+    }
+
+    const normalized = source.replace(
+      /([A-Za-z_$][\w$]*)\.to\(\s*(["'])(#[\w-]+)\2\s*,\s*\{([^{}]*)\}\s*,\s*([^)]+?)\s*\)\s*;/g,
+      (
+        full,
+        timeline: string,
+        quote: string,
+        selector: string,
+        body: string,
+        rawPosition: string,
+      ) => {
+        if (!clipIds.has(selector.slice(1))) return full;
+        const hiddenState = hiddenGsapState(body);
+        const position = numericTimelinePosition(rawPosition);
+        if (!hiddenState || position === null) return full;
+        const duration = numericGsapProperty(body, "duration") ?? 0;
+        const boundary = [...clipBoundaries].find(
+          (candidate) =>
+            Math.abs(candidate - position) <= 0.03 ||
+            Math.abs(candidate - (position + duration)) <= 0.03,
+        );
+        if (boundary === undefined) return full;
+        const key = `${timeline}\u0000${selector}\u0000${boundary.toFixed(3)}`;
+        if (hardKills.has(key)) return full;
+        hardKills.add(key);
+        return `${full}\n${timeline}.set(${quote}${selector}${quote}, { ${hiddenState} }, ${String(boundary)});`;
+      },
+    );
+    if (normalized !== source) await writeFile(filePath, normalized, "utf8");
+  }
+}
+
+function simpleHtmlAttribute(tag: string, attribute: string): string | null {
+  const escaped = attribute.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|\\s)${escaped}\\s*=\\s*([\"'])([^\"']*)\\1`, "i").exec(tag)?.[2] ?? null;
+}
+
+function numericTimelinePosition(raw: string): number | null {
+  const normalized = raw.trim().replace(/^(["'])(.*)\1$/, "$2");
+  if (!/^-?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) return null;
+  const value = Number(normalized);
+  return Number.isFinite(value) ? value : null;
+}
+
+function hiddenGsapState(body: string): string | null {
+  const autoAlpha = numericGsapProperty(body, "autoAlpha");
+  if (autoAlpha !== null && autoAlpha <= 0.01) return "autoAlpha: 0";
+  const opacity = numericGsapProperty(body, "opacity");
+  if (opacity !== null && opacity <= 0.01) return "opacity: 0";
+  if (/\bvisibility\s*:\s*(["'])hidden\1/i.test(body)) return 'visibility: "hidden"';
+  if (/\bdisplay\s*:\s*(["'])none\1/i.test(body)) return 'display: "none"';
+  return null;
 }
 
 /**
