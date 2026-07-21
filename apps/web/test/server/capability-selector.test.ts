@@ -22,6 +22,11 @@ describe("bounded Luna capability retrieval", () => {
       "compositions/_primitives/pointer-action.js",
       "compositions/_primitives/pointer-action.example.html",
     ]);
+    expect(
+      selected
+        .find(({ id }) => id === "product-cursor-action")
+        ?.constraints.some((constraint) => constraint.includes("display:none")),
+    ).toBe(true);
   });
 
   it("routes product typing and click cues to candidate-local primitives", () => {
