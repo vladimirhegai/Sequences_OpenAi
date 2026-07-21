@@ -6,17 +6,16 @@ answer streams coherently, Sources behaves like an inspecting side panel,
 Canvas performs the rewrite, and the film resolves through the animated ChatGPT
 knot.
 
-| Property      | Value                                                    |
-| ------------- | -------------------------------------------------------- |
-| Frame         | 1920x1080, 30fps                                         |
-| Duration      | 24.000 seconds / 720 frames                              |
-| Engine        | HyperFrames with one deterministic paused GSAP timeline  |
-| Music         | `commercial_jazz.mp3`, catalog ID `commercial-jazz`      |
-| Final         | [`renders/final.mp4`](renders/final.mp4)                 |
-| Silent master | [`renders/silent.mp4`](renders/silent.mp4)               |
-| Contact sheet | [`renders/contact-sheet.jpg`](renders/contact-sheet.jpg) |
-| Beat map      | [`audio/BEAT_MAP.json`](audio/BEAT_MAP.json)             |
-| Manifest      | [`manifest.json`](manifest.json)                         |
+| Property      | Value                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------- |
+| Frame         | 1920x1080, 30fps                                                                             |
+| Duration      | 24.000 seconds / 720 frames                                                                  |
+| Engine        | HyperFrames with one deterministic paused GSAP timeline                                      |
+| Music         | `commercial_jazz.mp3`, catalog ID `commercial-jazz`                                          |
+| Final         | [`renders/final.mp4`](renders/final.mp4)                                                     |
+| Contact sheet | [`evidence/snapshots/pass-2/contact-sheet.jpg`](evidence/snapshots/pass-2/contact-sheet.jpg) |
+| Beat map      | [`audio/BEAT_MAP.json`](audio/BEAT_MAP.json)                                                 |
+| Manifest      | [`manifest.json`](manifest.json)                                                             |
 
 ## Story
 
@@ -36,7 +35,7 @@ knot.
 
 ## Reproduce
 
-Run from `C:\dev\Coding\Sequences-openai`:
+Run from the repository root:
 
 ```powershell
 bun scripts/hyperframes.ts check Showcase/chatgpt-native-story/source --json --strict --frame-check="severity=warning;seek=.5;tol=2" --at-transitions --snapshots

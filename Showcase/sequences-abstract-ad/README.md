@@ -21,7 +21,7 @@ evidence.
   review sheet.
 - `evidence/` — component and final-film snapshots plus QA notes.
 - `renders/sequences-abstract-ad.mp4` — final 1080p H.264/AAC master.
-- `renders/sequences-abstract-ad-contact-sheet.jpg` — encoded-film overview.
+- `source/snapshots/contact-sheet.jpg` — encoded-film overview.
 
 ## Current phase
 

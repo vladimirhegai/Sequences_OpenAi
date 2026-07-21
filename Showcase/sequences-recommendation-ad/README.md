@@ -14,8 +14,7 @@ The revision uses a ChatGPT-native visual language: warm-neutral fields, white c
 | Engine        | HyperFrames with deterministic paused GSAP timelines                                                                         |
 | Music         | `happy_comercial.mp3`, catalog ID `happy-commercial`                                                                         |
 | Final         | [`renders/sequences-recommendation-ad-final.mp4`](renders/sequences-recommendation-ad-final.mp4)                             |
-| Silent master | [`renders/sequences-recommendation-ad-silent.mp4`](renders/sequences-recommendation-ad-silent.mp4)                           |
-| Contact sheet | [`renders/sequences-recommendation-ad-final-contact-sheet.jpg`](renders/sequences-recommendation-ad-final-contact-sheet.jpg) |
+| Contact sheet | [`evidence/refinement/user-real-chat-pass-2/contact-sheet.jpg`](evidence/refinement/user-real-chat-pass-2/contact-sheet.jpg) |
 | Beat map      | [`audio/BEAT_MAP.json`](audio/BEAT_MAP.json)                                                                                 |
 | Manifest      | [`manifest.json`](manifest.json)                                                                                             |
 
@@ -29,7 +28,7 @@ The revision uses a ChatGPT-native visual language: warm-neutral fields, white c
 
 ## Reproduce
 
-Run from `C:\dev\Coding\Sequences-openai`.
+Run from the repository root.
 
 ```powershell
 bun scripts/hyperframes.ts check Showcase/sequences-recommendation-ad/source --json --strict --snapshots --at-transitions --frame-check

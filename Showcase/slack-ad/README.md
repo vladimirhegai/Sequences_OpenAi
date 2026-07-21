@@ -4,15 +4,14 @@ Made by Sequences and normalized to the shared Showcase package contract.
 
 ## Package
 
-| Property         | Value                                                              |
-| ---------------- | ------------------------------------------------------------------ |
-| Duration         | 28 seconds                                                         |
-| Frame            | 1920×1080 at 30fps                                                 |
-| Engine           | Deterministic paused GSAP timeline with a local Puppeteer renderer |
-| Website render   | [`renders/final.mp4`](renders/final.mp4)                           |
-| Silent render    | [`renders/silent.mp4`](renders/silent.mp4)                         |
-| Contact sheet    | [`renders/contact-sheet.jpg`](renders/contact-sheet.jpg)           |
-| Machine metadata | [`manifest.json`](manifest.json)                                   |
+| Property         | Value                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------- |
+| Duration         | 28 seconds                                                                         |
+| Frame            | 1920×1080 at 30fps                                                                 |
+| Engine           | Deterministic paused GSAP timeline with a local Puppeteer renderer                 |
+| Website render   | [`renders/final.mp4`](renders/final.mp4)                                           |
+| Contact sheet    | [`evidence/refinement/temporal-strip.jpg`](evidence/refinement/temporal-strip.jpg) |
+| Machine metadata | [`manifest.json`](manifest.json)                                                   |
 
 ## Layout
 
@@ -32,7 +31,7 @@ reference; use the ChatGPT package for the current HyperFrames project shape.
 
 ## Reproduce
 
-Run from `C:\dev\Coding\Sequences-openai`:
+Run from the repository root:
 
 ```powershell
 bun install --cwd Showcase/slack-ad/source

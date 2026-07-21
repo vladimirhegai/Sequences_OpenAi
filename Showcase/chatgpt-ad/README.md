@@ -5,15 +5,14 @@ Made by Sequences: a ChatGPT launch film in the grammar of
 
 ## Package
 
-| Property         | Value                                                    |
-| ---------------- | -------------------------------------------------------- |
-| Duration         | 27.6 seconds                                             |
-| Frame            | 1920×1080 at 30fps                                       |
-| Engine           | HyperFrames with deterministic paused GSAP timelines     |
-| Website render   | [`renders/final.mp4`](renders/final.mp4)                 |
-| Silent render    | [`renders/silent.mp4`](renders/silent.mp4)               |
-| Contact sheet    | [`renders/contact-sheet.jpg`](renders/contact-sheet.jpg) |
-| Machine metadata | [`manifest.json`](manifest.json)                         |
+| Property         | Value                                                                          |
+| ---------------- | ------------------------------------------------------------------------------ |
+| Duration         | 27.6 seconds                                                                   |
+| Frame            | 1920×1080 at 30fps                                                             |
+| Engine           | HyperFrames with deterministic paused GSAP timelines                           |
+| Website render   | [`renders/final.mp4`](renders/final.mp4)                                       |
+| Contact sheet    | [`evidence/snapshots/contact-sheet.jpg`](evidence/snapshots/contact-sheet.jpg) |
+| Machine metadata | [`manifest.json`](manifest.json)                                               |
 
 ## Layout
 
@@ -32,7 +31,7 @@ The full beat map and motion lessons are in
 
 ## Reproduce
 
-Run from `C:\dev\Coding\Sequences-openai`:
+Run from the repository root:
 
 ```powershell
 bun scripts/hyperframes.ts check Showcase/chatgpt-ad/source --json --strict --snapshots --at-transitions --frame-check
