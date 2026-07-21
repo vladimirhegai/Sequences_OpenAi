@@ -181,6 +181,48 @@ describe("audio director", () => {
     expect(args).toContain("aac");
   });
 
+  it("builds a seek-safe Studio preview plan from the same catalog direction", async () => {
+    await expect(director.previewPlan(sequenceWith(null))).resolves.toBeNull();
+
+    const plan = await director.previewPlan(
+      sequenceWith({
+        soundtrackId: "confident-commercial",
+        cues: [
+          { kind: "typing", startSec: 7.5, endSec: 8.7 },
+          { kind: "mouse-click", atSec: 9.4 },
+        ],
+      }),
+    );
+    expect(plan).toMatchObject({ soundtrackId: "confident-commercial", cueCount: 2 });
+    expect(plan?.tracks).toEqual([
+      {
+        assetKind: "soundtrack",
+        assetId: "confident-commercial",
+        startSec: 0,
+        durationSec: 24,
+        volume: 0.223872,
+        loop: true,
+      },
+      expect.objectContaining({
+        assetKind: "sfx",
+        assetId: "typing",
+        startSec: 7.5,
+        loop: false,
+      }),
+      expect.objectContaining({
+        assetKind: "sfx",
+        assetId: "mouse-click",
+        startSec: 9.4,
+        loop: false,
+      }),
+    ]);
+    expect(plan?.tracks[1]?.durationSec).toBeCloseTo(1.2);
+    await expect(director.previewAsset("soundtrack", "confident-commercial")).resolves.toEqual({
+      file: "vendor/audio/music/confident_commercial.mp3",
+    });
+    await expect(director.previewAsset("sfx", "not-a-cue")).resolves.toBeNull();
+  });
+
   it("refuses to plan a mix for an invalid declaration", async () => {
     await expect(
       director.mixPlan({

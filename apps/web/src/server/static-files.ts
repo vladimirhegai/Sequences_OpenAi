@@ -2,6 +2,7 @@ import { readFile, stat } from "node:fs/promises";
 import { extname } from "node:path";
 import { bundleToSingleHtml } from "@hyperframes/core/compiler";
 import type { Context } from "hono";
+import type { PreviewAudioPlan } from "./audio-director";
 import type { ServerConfig } from "./config";
 import { ApiProblem } from "./errors";
 import { existingFileWithin } from "./files";
@@ -32,8 +33,10 @@ export async function serveCompositionPreview(
   c: Context,
   config: ServerConfig,
   root: string,
+  audio: PreviewAudioPlan | null = null,
 ): Promise<Response> {
-  const html = await bundleToSingleHtml(root);
+  const bundled = await bundleToSingleHtml(root);
+  const html = audio ? injectPreviewAudio(bundled, config, audio) : bundled;
   const size = Buffer.byteLength(html, "utf8");
   if (size > 512 * 1_024 * 1_024) {
     throw new ApiProblem(
@@ -45,7 +48,7 @@ export async function serveCompositionPreview(
 
   const headers = projectResponseHeaders(c, config, "text/html; charset=utf-8");
   headers.delete("Accept-Ranges");
-  applyProjectContentSecurityPolicy(headers);
+  applyProjectContentSecurityPolicy(headers, config);
   headers.set("Content-Length", String(size));
   if (c.req.method === "HEAD") return new Response(null, { status: 200, headers });
   return new Response(html, { status: 200, headers });
@@ -74,7 +77,7 @@ export async function serveProjectFile(
 
   const responseHeaders = projectResponseHeaders(c, config, contentType);
   if (extension === ".html" || extension === ".svg") {
-    applyProjectContentSecurityPolicy(responseHeaders);
+    applyProjectContentSecurityPolicy(responseHeaders, config);
   }
 
   const range = parseRange(c.req.header("range"), metadata.size);
@@ -106,7 +109,7 @@ function projectResponseHeaders(c: Context, config: ServerConfig, contentType: s
   });
 }
 
-function applyProjectContentSecurityPolicy(headers: Headers): void {
+function applyProjectContentSecurityPolicy(headers: Headers, config: ServerConfig): void {
   headers.set(
     "Content-Security-Policy",
     [
@@ -119,7 +122,7 @@ function applyProjectContentSecurityPolicy(headers: Headers): void {
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
-      "media-src 'self' blob:",
+      `media-src 'self' ${config.previewOrigin} blob:`,
       "font-src 'self' data:",
       "connect-src 'self'",
       "frame-src 'self'",
@@ -128,6 +131,49 @@ function applyProjectContentSecurityPolicy(headers: Headers): void {
       "form-action 'none'",
     ].join("; "),
   );
+}
+
+export function injectPreviewAudio(
+  html: string,
+  config: ServerConfig,
+  plan: PreviewAudioPlan,
+): string {
+  const bodyAt = html.search(/<body\b[^>]*>/i);
+  if (bodyAt < 0) throw new Error("Bundled composition preview is missing a body element");
+  const body = html.slice(bodyAt);
+  const root = /<([a-z][\w:-]*)\b(?=[^>]*\bdata-composition-id\s*=)[^>]*>/i.exec(body);
+  if (!root || root.index === undefined) {
+    throw new Error("Bundled composition preview is missing its composition root");
+  }
+  const assetBase = `${config.previewOrigin}/api/v1/preview-audio/${config.staticAccessToken}`;
+  const markup = plan.tracks
+    .map((track, index) => {
+      const source = `${assetBase}/${track.assetKind}/${encodeURIComponent(track.assetId)}`;
+      return (
+        `<audio id="__sequences_preview_audio_${index}"` +
+        ` data-sequences-preview-audio="${track.assetKind}"` +
+        ` src="${escapeHtmlAttribute(source)}" preload="auto"` +
+        ` data-start="${seconds(track.startSec)}"` +
+        ` data-duration="${seconds(track.durationSec)}"` +
+        ` data-track-index="${900 + index}"` +
+        ` data-volume="${track.volume.toFixed(6)}"${track.loop ? " loop" : ""}></audio>`
+      );
+    })
+    .join("");
+  const insertionAt = bodyAt + root.index + root[0].length;
+  return `${html.slice(0, insertionAt)}${markup}${html.slice(insertionAt)}`;
+}
+
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function seconds(value: number): string {
+  return value.toFixed(3).replace(/\.?0+$/, "") || "0";
 }
 
 export function staticPreflight(c: Context, config: ServerConfig): Response {

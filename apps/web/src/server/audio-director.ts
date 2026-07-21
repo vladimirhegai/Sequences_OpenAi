@@ -79,6 +79,23 @@ export const AudioCatalogSchema = z
 export type AudioCatalog = z.infer<typeof AudioCatalogSchema>;
 export type AudioSoundtrackEntry = AudioCatalog["soundtracks"][number];
 
+export type PreviewAudioAssetKind = "soundtrack" | "sfx";
+
+export interface PreviewAudioTrack {
+  assetKind: PreviewAudioAssetKind;
+  assetId: string;
+  startSec: number;
+  durationSec: number;
+  volume: number;
+  loop: boolean;
+}
+
+export interface PreviewAudioPlan {
+  soundtrackId: string;
+  cueCount: number;
+  tracks: PreviewAudioTrack[];
+}
+
 const MAX_AUDIO_CUES = 20;
 const MAX_TYPING_WINDOW_SEC = 8;
 const CUE_BUDGETS: Record<(typeof AUDIO_SFX_KINDS)[number], number> = {
@@ -91,6 +108,7 @@ const CUE_BUDGETS: Record<(typeof AUDIO_SFX_KINDS)[number], number> = {
 
 export class AudioDirector {
   private catalog: AudioCatalog | null = null;
+  private sourcesVerified = false;
 
   constructor(private readonly workspaceRoot: string) {}
 
@@ -203,6 +221,7 @@ export class AudioDirector {
 
   /** Verify the vendored bytes still match the committed catalog hashes. */
   async verifySources(): Promise<void> {
+    if (this.sourcesVerified) return;
     const catalog = await this.load();
     for (const entry of [...catalog.soundtracks, ...catalog.sfx]) {
       const bytes = await readFile(join(this.workspaceRoot, ...entry.file.split("/")));
@@ -211,6 +230,63 @@ export class AudioDirector {
         throw new Error(`vendored audio failed SHA-256 verification: ${entry.file}`);
       }
     }
+    this.sourcesVerified = true;
+  }
+
+  /**
+   * Convert the semantic sound direction into HyperFrames timed-media tracks
+   * for Studio preview. The same catalog files, levels, and cue timing used by
+   * the final FFmpeg mix remain host-owned here.
+   */
+  async previewPlan(sequence: SequenceArtifactV1): Promise<PreviewAudioPlan | null> {
+    const audio = sequence.audio;
+    if (!audio) return null;
+    await this.assertAudioDirection(sequence);
+    await this.verifySources();
+    const catalog = await this.load();
+    const durationSec = sequence.format!.targetDuration;
+    const bed = catalog.soundtracks.find((entry) => entry.id === audio.soundtrackId)!;
+    const sfxByKind = new Map(catalog.sfx.map((entry) => [entry.kind, entry]));
+    const tracks: PreviewAudioTrack[] = [
+      {
+        assetKind: "soundtrack",
+        assetId: bed.id,
+        startSec: 0,
+        durationSec,
+        volume: Number(amplitude(bed.gainDb)),
+        loop: true,
+      },
+    ];
+    for (const cue of audio.cues) {
+      const entry = sfxByKind.get(cue.kind)!;
+      const startSec = cue.kind === "typing" ? cue.startSec : cue.atSec;
+      const directedDuration =
+        cue.kind === "typing" ? cue.endSec - cue.startSec : entry.durationSec;
+      tracks.push({
+        assetKind: "sfx",
+        assetId: cue.kind,
+        startSec,
+        durationSec: Math.min(directedDuration, durationSec - startSec),
+        volume: Number(amplitude(entry.gainDb)),
+        loop: false,
+      });
+    }
+    return { soundtrackId: bed.id, cueCount: audio.cues.length, tracks };
+  }
+
+  /** Resolve only a hash-verified catalog asset, never a request-authored path. */
+  async previewAsset(
+    assetKind: PreviewAudioAssetKind,
+    assetId: string,
+  ): Promise<{ file: string } | null> {
+    await this.verifySources();
+    const catalog = await this.load();
+    if (assetKind === "soundtrack") {
+      const entry = catalog.soundtracks.find((candidate) => candidate.id === assetId);
+      return entry ? { file: entry.file } : null;
+    }
+    const entry = catalog.sfx.find((candidate) => candidate.kind === assetId);
+    return entry ? { file: entry.file } : null;
   }
 
   /**

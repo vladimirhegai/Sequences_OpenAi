@@ -333,6 +333,31 @@ async function verifyLatestViewer(page: Page, screenshotStem: string) {
     { timeout: 5_000 },
     viewer.mountedCompositionId,
   );
+  // The pinned player previously surfaced a stale CompositionProbe timeout
+  // eight seconds after a valid ready event. Hold past that window so website
+  // parity means the viewer stays playable, not merely that it became ready
+  // for one instant.
+  await Bun.sleep(8_500);
+  const stability = await page.evaluate(() => {
+    const player = document.querySelector("hyperframes-player") as HTMLElement & {
+      duration?: number;
+      ready?: boolean;
+    };
+    return {
+      state: document.querySelector(".viewer__state")?.textContent?.trim() ?? null,
+      error: document.querySelector(".viewer__notice--error")?.textContent?.trim() ?? null,
+      ready: player?.ready === true,
+      duration: typeof player?.duration === "number" ? player.duration : null,
+    };
+  });
+  if (
+    stability.state !== "ready" ||
+    stability.error !== null ||
+    !stability.ready ||
+    !(typeof stability.duration === "number" && stability.duration > 0)
+  ) {
+    throw new Error(`Latest composition did not remain playable: ${JSON.stringify(stability)}`);
+  }
   const motion = await compositionFrame.evaluate(
     (compositionId, expectedSeekTime) => {
       const timelines = (
@@ -350,8 +375,117 @@ async function verifyLatestViewer(page: Page, screenshotStem: string) {
     viewer.mountedCompositionId,
     seekTime,
   );
+  await compositionFrame.waitForFunction(
+    (expectedTime) => {
+      const bed = document.querySelector<HTMLAudioElement>(
+        'audio[data-sequences-preview-audio="soundtrack"]',
+      );
+      return (
+        bed !== null &&
+        bed.readyState >= HTMLMediaElement.HAVE_METADATA &&
+        Math.abs(bed.currentTime - expectedTime) < 0.75
+      );
+    },
+    { timeout: 15_000 },
+    seekTime,
+  );
+  const previewAudio = await compositionFrame.evaluate(() =>
+    Array.from(
+      document.querySelectorAll<HTMLAudioElement>("audio[data-sequences-preview-audio]"),
+    ).map((audio) => ({
+      kind: audio.dataset.sequencesPreviewAudio ?? null,
+      start: Number(audio.dataset.start),
+      duration: Number(audio.dataset.duration),
+      volume: Number(audio.dataset.volume),
+      currentTime: audio.currentTime,
+      paused: audio.paused,
+      readyState: audio.readyState,
+      error: audio.error?.message ?? null,
+      source: new URL(audio.currentSrc || audio.src).pathname,
+    })),
+  );
+  const soundtrack = previewAudio.find((track) => track.kind === "soundtrack");
+  if (
+    !soundtrack ||
+    previewAudio.length < 2 ||
+    soundtrack.error !== null ||
+    !soundtrack.source.includes("/api/v1/preview-audio/") ||
+    Math.abs(soundtrack.currentTime - seekTime) >= 0.75
+  ) {
+    throw new Error(
+      `Latest composition audio did not seek with Studio: ${JSON.stringify(previewAudio)}`,
+    );
+  }
+
+  await page.evaluate(() => {
+    const player = document.querySelector("hyperframes-player") as HTMLElement & {
+      play?: () => void;
+    };
+    if (typeof player?.play !== "function") throw new Error("The Latest player cannot play");
+    player.play();
+  });
+  await Bun.sleep(1_200);
+  const playerAudio = await page.evaluate(() => {
+    const player = document.querySelector("hyperframes-player") as HTMLElement & {
+      currentTime?: number;
+      paused?: boolean;
+      pause?: () => void;
+      _audioOwner?: "parent" | "runtime";
+      _parentMedia?: Array<{ el: HTMLMediaElement }>;
+    };
+    const result = {
+      currentTime: typeof player?.currentTime === "number" ? player.currentTime : null,
+      paused: player?.paused ?? null,
+      owner: player?._audioOwner ?? null,
+      parentMedia:
+        player?._parentMedia?.map(({ el }) => ({
+          currentTime: el.currentTime,
+          paused: el.paused,
+          error: el.error?.message ?? null,
+          source: new URL(el.currentSrc || el.src).pathname,
+        })) ?? [],
+    };
+    player?.pause?.();
+    return result;
+  });
+  const runtimeAudio = await compositionFrame.evaluate(() =>
+    Array.from(
+      document.querySelectorAll<HTMLAudioElement>("audio[data-sequences-preview-audio]"),
+    ).map((audio) => ({
+      kind: audio.dataset.sequencesPreviewAudio ?? null,
+      currentTime: audio.currentTime,
+      paused: audio.paused,
+      error: audio.error?.message ?? null,
+    })),
+  );
+  const runtimeBed = runtimeAudio.find((track) => track.kind === "soundtrack");
+  const parentAdvanced = playerAudio.parentMedia.some(
+    (track) => track.error === null && track.currentTime > seekTime + 0.5,
+  );
+  const runtimeAdvanced =
+    runtimeBed !== undefined &&
+    runtimeBed.error === null &&
+    runtimeBed.currentTime > soundtrack.currentTime + 0.5;
+  if (
+    playerAudio.paused !== false ||
+    !(typeof playerAudio.currentTime === "number" && playerAudio.currentTime > seekTime + 0.5) ||
+    (!parentAdvanced && !runtimeAdvanced)
+  ) {
+    throw new Error(
+      `Latest composition timeline advanced without audible media: ${JSON.stringify({ playerAudio, runtimeAudio })}`,
+    );
+  }
   const motionScreenshot = resolve(root, "artifacts", `${screenshotStem}-motion.png`);
   await page.screenshot({ path: motionScreenshot });
 
-  return { viewer, viewerScreenshot, motion, motionScreenshot };
+  return {
+    viewer,
+    stability,
+    viewerScreenshot,
+    motion,
+    previewAudio,
+    playerAudio,
+    runtimeAudio,
+    motionScreenshot,
+  };
 }

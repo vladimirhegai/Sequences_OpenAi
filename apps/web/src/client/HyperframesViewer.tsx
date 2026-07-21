@@ -15,8 +15,16 @@ type ViewerState = "loading" | "ready" | "error";
 
 const TIMELINE_STARTUP_ERROR = "Composition timeline not found";
 
-export function shouldRetryPreview(message: string | null, attempt: number): boolean {
-  return attempt === 0 && Boolean(message?.includes(TIMELINE_STARTUP_ERROR));
+export type PreviewErrorDisposition = "ignore" | "retry" | "error";
+
+export function previewErrorDisposition(
+  message: string | null,
+  attempt: number,
+  becameReady: boolean,
+): PreviewErrorDisposition {
+  if (!message?.includes(TIMELINE_STARTUP_ERROR)) return "error";
+  if (becameReady) return "ignore";
+  return attempt === 0 ? "retry" : "error";
 }
 
 export function previewSourceForAttempt(source: string, attempt: number): string {
@@ -61,6 +69,7 @@ export function HyperframesViewer({
     setError(null);
 
     const player = document.createElement("hyperframes-player") as HyperframesPlayer;
+    let becameReady = false;
     const iframe = player.iframeElement;
     iframe.title = label;
 
@@ -69,16 +78,18 @@ export function HyperframesViewer({
     player.setAttribute("height", "1080");
     player.setAttribute("shader-loading", "player");
     player.setAttribute("aria-label", label);
-    player.setAttribute("src", previewSourceForAttempt(source, loadAttempt));
 
     const onReady = () => {
+      becameReady = true;
       setState("ready");
       onPlayer?.(player);
     };
     const onError = (event: Event) => {
       const detail = (event as CustomEvent<{ message?: string }>).detail;
       const message = detail?.message ?? null;
-      if (shouldRetryPreview(message, loadAttempt)) {
+      const disposition = previewErrorDisposition(message, loadAttempt, becameReady);
+      if (disposition === "ignore") return;
+      if (disposition === "retry") {
         setState("loading");
         setError(null);
         setRetry({ source, attempt: loadAttempt + 1 });
@@ -100,6 +111,10 @@ export function HyperframesViewer({
     player.addEventListener("error", onError);
     player.addEventListener("timeupdate", onTimeUpdate);
     host.replaceChildren(player);
+    // The runtime publishes timeline readiness during iframe startup. Mount
+    // first so the custom element has installed its load/message listeners
+    // before assigning src, especially on warm-cache reloads.
+    player.setAttribute("src", previewSourceForAttempt(source, loadAttempt));
 
     return () => {
       onPlayer?.(null);

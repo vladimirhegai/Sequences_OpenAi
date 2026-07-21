@@ -118,6 +118,9 @@ export class LocalSecurity {
 
   private isSignedStaticRequest(path: string, method: string): boolean {
     if (!["GET", "HEAD", "OPTIONS"].includes(method)) return false;
+    const previewAudio =
+      /^\/api\/v1\/preview-audio\/([^/]+)\/(?:soundtrack|sfx)\/[a-z][a-z0-9-]*(?:\/|$)/.exec(path);
+    if (previewAudio) return this.acceptsStaticToken(previewAudio[1] ?? "");
     const match =
       /^\/api\/v1\/projects\/release-a\/files\/([^/]+)\/(?:accepted|sample|candidate\/run_[0-9a-f]{32})(?:\/|$)/.exec(
         path,

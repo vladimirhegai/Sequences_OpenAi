@@ -16,6 +16,7 @@ import {
   type JobState,
 } from "../shared";
 import { CapabilityCatalog } from "./capabilities";
+import { AudioDirector, type PreviewAudioAssetKind } from "./audio-director";
 import { CodexRunner } from "./codex-runner";
 import { serveClientShell } from "./client-shell";
 import { createServerConfig, type ServerConfig, type ServerConfigOverrides } from "./config";
@@ -80,6 +81,7 @@ export async function createSequencesRuntime(
   const capabilities = new CapabilityCatalog(config, skills);
   const codex = new CodexRunner(config);
   const hyperframes = new HyperframesVerifier(config);
+  const previewAudio = new AudioDirector(config.workspaceRoot);
   const jobs = new JobManager(config, projects, runs, skills, codex, hyperframes);
   await jobs.recoverInterruptedJobs();
   const renders = new RenderManager(config, projects, hyperframes);
@@ -272,6 +274,24 @@ export async function createSequencesRuntime(
     );
   });
 
+  const previewAudioRoute = "/api/v1/preview-audio/:token/:assetKind/:assetId";
+  app.options(previewAudioRoute, (c) => staticPreflight(c, config));
+  app.on(["GET", "HEAD"], previewAudioRoute, async (c) => {
+    if (!security.acceptsStaticToken(c.req.param("token"))) {
+      throw new ApiProblem(404, "file_not_found", "Preview audio was not found");
+    }
+    const rawKind = c.req.param("assetKind");
+    if (rawKind !== "soundtrack" && rawKind !== "sfx") {
+      throw new ApiProblem(404, "file_not_found", "Preview audio was not found");
+    }
+    const asset = await previewAudio.previewAsset(
+      rawKind as PreviewAudioAssetKind,
+      c.req.param("assetId"),
+    );
+    if (!asset) throw new ApiProblem(404, "file_not_found", "Preview audio was not found");
+    return serveProjectFile(c, config, config.workspaceRoot, asset.file);
+  });
+
   const staticRoutes = [
     "/api/v1/projects/:projectId/files/:token/accepted/*",
     "/api/v1/projects/:projectId/files/:token/sample/*",
@@ -282,14 +302,29 @@ export async function createSequencesRuntime(
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
     const tail = staticRouteTail(c.req.url, "/accepted/");
     if (tail === "index.html") {
-      return serveCompositionPreview(c, config, projects.acceptedRoot(PROJECT_ID));
+      const root = projects.acceptedRoot(PROJECT_ID);
+      const sequence = await readSequenceArtifact(root, false);
+      return serveCompositionPreview(
+        c,
+        config,
+        root,
+        sequence ? await previewAudio.previewPlan(sequence) : null,
+      );
     }
     return serveProjectFile(c, config, projects.acceptedRoot(PROJECT_ID), tail);
   });
   app.on(["GET", "HEAD"], staticRoutes[1], async (c) => {
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
     const tail = staticRouteTail(c.req.url, "/sample/");
-    if (tail === "index.html") return serveCompositionPreview(c, config, config.seedRoot);
+    if (tail === "index.html") {
+      const sequence = await readSequenceArtifact(config.seedRoot, false);
+      return serveCompositionPreview(
+        c,
+        config,
+        config.seedRoot,
+        sequence ? await previewAudio.previewPlan(sequence) : null,
+      );
+    }
     return serveProjectFile(c, config, config.seedRoot, tail);
   });
   app.on(["GET", "HEAD"], staticRoutes[2], async (c) => {
@@ -300,7 +335,15 @@ export async function createSequencesRuntime(
       c.req.url,
       `/candidate/${encodeURIComponent(c.req.param("jobId"))}/`,
     );
-    if (tail === "index.html") return serveCompositionPreview(c, config, candidateRoot);
+    if (tail === "index.html") {
+      const sequence = await readSequenceArtifact(candidateRoot, false);
+      return serveCompositionPreview(
+        c,
+        config,
+        candidateRoot,
+        sequence ? await previewAudio.previewPlan(sequence) : null,
+      );
+    }
     return serveProjectFile(c, config, candidateRoot, tail);
   });
 

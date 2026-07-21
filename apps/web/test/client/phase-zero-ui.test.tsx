@@ -4,7 +4,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { JobCard, QaFailureDetails } from "../../src/client/App";
 import type { JobResponse } from "../../src/client/api";
-import { previewSourceForAttempt, shouldRetryPreview } from "../../src/client/HyperframesViewer";
+import {
+  previewErrorDisposition,
+  previewSourceForAttempt,
+} from "../../src/client/HyperframesViewer";
 import { SequencesStudio } from "../../src/client/SequencesStudio";
 
 describe("Phase 0 studio UI", () => {
@@ -85,12 +88,28 @@ describe("Phase 0 studio UI", () => {
     expect(viewer).toContain("player?.requestFullscreen().catch");
   });
 
-  it("reloads a stale composition preview once after its timeline misses startup", () => {
+  it("mounts before loading and recovers only genuine composition startup misses", () => {
     const source = "/api/v1/projects/release-a/accepted/index.html?revision=abc#frame";
+    const viewer = readFileSync(resolve("apps/web/src/client/HyperframesViewer.tsx"), "utf8");
+    const mountAt = viewer.indexOf("host.replaceChildren(player)");
+    const loadAt = viewer.indexOf(
+      'player.setAttribute("src", previewSourceForAttempt(source, loadAttempt))',
+    );
 
-    expect(shouldRetryPreview("Composition timeline not found after 8s", 0)).toBe(true);
-    expect(shouldRetryPreview("Composition timeline not found after 8s", 1)).toBe(false);
-    expect(shouldRetryPreview("The video preview could not be loaded.", 0)).toBe(false);
+    expect(mountAt).toBeGreaterThan(0);
+    expect(loadAt).toBeGreaterThan(mountAt);
+    expect(previewErrorDisposition("Composition timeline not found after 8s", 0, false)).toBe(
+      "retry",
+    );
+    expect(previewErrorDisposition("Composition timeline not found after 8s", 1, false)).toBe(
+      "error",
+    );
+    expect(previewErrorDisposition("Composition timeline not found after 8s", 0, true)).toBe(
+      "ignore",
+    );
+    expect(previewErrorDisposition("The video preview could not be loaded.", 0, true)).toBe(
+      "error",
+    );
     expect(previewSourceForAttempt(source, 1)).toBe(
       "/api/v1/projects/release-a/accepted/index.html?revision=abc&sequences-preview-attempt=1#frame",
     );

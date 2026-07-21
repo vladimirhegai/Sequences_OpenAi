@@ -18,6 +18,15 @@ data/
 renders/
 workbench/
 
+# These four final Showcase renders are public product assets used by the
+# Featured player. Keep other generated and superseded renders ignored.
+!Showcase/**/renders/
+Showcase/**/renders/**
+!Showcase/chatgpt-ad/renders/final.mp4
+!Showcase/chatgpt-native-story/renders/final.mp4
+!Showcase/sequences-abstract-ad/renders/sequences-abstract-ad.mp4
+!Showcase/sequences-recommendation-ad/renders/sequences-recommendation-ad-final.mp4
+
 # Local creative inputs and superseded showcase renders are not source assets.
 Video References/
 Showcase/**/archive/

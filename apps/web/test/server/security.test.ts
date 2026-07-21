@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -137,6 +137,59 @@ describe("localhost security boundary", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toBe("text/javascript; charset=utf-8");
     expect(await response.text()).toContain("GreenSock");
+  });
+
+  it("injects directed music and SFX into accepted HTML and serves only signed catalog audio", async () => {
+    const { app, projects } = await runtime();
+    const sequencePath = join(projects.acceptedRoot("release-a"), "sequence.json");
+    const sequence = JSON.parse(readFileSync(sequencePath, "utf8")) as Record<string, unknown>;
+    sequence.audio = {
+      soundtrackId: "confident-commercial",
+      cues: [
+        { kind: "typing", startSec: 2, endSec: 3.5 },
+        { kind: "mouse-click", atSec: 4.2 },
+      ],
+    };
+    writeFileSync(sequencePath, `${JSON.stringify(sequence, null, 2)}\n`, "utf8");
+
+    const token = "f".repeat(43);
+    const response = await app.request(
+      `/api/v1/projects/release-a/files/${token}/accepted/index.html`,
+      { headers: headers({ Origin: ORIGIN }) },
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-security-policy")).toContain(
+      `media-src 'self' ${ORIGIN} blob:`,
+    );
+    const bundled = await response.text();
+    const audioTags = bundled.match(/<audio\b[^>]*data-sequences-preview-audio=[^>]*>/g) ?? [];
+    expect(audioTags).toHaveLength(3);
+    expect(audioTags[0]).toContain('data-sequences-preview-audio="soundtrack"');
+    expect(audioTags[0]).toContain('data-start="0"');
+    expect(audioTags[0]).toContain('data-duration="15"');
+    expect(audioTags[0]).toContain('data-volume="0.223872"');
+    expect(audioTags[0]).toContain(" loop");
+    expect(audioTags[1]).toContain('data-start="2"');
+    expect(audioTags[1]).toContain('data-duration="1.5"');
+    expect(audioTags[2]).toContain('data-start="4.2"');
+    const body = bundled.slice(bundled.search(/<body\b/i));
+    const root = /<([a-z][\w:-]*)\b(?=[^>]*\bdata-composition-id\s*=)[^>]*>/i.exec(body);
+    expect(root).not.toBeNull();
+    expect(body.slice(root!.index + root![0].length)).toMatch(/^<audio\b/);
+
+    const audio = await app.request(
+      `/api/v1/preview-audio/${token}/soundtrack/confident-commercial`,
+      { headers: headers({ Origin: "null", Range: "bytes=0-31" }) },
+    );
+    expect(audio.status).toBe(206);
+    expect(audio.headers.get("content-type")).toBe("audio/mpeg");
+    expect(audio.headers.get("content-range")).toMatch(/^bytes 0-31\//);
+    expect((await audio.arrayBuffer()).byteLength).toBe(32);
+
+    const unknown = await app.request(`/api/v1/preview-audio/${token}/sfx/not-a-cue`, {
+      headers: headers({ Origin: "null" }),
+    });
+    expect(unknown.status).toBe(404);
   });
 
   it("rejects an alternate host before routing", async () => {
