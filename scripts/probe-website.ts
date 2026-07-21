@@ -89,6 +89,7 @@ try {
       if (promptControls.length !== 1 || generateButtons.length !== 1) {
         throw new Error("The website Prompt and Generate controls are not unique");
       }
+      const viewerEvidence = await verifyLatestViewer(page, "website-viewer-check");
       console.log(
         JSON.stringify(
           {
@@ -98,6 +99,7 @@ try {
             generateLabel: await generateButtons[0]!.evaluate((element) =>
               element.textContent?.trim(),
             ),
+            ...viewerEvidence,
             origin: new URL(page.url()).origin,
             submitted: false,
           },
@@ -210,6 +212,7 @@ try {
       () => document.querySelector(".viewer__state")?.textContent?.trim() === "ready",
       { timeout: 60_000 },
     );
+    const viewerEvidence = await verifyLatestViewer(page, `website-viewer-${current.jobId}`);
 
     console.log(
       JSON.stringify(
@@ -220,6 +223,7 @@ try {
           runReceiptPath: `data/runs/release-a/${current.jobId}/receipt.json`,
           candidateUrl: new URL(started.candidateUrl, origin).toString(),
           qa: current.qa?.summary ?? null,
+          ...viewerEvidence,
         },
         null,
         2,
@@ -238,4 +242,113 @@ async function readPersistedReceipt(jobId: string) {
       await readFile(resolve(root, "data", "runs", "release-a", jobId, "receipt.json"), "utf8"),
     ) as unknown,
   );
+}
+
+async function verifyLatestViewer(page: Page, screenshotStem: string) {
+  const latestButton = await page.$(".viewer-source button:last-child");
+  if (!latestButton) throw new Error("The website Latest viewer control is missing");
+  await latestButton.click();
+  await page.waitForFunction(
+    () => document.querySelector(".viewer__state")?.textContent?.trim() === "ready",
+    { timeout: 30_000 },
+  );
+  const compositionFrame = page
+    .frames()
+    .find((frame) => new URL(frame.url()).pathname.includes("/accepted/index.html"));
+  if (!compositionFrame) throw new Error("The Latest composition iframe did not load");
+
+  const viewer = await compositionFrame.evaluate(() => {
+    const root = document.querySelector<HTMLElement>("[data-composition-id]");
+    const mounted = document.querySelector<HTMLElement>('[data-hf-inner-root="true"]');
+    const mountedHost = mounted?.closest<HTMLElement>("[data-composition-id]") ?? null;
+    const rootStyle = root ? getComputedStyle(root) : null;
+    const mountedStyle = mounted ? getComputedStyle(mounted) : null;
+    const timelines = (window as Window & { __timelines?: Record<string, unknown> }).__timelines;
+    const mountedCompositionId = mountedHost?.dataset.compositionId ?? null;
+    return {
+      url: location.href,
+      styleElements: document.querySelectorAll("style").length,
+      styleSheets: document.styleSheets.length,
+      injectedStylePresent: Array.from(document.querySelectorAll("style")).some((style) =>
+        style.textContent?.includes("data-hf-authored-id"),
+      ),
+      mountedCompositionId,
+      mountedTimelineRegistered: Boolean(
+        mountedCompositionId && timelines && mountedCompositionId in timelines,
+      ),
+      root: root
+        ? {
+            id: root.id,
+            width: rootStyle?.width ?? null,
+            height: rootStyle?.height ?? null,
+            position: rootStyle?.position ?? null,
+          }
+        : null,
+      mounted: mounted
+        ? {
+            width: mountedStyle?.width ?? null,
+            height: mountedStyle?.height ?? null,
+            position: mountedStyle?.position ?? null,
+            fontFamily: mountedStyle?.fontFamily ?? null,
+          }
+        : null,
+    };
+  });
+  if (
+    !viewer.injectedStylePresent ||
+    !viewer.mounted ||
+    viewer.mounted.position === "static" ||
+    /Times New Roman/i.test(viewer.mounted.fontFamily ?? "") ||
+    !viewer.mountedTimelineRegistered
+  ) {
+    throw new Error(`Latest composition failed website playback parity: ${JSON.stringify(viewer)}`);
+  }
+
+  const viewerScreenshot = resolve(root, "artifacts", `${screenshotStem}.png`);
+  await page.screenshot({ path: viewerScreenshot });
+  const seekTime = await page.evaluate(() => {
+    const player = document.querySelector("hyperframes-player") as HTMLElement & {
+      duration?: number;
+      seek?: (time: number) => void;
+    };
+    if (typeof player?.seek !== "function") throw new Error("The Latest player cannot seek");
+    const duration = typeof player.duration === "number" ? player.duration : 20;
+    const time = Math.max(0.5, Math.min(5, duration * 0.35));
+    player.seek(time);
+    return time;
+  });
+  await compositionFrame.waitForFunction(
+    (compositionId) => {
+      const timelines = (
+        window as Window & {
+          __timelines?: Record<string, { time?: () => number }>;
+        }
+      ).__timelines;
+      const time = compositionId ? timelines?.[compositionId]?.time?.() : null;
+      return typeof time === "number" && time > 0;
+    },
+    { timeout: 5_000 },
+    viewer.mountedCompositionId,
+  );
+  const motion = await compositionFrame.evaluate(
+    (compositionId, expectedSeekTime) => {
+      const timelines = (
+        window as Window & {
+          __timelines?: Record<string, { time?: () => number; progress?: () => number }>;
+        }
+      ).__timelines;
+      const timeline = compositionId ? timelines?.[compositionId] : null;
+      return {
+        seekTime: expectedSeekTime,
+        timelineTime: timeline?.time?.() ?? null,
+        timelineProgress: timeline?.progress?.() ?? null,
+      };
+    },
+    viewer.mountedCompositionId,
+    seekTime,
+  );
+  const motionScreenshot = resolve(root, "artifacts", `${screenshotStem}-motion.png`);
+  await page.screenshot({ path: motionScreenshot });
+
+  return { viewer, viewerScreenshot, motion, motionScreenshot };
 }

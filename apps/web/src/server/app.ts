@@ -29,7 +29,12 @@ import { RenderManager } from "./render-manager";
 import { RunStore } from "./run-store";
 import { LocalSecurity } from "./security";
 import { SkillBundle } from "./skills";
-import { serveDownload, serveProjectFile, staticPreflight } from "./static-files";
+import {
+  serveCompositionPreview,
+  serveDownload,
+  serveProjectFile,
+  staticPreflight,
+} from "./static-files";
 import { readSequenceArtifact } from "./sequence-artifact";
 
 type AppEnvironment = { Variables: { requestId: string } };
@@ -275,26 +280,28 @@ export async function createSequencesRuntime(
   for (const route of staticRoutes) app.options(route, (c) => staticPreflight(c, config));
   app.on(["GET", "HEAD"], staticRoutes[0], async (c) => {
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
-    return serveProjectFile(
-      c,
-      config,
-      projects.acceptedRoot(PROJECT_ID),
-      staticRouteTail(c.req.url, "/accepted/"),
-    );
+    const tail = staticRouteTail(c.req.url, "/accepted/");
+    if (tail === "index.html") {
+      return serveCompositionPreview(c, config, projects.acceptedRoot(PROJECT_ID));
+    }
+    return serveProjectFile(c, config, projects.acceptedRoot(PROJECT_ID), tail);
   });
   app.on(["GET", "HEAD"], staticRoutes[1], async (c) => {
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
-    return serveProjectFile(c, config, config.seedRoot, staticRouteTail(c.req.url, "/sample/"));
+    const tail = staticRouteTail(c.req.url, "/sample/");
+    if (tail === "index.html") return serveCompositionPreview(c, config, config.seedRoot);
+    return serveProjectFile(c, config, config.seedRoot, tail);
   });
   app.on(["GET", "HEAD"], staticRoutes[2], async (c) => {
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
     await jobs.get(c.req.param("jobId"));
-    return serveProjectFile(
-      c,
-      config,
-      projects.candidateRoot(c.req.param("jobId")),
-      staticRouteTail(c.req.url, `/candidate/${encodeURIComponent(c.req.param("jobId"))}/`),
+    const candidateRoot = projects.candidateRoot(c.req.param("jobId"));
+    const tail = staticRouteTail(
+      c.req.url,
+      `/candidate/${encodeURIComponent(c.req.param("jobId"))}/`,
     );
+    if (tail === "index.html") return serveCompositionPreview(c, config, candidateRoot);
+    return serveProjectFile(c, config, candidateRoot, tail);
   });
 
   app.on(["GET", "HEAD"], "*", async (c) => {

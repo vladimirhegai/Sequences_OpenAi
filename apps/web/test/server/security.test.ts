@@ -113,7 +113,10 @@ describe("localhost security boundary", () => {
     expect(policy).toContain("sandbox allow-scripts allow-same-origin");
     expect(policy).toContain("script-src 'self'");
     expect(policy).not.toContain(ORIGIN);
-    expect(await response.text()).toContain('data-composition-id="release-a"');
+    const bundled = await response.text();
+    expect(bundled).toContain('data-composition-id="release-a"');
+    expect(bundled).toContain('data-hf-inner-root="true"');
+    expect(bundled).not.toMatch(/<[^>]*\sdata-composition-src=/);
   });
 
   it("does not expose the app shell or authenticated API on the preview origin", async () => {

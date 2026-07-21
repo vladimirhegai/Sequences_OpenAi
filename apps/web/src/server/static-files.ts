@@ -1,5 +1,6 @@
 import { readFile, stat } from "node:fs/promises";
 import { extname } from "node:path";
+import { bundleToSingleHtml } from "@hyperframes/core/compiler";
 import type { Context } from "hono";
 import type { ServerConfig } from "./config";
 import { ApiProblem } from "./errors";
@@ -27,6 +28,29 @@ const MIME_TYPES: Record<string, string> = {
   ".otf": "font/otf",
 };
 
+export async function serveCompositionPreview(
+  c: Context,
+  config: ServerConfig,
+  root: string,
+): Promise<Response> {
+  const html = await bundleToSingleHtml(root);
+  const size = Buffer.byteLength(html, "utf8");
+  if (size > 512 * 1_024 * 1_024) {
+    throw new ApiProblem(
+      413,
+      "project_file_too_large",
+      "Bundled project previews larger than 512 MiB are not previewable",
+    );
+  }
+
+  const headers = projectResponseHeaders(c, config, "text/html; charset=utf-8");
+  headers.delete("Accept-Ranges");
+  applyProjectContentSecurityPolicy(headers);
+  headers.set("Content-Length", String(size));
+  if (c.req.method === "HEAD") return new Response(null, { status: 200, headers });
+  return new Response(html, { status: 200, headers });
+}
+
 export async function serveProjectFile(
   c: Context,
   config: ServerConfig,
@@ -48,38 +72,9 @@ export async function serveProjectFile(
     );
   }
 
-  const responseHeaders = new Headers({
-    "Content-Type": contentType,
-    "Accept-Ranges": "bytes",
-    "Cache-Control": "no-store",
-    "Cross-Origin-Resource-Policy": "cross-origin",
-    "Access-Control-Allow-Origin": staticRequestOrigin(c, config),
-    Vary: "Origin",
-    "Referrer-Policy": "no-referrer",
-    "X-Content-Type-Options": "nosniff",
-  });
+  const responseHeaders = projectResponseHeaders(c, config, contentType);
   if (extension === ".html" || extension === ".svg") {
-    responseHeaders.set(
-      "Content-Security-Policy",
-      [
-        // Match the HyperFrames player's iframe sandbox. A stricter response-level
-        // sandbox gives the preview document an opaque origin, which breaks
-        // runtime-mounted nested composition styles. Preview files use a separate
-        // loopback origin so this permission does not expose the app document.
-        "sandbox allow-scripts allow-same-origin",
-        "default-src 'none'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data: blob:",
-        "media-src 'self' blob:",
-        "font-src 'self' data:",
-        "connect-src 'self'",
-        "frame-src 'self'",
-        "worker-src blob:",
-        "base-uri 'none'",
-        "form-action 'none'",
-      ].join("; "),
-    );
+    applyProjectContentSecurityPolicy(responseHeaders);
   }
 
   const range = parseRange(c.req.header("range"), metadata.size);
@@ -96,6 +91,42 @@ export async function serveProjectFile(
   responseHeaders.set("Content-Length", String(metadata.size));
   if (c.req.method === "HEAD") return new Response(null, { status: 200, headers: responseHeaders });
   return new Response(await fileBody(absolute), { status: 200, headers: responseHeaders });
+}
+
+function projectResponseHeaders(c: Context, config: ServerConfig, contentType: string): Headers {
+  return new Headers({
+    "Content-Type": contentType,
+    "Accept-Ranges": "bytes",
+    "Cache-Control": "no-store",
+    "Cross-Origin-Resource-Policy": "cross-origin",
+    "Access-Control-Allow-Origin": staticRequestOrigin(c, config),
+    Vary: "Origin",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+  });
+}
+
+function applyProjectContentSecurityPolicy(headers: Headers): void {
+  headers.set(
+    "Content-Security-Policy",
+    [
+      // Match the HyperFrames player's iframe sandbox. Preview files use a
+      // separate loopback origin, so preserving their origin does not expose
+      // the authenticated app document.
+      "sandbox allow-scripts allow-same-origin",
+      "default-src 'none'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "media-src 'self' blob:",
+      "font-src 'self' data:",
+      "connect-src 'self'",
+      "frame-src 'self'",
+      "worker-src blob:",
+      "base-uri 'none'",
+      "form-action 'none'",
+    ].join("; "),
+  );
 }
 
 export function staticPreflight(c: Context, config: ServerConfig): Response {
