@@ -47,7 +47,9 @@ describe("localhost security boundary", () => {
     const { app } = await runtime();
     const shell = await app.request("/", { headers: headers() });
     expect(shell.status).toBe(200);
-    expect(shell.headers.get("content-security-policy")).toContain("frame-ancestors 'none'");
+    const policy = shell.headers.get("content-security-policy") ?? "";
+    expect(policy).toContain("frame-ancestors 'none'");
+    expect(policy).toContain(`frame-src ${ORIGIN} ${PREVIEW_ORIGIN}`);
     expect(await shell.text()).toContain('<div id="root"></div>');
 
     const bootstrap = await app.request("/api/v1/bootstrap", { headers: headers() });
