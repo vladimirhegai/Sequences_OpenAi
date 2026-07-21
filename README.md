@@ -1,212 +1,313 @@
 # Sequences
 
-Sequences is a small local workspace for turning one generic prompt into a
-HyperFrames video. It currently has four pieces:
+> One prompt becomes a finished SaaS launch video.
 
-- a generic prompt and dev-only prompt templates;
-- a Sequences-owned, watch-only Studio with the real HyperFrames player and a
-  simple timeline;
-- a Bun server that runs Codex in a fresh HyperFrames scaffold, verifies it,
-  and automatically promotes the result;
-- a host-owned render job that freezes the promoted commit, verifies the MP4,
-  and exposes MP4 and source-bundle downloads.
+Sequences is a Codex-powered motion director for product teams. Give it a short
+brief and, if useful, a few UI screenshots. It creates a fresh 20-30 second
+product film, shows what it is doing, checks the real result, and places a
+passing video in a simple viewer.
 
-The project does not open or depend on HyperFrames Studio. The Sequences
-timeline is a lightweight view of the HyperFrames composition; HyperFrames
-HTML, assets, and its seekable runtime remain the creative source.
+The current hackathon build is intentionally focused: **prompt, generate,
+watch, and render**. It is a complete watch-only experience, not a half-built
+video editor.
+
+![Frames from the ChatGPT showcase video](Showcase/chatgpt-native-story/evidence/snapshots/pass-2/contact-sheet.jpg)
+
+_The included "ChatGPT: From question to working draft" showcase is ready to
+watch as soon as the app starts._
+
+## Why Sequences
+
+Good launch videos are expensive in two ways: they need strong creative taste,
+and they need careful motion-design work. Small SaaS teams often have neither a
+motion designer nor days to spend inside a timeline.
+
+Sequences gives that team a small creative production crew:
+
+- **Sol** directs the story and reviews the finished work.
+- **Terra** builds the product UI, camera moves, and animation.
+- **Luna** is the all-in-one benchmark that can direct and build a full video.
+- **Sequences** checks the real output and only delivers work that passes.
+
+This is different from filling a template. Each Generate starts a new product
+story and a new native HyperFrames composition.
+
+## What judges can see
+
+| Judging area                     | Evidence in this project                                                                                                                                                                                          |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Technological implementation** | GPT-5.6 creates real HTML, CSS, and GSAP motion. Typed contracts, isolated Git candidates, browser-based QA, bounded repair, receipts, and verified rendering make it a working system rather than a prompt demo. |
+| **Design**                       | One clear page contains the video viewer, prompt, live progress, Showcase, and Recent results. The prepared sample and generated videos are playable with familiar controls.                                      |
+| **Potential impact**             | Founders, product marketers, and designers can turn a brief and product screenshots into a launch film without first becoming motion-design experts.                                                              |
+| **Quality of the idea**          | Codex owns creative judgment while deterministic code owns truth. A second Codex role reviews painted frames, not just text or source code.                                                                       |
 
 ## Run locally
 
-Prerequisites: Windows, Bun 1.3+, Node.js 22+, Git, FFmpeg, and an authenticated
-Codex CLI.
+### Prerequisites
+
+The hackathon build is tested on Windows. Install:
+
+- [Bun](https://bun.sh/) 1.3 or newer
+- [Node.js](https://nodejs.org/) 22 or newer
+- [Git](https://git-scm.com/)
+- [FFmpeg](https://ffmpeg.org/) with `ffprobe` on `PATH`
+- an installed and authenticated [Codex CLI](https://developers.openai.com/codex/cli)
+
+Check Codex authentication with:
 
 ```powershell
+codex login status
+```
+
+### Install and verify
+
+```powershell
+git clone https://github.com/vladimirhegai/Sequences_OpenAi.git
+cd Sequences_OpenAi
 bun install
+bun run judge
+```
+
+`bun run judge` is the best first check. It verifies the local tools, pinned
+HyperFrames version, skill bundle, build, server session, and prepared sample.
+It does not spend a model generation.
+
+No `.env` file is required for the default path. Copy `.env.example` only when
+you want to test a different model route or port.
+
+### Start the app
+
+```powershell
 bun run dev
 ```
 
-Open the exact `http://127.0.0.1:4317/?boot=...` URL printed by the server.
+Open the exact `http://127.0.0.1:4317/?boot=...` URL printed by the server. The
+boot value is a short-lived local session token, so do not remove it.
 
-On native Windows, the local server defaults its Codex author subprocess to
-`danger-full-access` because supported Codex CLI installations can silently
-treat `workspace-write` as read-only. This compatibility mode is for the
-loopback-only local app: Codex has unrestricted filesystem access during the
-turn, while Sequences accepts only the allowlisted Git diff from its disposable
-candidate worktree. Native Windows therefore always uses this compatibility
-mode; a `workspace-write` environment override cannot restore the known
-read-only failure. Non-Windows platforms continue to default to
-`workspace-write` and may override it explicitly.
+The prepared ChatGPT showcase loads immediately. A judge can inspect the full
+product without waiting for a new generation. Generating a new video requires
+the authenticated Codex CLI and normally takes several minutes.
 
-## Use it
+## Use the product
 
-1. Write a plain-language video prompt, or choose one of the three templates
-   shown in development mode. Optionally attach up to four PNG, JPEG, or WebP
-   product references; the host records their immutable dimensions and hashes.
-2. Click **Generate**. Every run starts from the generic, contract-valid SaaS
-   starter shell and a fresh direction; it does not edit or inherit the
-   previous composition.
-3. Wait while the configured author workflow runs and the host verifies the
-   video. A passing result is automatically promoted and appears on the
-   timeline.
-4. Render the promoted commit, monitor or cancel the job, then download the
-   verified MP4 and exact Git source bundle.
+1. Enter a plain-language launch-video brief.
+2. Optionally attach up to four PNG, JPEG, or WebP product screenshots.
+3. Click **Generate**.
+4. Follow the timer and live stage updates while Codex works.
+5. Watch the verified result in the player.
+6. Start a render and download the MP4 and exact source bundle.
 
-There is no plan-first workflow in the MVP. The prompt is intentionally generic
-so the creative direction can stay with the person using the tool.
+Every Generate is fresh. It never continues an old thread or edits the video
+that is already playing. If a run fails, the previous good video stays
+available.
 
-If a prompt does not name a duration, Luna targets 24 seconds. The normal range
-for a SaaS launch film is 20–30 seconds, but an explicit shorter or longer
-duration always wins.
+## How Codex and GPT-5.6 are used
 
-In the default balanced route, every click on **Generate** creates fresh
-preproduction, compositor, and audit custody. A bounded repair resumes the exact
-Terra compositor thread while the same run is being verified; it never
-continues a previous generation. Candidate worktrees are internal quarantine,
-not a public review or Apply/Reject workflow.
+![Sequences Codex agent workflow](docs/images/codex-agentic-workflow.png)
 
-## Balanced agent workflow
+The production default is a small specialist workflow, not a group vote:
 
-Balanced is the production default and targets a useful website result in
-roughly ten minutes on a healthy model route. That is a latency target, not a
-hard SLA: strict QA or a focused repair can extend a difficult run.
+1. **Sol / medium - creative director.** Sol chooses the story, look, pacing,
+   product moments, component states, camera direction, and sound plan.
+2. **Terra / medium - motion designer and builder.** Terra turns that locked
+   plan into the real HyperFrames video: UI, layout, transitions, camera, and
+   animation.
+3. **Sequences - truth gate.** The host checks the actual files and browser
+   output. It tests the story contract, readable layout, contrast, motion, and
+   important frames.
+4. **Sol / medium - final reviewer.** Sol sees ordered screenshots from the
+   finished video. It can pass the work or describe one focused improvement.
+5. **Terra / medium - bounded repair.** If needed, the exact same Terra thread
+   gets one focused polish task. Every check then runs again.
+6. **Luna / high - all-in-one baseline.** Luna remains the controlled baseline
+   for directing and building the whole film in one Codex thread. Repeated live
+   tests, not guesswork, led to the current Sol/Terra split.
 
-Balanced mode is a sequential specialist pipeline, not a voting committee:
+GPT-5.6 is doing more than writing copy. Inside the product it:
 
-1. One Sol/medium preproduction turn locks the per-film `frame.md`, design
-   capsule, causal `sequence.json`, component plan, camera intent, and sound
-   direction.
-2. Terra/medium is the sole owner of renderable source, UI placement, camera, and
-   motion. Contract, layout, QA, and audit repairs resume this exact thread and
-   route.
-3. After strict deterministic QA passes, Sol/medium receives rendered temporal
-   evidence labeled as transit or landed and emits a read-only typed audit. At
-   most one localized compositor polish is accepted, and only after the full
-   contracts and strict QA pass again.
+- studies uploaded UI references;
+- creates the visual direction and causal product story;
+- plans reusable UI components and their visible states;
+- chooses transitions, camera moves, pacing, and audio cues;
+- writes the renderable motion-design source;
+- reviews real frames from the completed video; and
+- repairs a specific problem without restarting the run.
 
-The author context stays bounded: prompt plus locked `sequence.json` selects at
-most two hash-pinned Showcase capsules, and the receipt records their IDs. The
-compositor treats them as transferable craft references, never as films to
-copy. Product typing and click briefs also point directly at the local
-`compositions/_primitives/` helpers copied into every fresh candidate. Typing
-and mouse-click audio cues reserve their own start/mid/end and
-approach/contact/consequence audit frames before generic temporal coverage.
+### How the system keeps agents honest
 
-Stage write scopes are disjoint and creative/component handoffs are hash-locked.
-The run receipt records every turn's role, operation, model, effort, thread,
-latency, token usage, and cached-input usage. Override individual experimental
-routes with `SEQUENCES_CREATIVE_*`, `SEQUENCES_COMPONENT_*`,
-`SEQUENCES_COMPOSITOR_*`, and `SEQUENCES_AUDITOR_*`; see `.env.example`.
+- Each run gets a fresh thread and isolated Git candidate.
+- The creative plan is locked before implementation begins.
+- Completion comes from the files and Git diff, not an agent saying "done."
+- A hash-pinned skill profile gives each role only relevant HyperFrames and
+  SaaS-launch guidance.
+- Repairs are small and transactional. A change is kept only when it improves
+  the result without breaking another check.
+- Every turn records its role, model, effort, thread, time, tokens, and result.
 
-The stages intentionally run sequentially because every later stage consumes a
-hash-locked handoff. The former standalone Sol component pass was folded into
-preproduction to remove one full model round trip. Transient capacity and
-transport failures receive two short retries on the exact thread. For a
-controlled legacy comparison, set `SEQUENCES_AGENT_WORKFLOW=legacy` before
-starting the server.
+## How Codex contributed to building Sequences
 
-## Test without opening the website
+Codex was used throughout the hackathon development process. It helped:
 
-```powershell
-bun run test:project
-```
+- turn lessons from the old Slack prototype into a smaller, fresh architecture;
+- build the React product UI and Bun/Hono orchestration server;
+- create the typed story, design, component, camera, motion, and audio contracts;
+- implement isolated candidate worktrees and automatic promotion;
+- connect the pinned HyperFrames player, quality checks, and renderer;
+- run live website probes, inspect receipts and screenshots, and find failure
+  classes;
+- replace one-off fixes with regression tests and shared safeguards; and
+- design and test the Sol/Terra/Sol workflow while keeping Luna as a baseline.
 
-This checks the Codex and HyperFrames CLIs, starts the server in memory with
-temporary project directories, exercises the local session/bootstrap API, and
-loads the signed sample composition route. It does not open a browser or start
-the dev server.
+The human product owner stayed the source of truth for scope and taste. Codex
+handled implementation, diagnosis, testing, and repeated refinement. The dated
+commit history is the main public evidence; each local generation also writes a
+detailed receipt under `data/runs/release-a/<run_id>/`.
 
-Useful verification commands:
+## What makes the implementation non-trivial
 
-```powershell
-bun run doctor
-bun run typecheck
-bun run test
-bun run build
-bun run qa:fixture
-bun run test:phase -- 0
-bun run test:phase -- 1
-bun run test:all
-```
+| Layer                   | What is implemented                                                                                                                               |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Creative handoff**    | `frame.md`, a design capsule, `sequence.json`, and a typed component plan describe the intended film before render code is written.               |
+| **Native video source** | The result is ordinary HTML, CSS, local assets, and seek-safe GSAP motion. There is no hidden second renderer or prerecorded generation.          |
+| **Quality control**     | HyperFrames lint and strict browser checks cover runtime errors, assets, timing, layout, contrast, transitions, and motion assertions.            |
+| **Safe autonomy**       | Codex works in a disposable Git candidate. Only allowed files can be promoted, and protected skills are hash-checked before and after authoring.  |
+| **Focused repair**      | Contract, layout, QA, and visual-audit findings return to the exact source-owning thread with a small repair budget.                              |
+| **Delivery**            | The host promotes the passing commit, renders it, checks the MP4 with `ffprobe` and decoded boundary frames, and exposes the MP4 plus source ZIP. |
 
-The offline phase/unit suites use a deterministic fixture author; they verify
-orchestration and contracts but do not prove that Luna can write a real website
-candidate. For a literal website-parity probe, start the site and drive its real
-Prompt form and Generate button through a browser:
+HyperFrames owns the HTML video runtime, player, QA primitives, and rendering.
+Sequences owns creative direction, semantic contracts, verification custody,
+evidence, the product UI, and delivery.
 
-```powershell
-bun run probe:website -- --image <file1> --image <file2> "your exact prompt"
-```
+## Test it
 
-This command loads the current boot URL, establishes the normal browser
-session, uploads through the website control, clicks Generate, and waits until
-the generated composition is applied and ready in the timeline. The separate
-opt-in pipeline acceptance gate owns a production-default server, promotes the
-verified candidate, performs a draft render, and checks the persisted MP4 and
-source bundle:
+All offline tests use included fixtures and temporary directories. They do not
+need paid model calls.
 
-Use `bun run probe:website -- --check-ui` for a no-submit browser smoke test of
-the Prompt and Generate controls.
+| Command                   | Purpose                                                                                        |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| `bun run judge`           | Best judge smoke test: tools, build, server, session, skills, HyperFrames, and prepared sample |
+| `bun run typecheck`       | TypeScript contracts                                                                           |
+| `bun run test`            | Unit, policy, orchestration, QA, render, and client tests                                      |
+| `bun run build`           | Production web build                                                                           |
+| `bun run qa:fixture`      | Pinned HyperFrames lint and strict browser QA on the sample film                               |
+| `bun run test:phase -- 0` | Foundation, security, promotion, render, and download gate                                     |
+| `bun run test:phase -- 1` | Fresh-generation, semantic-contract, repair, and Studio gate                                   |
+| `bun run test:all`        | Full local exit gate                                                                           |
+
+With `bun run dev` already running, check the real website without submitting a
+model run:
 
 ```powershell
-bun run test:live-website -- --image <file1> --image <file2> "your exact prompt"
+bun run probe:website -- --check-ui
 ```
 
-`bun run render:fixture` is available for an explicit local draft render.
-`test:phase -- 0` is the Phase 0 exit gate: it wraps doctor, typecheck, build,
-unit and browserless tests, fixture verification and automatic promotion,
-pinned HyperFrames QA, a draft render, `ffprobe`, boundary-frame decoding, and
-both download routes. Evidence and a durable receipt are written under
-`artifacts/tests/phase-0/latest/`.
-`test:phase -- 1` verifies fresh-run custody, the versioned `sequence.json`
-contract, the director-owned `frame.md`/design capsule, typed reusable SaaS
-components, semantic transitions and camera intent, the required motion sidecar,
-server-owned automatic promotion, and the watch-only Studio build. It also
-exercises overlap-intent validation, handoff clustering, renderer-backed
-inspection, broad-suppression rejection, bounded same-run repair, and rollback.
-Its receipt is written under `artifacts/tests/phase-1/latest/`.
+Run a literal website generation through the same prompt box and Generate
+button a user clicks:
 
-## Codex and HyperFrames skills
+```powershell
+bun run probe:website -- --image .\path\ui.png "Launch our new AI search feature"
+```
 
-The host supplies the six-skill `sequences-saas-launch-local-v1` profile:
-`hyperframes`, `hyperframes-core`, `hyperframes-creative`,
-`hyperframes-animation`, `hyperframes-keyframes`, and
-`sequences-saas-launch`. It verifies the profile manifest plus every copied
-skill hash. Luna receives a compact catalog and reads only the relevant copied
-skill references. The launch skill contains five compact Showcase capsules
-(contact sheet plus a few focused source references each), while the SaaS shell
-contains offline typewriter and pointer-action primitives with copyable
-examples. Author jobs cannot update skills, acquire workflows, install
-registry items, or assume a runtime that the host did not supply.
+The included test and sample data lives in:
 
-The Codex output and compact `sequence.json` contracts are validated before a
-generated video is promoted. The semantic artifact records exact beat timing,
-transition ownership, and camera intent when a beat uses a camera;
-`index.motion.json` records executable motion assertions. The host owns
-the authoritative authored-file inventory from the candidate Git diff,
-HyperFrames lint/check, bounded category-level QA remediation, Git promotion,
-and rendering. Luna's handwritten artifact list is receipt context, not a
-security boundary.
-The contrast fixer uses measured samples, WCAG luminance, and perceptual OKLab
-search; it is accepted only if the failing category strictly improves and the
-complete strict check still passes.
+- `fixtures/release-a/` - known-good project and strict-QA fixture;
+- `fixtures/saas-shell/` - neutral starter copied into each fresh candidate;
+- `Showcase/` - finished films, source, contact sheets, and QA evidence; and
+- `.agents/` - the hash-pinned Codex skill profile and registry snapshot.
 
-Layout QA stays semantic rather than becoming a universal CSS fixer. Repeated
-overlap/occlusion findings are collapsed into root-cause clusters, broad ignore
-markers are rejected, and exact overlap intent is checked against renderer-backed
-readability evidence. An unresolved cluster may give the same run's Luna thread
-an annotated frame/crop plus `inspect_layout` geometry in its quarantined
-worktree. Related actionable clusters from the same implementation composition
-are repaired as one class. At most three file-scoped layout-repair turns are
-allowed, and each is adopted only after strict QA and unchanged proof frames are
-rerun.
+## Project map
 
-## Scope
+```text
+apps/web/          React product + Bun/Hono server
+fixtures/          prepared sample and fresh SaaS starter
+Showcase/          finished reference films and evidence
+.agents/           pinned Codex/HyperFrames skills
+vendor/hyperframes pinned third-party reference source
+vendor/audio/      temporary Build Week audio, hashes, and notice
+scripts/           setup, doctor, tests, probes, QA, and render commands
+```
 
-This is the foundation, not the final Sequences product. It deliberately leaves
-out evidence graphs, arbitrary URL capture, multi-project management, a large
-inspector, custom rendering, and a full NLE timeline.
+Generated runs, candidates, logs, and renders live under `data/` and
+`artifacts/`. They are local evidence and are not committed.
 
-`ARCHITECTURE.md` is the single architecture reference (pipeline stages and
-failure owners, the HyperFrames boundary, the phase roadmap, and the testing
-contract). The running code and the HyperFrames composition contract are
-authoritative for current behavior.
+## Third-party tools and media
+
+- [HyperFrames 0.7.56](https://github.com/heygen-com/hyperframes) by HeyGen is
+  the video composition, player, QA, and rendering foundation. It is used under
+  the [Apache 2.0 license](vendor/hyperframes/LICENSE). Sequences uses the
+  framework directly and does not embed HyperFrames Studio.
+- [GSAP 3.13](https://gsap.com/) provides seek-safe DOM animation under its
+  published standard license.
+- React, Hono, Zod, Vite, Vitest, Puppeteer, Bun, and FFmpeg are standard tools
+  used under their applicable licenses. Exact package versions are pinned in
+  `package.json` and `bun.lock`.
+- **Sound effects:** selected from [Freesound](https://freesound.org/), where
+  every sound has its own Creative Commons license. The original item pages and
+  license labels were not retained, so these files must be properly re-sourced
+  or replaced before an open-source release.
+- **Background music:** temporary Build Week demo tracks from
+  [Fesliyan Studios](https://www.fesliyanstudios.com/). Its
+  [music policy](https://www.fesliyanstudios.com/policy) allows free use only
+  for a non-commercial, unmonetized project with credit. Commercial or
+  promotional use requires a donation and usage license. These tracks are not
+  open-source assets and will be replaced before an open-source release.
+
+The current audio bytes are recorded by SHA-256 in `vendor/audio/catalog.json`.
+They are not covered by a Sequences open-source license and should not be reused
+from this repository. See [`vendor/audio/NOTICE.md`](vendor/audio/NOTICE.md) for
+the full provenance limit.
+
+## Current scope
+
+- The Studio is watch-only. Editing, revision prompts, Apply/Reject controls,
+  and a full NLE timeline are later work.
+- New generations require an authenticated Codex CLI and can be affected by
+  model capacity.
+- The local hackathon path is tested on Windows and binds only to loopback.
+- Website URL capture, multi-project management, and collaboration are outside
+  this focused build.
+
+For deeper technical detail, see [`ARCHITECTURE.md`](ARCHITECTURE.md).
+
+## Hackathon project boundary: prior work vs. new work
+
+**Sequences for Slack was the research basis, not this codebase.** It existed
+before the hackathon and finished its last development work on July 13, 2026.
+It was a Slack/Bolt application with a Railway worker, a different orchestration
+system, persistent creative threads, and HyperFrames 0.6.86.
+
+This repository is a **new, ground-up implementation** created during the
+hackathon in a separate Git history:
+
+| Before the hackathon: Slack Sequences                 | Built during the hackathon: this repository                                               |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Slack commands and thread replies                     | A new editorial React web product                                                         |
+| Slack OAuth, hosted MCP, and Railway worker           | A local Bun/Hono host with no Slack dependency                                            |
+| Persistent Luna route and an older committee fallback | Fresh-run Sol/Terra/Sol workflow with Luna as a measured baseline                         |
+| HyperFrames 0.6.86 and a custom Slack delivery engine | Pinned HyperFrames 0.7.56, native player, strict QA, and host-owned render                |
+| Large prototype used to learn what failed             | Smaller isolated candidates, typed contracts, bounded repair, receipts, and focused tests |
+
+No Slack application, Slack authentication, old worker, or legacy committee
+runs inside this project. What carried forward was product learning: the model
+should own taste, the host should own truth, and motion quality must be judged
+from real frames. The older Slack launch film is included only as a clearly
+labeled Showcase craft reference; it is not the current application or a
+starter copied into generated videos.
+
+### Dated evidence
+
+- July 14, 2026: [starting documents commit](https://github.com/vladimirhegai/Sequences_OpenAi/commit/2bc5ef3d4e8a872eb5361c6c220b4fcd7803e953)
+  records the clean repository boundary before implementation.
+- July 14, 2026: [first implementation commit](https://github.com/vladimirhegai/Sequences_OpenAi/commit/f689e74f461b594af54d3c4949b999733f8b56a6)
+  adds the new web app, server, contracts, fixtures, tests, and HyperFrames-native
+  foundation from scratch.
+- July 21, 2026: [public Build Week milestone](https://github.com/vladimirhegai/Sequences_OpenAi/commit/b6553f02fffe0cb41c3d6a826410181730ecfdce)
+  records the expanded GPT-5.6 workflow, product UI, QA, audio, Showcases, and
+  release evidence.
+- The full dated [commit history](https://github.com/vladimirhegai/Sequences_OpenAi/commits/main/)
+  shows the Codex-assisted implementation and the bug classes found through
+  live probes.
+
+This distinction is deliberate: the old project proved the need. **This
+hackathon project rebuilt the product around one prompt, specialized GPT-5.6
+roles, deterministic verification, and a judge-ready web experience.**
