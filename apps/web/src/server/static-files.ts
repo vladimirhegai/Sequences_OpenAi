@@ -53,25 +53,28 @@ export async function serveProjectFile(
     "Accept-Ranges": "bytes",
     "Cache-Control": "no-store",
     "Cross-Origin-Resource-Policy": "cross-origin",
-    "Access-Control-Allow-Origin": "null",
+    "Access-Control-Allow-Origin": staticRequestOrigin(c, config),
     Vary: "Origin",
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
   });
   if (extension === ".html" || extension === ".svg") {
-    const origin = config.expectedOrigin;
     responseHeaders.set(
       "Content-Security-Policy",
       [
-        "sandbox allow-scripts",
+        // Match the HyperFrames player's iframe sandbox. A stricter response-level
+        // sandbox gives the preview document an opaque origin, which breaks
+        // runtime-mounted nested composition styles. Preview files use a separate
+        // loopback origin so this permission does not expose the app document.
+        "sandbox allow-scripts allow-same-origin",
         "default-src 'none'",
-        `script-src 'unsafe-inline' 'unsafe-eval' data: ${origin}`,
-        `style-src 'unsafe-inline' ${origin}`,
-        `img-src data: blob: ${origin}`,
-        `media-src blob: ${origin}`,
-        `font-src data: ${origin}`,
-        `connect-src ${origin}`,
-        `frame-src ${origin}`,
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: blob:",
+        "media-src 'self' blob:",
+        "font-src 'self' data:",
+        "connect-src 'self'",
+        "frame-src 'self'",
         "worker-src blob:",
         "base-uri 'none'",
         "form-action 'none'",
@@ -95,15 +98,20 @@ export async function serveProjectFile(
   return new Response(await fileBody(absolute), { status: 200, headers: responseHeaders });
 }
 
-export function staticPreflight(_c: Context): Response {
+export function staticPreflight(c: Context, config: ServerConfig): Response {
   const headers = new Headers({
-    "Access-Control-Allow-Origin": "null",
+    "Access-Control-Allow-Origin": staticRequestOrigin(c, config),
     "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
     "Access-Control-Allow-Headers": "Range",
     "Access-Control-Max-Age": "600",
     Vary: "Origin",
   });
   return new Response(null, { status: 204, headers });
+}
+
+function staticRequestOrigin(c: Context, config: ServerConfig): string {
+  const origin = c.req.header("origin");
+  return origin === config.expectedOrigin || origin === config.previewOrigin ? origin : "null";
 }
 
 export async function serveDownload(

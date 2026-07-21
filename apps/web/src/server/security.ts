@@ -33,8 +33,10 @@ export class LocalSecurity {
 
   middleware(): MiddlewareHandler {
     return async (c, next) => {
+      const signedStatic = this.isSignedStaticRequest(c.req.path, c.req.method);
       const host = c.req.header("host")?.toLowerCase();
-      if (host !== this.config.expectedHost) {
+      const previewHost = new URL(this.config.previewOrigin).host.toLowerCase();
+      if (host !== this.config.expectedHost && !(signedStatic && host === previewHost)) {
         throw new ApiProblem(
           403,
           "invalid_host",
@@ -43,8 +45,11 @@ export class LocalSecurity {
       }
 
       const origin = c.req.header("origin");
-      const signedStatic = this.isSignedStaticRequest(c.req.path, c.req.method);
-      if (origin && origin !== this.config.expectedOrigin && !(signedStatic && origin === "null")) {
+      if (
+        origin &&
+        origin !== this.config.expectedOrigin &&
+        !(signedStatic && (origin === "null" || origin === this.config.previewOrigin))
+      ) {
         throw new ApiProblem(403, "invalid_origin", "Cross-origin requests are not allowed");
       }
 

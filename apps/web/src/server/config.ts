@@ -62,6 +62,7 @@ export interface ServerConfig {
   registryManifestPath: string;
   expectedOrigin: string;
   expectedHost: string;
+  previewOrigin: string;
   hostname: "127.0.0.1";
   port: number;
   bootToken: string;
@@ -191,6 +192,9 @@ export function createServerConfig(overrides: ServerConfigOverrides = {}): Serve
   if (origin.protocol !== "http:" || origin.hostname !== "127.0.0.1" || origin.pathname !== "/") {
     throw new Error("The Sequences server origin must be an http://127.0.0.1 loopback origin");
   }
+  const previewOriginUrl = new URL(expectedOrigin);
+  previewOriginUrl.hostname = "localhost";
+  const previewOrigin = previewOriginUrl.origin;
 
   const dataRoot = resolve(workspaceRoot, "data");
   const base: ServerConfig = {
@@ -216,6 +220,7 @@ export function createServerConfig(overrides: ServerConfigOverrides = {}): Serve
     ),
     expectedOrigin,
     expectedHost: origin.host.toLowerCase(),
+    previewOrigin,
     hostname: "127.0.0.1",
     port,
     bootToken: secret(),
@@ -257,6 +262,7 @@ export function createServerConfig(overrides: ServerConfigOverrides = {}): Serve
     registryManifestPath: resolve(overrides.registryManifestPath ?? base.registryManifestPath),
     expectedOrigin,
     expectedHost: overrides.expectedHost ?? origin.host.toLowerCase(),
+    previewOrigin,
     hostname: "127.0.0.1",
     port,
     // Reassert after spreading overrides so internal callers cannot bypass the

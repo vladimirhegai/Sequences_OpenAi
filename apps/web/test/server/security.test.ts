@@ -7,6 +7,8 @@ import { createSequencesRuntime } from "../../src/server/app";
 const workspaces: string[] = [];
 const ORIGIN = "http://127.0.0.1:4317";
 const HOST = "127.0.0.1:4317";
+const PREVIEW_ORIGIN = "http://localhost:4317";
+const PREVIEW_HOST = "localhost:4317";
 
 afterEach(() => {
   for (const path of workspaces.splice(0)) rmSync(path, { recursive: true, force: true });
@@ -97,18 +99,30 @@ describe("localhost security boundary", () => {
     await expect(response.json()).resolves.toMatchObject({ error: { code: "invalid_csrf" } });
   });
 
-  it("serves signed composition files to a unique-origin iframe without cookies", async () => {
+  it("serves signed composition files on an isolated origin with the player sandbox contract", async () => {
     const { app } = await runtime();
     const response = await app.request(
       `/api/v1/projects/release-a/files/${"f".repeat(43)}/sample/index.html`,
-      { headers: headers({ Origin: "null" }) },
+      { headers: { Host: PREVIEW_HOST, Origin: PREVIEW_ORIGIN } },
     );
     expect(response.status).toBe(200);
-    expect(response.headers.get("access-control-allow-origin")).toBe("null");
+    expect(response.headers.get("access-control-allow-origin")).toBe(PREVIEW_ORIGIN);
     const policy = response.headers.get("content-security-policy") ?? "";
-    expect(policy).toContain("sandbox allow-scripts");
-    expect(policy).not.toContain("allow-same-origin");
+    expect(policy).toContain("sandbox allow-scripts allow-same-origin");
+    expect(policy).toContain("script-src 'self'");
+    expect(policy).not.toContain(ORIGIN);
     expect(await response.text()).toContain('data-composition-id="release-a"');
+  });
+
+  it("does not expose the app shell or authenticated API on the preview origin", async () => {
+    const { app } = await runtime();
+    const shell = await app.request("/", { headers: { Host: PREVIEW_HOST } });
+    const bootstrap = await app.request("/api/v1/bootstrap", {
+      headers: { Host: PREVIEW_HOST, Origin: PREVIEW_ORIGIN },
+    });
+
+    expect(shell.status).toBe(403);
+    expect(bootstrap.status).toBe(403);
   });
 
   it("serves nested composition assets instead of substituting the project index", async () => {

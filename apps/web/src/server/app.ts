@@ -272,7 +272,7 @@ export async function createSequencesRuntime(
     "/api/v1/projects/:projectId/files/:token/sample/*",
     "/api/v1/projects/:projectId/files/:token/candidate/:jobId/*",
   ] as const;
-  for (const route of staticRoutes) app.options(route, (c) => staticPreflight(c));
+  for (const route of staticRoutes) app.options(route, (c) => staticPreflight(c, config));
   app.on(["GET", "HEAD"], staticRoutes[0], async (c) => {
     assertStaticAccess(c.req.param("projectId"), c.req.param("token"), security);
     return serveProjectFile(
@@ -382,9 +382,9 @@ function staticRouteTail(requestUrl: string, boundary: string): string {
 }
 
 function acceptedUrl(config: ServerConfig): string {
-  return `/api/v1/projects/${PROJECT_ID}/files/${config.staticAccessToken}/accepted/index.html`;
+  return `${config.previewOrigin}/api/v1/projects/${PROJECT_ID}/files/${config.staticAccessToken}/accepted/index.html`;
 }
 
 function sampleUrl(config: ServerConfig): string {
-  return `/api/v1/projects/${PROJECT_ID}/files/${config.staticAccessToken}/sample/index.html`;
+  return `${config.previewOrigin}/api/v1/projects/${PROJECT_ID}/files/${config.staticAccessToken}/sample/index.html`;
 }

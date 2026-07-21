@@ -2590,7 +2590,7 @@ export class JobManager {
   }
 
   private response(receipt: RunReceiptV1): JobResponseV1 {
-    const base = `/api/v1/projects/${PROJECT_ID}/files/${this.config.staticAccessToken}/candidate/${receipt.jobId}/index.html`;
+    const base = `${this.config.previewOrigin}/api/v1/projects/${PROJECT_ID}/files/${this.config.staticAccessToken}/candidate/${receipt.jobId}/index.html`;
     return {
       version: "sequences.job-response.v1",
       receipt,
