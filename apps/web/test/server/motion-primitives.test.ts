@@ -17,6 +17,7 @@ function element(rect = { left: 0, top: 0, width: 1, height: 1 }) {
     dataset: {} as Record<string, string>,
     style: {} as Record<string, string>,
     textContent: "",
+    offsetParent: null as unknown,
     parentElement: null as unknown,
     nextElementSibling: null as unknown,
     getBoundingClientRect: () => rect,
@@ -164,5 +165,71 @@ describe("candidate-local motion primitives", () => {
     expect(example).toContain("data-pointer-action-after>Generating...</span>");
     expect(example).not.toContain("clip-path: polygon");
     expect(example).not.toMatch(/https?:\/\//);
+  });
+
+  it("measures nested cursor and ripple positions in their own containing blocks", async () => {
+    const api = await loadPrimitive("pointer-action.js");
+    const rootRect = { left: 100, top: 50, width: 1200, height: 800 };
+    const pointerLayer = element({ left: 300, top: 200, width: 900, height: 600 });
+    const targetRect = { left: 590, top: 390, width: 320, height: 96 };
+    const pointer = element();
+    const target = element(targetRect);
+    const ripple = element({ left: 0, top: 0, width: 44, height: 44 });
+    pointer.offsetParent = pointerLayer;
+    ripple.offsetParent = target;
+    const bySelector = new Map<string, ReturnType<typeof element>>([
+      ["[data-pointer-action-cursor]", pointer],
+      ["[data-pointer-action-target]", target],
+      ["[data-pointer-action-feedback]", target],
+      ["[data-pointer-action-ripple]", ripple],
+    ]);
+    const root = {
+      dataset: {} as Record<string, string>,
+      getBoundingClientRect: () => rootRect,
+      querySelector: (selector: string) => bySelector.get(selector) ?? null,
+    };
+    const timeline = { to: () => timeline };
+    const action = api.createPointerAction({ root, timeline, startSec: 0.4 });
+
+    const contact = action.render(action.timing.contactSec);
+    expect(pointer.style.left).toBe("0px");
+    expect(pointer.style.top).toBe("0px");
+    expect(ripple.style.left).toBe("0px");
+    expect(ripple.style.top).toBe("0px");
+    expect(contact.cursorX + action.geometry.hotspot.x).toBeCloseTo(450, 8);
+    expect(contact.cursorY + action.geometry.hotspot.y).toBeCloseTo(238, 8);
+    expect(action.rippleGeometry.targetPoint).toEqual({ x: 160, y: 48 });
+    expect(ripple.style.transform).toContain("translate3d(138px, 26px, 0)");
+  });
+
+  it("finds a positioned ancestor for an SVG cursor without offsetParent", async () => {
+    const api = await loadPrimitive("pointer-action.js");
+    const rootRect = { left: 0, top: 0, width: 1920, height: 1080 };
+    const composerRect = { left: 120, top: 430, width: 1680, height: 222 };
+    const targetRect = { left: 1615, top: 472, width: 138, height: 138 };
+    const composer = element(composerRect);
+    composer.style.position = "absolute";
+    const pointer = element();
+    pointer.parentElement = composer;
+    const target = element(targetRect);
+    const ripple = element({ left: 120, top: 430, width: 48, height: 48 });
+    ripple.offsetParent = composer;
+    const bySelector = new Map<string, ReturnType<typeof element>>([
+      ["[data-pointer-action-cursor]", pointer],
+      ["[data-pointer-action-target]", target],
+      ["[data-pointer-action-feedback]", target],
+      ["[data-pointer-action-ripple]", ripple],
+    ]);
+    const root = {
+      dataset: {} as Record<string, string>,
+      getBoundingClientRect: () => rootRect,
+      querySelector: (selector: string) => bySelector.get(selector) ?? null,
+    };
+    const timeline = { to: () => timeline };
+    const action = api.createPointerAction({ root, timeline, startSec: 0.4 });
+
+    const contact = action.render(action.timing.contactSec);
+    expect(contact.cursorX + action.geometry.hotspot.x).toBeCloseTo(1564, 8);
+    expect(contact.cursorY + action.geometry.hotspot.y).toBeCloseTo(111, 8);
   });
 });

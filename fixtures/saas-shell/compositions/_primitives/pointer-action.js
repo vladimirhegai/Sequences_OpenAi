@@ -51,7 +51,9 @@
       consequenceSec <= 0 ||
       pointerFadeSec < 0
     ) {
-      throw new Error("Pointer timing values must be finite and positive (settleSec may be zero)");
+      throw new Error(
+        "Pointer timing values must be finite and positive (settleSec and pointerFadeSec may be zero)",
+      );
     }
     const approachEndSec = startSec + approachSec;
     const pressStartSec = approachEndSec + settleSec;
@@ -187,6 +189,34 @@
     };
   }
 
+  function positioningSpace(element, fallback) {
+    const offsetParent = element.offsetParent;
+    if (offsetParent && typeof offsetParent.getBoundingClientRect === "function") {
+      return offsetParent;
+    }
+
+    // SVG elements do not expose offsetParent in Chromium. Walk to the nearest
+    // containing-block ancestor so an SVG cursor can still use local geometry.
+    let ancestor = element.parentElement;
+    while (ancestor && ancestor !== fallback) {
+      const style =
+        typeof global.getComputedStyle === "function"
+          ? global.getComputedStyle(ancestor)
+          : ancestor.style;
+      if (
+        style &&
+        (style.position !== "static" ||
+          (style.transform && style.transform !== "none") ||
+          (style.perspective && style.perspective !== "none") ||
+          (style.filter && style.filter !== "none"))
+      ) {
+        return ancestor;
+      }
+      ancestor = ancestor.parentElement;
+    }
+    return fallback;
+  }
+
   function createPointerAction(options) {
     const root = options.root;
     const timeline = options.timeline;
@@ -208,7 +238,15 @@
       throw new Error("Pointer root needs cursor, target, feedback, and ripple elements");
     }
 
-    const geometry = targetRelativeGeometry(root, target, options);
+    // Absolutely positioned elements without explicit insets retain their
+    // static-position origin. Pin the helper-owned layers before measuring so
+    // translate coordinates are relative to their actual containing blocks.
+    pointer.style.left = "0px";
+    pointer.style.top = "0px";
+    ripple.style.left = "0px";
+    ripple.style.top = "0px";
+    const geometry = targetRelativeGeometry(positioningSpace(pointer, root), target, options);
+    const rippleGeometry = targetRelativeGeometry(positioningSpace(ripple, root), target, options);
     const timing = normalizedTiming(options);
     const rippleRect = ripple.getBoundingClientRect();
     pointer.style.transformOrigin = `${geometry.hotspot.x}px ${geometry.hotspot.y}px`;
@@ -227,7 +265,7 @@
       pointer.style.transform = `translate3d(${state.cursorX}px, ${state.cursorY}px, 0) scale(${state.pointerScale})`;
       pointer.style.opacity = String(state.pointerOpacity);
       feedback.style.transform = `scale(${state.targetScale})`;
-      ripple.style.transform = `translate3d(${geometry.targetPoint.x - rippleRect.width / 2}px, ${geometry.targetPoint.y - rippleRect.height / 2}px, 0) scale(${state.rippleScale})`;
+      ripple.style.transform = `translate3d(${rippleGeometry.targetPoint.x - rippleRect.width / 2}px, ${rippleGeometry.targetPoint.y - rippleRect.height / 2}px, 0) scale(${state.rippleScale})`;
       ripple.style.opacity = String(state.rippleOpacity);
       if (beforeState) beforeState.style.opacity = state.consequenceVisible ? "0" : "1";
       if (afterState) afterState.style.opacity = state.consequenceVisible ? "1" : "0";
@@ -258,6 +296,7 @@
       stateAt: (atSec) => pointerActionState(stateOptions, atSec),
       audioCue: { kind: "mouse-click", atSec: timing.contactSec },
       geometry,
+      rippleGeometry,
       timing,
     };
   }
