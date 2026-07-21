@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import puppeteer, { type Page } from "puppeteer";
 import { z } from "zod";
 import { JobResponseV1Schema, RunReceiptV1Schema } from "../apps/web/src/shared";
-import { parseGenerateArguments } from "./generate";
+import { parseGenerateArguments, websiteProbeProtocolTimeoutMs } from "./generate";
 
 const root = resolve(import.meta.dir, "..");
 const descriptorPath = resolve(root, "data", "local-server.json");
@@ -30,7 +30,10 @@ const origin = descriptor.origin.replace(/\/$/, "");
 const health = await fetch(`${origin}/api/v1/health`);
 if (!health.ok) throw new Error(`The website at ${origin} is not healthy`);
 
-const browser = await puppeteer.launch({ headless: true, protocolTimeout: 1_200_000 });
+const browser = await puppeteer.launch({
+  headless: true,
+  protocolTimeout: websiteProbeProtocolTimeoutMs(requested.timeoutMinutes),
+});
 let page: Page | null = null;
 let activeJobId: string | null = null;
 
@@ -166,9 +169,11 @@ try {
         { polling: 1_000, timeout: timeoutMs },
         activeJobId,
       );
-    } catch {
+    } catch (error) {
       await cancelFromWebsite();
-      throw new Error(`Website generation exceeded ${String(requested.timeoutMinutes)} minutes`);
+      throw new Error(
+        `Website generation did not reach a terminal UI state within ${String(requested.timeoutMinutes)} minutes: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
     const uiTerminal = await page.evaluate((jobId) => {
       const card = document.querySelector<HTMLElement>(`.job-card[data-job-id="${jobId}"]`);

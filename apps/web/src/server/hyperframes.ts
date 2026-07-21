@@ -469,7 +469,15 @@ export class HyperframesVerifier {
       throw new Error("Refusing to remove an unmanaged tool workspace");
     }
     try {
-      await rm(workspaceRoot, { recursive: true, force: false });
+      // A cancelled Windows browser check can release its Chromium handles a
+      // fraction after the CLI process exits. Let Node retry those transient
+      // EBUSY/EPERM/ENOTEMPTY removals before surfacing a cleanup failure.
+      await rm(workspaceRoot, {
+        recursive: true,
+        force: false,
+        maxRetries: 8,
+        retryDelay: 100,
+      });
     } catch (error) {
       if (!isMissing(error)) throw error;
     }

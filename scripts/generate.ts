@@ -471,6 +471,10 @@ export function imageMediaTypeForPath(path: string): "image/png" | "image/jpeg" 
   throw new Error(`Unsupported image extension for ${path}; use PNG, JPEG, or WebP`);
 }
 
+export function websiteProbeProtocolTimeoutMs(timeoutMinutes: number): number {
+  return (timeoutMinutes + 2) * 60_000;
+}
+
 function runReceiptPathFor(jobId: string): string {
   return `data/runs/release-a/${jobId}/receipt.json`;
 }

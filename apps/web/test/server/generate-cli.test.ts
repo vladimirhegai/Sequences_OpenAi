@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { imageMediaTypeForPath, parseGenerateArguments } from "../../../../scripts/generate";
+import {
+  imageMediaTypeForPath,
+  parseGenerateArguments,
+  websiteProbeProtocolTimeoutMs,
+} from "../../../../scripts/generate";
 
 describe("website generation CLI", () => {
   it("accepts repeated image inputs while preserving the video prompt", () => {
@@ -38,5 +42,10 @@ describe("website generation CLI", () => {
     expect(imageMediaTypeForPath("screen.jpeg")).toBe("image/jpeg");
     expect(imageMediaTypeForPath("screen.webp")).toBe("image/webp");
     expect(() => imageMediaTypeForPath("screen.gif")).toThrow("use PNG, JPEG, or WebP");
+  });
+
+  it("keeps the browser protocol alive beyond the website generation watchdog", () => {
+    expect(websiteProbeProtocolTimeoutMs(30)).toBe(32 * 60_000);
+    expect(websiteProbeProtocolTimeoutMs(30)).toBeGreaterThan(30 * 60_000);
   });
 });
