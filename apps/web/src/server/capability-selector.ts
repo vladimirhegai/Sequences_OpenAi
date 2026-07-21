@@ -68,6 +68,7 @@ const CAPABILITIES: readonly RankedCapability[] = [
     ],
     constraints: [
       "Start from the candidate-local pointer primitive and measured hotspot geometry",
+      "Pass the composition root element itself as the helper root; never query for the root inside itself",
       "Keep the pointer target and its ancestors layout-measurable when the helper initializes; use opacity or visibility instead of display:none before measurement",
       "The click must cause the next product state",
     ],
