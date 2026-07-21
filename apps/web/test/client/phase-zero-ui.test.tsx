@@ -1,47 +1,27 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { JobCard, QaFailureDetails } from "../../src/client/App";
 import type { JobResponse } from "../../src/client/api";
-import { SequencesStudio, StudioTimeline } from "../../src/client/SequencesStudio";
+import { SequencesStudio } from "../../src/client/SequencesStudio";
 
 describe("Phase 0 studio UI", () => {
-  it("shows an honest empty timeline before the player reports real timing", () => {
-    const markup = renderToStaticMarkup(
-      <StudioTimeline ready={false} duration={0} time={0} clips={[]} onSeek={vi.fn()} />,
-    );
-
-    expect(markup).toContain("Waiting for preview");
-    expect(markup).toContain("timeline will appear");
-    expect(markup).not.toContain("Scene 01");
-  });
-
-  it("uses a native draggable range input when real timing is available", () => {
-    const markup = renderToStaticMarkup(
-      <StudioTimeline ready duration={12} time={3} clips={[]} onSeek={vi.fn()} />,
-    );
-
-    expect(markup).toContain('type="range"');
-    expect(markup).toContain('aria-valuetext="0:03 of 0:12"');
-    expect(markup).toContain("No scene markers in this video");
-  });
-
-  it("renders the featured ChatGPT MP4 through the real viewer transport", () => {
+  it("renders the featured ChatGPT MP4 with native bottom controls and fullscreen", () => {
     const markup = renderToStaticMarkup(
       <SequencesStudio
         mode="video"
         mediaSource="/api/v1/showcases/chatgpt-native-story/video"
         poster="/api/v1/showcases/chatgpt-native-story/poster"
-        clipLabel="ChatGPT native story"
         label="ChatGPT: From question to working draft"
       />,
     );
 
     expect(markup).toContain('<video src="/api/v1/showcases/chatgpt-native-story/video"');
     expect(markup).toContain('aria-label="ChatGPT: From question to working draft"');
-    expect(markup).toContain('aria-label="Play"');
-    expect(markup).toContain("Verified showcase");
+    expect(markup).toContain('controls=""');
+    expect(markup).toContain('controlsList="nodownload"');
+    expect(markup).not.toContain('class="timeline"');
   });
 
   it("does not expose fake workflow tabs or the underlying engine name", () => {
@@ -53,7 +33,7 @@ describe("Phase 0 studio UI", () => {
     expect(app).not.toMatch(/["'`][^"'`\r\n]*hyperframes/i);
   });
 
-  it("keeps generation, watch-only timeline, and delivery in the main website flow", () => {
+  it("keeps generation, watch-only playback, and delivery in the main website flow", () => {
     const app = readFileSync(resolve("apps/web/src/client/App.tsx"), "utf8");
     const mainFlow = app.slice(0, app.indexOf("export function JobCard"));
 
@@ -61,7 +41,7 @@ describe("Phase 0 studio UI", () => {
     expect(mainFlow).toContain('pending === "cancel" ? "Stopping…" : "Stop generation"');
     expect(mainFlow).toContain("<JobCard");
     expect(mainFlow).toContain("<RenderCard");
-    expect(mainFlow).toContain('<span className="eyebrow">Timeline</span>');
+    expect(mainFlow).toContain('<span className="eyebrow">Now playing</span>');
     expect(mainFlow).not.toContain('job?.receipt.state === "review_ready" && pending === null');
     expect(mainFlow).toContain("revisionedSource(");
     expect(mainFlow).not.toContain("Use this version");
@@ -84,10 +64,24 @@ describe("Phase 0 studio UI", () => {
     expect(libraryAt).toBeGreaterThan(promptAt);
     expect(mainFlow).toContain('setLibraryTab("showcase")');
     expect(mainFlow).toContain('setLibraryTab("recent")');
-    expect(mainFlow).toContain("/api/v1/showcases/chatgpt-native-story/video");
-    expect(mainFlow).toContain('useState<ViewerSource>("featured")');
-    expect(mainFlow).toContain("!HIDDEN_RECENT_STATES.has(recentJob.state)");
+    expect(mainFlow).toContain("/api/v1/showcases/${selectedShowcase.id}/video");
+    expect(mainFlow).toContain('id: "chatgpt-native-story"');
+    expect(mainFlow).toContain('recentJob.state === "applied"');
     expect(mainFlow).toContain("recentJobs.map((recentJob)");
+    expect(mainFlow).toContain("showInViewer({");
+    expect(mainFlow).toContain("scrollIntoView");
+    expect(mainFlow).toContain("chatgpt-ad");
+    expect(mainFlow).toContain("sequences-abstract-ad");
+    expect(mainFlow).toContain("sequences-recommendation-ad");
+    expect(mainFlow).not.toContain('id: "slack-ad"');
+    expect(mainFlow).toContain("Codex will direct, build, verify");
+  });
+
+  it("preserves the HyperFrames player sandbox contract for nested compositions", () => {
+    const viewer = readFileSync(resolve("apps/web/src/client/HyperframesViewer.tsx"), "utf8");
+
+    expect(viewer).not.toContain('iframe.setAttribute("sandbox"');
+    expect(viewer).toContain("player?.requestFullscreen().catch");
   });
 
   it("uses the beige editorial skin and sizes the complete viewer against the first viewport", () => {

@@ -6,6 +6,7 @@ export interface HyperframesViewerProps {
   source: string | null;
   badge?: string;
   controls?: boolean;
+  allowFullscreen?: boolean;
   onPlayer?: (player: HyperframesPlayer | null) => void;
   onTimeChange?: (time: number) => void;
 }
@@ -13,14 +14,15 @@ export interface HyperframesViewerProps {
 type ViewerState = "loading" | "ready" | "error";
 
 /**
- * Hosts the real HyperFrames player. The surrounding Sequences studio owns the
- * prompt and timeline chrome; HyperFrames still owns composition playback.
+ * Hosts the real HyperFrames player. The surrounding Sequences shell owns the
+ * prompt and library chrome; HyperFrames still owns composition playback.
  */
 export function HyperframesViewer({
   label,
   source,
   badge,
   controls = true,
+  allowFullscreen = false,
   onPlayer,
   onTimeChange,
 }: HyperframesViewerProps) {
@@ -41,7 +43,6 @@ export function HyperframesViewer({
 
     const player = document.createElement("hyperframes-player") as HyperframesPlayer;
     const iframe = player.iframeElement;
-    iframe.setAttribute("sandbox", "allow-scripts");
     iframe.title = label;
 
     if (controls) player.setAttribute("controls", "");
@@ -92,6 +93,20 @@ export function HyperframesViewer({
       </div>
       <div className="viewer__frame">
         <div ref={hostRef} className="viewer__host" />
+        {allowFullscreen ? (
+          <button
+            className="viewer__fullscreen"
+            type="button"
+            aria-label="Enter full screen"
+            title="Full screen"
+            onClick={() => {
+              const player = hostRef.current?.querySelector("hyperframes-player");
+              void player?.requestFullscreen().catch(() => undefined);
+            }}
+          >
+            <span aria-hidden="true">&#x26F6;</span>
+          </button>
+        ) : null}
         {state === "loading" ? (
           <div className="viewer__notice" role="status">
             Loading preview…

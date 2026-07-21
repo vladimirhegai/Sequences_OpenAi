@@ -36,6 +36,25 @@ type AppEnvironment = { Variables: { requestId: string } };
 
 export const JOB_EVENT_HEARTBEAT_MS = 15_000;
 
+const SHOWCASE_ASSETS: Record<string, { video: string; poster: string }> = {
+  "chatgpt-native-story": {
+    video: "renders/final.mp4",
+    poster: "evidence/snapshots/pass-2/frame-02-at-16.7s.png",
+  },
+  "chatgpt-ad": {
+    video: "renders/final.mp4",
+    poster: "evidence/snapshots/frame-03-at-16.7s.png",
+  },
+  "sequences-abstract-ad": {
+    video: "renders/sequences-abstract-ad.mp4",
+    poster: "evidence/final-snapshots/frame-14-at-21.9s.png",
+  },
+  "sequences-recommendation-ad": {
+    video: "renders/sequences-recommendation-ad-final.mp4",
+    poster: "evidence/reference-study/full-res-20.png",
+  },
+};
+
 export interface SequencesRuntime {
   app: Hono<AppEnvironment>;
   config: ServerConfig;
@@ -221,18 +240,32 @@ export async function createSequencesRuntime(
     return serveDownload(c, artifact.path, artifact.filename, artifact.contentType);
   });
 
-  const featuredShowcaseRoot = resolve(config.workspaceRoot, "Showcase", "chatgpt-native-story");
-  app.on(["GET", "HEAD"], "/api/v1/showcases/chatgpt-native-story/video", async (c) =>
-    serveProjectFile(c, config, featuredShowcaseRoot, "renders/final.mp4"),
-  );
-  app.on(["GET", "HEAD"], "/api/v1/showcases/chatgpt-native-story/poster", async (c) =>
-    serveProjectFile(
+  app.on(["GET", "HEAD"], "/api/v1/showcases/:showcaseId/video", async (c) => {
+    const showcaseId = c.req.param("showcaseId");
+    const showcase = Object.hasOwn(SHOWCASE_ASSETS, showcaseId)
+      ? SHOWCASE_ASSETS[showcaseId]
+      : undefined;
+    if (!showcase) throw new ApiProblem(404, "showcase_not_found", "Showcase not found");
+    return serveProjectFile(
       c,
       config,
-      featuredShowcaseRoot,
-      "evidence/snapshots/pass-2/frame-02-at-16.7s.png",
-    ),
-  );
+      resolve(config.workspaceRoot, "Showcase", showcaseId),
+      showcase.video,
+    );
+  });
+  app.on(["GET", "HEAD"], "/api/v1/showcases/:showcaseId/poster", async (c) => {
+    const showcaseId = c.req.param("showcaseId");
+    const showcase = Object.hasOwn(SHOWCASE_ASSETS, showcaseId)
+      ? SHOWCASE_ASSETS[showcaseId]
+      : undefined;
+    if (!showcase) throw new ApiProblem(404, "showcase_not_found", "Showcase not found");
+    return serveProjectFile(
+      c,
+      config,
+      resolve(config.workspaceRoot, "Showcase", showcaseId),
+      showcase.poster,
+    );
+  });
 
   const staticRoutes = [
     "/api/v1/projects/:projectId/files/:token/accepted/*",

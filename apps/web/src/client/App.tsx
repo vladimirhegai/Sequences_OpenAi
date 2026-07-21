@@ -10,22 +10,49 @@ import {
   type WorkspaceBootstrap,
 } from "./api";
 import { SequencesStudio } from "./SequencesStudio";
-import { DEV_PROMPTS } from "./dev-prompts";
 import { ImageAttachments, type ImageAttachmentSummary } from "./ImageAttachments";
 
 const PROJECT_ID = "release-a";
 
+const SHOWCASES = [
+  {
+    id: "chatgpt-native-story",
+    title: "ChatGPT: From question to working draft",
+    description:
+      "A native product story with streamed responses, persistent UI, measured pointer work, and a polished lockup.",
+    duration: "24 sec",
+  },
+  {
+    id: "chatgpt-ad",
+    title: "This is ChatGPT",
+    description:
+      "A fast product-led ChatGPT launch film with focused interaction and a clean brand resolve.",
+    duration: "28 sec",
+  },
+  {
+    id: "sequences-abstract-ad",
+    title: "Sequences — Make your prompt move",
+    description:
+      "An abstract, motion-first introduction to turning one prompt into a launch-ready sequence.",
+    duration: "30 sec",
+  },
+  {
+    id: "sequences-recommendation-ad",
+    title: "Sequences recommendation launch",
+    description:
+      "A compact SaaS story built around product recommendations, proof, and a decisive finish.",
+    duration: "24 sec",
+  },
+] as const;
+
+type ShowcaseId = (typeof SHOWCASES)[number]["id"];
+type ViewerSelection =
+  | { kind: "showcase"; id: ShowcaseId }
+  | { kind: "composition"; jobId: string | null; label: string };
+
 const LIVE_STATES = new Set<JobState>(["queued", "preparing", "authoring", "verifying"]);
 const STREAMING_JOB_STATES = new Set<JobState>([...LIVE_STATES, "applying"]);
 const LIVE_RENDER_STATES = new Set<RenderState>(["queued", "preparing", "rendering", "verifying"]);
-const HIDDEN_RECENT_STATES = new Set<JobState>([
-  "failed",
-  "timed_out",
-  "cancelled",
-  "rejected",
-  "stale",
-]);
-
 const STATE_LABELS: Record<JobState, string> = {
   queued: "Queued",
   preparing: "Preparing",
@@ -44,7 +71,6 @@ const STATE_LABELS: Record<JobState, string> = {
 type LoadState = "loading" | "ready" | "error";
 type PendingAction = "build" | "cancel" | "render" | "cancel-render" | null;
 type LibraryTab = "showcase" | "recent";
-type ViewerSource = "featured" | "latest";
 
 export function App() {
   const [loadState, setLoadState] = useState<LoadState>("loading");
@@ -62,13 +88,24 @@ export function App() {
   const [pending, setPending] = useState<PendingAction>(null);
   const [error, setError] = useState<ApiRequestError | null>(null);
   const [libraryTab, setLibraryTab] = useState<LibraryTab>("showcase");
-  const [viewerSource, setViewerSource] = useState<ViewerSource>("featured");
+  const [viewerSelection, setViewerSelection] = useState<ViewerSelection>({
+    kind: "showcase",
+    id: "chatgpt-native-story",
+  });
+  const viewerPanelRef = useRef<HTMLElement>(null);
   const promptRef = useRef<HTMLTextAreaElement>(null);
   const launchedJobIdRef = useRef<string | null>(null);
   const startupRef = useRef<Promise<{ api: SequencesApi; workspace: WorkspaceBootstrap }> | null>(
     null,
   );
   const elapsedMs = useElapsedTime(job);
+
+  const showInViewer = useCallback((selection: ViewerSelection) => {
+    setViewerSelection(selection);
+    window.requestAnimationFrame(() => {
+      viewerPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, []);
 
   const updateAttachments = useCallback((summary: ImageAttachmentSummary) => {
     setImagePaths(summary.paths);
@@ -281,7 +318,11 @@ export function App() {
       job.receipt.acceptedCommit === workspace?.project.acceptedCommit
     ) {
       launchedJobIdRef.current = null;
-      setViewerSource("latest");
+      setViewerSelection({
+        kind: "composition",
+        jobId: job.receipt.jobId,
+        label: "Latest generated video",
+      });
     }
   }, [job?.receipt.acceptedCommit, job?.receipt.jobId, job?.receipt.state, workspace]);
 
@@ -342,8 +383,20 @@ export function App() {
   const currentStatus = generationInProgress ? "Generating…" : "Ready";
   const acceptedRunId = workspace.project.acceptedSource.runId;
   const recentJobs = workspace.project.jobs
-    .filter((recentJob) => !HIDDEN_RECENT_STATES.has(recentJob.state))
+    .filter((recentJob) => recentJob.state === "applied")
     .slice(0, 8);
+  const selectedShowcase =
+    viewerSelection.kind === "showcase"
+      ? (SHOWCASES.find((showcase) => showcase.id === viewerSelection.id) ?? SHOWCASES[0])
+      : null;
+  const selectedCompositionSource =
+    viewerSelection.kind === "composition"
+      ? viewerSelection.jobId === acceptedRunId || !viewerSelection.jobId
+        ? source
+        : candidateSource(workspace.project.acceptedUrl, viewerSelection.jobId)
+      : null;
+  const viewerTitle =
+    viewerSelection.kind === "showcase" ? selectedShowcase!.title : viewerSelection.label;
 
   return (
     <div className="app">
@@ -369,41 +422,66 @@ export function App() {
           <p>From one prompt to a finished launch video.</p>
         </section>
 
-        <section className="studio-panel" aria-label="Sequences studio">
+        <section ref={viewerPanelRef} className="studio-panel" aria-label="Sequences studio">
           <header className="studio-panel__header">
             <div>
-              <span className="eyebrow">Timeline</span>
-              <h2>{generationInProgress ? "Luna is building" : "Your latest sequence"}</h2>
+              <span className="eyebrow">Now playing</span>
+              <h2>{viewerTitle}</h2>
             </div>
             <div className="viewer-source" role="group" aria-label="Viewer source">
               <button
                 type="button"
-                className={viewerSource === "featured" ? "is-active" : ""}
-                aria-pressed={viewerSource === "featured"}
-                onClick={() => setViewerSource("featured")}
+                className={
+                  viewerSelection.kind === "showcase" &&
+                  viewerSelection.id === "chatgpt-native-story"
+                    ? "is-active"
+                    : ""
+                }
+                aria-pressed={
+                  viewerSelection.kind === "showcase" &&
+                  viewerSelection.id === "chatgpt-native-story"
+                }
+                onClick={() => setViewerSelection({ kind: "showcase", id: "chatgpt-native-story" })}
               >
                 Featured
               </button>
               <button
                 type="button"
-                className={viewerSource === "latest" ? "is-active" : ""}
-                aria-pressed={viewerSource === "latest"}
-                onClick={() => setViewerSource("latest")}
+                className={
+                  viewerSelection.kind === "composition" && viewerSelection.jobId === acceptedRunId
+                    ? "is-active"
+                    : ""
+                }
+                aria-pressed={
+                  viewerSelection.kind === "composition" && viewerSelection.jobId === acceptedRunId
+                }
+                onClick={() =>
+                  setViewerSelection({
+                    kind: "composition",
+                    jobId: acceptedRunId,
+                    label: "Latest generated video",
+                  })
+                }
               >
                 Latest
               </button>
             </div>
           </header>
-          {viewerSource === "featured" ? (
+          {selectedShowcase ? (
             <SequencesStudio
+              key={selectedShowcase.id}
               mode="video"
-              mediaSource="/api/v1/showcases/chatgpt-native-story/video"
-              poster="/api/v1/showcases/chatgpt-native-story/poster"
-              clipLabel="ChatGPT native story"
-              label="ChatGPT: From question to working draft"
+              mediaSource={`/api/v1/showcases/${selectedShowcase.id}/video`}
+              poster={`/api/v1/showcases/${selectedShowcase.id}/poster`}
+              label={selectedShowcase.title}
             />
           ) : (
-            <SequencesStudio mode="composition" source={source} label="Latest generated video" />
+            <SequencesStudio
+              key={viewerSelection.kind === "composition" ? viewerSelection.jobId : "latest"}
+              mode="composition"
+              source={selectedCompositionSource ?? source}
+              label={viewerTitle}
+            />
           )}
         </section>
 
@@ -413,7 +491,7 @@ export function App() {
               <span className="eyebrow">Create a sequence</span>
               <h2 id="create-heading">What do you want to make?</h2>
             </div>
-            <p>Describe the launch moment. Luna will direct, build, verify, and place it above.</p>
+            <p>Describe the launch moment. Codex will direct, build, verify, and place it above.</p>
           </div>
 
           {!canRun ? (
@@ -534,39 +612,62 @@ export function App() {
 
           {libraryTab === "showcase" ? (
             <div className="showcase-grid" role="tabpanel" aria-label="Showcase videos">
-              <article className="showcase-card">
-                <div className="showcase-card__media">
-                  <video
-                    controls
-                    preload="metadata"
-                    poster="/api/v1/showcases/chatgpt-native-story/poster"
-                  >
-                    <source src="/api/v1/showcases/chatgpt-native-story/video" type="video/mp4" />
-                  </video>
-                  <span>24 sec</span>
-                </div>
-                <div className="showcase-card__copy">
-                  <div>
-                    <span className="eyebrow">Featured sequence</span>
-                    <h3>ChatGPT: From question to working draft</h3>
+              {SHOWCASES.map((showcase, index) => (
+                <button
+                  type="button"
+                  className={`showcase-card${
+                    viewerSelection.kind === "showcase" && viewerSelection.id === showcase.id
+                      ? " showcase-card--selected"
+                      : ""
+                  }`}
+                  key={showcase.id}
+                  onClick={() => showInViewer({ kind: "showcase", id: showcase.id })}
+                >
+                  <div className="showcase-card__media">
+                    <img src={`/api/v1/showcases/${showcase.id}/poster`} alt="" loading="lazy" />
+                    <span>{showcase.duration}</span>
+                    <i aria-hidden="true">▶</i>
                   </div>
-                  <p>
-                    A native product story with streamed responses, persistent UI, measured pointer
-                    work, and a polished lockup.
-                  </p>
-                </div>
-              </article>
+                  <div className="showcase-card__copy">
+                    <div>
+                      <span className="eyebrow">
+                        {index === 0 ? "Featured sequence" : "Showcase sequence"}
+                      </span>
+                      <h3>{showcase.title}</h3>
+                    </div>
+                    <p>{showcase.description}</p>
+                  </div>
+                </button>
+              ))}
             </div>
           ) : (
             <div className="recent-grid" role="tabpanel" aria-label="Recent videos">
               {recentJobs.length > 0 ? (
                 recentJobs.map((recentJob) => (
-                  <article
-                    className={`recent-card${recentJob.id === acceptedRunId ? " recent-card--current" : ""}`}
+                  <button
+                    type="button"
+                    className={`recent-card${
+                      recentJob.id === acceptedRunId ? " recent-card--current" : ""
+                    }${
+                      viewerSelection.kind === "composition" &&
+                      viewerSelection.jobId === recentJob.id
+                        ? " recent-card--selected"
+                        : ""
+                    }`}
                     key={recentJob.id}
+                    onClick={() =>
+                      showInViewer({
+                        kind: "composition",
+                        jobId: recentJob.id,
+                        label:
+                          recentJob.id === acceptedRunId
+                            ? "Latest generated video"
+                            : `Generated sequence · ${formatRecentDate(recentJob.createdAt)}`,
+                      })
+                    }
                   >
                     <div className="recent-card__visual" aria-hidden="true">
-                      <span>{recentJob.id === acceptedRunId ? "Now playing" : "Sequence"}</span>
+                      <span>{recentJob.id === acceptedRunId ? "Latest" : "Sequence"}</span>
                       <strong>S</strong>
                     </div>
                     <div className="recent-card__copy">
@@ -574,12 +675,12 @@ export function App() {
                         {STATE_LABELS[recentJob.state]}
                       </span>
                       <h3>
-                        {recentJob.id === acceptedRunId ? "Current timeline video" : "Recent run"}
+                        {recentJob.id === acceptedRunId ? "Latest generated video" : "Recent run"}
                       </h3>
                       <p>{formatRecentDate(recentJob.createdAt)}</p>
                       <code>{recentJob.id.slice(-8)}</code>
                     </div>
-                  </article>
+                  </button>
                 ))
               ) : (
                 <div className="library-empty">
@@ -963,6 +1064,14 @@ function shortCommit(commit: string): string {
 function revisionedSource(source: string, revision: string): string {
   const separator = source.includes("?") ? "&" : "?";
   return `${source}${separator}revision=${encodeURIComponent(revision)}`;
+}
+
+function candidateSource(acceptedUrl: string, jobId: string): string {
+  const candidateUrl = acceptedUrl.replace(
+    /\/accepted\/index\.html(?:\?.*)?$/,
+    `/candidate/${encodeURIComponent(jobId)}/index.html`,
+  );
+  return revisionedSource(candidateUrl, jobId);
 }
 
 function phaseForJob(
