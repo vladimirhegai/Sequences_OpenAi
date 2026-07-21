@@ -1,21 +1,18 @@
 # Audio asset provenance
 
-The repository owner confirmed the source sites for these temporary Build Week
-audio files on July 21, 2026. The files are not covered by a Sequences
-open-source license.
+The repository owner confirmed the source sites for these Build Week audio
+files on July 21, 2026.
 
 - Background music was obtained from
-  [Fesliyan Studios](https://www.fesliyanstudios.com/). Its
-  [music policy](https://www.fesliyanstudios.com/policy) allows free use for a
-  non-commercial, unmonetized project with credit. Commercial or promotional
-  use requires a donation and usage license. The policy does not grant an
-  open-source license for the raw tracks. These tracks must be replaced before
-  an open-source release.
+  [Fesliyan Studios](https://www.fesliyanstudios.com/). A commercial-use license
+  was purchased for the Sequences demo on July 21, 2026, and was attached to the
+  submitted [YouTube video](https://youtu.be/ZQ0JM4ASbD0). The public
+  [license terms](https://www.fesliyanstudios.com/license/?id=2ec92aa4-5cd7-4951-91e3-02521e9635fa)
+  record purchase license code `2ec92aa4-5cd7-4951-91e3-02521e9635fa`. The
+  tracks are not open-source assets and will be replaced before an open-source
+  release.
 - Sound effects were obtained from [Freesound](https://freesound.org/), where
-  every source sound has an item-specific Creative Commons license. The
-  original per-file pages and license labels were not retained, so these files
-  must be properly re-sourced with their licenses and attribution or replaced
-  before an open-source release.
+  every source sound has an item-specific Creative Commons license.
 
 This notice records the known source sites and current provenance limits. It
 does not assign a broader license or authorship claim than the available records

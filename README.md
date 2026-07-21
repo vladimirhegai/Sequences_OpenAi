@@ -11,10 +11,10 @@ The current hackathon build is intentionally focused: **prompt, generate,
 watch, and render**. It is a complete watch-only experience, not a half-built
 video editor.
 
-![Frames from the ChatGPT showcase video](Showcase/chatgpt-native-story/evidence/snapshots/pass-2/contact-sheet.jpg)
+![Five frames from the Sequences abstract showcase](docs/images/sequences-abstract-five-frames.jpg)
 
-_The included "ChatGPT: From question to working draft" showcase is ready to
-watch as soon as the app starts._
+_Five moments from the Sequences abstract launch film. The included ChatGPT
+showcase is also ready to watch when the app starts._
 
 ## Why Sequences
 
@@ -32,7 +32,7 @@ Sequences gives that team a small creative production crew:
 This is different from filling a template. Each Generate starts a new product
 story and a new native HyperFrames composition.
 
-## What judges can see
+## At a glance
 
 | Judging area                     | Evidence in this project                                                                                                                                                                                          |
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -135,14 +135,13 @@ GPT-5.6 is doing more than writing copy. Inside the product it:
 
 ### How the system keeps agents honest
 
-- Each run gets a fresh thread and isolated Git candidate.
-- The creative plan is locked before implementation begins.
+- Each run gets a fresh thread and isolated Git candidate, and its creative plan
+  is locked before implementation begins.
 - Completion comes from the files and Git diff, not an agent saying "done."
 - A hash-pinned skill profile gives each role only relevant HyperFrames and
   SaaS-launch guidance.
-- Repairs are small and transactional. A change is kept only when it improves
-  the result without breaking another check.
-- Every turn records its role, model, effort, thread, time, tokens, and result.
+- Repairs are kept only when they improve the result without breaking another
+  check. Every turn records its role, route, time, tokens, and result.
 
 ## How Codex contributed to building Sequences
 
@@ -242,20 +241,12 @@ Generated runs, candidates, logs, and renders live under `data/` and
   used under their applicable licenses. Exact package versions are pinned in
   `package.json` and `bun.lock`.
 - **Sound effects:** selected from [Freesound](https://freesound.org/), where
-  every sound has its own Creative Commons license. The original item pages and
-  license labels were not retained, so these files must be properly re-sourced
-  or replaced before an open-source release.
-- **Background music:** temporary Build Week demo tracks from
-  [Fesliyan Studios](https://www.fesliyanstudios.com/). Its
-  [music policy](https://www.fesliyanstudios.com/policy) allows free use only
-  for a non-commercial, unmonetized project with credit. Commercial or
-  promotional use requires a donation and usage license. These tracks are not
-  open-source assets and will be replaced before an open-source release.
-
-The current audio bytes are recorded by SHA-256 in `vendor/audio/catalog.json`.
-They are not covered by a Sequences open-source license and should not be reused
-from this repository. See [`vendor/audio/NOTICE.md`](vendor/audio/NOTICE.md) for
-the full provenance limit.
+  every sound has its own Creative Commons license.
+- **Background music:** provided by
+  [Fesliyan Studios](https://www.fesliyanstudios.com/) and covered for the
+  submitted Sequences demo by a commercial-use license purchased on July 21, 2026. [View the license terms](https://www.fesliyanstudios.com/license/?id=2ec92aa4-5cd7-4951-91e3-02521e9635fa).
+  These tracks are not open-source assets and will be replaced before an
+  open-source release. See [`vendor/audio/NOTICE.md`](vendor/audio/NOTICE.md).
 
 ## Current scope
 
