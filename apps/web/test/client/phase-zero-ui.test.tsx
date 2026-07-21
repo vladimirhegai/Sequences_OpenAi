@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { JobCard, QaFailureDetails } from "../../src/client/App";
 import type { JobResponse } from "../../src/client/api";
+import { previewSourceForAttempt, shouldRetryPreview } from "../../src/client/HyperframesViewer";
 import { SequencesStudio } from "../../src/client/SequencesStudio";
 
 describe("Phase 0 studio UI", () => {
@@ -82,6 +83,17 @@ describe("Phase 0 studio UI", () => {
 
     expect(viewer).not.toContain('iframe.setAttribute("sandbox"');
     expect(viewer).toContain("player?.requestFullscreen().catch");
+  });
+
+  it("reloads a stale composition preview once after its timeline misses startup", () => {
+    const source = "/api/v1/projects/release-a/accepted/index.html?revision=abc#frame";
+
+    expect(shouldRetryPreview("Composition timeline not found after 8s", 0)).toBe(true);
+    expect(shouldRetryPreview("Composition timeline not found after 8s", 1)).toBe(false);
+    expect(shouldRetryPreview("The video preview could not be loaded.", 0)).toBe(false);
+    expect(previewSourceForAttempt(source, 1)).toBe(
+      "/api/v1/projects/release-a/accepted/index.html?revision=abc&sequences-preview-attempt=1#frame",
+    );
   });
 
   it("uses the beige editorial skin and sizes the complete viewer against the first viewport", () => {

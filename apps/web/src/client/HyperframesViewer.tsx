@@ -13,6 +13,20 @@ export interface HyperframesViewerProps {
 
 type ViewerState = "loading" | "ready" | "error";
 
+const TIMELINE_STARTUP_ERROR = "Composition timeline not found";
+
+export function shouldRetryPreview(message: string | null, attempt: number): boolean {
+  return attempt === 0 && Boolean(message?.includes(TIMELINE_STARTUP_ERROR));
+}
+
+export function previewSourceForAttempt(source: string, attempt: number): string {
+  if (attempt === 0) return source;
+  const hashAt = source.indexOf("#");
+  const hash = hashAt === -1 ? "" : source.slice(hashAt);
+  const base = hashAt === -1 ? source : source.slice(0, hashAt);
+  return `${base}${base.includes("?") ? "&" : "?"}sequences-preview-attempt=${attempt}${hash}`;
+}
+
 /**
  * Hosts the real HyperFrames player. The surrounding Sequences shell owns the
  * prompt and library chrome; HyperFrames still owns composition playback.
@@ -29,6 +43,11 @@ export function HyperframesViewer({
   const hostRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<ViewerState>("loading");
   const [error, setError] = useState<string | null>(null);
+  const [retry, setRetry] = useState<{ source: string | null; attempt: number }>({
+    source: null,
+    attempt: 0,
+  });
+  const loadAttempt = retry.source === source ? retry.attempt : 0;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -50,7 +69,7 @@ export function HyperframesViewer({
     player.setAttribute("height", "1080");
     player.setAttribute("shader-loading", "player");
     player.setAttribute("aria-label", label);
-    player.setAttribute("src", source);
+    player.setAttribute("src", previewSourceForAttempt(source, loadAttempt));
 
     const onReady = () => {
       setState("ready");
@@ -58,8 +77,15 @@ export function HyperframesViewer({
     };
     const onError = (event: Event) => {
       const detail = (event as CustomEvent<{ message?: string }>).detail;
+      const message = detail?.message ?? null;
+      if (shouldRetryPreview(message, loadAttempt)) {
+        setState("loading");
+        setError(null);
+        setRetry({ source, attempt: loadAttempt + 1 });
+        return;
+      }
       setError(
-        detail?.message?.replace(/hyperframes/gi, "video engine") ??
+        message?.replace(/hyperframes/gi, "video engine") ??
           "The video preview could not be loaded.",
       );
       setState("error");
@@ -82,7 +108,7 @@ export function HyperframesViewer({
       player.removeEventListener("timeupdate", onTimeUpdate);
       player.remove();
     };
-  }, [controls, label, onPlayer, onTimeChange, source]);
+  }, [controls, label, loadAttempt, onPlayer, onTimeChange, source]);
 
   return (
     <section className="viewer" aria-label={label}>
