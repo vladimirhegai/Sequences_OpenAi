@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { resolve } from "node:path";
 import { Hono } from "hono";
 import { streamSSE } from "hono/streaming";
 import { z } from "zod";
@@ -219,6 +220,19 @@ export async function createSequencesRuntime(
     const artifact = await renders.artifact(c.req.param("renderId"), "source");
     return serveDownload(c, artifact.path, artifact.filename, artifact.contentType);
   });
+
+  const featuredShowcaseRoot = resolve(config.workspaceRoot, "Showcase", "chatgpt-native-story");
+  app.on(["GET", "HEAD"], "/api/v1/showcases/chatgpt-native-story/video", async (c) =>
+    serveProjectFile(c, config, featuredShowcaseRoot, "renders/final.mp4"),
+  );
+  app.on(["GET", "HEAD"], "/api/v1/showcases/chatgpt-native-story/poster", async (c) =>
+    serveProjectFile(
+      c,
+      config,
+      featuredShowcaseRoot,
+      "evidence/snapshots/pass-2/frame-02-at-16.7s.png",
+    ),
+  );
 
   const staticRoutes = [
     "/api/v1/projects/:projectId/files/:token/accepted/*",

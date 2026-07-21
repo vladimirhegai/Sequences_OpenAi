@@ -53,6 +53,24 @@ describe("Phase 0 studio UI", () => {
     expect(mainFlow).not.toContain("Start Luna without earlier context");
   });
 
+  it("orders the homepage as title, viewer, prompt, and Showcase or Recent library", () => {
+    const app = readFileSync(resolve("apps/web/src/client/App.tsx"), "utf8");
+    const mainFlow = app.slice(0, app.indexOf("export function JobCard"));
+    const titleAt = mainFlow.indexOf('id="page-title"');
+    const viewerAt = mainFlow.indexOf('className="studio-panel"');
+    const promptAt = mainFlow.indexOf('className="create-panel"');
+    const libraryAt = mainFlow.indexOf('className="library"');
+
+    expect(titleAt).toBeGreaterThan(0);
+    expect(viewerAt).toBeGreaterThan(titleAt);
+    expect(promptAt).toBeGreaterThan(viewerAt);
+    expect(libraryAt).toBeGreaterThan(promptAt);
+    expect(mainFlow).toContain('setLibraryTab("showcase")');
+    expect(mainFlow).toContain('setLibraryTab("recent")');
+    expect(mainFlow).toContain("/api/v1/showcases/chatgpt-native-story/video");
+    expect(mainFlow).toContain("workspace.project.jobs.slice(0, 8)");
+  });
+
   it("streams Luna activity only while the current job is active", () => {
     const app = readFileSync(resolve("apps/web/src/client/App.tsx"), "utf8");
     const subscription = app.slice(

@@ -36,6 +36,7 @@ const STATE_LABELS: Record<JobState, string> = {
 
 type LoadState = "loading" | "ready" | "error";
 type PendingAction = "build" | "cancel" | "render" | "cancel-render" | null;
+type LibraryTab = "showcase" | "recent";
 
 export function App() {
   const [loadState, setLoadState] = useState<LoadState>("loading");
@@ -52,6 +53,7 @@ export function App() {
   const [attachmentBatch, setAttachmentBatch] = useState(0);
   const [pending, setPending] = useState<PendingAction>(null);
   const [error, setError] = useState<ApiRequestError | null>(null);
+  const [libraryTab, setLibraryTab] = useState<LibraryTab>("showcase");
   const promptRef = useRef<HTMLTextAreaElement>(null);
   const startupRef = useRef<Promise<{ api: SequencesApi; workspace: WorkspaceBootstrap }> | null>(
     null,
@@ -316,37 +318,55 @@ export function App() {
     pending === "build" || generationActive || job?.receipt.state === "applying",
   );
   const currentStatus = generationInProgress ? "Generating…" : "Ready";
+  const acceptedRunId = workspace.project.acceptedSource.runId;
 
   return (
     <div className="app">
-      <header className="app-header">
-        <div className="brand">
-          <span className="brand__mark" aria-hidden="true">
-            S
-          </span>
-          <div>
-            <strong>Sequences</strong>
-            <span>{workspace.project.title}</span>
-          </div>
-          <code className="brand__commit">{shortCommit(workspace.project.acceptedCommit)}</code>
-        </div>
-        <div className="app-header__right">
+      <header className="site-header">
+        <a className="site-wordmark" href="#top" aria-label="Sequences home">
+          Sequences<span>.</span>
+        </a>
+        <div className="site-header__status">
           <span
             className={`header-status header-status--${generationInProgress ? "attention" : "neutral"}`}
           >
             <span className="connection-dot" aria-hidden="true" />
             {currentStatus}
           </span>
-          <span className="header-status__context">Local workspace</span>
+          <code>{shortCommit(workspace.project.acceptedCommit)}</code>
         </div>
       </header>
 
-      <main className="workspace-layout">
-        <aside className="prompt-panel" aria-label="Create sequence">
-          <h1>What do you want to make?</h1>
-          <p className="prompt-panel__intro">
-            Enter a prompt, click Generate, and the finished video will appear in the timeline.
-          </p>
+      <main className="home-shell" id="top">
+        <section className="hero" aria-labelledby="page-title">
+          <span className="hero__kicker">AI motion direction for SaaS</span>
+          <h1 id="page-title">Sequences</h1>
+          <p>From one prompt to a finished launch video.</p>
+        </section>
+
+        <section className="studio-panel" aria-label="Sequences studio">
+          <header className="studio-panel__header">
+            <div>
+              <span className="eyebrow">Timeline</span>
+              <h2>{generationInProgress ? "Luna is building" : "Your latest sequence"}</h2>
+            </div>
+            <span className="studio-panel__meta">
+              {workspace.project.acceptedSource.kind === "generated_candidate"
+                ? "Generated"
+                : "Prepared sample"}
+            </span>
+          </header>
+          <SequencesStudio source={source} label="Video preview" />
+        </section>
+
+        <section className="create-panel" aria-labelledby="create-heading">
+          <div className="create-panel__heading">
+            <div>
+              <span className="eyebrow">Create a sequence</span>
+              <h2 id="create-heading">What do you want to make?</h2>
+            </div>
+            <p>Describe the launch moment. Luna will direct, build, verify, and place it above.</p>
+          </div>
 
           {!canRun ? (
             <div className="notice notice--warning" role="alert">
@@ -364,53 +384,68 @@ export function App() {
               void startBuild();
             }}
           >
-            <label htmlFor="video-prompt">Prompt</label>
+            <label className="sr-only" htmlFor="video-prompt">
+              Prompt
+            </label>
             <textarea
               ref={promptRef}
               id="video-prompt"
               value={prompt}
-              rows={7}
+              rows={5}
               maxLength={16_000}
               disabled={!canRun || generationInProgress}
-              placeholder="Describe the video you want…"
+              placeholder="A 24-second launch film for…"
               onChange={(event) => setPrompt(event.target.value)}
             />
 
-            <ImageAttachments
-              key={attachmentBatch}
-              api={api!}
-              projectId={PROJECT_ID}
-              disabled={!canRun || generationInProgress}
-              onChange={updateAttachments}
-            />
+            <div className="prompt-form__tools">
+              <ImageAttachments
+                key={attachmentBatch}
+                api={api!}
+                projectId={PROJECT_ID}
+                disabled={!canRun || generationInProgress}
+                onChange={updateAttachments}
+              />
 
-            <div className="prompt-form__footer">
-              {generationActive ? (
-                <button
-                  className="button button--quiet-danger"
-                  type="button"
-                  disabled={pending !== null}
-                  onClick={() => void cancelJob()}
-                >
-                  {pending === "cancel" ? "Stopping…" : "Stop generation"}
-                </button>
-              ) : (
-                <button
-                  className="button button--primary"
-                  type="submit"
-                  disabled={!canRun || !prompt.trim() || generationInProgress || attachmentsBlocked}
-                >
-                  {generationInProgress ? "Finishing…" : "Generate"}
-                </button>
-              )}
+              <div className="prompt-form__footer">
+                {generationActive ? (
+                  <button
+                    className="button button--quiet-danger"
+                    type="button"
+                    disabled={pending !== null}
+                    onClick={() => void cancelJob()}
+                  >
+                    {pending === "cancel" ? "Stopping…" : "Stop generation"}
+                  </button>
+                ) : (
+                  <button
+                    className="button button--primary"
+                    type="submit"
+                    disabled={
+                      !canRun || !prompt.trim() || generationInProgress || attachmentsBlocked
+                    }
+                  >
+                    <span>{generationInProgress ? "Finishing…" : "Generate"}</span>
+                    <span aria-hidden="true">↗</span>
+                  </button>
+                )}
+              </div>
             </div>
           </form>
 
-          {job && visibleJobId === job.receipt.jobId ? (
-            <>
+          <div className="operations-grid">
+            {job && visibleJobId === job.receipt.jobId ? (
               <JobCard job={job} events={jobEvents} elapsedMs={elapsedMs} />
-            </>
-          ) : null}
+            ) : null}
+
+            <RenderCard
+              render={render}
+              acceptedCommit={workspace.project.acceptedCommit}
+              pending={pending}
+              onStart={() => void startRender()}
+              onCancel={() => void cancelRender()}
+            />
+          </div>
 
           {error ? (
             <div className="notice notice--error" role="alert">
@@ -418,26 +453,101 @@ export function App() {
               <span>{uiMessage(error.message)}</span>
             </div>
           ) : null}
+        </section>
 
-          <RenderCard
-            render={render}
-            acceptedCommit={workspace.project.acceptedCommit}
-            pending={pending}
-            onStart={() => void startRender()}
-            onCancel={() => void cancelRender()}
-          />
-        </aside>
-
-        <section className="studio-panel" aria-label="Sequences studio">
-          <header className="studio-panel__header">
+        <section className="library" aria-labelledby="library-heading">
+          <div className="library__heading">
             <div>
-              <span className="eyebrow">Timeline</span>
-              <h2>{generationInProgress ? "Generating…" : "Video"}</h2>
+              <span className="eyebrow">Library</span>
+              <h2 id="library-heading">Sequences worth watching</h2>
             </div>
-          </header>
-          <SequencesStudio source={source} label="Video preview" />
+            <div className="library-tabs" role="tablist" aria-label="Video library">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={libraryTab === "showcase"}
+                className={libraryTab === "showcase" ? "is-active" : ""}
+                onClick={() => setLibraryTab("showcase")}
+              >
+                Showcase
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={libraryTab === "recent"}
+                className={libraryTab === "recent" ? "is-active" : ""}
+                onClick={() => setLibraryTab("recent")}
+              >
+                Recent
+                <span>{workspace.project.jobs.length}</span>
+              </button>
+            </div>
+          </div>
+
+          {libraryTab === "showcase" ? (
+            <div className="showcase-grid" role="tabpanel" aria-label="Showcase videos">
+              <article className="showcase-card">
+                <div className="showcase-card__media">
+                  <video
+                    controls
+                    preload="metadata"
+                    poster="/api/v1/showcases/chatgpt-native-story/poster"
+                  >
+                    <source src="/api/v1/showcases/chatgpt-native-story/video" type="video/mp4" />
+                  </video>
+                  <span>24 sec</span>
+                </div>
+                <div className="showcase-card__copy">
+                  <div>
+                    <span className="eyebrow">Featured sequence</span>
+                    <h3>ChatGPT: From question to working draft</h3>
+                  </div>
+                  <p>
+                    A native product story with streamed responses, persistent UI, measured pointer
+                    work, and a polished lockup.
+                  </p>
+                </div>
+              </article>
+            </div>
+          ) : (
+            <div className="recent-grid" role="tabpanel" aria-label="Recent videos">
+              {workspace.project.jobs.length > 0 ? (
+                workspace.project.jobs.slice(0, 8).map((recentJob) => (
+                  <article
+                    className={`recent-card${recentJob.id === acceptedRunId ? " recent-card--current" : ""}`}
+                    key={recentJob.id}
+                  >
+                    <div className="recent-card__visual" aria-hidden="true">
+                      <span>{recentJob.id === acceptedRunId ? "Now playing" : "Sequence"}</span>
+                      <strong>S</strong>
+                    </div>
+                    <div className="recent-card__copy">
+                      <span className={`state-pill state-pill--${toneForState(recentJob.state)}`}>
+                        {STATE_LABELS[recentJob.state]}
+                      </span>
+                      <h3>
+                        {recentJob.id === acceptedRunId ? "Current timeline video" : "Recent run"}
+                      </h3>
+                      <p>{formatRecentDate(recentJob.createdAt)}</p>
+                      <code>{recentJob.id.slice(-8)}</code>
+                    </div>
+                  </article>
+                ))
+              ) : (
+                <div className="library-empty">
+                  <strong>No recent sequences yet.</strong>
+                  <span>Your generated videos will appear here.</span>
+                </div>
+              )}
+            </div>
+          )}
         </section>
       </main>
+
+      <footer className="site-footer">
+        <span>Sequences</span>
+        <span>{workspace.project.title} · Local workspace</span>
+      </footer>
     </div>
   );
 }
@@ -870,6 +980,17 @@ function formatElapsed(milliseconds: number): string {
   return hours > 0
     ? `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`
     : `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
+}
+
+function formatRecentDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Recently created";
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
 }
 
 function formatQaTimes(times: readonly number[]): string {
