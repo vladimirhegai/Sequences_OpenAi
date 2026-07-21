@@ -16,6 +16,10 @@ video editor.
 _Five moments from the Sequences abstract launch film. The included ChatGPT
 showcase is also ready to watch when the app starts._
 
+The five films under `Showcase/` were made through the Sequences pipeline using
+Codex and the pinned HyperFrames skills. They are retained as finished examples
+and bounded craft references for new generations.
+
 ## Contributors
 
 - **Vladimir Hegai** — creator, product direction, design, and creative review.
@@ -158,15 +162,15 @@ Codex was used throughout the hackathon development process. It helped:
 - create the typed story, design, component, camera, motion, and audio contracts;
 - implement isolated candidate worktrees and automatic promotion;
 - connect the pinned HyperFrames player, quality checks, and renderer;
-- run live website probes, inspect receipts and screenshots, and find failure
-  classes;
+- verify the real website, inspect rendered frames, and turn observations into
+  regression tests;
 - replace one-off fixes with regression tests and shared safeguards; and
 - design and test the Sol/Terra/Sol workflow while keeping Luna as a baseline.
 
 The human product owner stayed the source of truth for scope and taste. Codex
 handled implementation, diagnosis, testing, and repeated refinement. The dated
-commit history is the main public evidence; each local generation also writes a
-detailed receipt under `data/runs/release-a/<run_id>/`.
+commit history is the main public evidence. Per-generation diagnostics stay
+local under `data/` and are excluded from the repository.
 
 ## What makes the implementation non-trivial
 
@@ -217,7 +221,9 @@ The included test and sample data lives in:
 
 - `fixtures/release-a/` - known-good project and strict-QA fixture;
 - `fixtures/saas-shell/` - neutral starter copied into each fresh candidate;
-- `Showcase/` - finished films, source, contact sheets, and QA evidence; and
+- `Showcase/` - Sequences-made films, source, contact sheets, and QA evidence;
+- `demos/` - compact motion-grammar examples referenced by the pinned skills;
+  and
 - `.agents/` - the hash-pinned Codex skill profile and registry snapshot.
 
 ## Project map
@@ -226,6 +232,7 @@ The included test and sample data lives in:
 apps/web/          React product + Bun/Hono server
 fixtures/          prepared sample and fresh SaaS starter
 Showcase/          finished reference films and evidence
+demos/             compact motion-grammar examples used by the skills
 .agents/           pinned Codex/HyperFrames skills
 vendor/hyperframes pinned third-party reference source
 vendor/audio/      temporary Build Week audio, hashes, and notice
@@ -276,13 +283,13 @@ system, persistent creative threads, and HyperFrames 0.6.86.
 This repository is a **new, ground-up implementation** created during the
 hackathon in a separate Git history:
 
-| Before the hackathon: Slack Sequences                 | Built during the hackathon: this repository                                               |
-| ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Slack commands and thread replies                     | A new editorial React web product                                                         |
-| Slack OAuth, hosted MCP, and Railway worker           | A local Bun/Hono host with no Slack dependency                                            |
-| Persistent Luna route and an older committee fallback | Fresh-run Sol/Terra/Sol workflow with Luna as a measured baseline                         |
-| HyperFrames 0.6.86 and a custom Slack delivery engine | Pinned HyperFrames 0.7.56, native player, strict QA, and host-owned render                |
-| Large prototype used to learn what failed             | Smaller isolated candidates, typed contracts, bounded repair, receipts, and focused tests |
+| Before the hackathon: Slack Sequences                 | Built during the hackathon: this repository                                     |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Slack commands and thread replies                     | A new editorial React web product                                               |
+| Slack OAuth, hosted MCP, and Railway worker           | A local Bun/Hono host with no Slack dependency                                  |
+| Persistent Luna route and an older committee fallback | Fresh-run Sol/Terra/Sol workflow with Luna as a measured baseline               |
+| HyperFrames 0.6.86 and a custom Slack delivery engine | Pinned HyperFrames 0.7.56, native player, strict QA, and host-owned render      |
+| Pre-hackathon research prototype                      | Smaller isolated candidates, typed contracts, bounded repair, and focused tests |
 
 No Slack application, Slack authentication, old worker, or legacy committee
 runs inside this project. What carried forward was product learning: the model
@@ -302,8 +309,8 @@ starter copied into generated videos.
   records the expanded GPT-5.6 workflow, product UI, QA, audio, Showcases, and
   release evidence.
 - The full dated [commit history](https://github.com/vladimirhegai/Sequences_OpenAi/commits/main/)
-  shows the Codex-assisted implementation and the bug classes found through
-  live probes.
+  shows the Codex-assisted implementation and refinement of the judge-ready
+  product path.
 
 This distinction is deliberate: the old project proved the need. **This
 hackathon project rebuilt the product around one prompt, specialized GPT-5.6

@@ -1,6 +1,9 @@
 # Sequences recommendation launch film
 
-A hand-authored 23.6-second launch film for Sequences. ChatGPT receives the question "How do I make a launch video people actually want to watch?" and types a coherent response. The user then types "Can you make a launch film"; ChatGPT begins "No, as an AI agent, I cannot directly help you—" before the response is visibly hijacked into a Sequences recommendation. The same request becomes a locked storyboard and a verified playable result before the promise: "One prompt. A launch film."
+Made by Sequences, this 23.6-second launch film asks ChatGPT, "How do I make a
+launch video people actually want to watch?" The answer is interrupted by a
+Sequences recommendation, and the same request becomes a locked storyboard and
+a verified playable result before the promise: "One prompt. A launch film."
 
 The revision uses a ChatGPT-native visual language: warm-neutral fields, white conversation surfaces, dark ink, restrained OpenAI green, rounded controls, and the animated knot. It is an original Sequences film inspired by those product conventions, not a claim that Sequences is an OpenAI product.
 

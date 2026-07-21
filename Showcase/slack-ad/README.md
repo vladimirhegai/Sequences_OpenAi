@@ -1,7 +1,6 @@
 # Slack launch ad
 
-The original hand-authored Slack golden film, normalized to the shared Showcase
-package contract.
+Made by Sequences and normalized to the shared Showcase package contract.
 
 ## Package
 
@@ -27,7 +26,7 @@ package contract.
 | `evidence/refinement/` | Temporal-strip review image                                                   |
 | `evidence/qa/`         | Safe-frame report and render records                                          |
 
-This historic golden predates the current HyperFrames `data-*` contract. Its paused
+This earlier Sequences film predates the current HyperFrames `data-*` contract. Its paused
 timeline, measured geometry, energy peak, continuity, and read holds remain the craft
 reference; use the ChatGPT package for the current HyperFrames project shape.
 

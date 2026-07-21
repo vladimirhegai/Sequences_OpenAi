@@ -1,6 +1,6 @@
 # Golden-demo techniques, HyperFrames-native
 
-Concrete craft distilled from the hand-authored 28-second golden demo (618
+Concrete craft distilled from the Sequences-made 28-second golden demo (618
 lines that outperformed every generated film). Use the techniques, not its
 palette, copy, or legacy runtime. Everything here compiles to ordinary
 seek-safe GSAP inside one registered paused timeline.

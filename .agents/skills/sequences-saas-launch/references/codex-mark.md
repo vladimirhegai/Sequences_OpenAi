@@ -1,8 +1,8 @@
 # The ChatGPT/OpenAI knot and its rose-to-knot unfurl
 
-Use this reference whenever a film needs the legacy ChatGPT/OpenAI six-loop knot shown
-in `Video References/chatgpt_work_ad.mp4` at 1:36-1:38. A proven implementation lives
-in `demos/chatgpt-ad/compositions/end-lockup.html`; its 25-frame transparent sprite is
+Use this reference whenever a film needs the legacy ChatGPT/OpenAI six-loop knot. A
+proven implementation lives in `demos/chatgpt-ad/compositions/end-lockup.html`; its
+25-frame transparent sprite is
 `demos/chatgpt-ad/assets/chatgpt-knot-unfurl.png`.
 
 Do not substitute six rotated capsules. That construction produces an asterisk/flower,

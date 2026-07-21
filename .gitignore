@@ -11,21 +11,30 @@ test-results/
 *.tsbuildinfo
 .vite/
 
-# Local runtime state and generated delivery output.
-artifacts/*
-!artifacts/.gitkeep
+# Local runtime state and generated delivery output, including every run and
+# render receipt. These diagnosis packets stay on the operator's machine.
+artifacts/
 data/
 renders/
 workbench/
 
-# These four final Showcase renders are public product assets used by the
-# Featured player. Keep other generated and superseded renders ignored.
+# Local working summaries and superseded diagnostic snapshots are not part of
+# the judge-facing source tree.
+SUMMARY.md
+demos/**/snapshots/finding-*
+Showcase/**/snapshots/finding-*
+Showcase/**/snapshots/**/finding-*
+Showcase/**/check-snapshots-history/finding-*
+
+# These five final Showcase renders are public product assets. Keep other
+# generated and superseded renders ignored.
 !Showcase/**/renders/
 Showcase/**/renders/**
 !Showcase/chatgpt-ad/renders/final.mp4
 !Showcase/chatgpt-native-story/renders/final.mp4
 !Showcase/sequences-abstract-ad/renders/sequences-abstract-ad.mp4
 !Showcase/sequences-recommendation-ad/renders/sequences-recommendation-ad-final.mp4
+!Showcase/slack-ad/renders/final.mp4
 
 # Local creative inputs and superseded showcase renders are not source assets.
 Video References/
@@ -38,6 +47,7 @@ fixtures/**/snapshots/
 fixtures/**/.hyperframes/
 
 # Logs, temporary files, and common editor/OS metadata.
+debug.log
 *.log
 *.tmp
 .DS_Store

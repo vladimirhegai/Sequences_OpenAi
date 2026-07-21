@@ -213,7 +213,7 @@ Requires `perspective` on the parent.
 
 ### From real ASR transcripts
 
-For real ASR-driven scenes, replace hardcoded TIMINGS with transcript JSON (each entry has `word`, `start_ms`, `end_ms`). Convert to seconds and feed in identically. The shape `{ [wordKey]: { start, end } }` is the same whether hand-authored or derived from `hyperframes transcribe`.
+For real ASR-driven scenes, replace hardcoded TIMINGS with transcript JSON (each entry has `word`, `start_ms`, `end_ms`). Convert to seconds and feed in identically. The shape `{ [wordKey]: { start, end } }` is the same whether supplied directly or derived from `hyperframes transcribe`.
 
 ## How to Choose Values
 

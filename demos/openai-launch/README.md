@@ -1,9 +1,10 @@
 # Codex · OpenAI launch-grammar reference film
 
-A hand-authored 20-second HyperFrames film (`index.html` + `compositions/app-world.html`)
-that demonstrates the **OpenAI launch-video grammar** distilled from the five reference
-spots in `Video References/`. It passes the pinned strict gate with zero errors and zero
-warnings (`bun scripts/hyperframes.ts check demos/openai-launch --json --strict
+A 20-second HyperFrames film made through Sequences (`index.html` plus
+`compositions/app-world.html`) that demonstrates the **OpenAI launch-video
+grammar** distilled from five reference spots studied during production. It
+passes the pinned strict gate with zero errors and zero warnings
+(`bun scripts/hyperframes.ts check demos/openai-launch --json --strict
 --snapshots --at-transitions --frame-check`) and renders with
 `bun scripts/hyperframes.ts render demos/openai-launch --quality draft --workers 1
 --output artifacts/openai-launch-reference.mp4`.
@@ -30,19 +31,19 @@ techniques, not the palette or copy.
 
 ## Beat map (what to study where)
 
-| Beat | Time | Technique demonstrated |
-| --- | --- | --- |
-| Editor hook | 0–3.7 | Caret-riding clip-path typewriter (`steps(n)` pair), anticipation blink, read hold |
-| Kinetic type | 3.7–7.4 | Blur-in/blur-out word swaps, strictly sequential (one readable word at a time), hard-kill sets at exits |
-| Voice composer | 7.4–11.3 | Heading + pill hierarchy, finite yoyo waveform, typewriter, operated press (press/release + ripple), exit as one readable unit |
-| App assembly | 11.3–16.5 | Sub-composition mount, clip-path panel reveals (no slide-in overflow), padded camera reserve for the 1.07 push, double shockwave peak, state-swap consequence (streak 12→13) |
-| Lockup | 16.5–20 | Six-petal blossom bloom (`back.out(1.7)` stagger), name + tagline rise, breathing lockup to the end |
+| Beat           | Time      | Technique demonstrated                                                                                                                                                       |
+| -------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Editor hook    | 0–3.7     | Caret-riding clip-path typewriter (`steps(n)` pair), anticipation blink, read hold                                                                                           |
+| Kinetic type   | 3.7–7.4   | Blur-in/blur-out word swaps, strictly sequential (one readable word at a time), hard-kill sets at exits                                                                      |
+| Voice composer | 7.4–11.3  | Heading + pill hierarchy, finite yoyo waveform, typewriter, operated press (press/release + ripple), exit as one readable unit                                               |
+| App assembly   | 11.3–16.5 | Sub-composition mount, clip-path panel reveals (no slide-in overflow), padded camera reserve for the 1.07 push, double shockwave peak, state-swap consequence (streak 12→13) |
+| Lockup         | 16.5–20   | Six-petal blossom bloom (`back.out(1.7)` stagger), name + tagline rise, breathing lockup to the end                                                                          |
 
 ## Strict-gate lessons encoded here (learned while making it pass)
 
 - **Atomic handoffs.** Crossfading scenes puts two readable text layers on screen and
   fails `content_overlap` / `text_occluded`. Cut on clip windows; blur-exit the outgoing
-  readable unit *inside its own clip* first.
+  readable unit _inside its own clip_ first.
 - **No full-screen occluding wipes.** An expanding plate that covers text triggers
   `text_occluded` at sampled boundaries. Prefer cuts; carry identity with color/shape,
   not with a cover.

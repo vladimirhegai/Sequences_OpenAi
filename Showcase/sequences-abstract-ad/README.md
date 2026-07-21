@@ -1,8 +1,9 @@
 # Sequences abstract ad
 
-This package contains the finished 30.333-second launch film **Make your prompt
-move.**, plus the approved preproduction, reusable component lab, reference
-study, exact music map, source composition, and verification evidence.
+Made by Sequences, this package contains the finished 30.333-second launch film
+**Make your prompt move.**, plus the approved preproduction, reusable component
+lab, reference study, exact music map, source composition, and verification
+evidence.
 
 ## Package map
 

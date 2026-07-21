@@ -11,7 +11,7 @@ interface Check {
 
 const root = resolve(import.meta.dir, "..");
 const expectedHyperframesVersion = "0.7.56";
-const expectedSkillsDigest = "7a1bec50e3c67d07ad84df951849991c54c43c3712e5879cedea5a0336ce86b6";
+const expectedSkillsDigest = "32761d8a24041652c176cd34531aba0da9e2e3183ac8b9aa17e63d3bf1673229";
 const checks: Check[] = [];
 
 function command(args: string[]): { ok: boolean; output: string } {

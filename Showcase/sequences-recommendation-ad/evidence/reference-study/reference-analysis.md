@@ -1,19 +1,11 @@
 # Reference study: `quick_openai_ad.mp4`
 
-Source: `Video References/quick_openai_ad.mp4`
+Source: an OpenAI launch reference studied locally during production.
 
 - Container duration: 15.788163 seconds; video duration: 15.700 seconds.
 - Picture: 1276 x 720, H.264 High, 30 fps, 471 frames, BT.709.
 - Source audio: HE-AAC, 44.1 kHz stereo.
 - Evidence: eight `all-frames-sheet-*.jpg` pages preserve every source frame in chronological 10 x 6 tiles; 31 `full-res-*.png` stills sample the picture at 2 fps.
-
-Commands used from the repository root:
-
-```powershell
-ffprobe -v error -show_streams -show_format -of json "Video References/quick_openai_ad.mp4"
-ffmpeg -i "Video References/quick_openai_ad.mp4" -vf "scale=212:120:force_original_aspect_ratio=decrease,pad=212:120:(ow-iw)/2:(oh-ih)/2:color=black,tile=10x6:nb_frames=60:padding=2:margin=4" -q:v 3 -vsync 0 "Showcase/sequences-recommendation-ad/evidence/reference-study/all-frames-sheet-%02d.jpg"
-ffmpeg -i "Video References/quick_openai_ad.mp4" -vf fps=2 "Showcase/sequences-recommendation-ad/evidence/reference-study/full-res-%02d.png"
-```
 
 ## Beat structure and holds
 

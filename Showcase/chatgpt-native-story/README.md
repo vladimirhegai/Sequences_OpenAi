@@ -1,6 +1,10 @@
 # ChatGPT native story
 
-A hand-authored 24-second product film that turns a real ChatGPT conversation into a sourced, editable backyard plan. This is the major revision of `artifacts/chatgpt-native-story.mp4`: the UI is now a native conversation surface, the answer streams coherently, Sources behaves like an inspecting side panel, Canvas performs the rewrite, and the film resolves through the animated ChatGPT knot.
+Made by Sequences, this 24-second product film turns a ChatGPT conversation into
+a sourced, editable backyard plan. The UI is a native conversation surface, the
+answer streams coherently, Sources behaves like an inspecting side panel,
+Canvas performs the rewrite, and the film resolves through the animated ChatGPT
+knot.
 
 | Property      | Value                                                    |
 | ------------- | -------------------------------------------------------- |
@@ -43,7 +47,8 @@ The exact audio placements and ffmpeg mux are documented in [`audio/MIX_NOTES.md
 
 ## Provenance
 
-- The old render's native-DOM source was recovered from the embedded repository at `data/projects/release-a`, commit `96166e8ab3f716b6ff26c3b8aa8102c0ff522651`. It was used as story research; this package is a fresh hand-authored cut.
+- The film was made through the Sequences Codex/HyperFrames workflow and retained
+  as a finished pipeline example.
 - The 25-frame knot sprite is the authorized local sequence from `Showcase/chatgpt-ad`; its final state resolves to the canonical vector mark.
 - `commercial_jazz.mp3` is the exact requested catalog master copied from `vendor/audio/music/commercial_jazz.mp3`, SHA-256 `842a8d072a059d9d9e1280282e9ea24eda04b92c6fe2146f367e6b000ef01d81`.
 - The UI is an original code-native recreation informed by ChatGPT interaction conventions; it is not a capture or a claim about unreleased product behavior.

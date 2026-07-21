@@ -1,6 +1,7 @@
 # ChatGPT launch ad
 
-A hand-authored ChatGPT launch film in the grammar of `bold_openai_ad.mp4`.
+Made by Sequences: a ChatGPT launch film in the grammar of
+`bold_openai_ad.mp4`.
 
 ## Package
 

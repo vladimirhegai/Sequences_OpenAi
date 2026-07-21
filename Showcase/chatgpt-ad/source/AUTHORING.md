@@ -1,9 +1,9 @@
-# This is ChatGPT · hand-authored launch film
+# This is ChatGPT · Sequences launch film
 
-A hand-authored 27.6-second, 1920x1080\@30fps HyperFrames film advertising ChatGPT,
-composed in the grammar of `Video References/bold_openai_ad.mp4` (studied
-frame-by-frame before authoring). It passes the pinned strict gate with zero errors and
-zero warnings:
+A 27.6-second, 1920x1080\@30fps HyperFrames film made through the Sequences
+pipeline using Codex and the pinned motion skills. Its direction follows an
+OpenAI launch reference studied frame-by-frame during production. It passes the
+pinned strict gate with zero errors and zero warnings:
 
 ```
 bun scripts/hyperframes.ts check Showcase/chatgpt-ad/source --json --strict --snapshots --at-transitions --frame-check
