@@ -89,6 +89,7 @@ export async function createSequencesRuntime(
   app.get("/api/v1/health", (c) =>
     c.json({ version: "sequences.health.v1", ok: true, projectId: PROJECT_ID }),
   );
+  app.get("/favicon.ico", (c) => c.body(null, 204));
 
   app.post("/api/v1/session", async (c) => {
     const body = await parseJsonBody(c.req.raw, CreateSessionRequestV1Schema, config.maxJsonBytes);

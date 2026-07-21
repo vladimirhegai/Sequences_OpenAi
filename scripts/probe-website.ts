@@ -7,7 +7,6 @@ import { parseGenerateArguments } from "./generate";
 
 const root = resolve(import.meta.dir, "..");
 const descriptorPath = resolve(root, "data", "local-server.json");
-const terminalStates = new Set(["applied", "failed", "cancelled", "stale"]);
 const checkUiOnly = process.argv.includes("--check-ui");
 const requested = parseGenerateArguments(
   process.argv.slice(2).filter((argument) => argument !== "--check-ui"),
@@ -62,6 +61,13 @@ try {
       `browser request failed · ${request.method()} ${new URL(request.url()).pathname} · ${request.failure()?.errorText ?? "unknown"}`,
     ),
   );
+  page.on("response", (response) => {
+    if (response.status() >= 400) {
+      console.error(
+        `browser response · ${String(response.status())} ${response.request().method()} ${new URL(response.url()).pathname}`,
+      );
+    }
+  });
   page.on("request", (request) => {
     if (request.method() === "POST") {
       console.error(`browser request · POST ${new URL(request.url()).pathname}`);
@@ -150,29 +156,47 @@ try {
     activeJobId = started.receipt.jobId;
     console.error(`website queued · ${activeJobId}`);
 
-    const deadline = Date.now() + requested.timeoutMinutes * 60_000;
-    let current = started.receipt;
-    let lastState = "";
-    while (!terminalStates.has(current.state)) {
-      if (Date.now() >= deadline) {
-        await cancelFromWebsite();
-        throw new Error(`Website generation exceeded ${String(requested.timeoutMinutes)} minutes`);
-      }
-      if (current.state !== lastState) {
-        console.error(`${current.state} · ${current.jobId}`);
-        lastState = current.state;
-      }
-      await Bun.sleep(1_000);
-      current = await readPersistedReceipt(activeJobId);
+    const timeoutMs = requested.timeoutMinutes * 60_000;
+    try {
+      await page.waitForFunction(
+        (jobId) => {
+          const card = document.querySelector<HTMLElement>(`.job-card[data-job-id="${jobId}"]`);
+          return ["success", "failure"].includes(card?.dataset.jobOutcome ?? "");
+        },
+        { polling: 1_000, timeout: timeoutMs },
+        activeJobId,
+      );
+    } catch {
+      await cancelFromWebsite();
+      throw new Error(`Website generation exceeded ${String(requested.timeoutMinutes)} minutes`);
     }
+    const uiTerminal = await page.evaluate((jobId) => {
+      const card = document.querySelector<HTMLElement>(`.job-card[data-job-id="${jobId}"]`);
+      return {
+        jobId: card?.dataset.jobId ?? null,
+        outcome: card?.dataset.jobOutcome ?? null,
+        status: card?.querySelector(".state-pill")?.textContent?.trim() ?? null,
+        result: card?.textContent?.replace(/\s+/g, " ").trim().slice(0, 2_000) ?? null,
+        pageError: document.querySelector(".notice--error")?.textContent?.trim() ?? null,
+      };
+    }, activeJobId);
+    console.error(`website terminal state · ${JSON.stringify(uiTerminal)}`);
+    const current = await readPersistedReceipt(activeJobId);
     activeJobId = null;
 
-    if (current.state !== "applied") {
+    if (
+      (uiTerminal.outcome === "success" && current.state !== "applied") ||
+      (uiTerminal.outcome === "failure" && current.state === "applied")
+    ) {
       throw new Error(
-        `${current.error?.message ?? `Website generation ended in ${current.state}`}\nRun receipt: data/runs/release-a/${current.jobId}/receipt.json`,
+        `Website showed ${uiTerminal.outcome ?? "no terminal outcome"}, but the persisted run ended in ${current.state}\nRun receipt: data/runs/release-a/${current.jobId}/receipt.json`,
       );
     }
-    await page.reload({ waitUntil: "domcontentloaded", timeout: 60_000 });
+    if (uiTerminal.outcome !== "success" || current.state !== "applied") {
+      throw new Error(
+        `${current.error?.message ?? uiTerminal.result ?? `Website generation ended in ${current.state}`}\nRun receipt: data/runs/release-a/${current.jobId}/receipt.json`,
+      );
+    }
     await page.waitForFunction(
       () => document.body.textContent?.includes("Generated video is now on the timeline.") === true,
       { timeout: 30_000 },

@@ -457,7 +457,18 @@ export function JobCard({
   const phase = phaseForJob(job, events.at(-1) ?? null);
 
   return (
-    <section className="job-card" aria-live="polite">
+    <section
+      className="job-card"
+      aria-live="polite"
+      data-job-id={receipt.jobId}
+      data-job-outcome={
+        receipt.state === "applied"
+          ? "success"
+          : ["failed", "timed_out", "cancelled", "stale", "rejected"].includes(receipt.state)
+            ? "failure"
+            : "active"
+      }
+    >
       <div className="job-card__header">
         <div>
           <span className="eyebrow">Latest run</span>

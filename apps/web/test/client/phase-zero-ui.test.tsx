@@ -82,6 +82,8 @@ describe("Phase 0 studio UI", () => {
     expect(markup).toContain("Luna");
     expect(markup).toContain("Luna is creating the video source.");
     expect(markup).toContain("02:34");
+    expect(markup).toContain(`data-job-id="run_${"a".repeat(32)}"`);
+    expect(markup).toContain('data-job-outcome="active"');
     expect(markup).not.toContain("Apply");
     expect(markup).not.toContain("Candidate");
   });
