@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <template>
+      <style>
+        #story-root {
+          --paper: #f7f7f8;
+          --surface: #ffffff;
+          --sidebar: #f3f3f3;
+          --ink: #0d0d0d;
+          --body: #262626;
+          --muted: #5d5d5d;
+          --hairline: #dedede;
+          --soft: #ececec;
+          --green: #10a37f;
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: var(--paper);
+          color: var(--ink);
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #story-root * { box-sizing: border-box; }
+        #story-root svg { display: block; }
+
+        #ui-scene,
+        #end-scene {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+        }
+
+        #ui-scene {
+          background:
+            radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.98) 0 12%, transparent 38%),
+            radial-gradient(circle at 84% 92%, rgba(225, 225, 225, 0.46) 0 9%, transparent 36%),
+            var(--paper);
+        }
+
+        .ambient-disc {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(13, 13, 13, 0.035);
+          pointer-events: none;
+        }
+
+        #ambient-disc-a { left: 8px; top: 250px; width: 240px; height: 240px; }
+        #ambient-disc-b { right: 8px; top: 120px; width: 310px; height: 310px; }
+
+        #product-viewport {
+          position: absolute;
+          left: 72px;
+          top: 48px;
+          width: 1776px;
+          height: 984px;
+          overflow: hidden;
+          border: 1px solid #d7d7d7;
+          border-radius: 34px;
+          background: var(--surface);
+          box-shadow: 0 28px 78px rgba(13, 13, 13, 0.13);
+        }
+
+        #product-world {
+          position: absolute;
+          inset: 0;
+          width: 1776px;
+          height: 984px;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        #app-shell {
+          position: absolute;
+          inset: 0;
+          width: 1776px;
+          height: 984px;
+          overflow: hidden;
+          background: var(--surface);
+        }
+
+        #sidebar {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 254px;
+          height: 984px;
+          padding: 24px 18px;
+          border-right: 1px solid #e2e2e2;
+          background: var(--sidebar);
+        }
+
+        #sidebar-brand {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          height: 52px;
+          padding: 0 10px;
+          font-size: 19px;
+          font-weight: 600;
+        }
+
+        .sidebar-mark,
+        .topbar-mark {
+          width: 28px;
+          height: 28px;
+          color: var(--ink);
+          flex: none;
+        }
+
+        #new-chat {
+          display: flex;
+          align-items: center;
+          gap: 13px;
+          height: 50px;
+          margin-top: 18px;
+          padding: 0 14px;
+          border-radius: 14px;
+          background: #e7e7e7;
+          color: #252525;
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .sidebar-icon {
+          display: grid;
+          width: 26px;
+          height: 26px;
+          place-items: center;
+          color: #373737;
+          font-size: 24px;
+          font-weight: 500;
+        }
+
+        #sidebar-nav { margin-top: 26px; }
+        .nav-row {
+          display: flex;
+          align-items: center;
+          gap: 13px;
+          height: 45px;
+          padding: 0 14px;
+          color: #3f3f3f;
+          font-size: 15px;
+          font-weight: 500;
+        }
+
+        #history-label {
+          margin: 34px 14px 13px;
+          color: #696969;
+          font-size: 13px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+        }
+
+        .history-row {
+          height: 38px;
+          padding: 9px 14px;
+          overflow: hidden;
+          color: #4b4b4b;
+          font-size: 14px;
+          font-weight: 500;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        #profile-row {
+          position: absolute;
+          left: 18px;
+          right: 18px;
+          bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          height: 56px;
+          padding: 0 10px;
+          border-top: 1px solid #dedede;
+          color: #343434;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        #profile-avatar {
+          display: grid;
+          width: 30px;
+          height: 30px;
+          place-items: center;
+          border-radius: 50%;
+          background: #dedede;
+          color: #383838;
+          font-size: 13px;
+        }
+
+        #main-shell {
+          position: absolute;
+          left: 254px;
+          top: 0;
+          width: 1522px;
+          height: 984px;
+          overflow: hidden;
+          background: var(--surface);
+        }
+
+        #topbar {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          z-index: 30;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 80px;
+          padding: 0 30px;
+          border-bottom: 1px solid #ededed;
+          background: rgba(255, 255, 255, 0.97);
+        }
+
+        #model-name {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        #model-chevron { color: #686868; font-size: 17px; }
+        #top-actions { display: flex; align-items: center; gap: 12px; }
+
+        .top-action {
+          display: grid;
+          min-width: 42px;
+          height: 42px;
+          place-items: center;
+          padding: 0 13px;
+          border: 1px solid #dddddd;
+          border-radius: 13px;
+          background: #ffffff;
+          color: #373737;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .app-state {
+          position: absolute;
+          left: 0;
+          top: 80px;
+          width: 1522px;
+          height: 904px;
+          overflow: hidden;
+          background: var(--surface);
+          opacity: 0;
+        }
+
+        #home-state { opacity: 1; }
+
+        #home-center {
+          position: absolute;
+          left: 246px;
+          top: 132px;
+          width: 1030px;
+          text-align: center;
+        }
+
+        #home-mark {
+          width: 68px;
+          height: 68px;
+          margin: 0 auto;
+          color: var(--ink);
+        }
+
+        #home-heading {
+          margin-top: 28px;
+          font-size: 46px;
+          line-height: 1.15;
+          font-weight: 600;
+          letter-spacing: -0.045em;
+        }
+
+        #home-composer {
+          position: absolute;
+          left: 280px;
+          top: 416px;
+          width: 962px;
+          height: 132px;
+          overflow: hidden;
+          border: 1px solid #d2d2d2;
+          border-radius: 31px;
+          background: #ffffff;
+          box-shadow: 0 10px 32px rgba(13, 13, 13, 0.08);
+          transform-origin: 50% 50%;
+        }
+
+        #home-prompt-line {
+          position: absolute;
+          left: 29px;
+          right: 104px;
+          top: 26px;
+          display: flex;
+          align-items: center;
+          height: 44px;
+          overflow: hidden;
+          color: #232323;
+          font-size: 24px;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+
+        #home-prompt-text { display: inline-block; }
+
+        #home-caret,
+        #refine-caret,
+        #answer-caret {
+          display: inline-block;
+          width: 3px;
+          border-radius: 2px;
+          background: #222222;
+          vertical-align: -6px;
+        }
+
+        #home-caret { height: 32px; margin-left: 4px; }
+        #answer-caret { height: 25px; margin-left: 4px; opacity: 0; }
+        #refine-caret { height: 28px; margin-left: 3px; opacity: 0; }
+
+        #composer-tool-row {
+          position: absolute;
+          left: 22px;
+          right: 18px;
+          bottom: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        #composer-tools { display: flex; align-items: center; gap: 10px; }
+
+        .tool-pill {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 35px;
+          padding: 0 12px;
+          border: 1px solid #dddddd;
+          border-radius: 999px;
+          color: #454545;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        #attach-button {
+          display: grid;
+          width: 36px;
+          height: 36px;
+          place-items: center;
+          border: 1px solid #dddddd;
+          border-radius: 50%;
+          color: #3d3d3d;
+          font-size: 23px;
+        }
+
+        #home-send,
+        #refine-send {
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          background: #0d0d0d;
+          color: #ffffff;
+          font-size: 23px;
+          font-weight: 600;
+          transform-origin: 50% 50%;
+        }
+
+        #home-send { position: relative; width: 43px; height: 43px; }
+
+        #suggestions {
+          position: absolute;
+          left: 385px;
+          top: 584px;
+          display: flex;
+          gap: 11px;
+        }
+
+        .suggestion {
+          padding: 12px 17px;
+          border: 1px solid #dfdfdf;
+          border-radius: 999px;
+          color: #555555;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        #chat-state { background: #ffffff; }
+
+        #chat-column {
+          position: absolute;
+          left: 258px;
+          top: 42px;
+          width: 1010px;
+          height: 728px;
+          transform-origin: 50% 40%;
+        }
+
+        #user-bubble {
+          width: 650px;
+          min-height: 78px;
+          margin-left: auto;
+          padding: 22px 27px;
+          border-radius: 27px 27px 8px 27px;
+          background: #f1f1f1;
+          color: #242424;
+          font-size: 21px;
+          line-height: 1.45;
+          font-weight: 500;
+        }
+
+        #assistant-message {
+          position: absolute;
+          left: 0;
+          top: 120px;
+          width: 1010px;
+          padding-left: 58px;
+        }
+
+        #assistant-avatar {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: grid;
+          width: 38px;
+          height: 38px;
+          place-items: center;
+          border-radius: 50%;
+          background: #111111;
+          color: #ffffff;
+          opacity: 0;
+        }
+
+        #assistant-avatar svg { width: 22px; height: 22px; }
+
+        #assistant-body { width: 930px; }
+
+        #assistant-label {
+          height: 31px;
+          color: #202020;
+          font-size: 17px;
+          font-weight: 600;
+          opacity: 0;
+        }
+
+        #search-progress {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          width: fit-content;
+          height: 34px;
+          margin-top: 4px;
+          padding: 0 13px;
+          border-radius: 999px;
+          background: #f2f2f2;
+          color: #505050;
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0;
+        }
+
+        #search-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: var(--green);
+        }
+
+        #answer-title {
+          min-height: 40px;
+          margin-top: 14px;
+          font-size: 31px;
+          line-height: 1.25;
+          font-weight: 600;
+          letter-spacing: -0.035em;
+        }
+
+        #answer-summary {
+          min-height: 60px;
+          margin-top: 10px;
+          color: #3f3f3f;
+          font-size: 18px;
+          line-height: 1.55;
+          font-weight: 500;
+        }
+
+        #plan-list { margin-top: 15px; }
+
+        .plan-row {
+          display: grid;
+          grid-template-columns: 31px 1fr;
+          gap: 13px;
+          min-height: 43px;
+          margin-bottom: 7px;
+          color: #303030;
+          font-size: 17px;
+          line-height: 1.45;
+          opacity: 0;
+        }
+
+        .plan-index {
+          display: grid;
+          width: 27px;
+          height: 27px;
+          place-items: center;
+          border-radius: 50%;
+          background: #eeeeee;
+          color: #292929;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 13px;
+        }
+
+        .plan-row strong { color: #171717; font-weight: 600; }
+
+        #inspiration-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+          width: 930px;
+          margin-top: 17px;
+        }
+
+        .inspiration-card {
+          position: relative;
+          height: 112px;
+          overflow: hidden;
+          border: 1px solid #dadada;
+          border-radius: 17px;
+          background: #e9e9e9;
+          opacity: 0;
+          transform-origin: 50% 70%;
+        }
+
+        .inspiration-sky {
+          position: absolute;
+          inset: 0 0 43px;
+          background: #d9e6df;
+        }
+
+        .inspiration-ground {
+          position: absolute;
+          left: -10px;
+          right: -10px;
+          bottom: -22px;
+          height: 77px;
+          border-radius: 50% 50% 0 0;
+          background: #57735f;
+        }
+
+        .inspiration-deck {
+          position: absolute;
+          left: 96px;
+          bottom: 18px;
+          width: 88px;
+          height: 38px;
+          border-radius: 7px 7px 2px 2px;
+          background: #e5d4b6;
+          box-shadow: 0 -9px 0 #8d7359;
+        }
+
+        .inspiration-card:nth-child(2) .inspiration-sky { background: #eadfd2; }
+        .inspiration-card:nth-child(2) .inspiration-ground { background: #6a8062; }
+        .inspiration-card:nth-child(3) .inspiration-sky { background: #d7e2ea; }
+        .inspiration-card:nth-child(3) .inspiration-ground { background: #4f6d56; }
+
+        #answer-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-top: 16px;
+          opacity: 0;
+        }
+
+        .answer-action {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          height: 42px;
+          padding: 0 15px;
+          border: 1px solid #d8d8d8;
+          border-radius: 999px;
+          background: #ffffff;
+          color: #303030;
+          font-size: 14px;
+          font-weight: 600;
+          transform-origin: 50% 50%;
+        }
+
+        #sources-button, #canvas-button { position: relative; }
+        #sources-button { background: #f4f4f4; }
+
+        #chat-composer {
+          position: absolute;
+          left: 308px;
+          bottom: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 906px;
+          height: 82px;
+          padding: 0 18px 0 26px;
+          border: 1px solid #d2d2d2;
+          border-radius: 29px;
+          background: #ffffff;
+          color: #707070;
+          font-size: 17px;
+          box-shadow: 0 8px 22px rgba(13, 13, 13, 0.06);
+          transform-origin: 50% 50%;
+        }
+
+        #chat-send-muted {
+          display: grid;
+          width: 40px;
+          height: 40px;
+          place-items: center;
+          border-radius: 50%;
+          background: #626262;
+          color: #ffffff;
+          font-size: 21px;
+        }
+
+        #sources-drawer {
+          position: absolute;
+          right: 0;
+          top: 0;
+          z-index: 20;
+          width: 506px;
+          height: 904px;
+          padding: 27px 25px;
+          border-left: 1px solid #d7d7d7;
+          background: #ffffff;
+          box-shadow: -18px 0 44px rgba(13, 13, 13, 0.09);
+          opacity: 0;
+        }
+
+        #sources-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 50px;
+          border-bottom: 1px solid #e4e4e4;
+          font-size: 22px;
+          font-weight: 600;
+        }
+
+        #sources-count {
+          color: #686868;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .source-card {
+          margin-top: 17px;
+          padding: 18px;
+          border: 1px solid #dfdfdf;
+          border-radius: 17px;
+          background: #ffffff;
+          opacity: 0;
+        }
+
+        .source-domain {
+          color: #686868;
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .source-title {
+          margin-top: 7px;
+          color: #202020;
+          font-size: 17px;
+          line-height: 1.35;
+          font-weight: 600;
+        }
+
+        .source-copy {
+          margin-top: 7px;
+          color: #5a5a5a;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        #source-note {
+          margin-top: 18px;
+          padding: 14px 16px;
+          border-radius: 14px;
+          background: #f2f2f2;
+          color: #4c4c4c;
+          font-size: 13px;
+          line-height: 1.5;
+          opacity: 0;
+        }
+
+        #canvas-state { background: #ffffff; }
+
+        #canvas-layout {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          grid-template-columns: 492px 1fr;
+          width: 1522px;
+          height: 904px;
+          overflow: hidden;
+          background: #ffffff;
+        }
+
+        #canvas-chat {
+          position: relative;
+          padding: 32px 32px 26px;
+          border-right: 1px solid #dcdcdc;
+          background: #fafafa;
+        }
+
+        #canvas-mode {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #303030;
+          font-size: 17px;
+          font-weight: 600;
+        }
+
+        #canvas-mode .assistant-mini {
+          display: grid;
+          width: 32px;
+          height: 32px;
+          place-items: center;
+          border-radius: 50%;
+          background: #111111;
+          color: #ffffff;
+        }
+
+        #canvas-mode svg { width: 19px; height: 19px; }
+
+        #canvas-doc-card {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          margin-top: 38px;
+          padding: 17px;
+          border: 1px solid #d7d7d7;
+          border-radius: 18px;
+          background: #ffffff;
+          box-shadow: 0 8px 22px rgba(13, 13, 13, 0.05);
+        }
+
+        #canvas-doc-icon {
+          display: grid;
+          width: 48px;
+          height: 48px;
+          place-items: center;
+          border-radius: 12px;
+          background: #e9e9e9;
+          color: #2f2f2f;
+          font-size: 23px;
+        }
+
+        #canvas-doc-title { font-size: 16px; font-weight: 600; }
+        #canvas-doc-type { margin-top: 4px; color: #707070; font-size: 13px; }
+
+        #canvas-thread {
+          margin-top: 34px;
+          color: #343434;
+          font-size: 16px;
+          line-height: 1.55;
+        }
+
+        #canvas-user-message {
+          margin-left: 52px;
+          padding: 17px 19px;
+          border-radius: 20px 20px 7px 20px;
+          background: #ececec;
+        }
+
+        #canvas-assistant-message {
+          margin-top: 20px;
+          padding-left: 8px;
+          color: #424242;
+        }
+
+        #refine-composer {
+          position: absolute;
+          left: 29px;
+          right: 29px;
+          bottom: 28px;
+          height: 104px;
+          padding: 19px 58px 18px 20px;
+          border: 1px solid #cdcdcd;
+          border-radius: 24px;
+          background: #ffffff;
+          box-shadow: 0 8px 24px rgba(13, 13, 13, 0.07);
+          color: #242424;
+          font-size: 18px;
+          line-height: 1.45;
+        }
+
+        #refine-placeholder { color: #888888; }
+        #refine-line { display: flex; align-items: center; min-height: 32px; }
+        #refine-text { display: inline-block; }
+
+        #refine-send {
+          position: absolute;
+          right: 16px;
+          bottom: 15px;
+          width: 42px;
+          height: 42px;
+        }
+
+        #canvas-document {
+          position: relative;
+          padding: 42px 68px 54px;
+          overflow: hidden;
+          background: #ffffff;
+        }
+
+        #document-topline {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #5a5a5a;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        #document-status {
+          padding: 9px 13px;
+          border-radius: 999px;
+          background: #eeeeee;
+          color: #4b4b4b;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 12px;
+          opacity: 0;
+        }
+
+        #document-title {
+          width: 820px;
+          margin-top: 42px;
+          font-size: 52px;
+          line-height: 1.08;
+          font-weight: 600;
+          letter-spacing: -0.05em;
+        }
+
+        #document-deck {
+          width: 830px;
+          margin-top: 17px;
+          color: #595959;
+          font-size: 17px;
+          line-height: 1.55;
+        }
+
+        #document-rule {
+          width: 830px;
+          height: 1px;
+          margin-top: 27px;
+          background: #dedede;
+        }
+
+        #document-sections { width: 830px; margin-top: 24px; }
+
+        .doc-section {
+          position: relative;
+          min-height: 120px;
+          padding: 18px 0 17px 54px;
+          border-bottom: 1px solid #e2e2e2;
+        }
+
+        .doc-check {
+          position: absolute;
+          left: 0;
+          top: 21px;
+          display: grid;
+          width: 32px;
+          height: 32px;
+          place-items: center;
+          border: 1px solid #cfcfcf;
+          border-radius: 50%;
+          background: #eeeeee;
+          color: #222222;
+          font-size: 16px;
+          transform-origin: 50% 50%;
+        }
+
+        .doc-section h3 {
+          margin: 0;
+          color: #242424;
+          font-size: 21px;
+          line-height: 1.35;
+          font-weight: 600;
+        }
+
+        .doc-section p {
+          margin: 7px 0 0;
+          color: #565656;
+          font-size: 15px;
+          line-height: 1.55;
+          font-weight: 500;
+        }
+
+        #rewrite-sweep {
+          position: absolute;
+          left: 53px;
+          top: 14px;
+          width: 750px;
+          height: 94px;
+          border-radius: 13px;
+          background: #e8f5ef;
+          opacity: 0;
+          transform-origin: 0 50%;
+          pointer-events: none;
+        }
+
+        #rewrite-copy { position: relative; }
+
+        #pointer {
+          position: absolute;
+          left: 1455px;
+          top: 820px;
+          z-index: 60;
+          width: 19px;
+          height: 28px;
+          opacity: 0;
+          transform-origin: 1.5px 1.2px;
+          pointer-events: none;
+        }
+
+        #pointer svg {
+          width: 19px;
+          height: 28px;
+          filter: drop-shadow(0 1px 1px rgba(13, 13, 13, 0.2));
+        }
+
+        .click-ripple {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          margin: -29px 0 0 -29px;
+          z-index: 55;
+          width: 58px;
+          height: 58px;
+          border: 2px solid #10a37f;
+          border-radius: 50%;
+          opacity: 0;
+          transform-origin: 50% 50%;
+          pointer-events: none;
+        }
+
+        #end-scene {
+          display: grid;
+          place-items: center;
+          background:
+            radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.96) 0 13%, transparent 44%),
+            #f7f7f8;
+        }
+
+        #end-lockup-group {
+          display: flex;
+          align-items: center;
+          gap: 50px;
+          width: 850px;
+          min-height: 230px;
+          transform-origin: 50% 50%;
+        }
+
+        #end-mark-wrap {
+          position: relative;
+          width: 208px;
+          height: 208px;
+          flex: none;
+        }
+
+        #end-knot-sprite {
+          position: absolute;
+          inset: 0;
+          width: 208px;
+          height: 208px;
+          background: url("assets/chatgpt-knot-unfurl.png") 0 0 / 1040px 1040px no-repeat;
+          filter: invert(1);
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        #end-knot-final {
+          position: absolute;
+          inset: 0;
+          width: 208px;
+          height: 208px;
+          color: #0d0d0d;
+          opacity: 0;
+        }
+
+        #end-copy { padding-bottom: 3px; }
+
+        #end-name {
+          font-size: 86px;
+          line-height: 0.98;
+          font-weight: 600;
+          letter-spacing: -0.06em;
+          opacity: 0;
+        }
+
+        #end-tagline {
+          margin-top: 21px;
+          color: #565656;
+          font-size: 29px;
+          line-height: 1.3;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          opacity: 0;
+        }
+      </style>
+
+      <div id="story-root" data-hf-id="chatgpt-native-story-root" data-composition-id="chatgpt-native-story" data-start="0" data-duration="24" data-width="1920" data-height="1080" data-fps="30">
+        <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><symbol id="knot-symbol" viewBox="0 0 320 320">
+              <path fill="currentColor" d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"></path>
+        </symbol></defs></svg>
+
+        <section id="ui-scene" class="clip" data-hf-id="product-story" data-start="0" data-duration="20.898" data-track-index="0">
+          <div id="ambient-disc-a" class="ambient-disc"></div><div id="ambient-disc-b" class="ambient-disc"></div>
+          <div id="product-viewport" data-hf-id="product-viewport">
+            <div id="product-world" data-hf-id="product-camera-world" data-layout-allow-overflow>
+              <div id="app-shell" data-component="app-window" data-hf-id="chatgpt-app-shell" data-state="home">
+                <aside id="sidebar" data-hf-id="chatgpt-sidebar">
+                  <div id="sidebar-brand"><svg class="sidebar-mark" viewBox="0 0 320 320" aria-hidden="true"><use href="#knot-symbol"></use></svg><span>ChatGPT</span></div>
+                  <div id="new-chat"><span class="sidebar-icon">＋</span><span>New chat</span></div>
+                  <div id="sidebar-nav"><div class="nav-row"><span class="sidebar-icon">⌕</span><span>Search</span></div><div class="nav-row"><span class="sidebar-icon">▱</span><span>Library</span></div></div>
+                  <div id="history-label">Chats</div>
+                  <div class="history-row">Backyard weekend plan</div>
+                  <div class="history-row">Launch notes</div>
+                  <div class="history-row">Dinner for six</div>
+                  <div class="history-row">Trip ideas</div>
+                  <div id="profile-row"><span id="profile-avatar">VA</span><span>Vlad</span></div>
+                </aside>
+
+                <main id="main-shell">
+                  <header id="topbar"><div id="model-name"><span>ChatGPT</span><span id="model-chevron">⌄</span></div><div id="top-actions"><div class="top-action">Share</div><div class="top-action">•••</div></div></header>
+
+                  <section id="home-state" class="app-state" data-hf-id="home-state">
+                    <div id="home-center"><svg id="home-mark" viewBox="0 0 320 320" aria-hidden="true"><use href="#knot-symbol"></use></svg><div id="home-heading">What can I help with?</div></div>
+                    <div id="home-composer" data-component="composer" data-hf-id="home-composer" data-state="typing"><div id="home-prompt-line"><span id="home-prompt-text" data-hf-id="home-prompt-text"></span><span id="home-caret"></span></div><div id="composer-tool-row"><div id="composer-tools"><span id="attach-button">＋</span><span class="tool-pill">⌕&nbsp; Search</span><span class="tool-pill">◌&nbsp; Reason</span></div><span id="home-send" data-hf-id="home-send">↑<span id="home-ripple" class="click-ripple"></span></span></div></div>
+                    <div id="suggestions"><span class="suggestion">Make a plan</span><span class="suggestion">Create an image</span><span class="suggestion">Help me write</span></div>
+                  </section>
+
+                  <section id="chat-state" class="app-state" data-hf-id="chat-state">
+                    <div id="chat-column" data-hf-id="chat-conversation">
+                      <div id="user-bubble" data-hf-id="user-bubble">Plan a backyard I can actually finish this weekend.</div>
+                      <article id="assistant-message" data-component="chat-message" data-hf-id="assistant-message" data-state="streaming">
+                        <div id="assistant-avatar"><svg viewBox="0 0 320 320" aria-hidden="true"><use href="#knot-symbol"></use></svg></div>
+                        <div id="assistant-body">
+                          <div id="assistant-label">ChatGPT</div>
+                          <div id="search-progress"><span id="search-dot"></span><span id="search-progress-copy">Searching the web</span></div>
+                          <div id="answer-title" data-hf-id="answer-title"></div>
+                          <div id="answer-summary" data-hf-id="answer-summary"><span id="answer-summary-text"></span><span id="answer-caret"></span></div>
+                          <div id="plan-list"><div class="plan-row"><span class="plan-index">1</span><span><strong>Anchor one gathering zone.</strong> Use the seating you have before buying anything new.</span></div><div class="plan-row"><span class="plan-index">2</span><span><strong>Add light at two heights.</strong> Pair overhead string lights with one portable lantern.</span></div><div class="plan-row"><span class="plan-index">3</span><span><strong>Finish with one flexible surface.</strong> A small table handles coffee, dinner, and prep.</span></div></div>
+                          <div id="inspiration-grid" data-hf-id="inspiration-grid"><div class="inspiration-card"><span class="inspiration-sky"></span><span class="inspiration-ground"></span><span class="inspiration-deck"></span></div><div class="inspiration-card"><span class="inspiration-sky"></span><span class="inspiration-ground"></span><span class="inspiration-deck"></span></div><div class="inspiration-card"><span class="inspiration-sky"></span><span class="inspiration-ground"></span><span class="inspiration-deck"></span></div></div>
+                          <div id="answer-actions" data-hf-id="answer-actions"><span id="sources-button" class="answer-action" data-hf-id="sources-button">⌕&nbsp; 6 sources<span id="sources-ripple" class="click-ripple"></span></span><span id="canvas-button" class="answer-action" data-hf-id="canvas-button">▱&nbsp; Open in Canvas<span id="canvas-ripple" class="click-ripple"></span></span><span class="answer-action">♡</span><span class="answer-action">⧉</span></div>
+                        </div>
+                      </article>
+                    </div>
+                    <div id="chat-composer"><span>Ask anything</span><span id="chat-send-muted">↑</span></div>
+                    <aside id="sources-drawer" data-component="sources-drawer" data-hf-id="sources-drawer" data-state="open">
+                      <div id="sources-header"><span>Sources</span><span id="sources-count">6 RESULTS</span></div>
+                      <article class="source-card"><div class="source-domain">The Spruce</div><div class="source-title">43 Backyard Ideas on a Budget</div><div class="source-copy">A practical guide to seating, lighting, and low-lift weekend upgrades.</div></article>
+                      <article class="source-card"><div class="source-domain">Better Homes &amp; Gardens</div><div class="source-title">Backyard Ideas for Every Kind of Space</div><div class="source-copy">Flexible zones that make compact outdoor spaces feel intentional.</div></article>
+                      <article class="source-card"><div class="source-domain">Family Handyman</div><div class="source-title">Easy Backyard Projects for a Weekend</div><div class="source-copy">Small projects with clear materials, timing, and effort estimates.</div></article>
+                      <div id="source-note">ChatGPT synthesized these sources into the plan shown in the conversation.</div>
+                    </aside>
+                  </section>
+
+                  <section id="canvas-state" class="app-state" data-hf-id="canvas-state">
+                    <div id="canvas-layout" data-component="canvas-workspace" data-hf-id="canvas-workspace" data-state="editing">
+                      <aside id="canvas-chat">
+                        <div id="canvas-mode"><span class="assistant-mini"><svg viewBox="0 0 320 320" aria-hidden="true"><use href="#knot-symbol"></use></svg></span><span>ChatGPT with Canvas</span></div>
+                        <div id="canvas-doc-card"><span id="canvas-doc-icon">▤</span><span><div id="canvas-doc-title">Backyard weekend plan</div><div id="canvas-doc-type">Working document</div></span></div>
+                        <div id="canvas-thread"><div id="canvas-user-message">Turn that into a practical weekend plan.</div><div id="canvas-assistant-message">Done — the sourced answer is now an editable draft. Refine any part directly.</div></div>
+                        <div id="refine-composer" data-component="composer" data-hf-id="refine-composer" data-state="typing"><span id="refine-placeholder">Ask for changes</span><div id="refine-line"><span id="refine-text" data-hf-id="refine-text"></span><span id="refine-caret"></span></div><span id="refine-send" data-hf-id="refine-send">↑<span id="refine-ripple" class="click-ripple"></span></span></div>
+                      </aside>
+                      <main id="canvas-document" data-hf-id="canvas-document">
+                        <div id="document-topline"><span>Backyard weekend plan</span><span id="document-status">UPDATED</span></div>
+                        <div id="document-title">A Better Backyard in One Saturday</div>
+                        <div id="document-deck">A source-backed plan with one clear order of operations, sized for a single day.</div>
+                        <div id="document-rule"></div>
+                        <div id="document-sections">
+                          <section class="doc-section"><span class="doc-check">✓</span><div><h3>9:00 — Reset the gathering zone</h3><p>Clear the patio, arrange the seating, and choose one focal point before adding anything decorative.</p></div></section>
+                          <section class="doc-section" id="rewrite-section"><div id="rewrite-sweep"></div><span class="doc-check">✓</span><div id="rewrite-copy"><h3>12:30 — Add warmth and light</h3><p id="rewrite-paragraph">Hang the string lights first, then place one lantern where people naturally gather.</p></div></section>
+                          <section class="doc-section"><span class="doc-check">✓</span><div><h3>4:00 — Finish, then stop</h3><p>Add the small table, set out soft goods, and leave the final hour open for cleanup.</p></div></section>
+                        </div>
+                      </main>
+                    </div>
+                  </section>
+                </main>
+              </div>
+
+              <div id="pointer" data-hf-id="operated-pointer"><svg viewBox="0 0 19 28" aria-hidden="true"><path d="M1.5 1.2 L1.5 24 L7 18.7 L10.9 27 L14.9 25.1 L10.9 16.9 L18 16.9 Z" fill="#0b0b0e" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"></path></svg></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="end-scene" class="clip" data-hf-id="end-lockup-scene" data-start="20.898" data-duration="3.102" data-track-index="1">
+          <div id="end-lockup-group" data-hf-id="end-lockup-group">
+            <div id="end-mark-wrap"><div id="end-knot-sprite"></div><svg id="end-knot-final" viewBox="0 0 320 320" aria-hidden="true"><use href="#knot-symbol"></use></svg></div>
+            <div id="end-copy"><div id="end-name" data-hf-id="end-name">ChatGPT</div><div id="end-tagline" data-hf-id="end-tagline">From question to working draft.</div></div>
+          </div>
+        </section>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+          const productWorld = document.querySelector("#product-world");
+          const appShell = document.querySelector("#app-shell");
+          const homeState = document.querySelector("#home-state");
+          const chatState = document.querySelector("#chat-state");
+          const canvasState = document.querySelector("#canvas-state");
+          const pointer = document.querySelector("#pointer");
+          const homePromptText = document.querySelector("#home-prompt-text");
+          const homeCaret = document.querySelector("#home-caret");
+          const answerTitle = document.querySelector("#answer-title");
+          const answerSummary = document.querySelector("#answer-summary-text");
+          const answerCaret = document.querySelector("#answer-caret");
+          const refineText = document.querySelector("#refine-text");
+          const refineCaret = document.querySelector("#refine-caret");
+          const refinePlaceholder = document.querySelector("#refine-placeholder");
+
+          const prompt = "Plan a backyard I can actually finish this weekend.";
+          const promptDriver = { value: 0 };
+          tl.to(promptDriver, {
+            value: prompt.length,
+            duration: 1.7,
+            ease: "none",
+            onUpdate: () => { homePromptText.textContent = prompt.slice(0, Math.floor(promptDriver.value)); },
+          }, 0.55);
+
+          const homeBlink = { phase: 0 };
+          tl.to(homeBlink, {
+            phase: Math.PI * 8,
+            duration: 2.5,
+            ease: "none",
+            onUpdate: () => { homeCaret.style.opacity = Math.sin(homeBlink.phase) > -0.15 ? "1" : "0"; },
+          }, 0);
+
+          tl.fromTo(productWorld, { scale: 1.018 }, { scale: 1, duration: 0.92, ease: "power3.out" }, 0);
+          tl.fromTo("#home-heading", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.08);
+          tl.fromTo("#home-composer", { opacity: 0, y: 22, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "back.out(1.3)" }, 0.18);
+          tl.fromTo("#suggestions", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.52);
+
+          tl.fromTo(pointer, { opacity: 0, x: 62, y: 74 }, { opacity: 1, x: -1, y: -231.7, duration: 0.58, ease: "power3.inOut" }, 1.88);
+          tl.to([pointer, "#home-send"], { scale: 0.86, duration: 0.08, ease: "power2.in" }, 2.507);
+          tl.to(pointer, { scale: 1, duration: 0.18, ease: "back.out(2)" }, 2.587);
+          tl.to("#home-send", { scale: 1, duration: 0.18, ease: "back.out(1.7)" }, 2.587);
+          tl.fromTo("#home-ripple", { opacity: 0.58, scale: 0.18 }, { opacity: 0, scale: 2.8, duration: 0.58, ease: "power3.out", immediateRender: false }, 2.507);
+          tl.to("#home-composer", { borderColor: "#a7a7a7", duration: 0.18, ease: "power1.out" }, 2.507);
+
+          tl.set(homeState, { opacity: 0 }, 2.76);
+          tl.set(chatState, { opacity: 1 }, 2.76);
+          tl.set(appShell, { attr: { "data-state": "chat" } }, 2.76);
+          tl.set(pointer, { opacity: 0 }, 2.76);
+          tl.to(productWorld, { x: -28, y: -12, scale: 1.028, duration: 0.7, ease: "power3.inOut" }, 2.76);
+          tl.fromTo("#user-bubble", { opacity: 0, x: 42 }, { opacity: 1, x: 0, duration: 0.42, ease: "power3.out" }, 2.82);
+          tl.fromTo("#assistant-avatar", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.38, ease: "back.out(1.55)" }, 3.04);
+          tl.to("#assistant-label", { opacity: 1, duration: 0.28, ease: "power2.out" }, 3.08);
+          tl.to("#search-progress", { opacity: 1, duration: 0.32, ease: "power2.out" }, 3.25);
+
+          const titleText = "Here’s a practical weekend plan.";
+          const titleDriver = { value: 0 };
+          tl.to(titleDriver, {
+            value: titleText.length,
+            duration: 1.12,
+            ease: "none",
+            onUpdate: () => { answerTitle.textContent = titleText.slice(0, Math.floor(titleDriver.value)); },
+          }, 3.52);
+
+          const summaryText = "Start with what changes how the space feels, then layer in the details.";
+          const summaryDriver = { value: 0 };
+          tl.to(answerCaret, { opacity: 1, duration: 0.01 }, 4.68);
+          tl.to(summaryDriver, {
+            value: summaryText.length,
+            duration: 1.28,
+            ease: "none",
+            onUpdate: () => { answerSummary.textContent = summaryText.slice(0, Math.floor(summaryDriver.value)); },
+          }, 4.68);
+          const answerBlink = { phase: 0 };
+          tl.to(answerBlink, {
+            phase: Math.PI * 8,
+            duration: 2.1,
+            ease: "none",
+            onUpdate: () => { answerCaret.style.opacity = Math.sin(answerBlink.phase) > -0.15 ? "1" : "0"; },
+          }, 4.68);
+          tl.set(answerCaret, { opacity: 0 }, 6.78);
+          tl.to("#search-progress", { backgroundColor: "#eaf6f1", color: "#23624f", duration: 0.35, ease: "power2.out" }, 5.72);
+          tl.set("#search-progress-copy", { textContent: "Sources found" }, 5.72);
+          tl.fromTo("#story-root .plan-row", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.38, stagger: 0.2, ease: "power2.out" }, 5.25);
+          tl.fromTo("#story-root .inspiration-card", { opacity: 0, y: 22, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.11, ease: "back.out(1.25)" }, 6.28);
+          tl.fromTo("#answer-actions", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.38, ease: "power2.out" }, 7.15);
+          tl.to(productWorld, { x: -62, y: -28, scale: 1.045, duration: 1.35, ease: "power2.inOut" }, 4.55);
+
+          tl.set(pointer, { opacity: 0, x: 0, y: 0, scale: 1 }, 7.7);
+          tl.fromTo(pointer, { opacity: 0, x: -80, y: 90 }, { opacity: 1, x: -820.6, y: -62.2, duration: 0.64, ease: "power3.inOut" }, 7.78);
+          tl.to([pointer, "#sources-button"], { scale: 0.88, duration: 0.08, ease: "power2.in" }, 8.6376);
+          tl.to([pointer, "#sources-button"], { scale: 1, duration: 0.18, ease: "back.out(2)" }, 8.73);
+          tl.fromTo("#sources-ripple", { opacity: 0.5, scale: 0.18 }, { opacity: 0, scale: 2.4, duration: 0.58, ease: "power3.out", immediateRender: false }, 8.6376);
+          tl.set(appShell, { attr: { "data-state": "sources" } }, 8.72);
+          tl.fromTo("#sources-drawer", { opacity: 0, x: 506 }, { opacity: 1, x: 0, duration: 0.68, ease: "power3.out" }, 8.72);
+          tl.to("#chat-column", { x: -230, scale: 0.93, duration: 0.68, ease: "power3.inOut" }, 8.72);
+          tl.to("#chat-composer", { opacity: 0, x: -140, scale: 0.95, duration: 0.28, ease: "power2.in" }, 8.72);
+          tl.to(productWorld, { x: 0, y: 0, scale: 1, duration: 0.72, ease: "power3.inOut" }, 8.72);
+          tl.fromTo("#story-root .source-card", { opacity: 0, x: 35 }, { opacity: 1, x: 0, duration: 0.42, stagger: 0.15, ease: "power3.out" }, 9.12);
+          tl.to("#source-note", { opacity: 1, duration: 0.36, ease: "power2.out" }, 9.78);
+          tl.to("#sources-drawer", { scale: 1.012, duration: 0.26, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.55);
+
+          tl.to(pointer, { x: -874.8, y: -86.4, duration: 0.56, ease: "power3.inOut" }, 11.95);
+          tl.to([pointer, "#canvas-button"], { scale: 0.88, duration: 0.08, ease: "power2.in" }, 12.7244);
+          tl.to([pointer, "#canvas-button"], { scale: 1, duration: 0.18, ease: "back.out(2)" }, 12.8044);
+          tl.fromTo("#canvas-ripple", { opacity: 0.5, scale: 0.18 }, { opacity: 0, scale: 2.4, duration: 0.58, ease: "power3.out", immediateRender: false }, 12.7244);
+          tl.to("#sources-drawer", { x: 506, opacity: 0, duration: 0.42, ease: "power3.in" }, 12.76);
+          tl.to("#chat-column", { x: 0, scale: 1, duration: 0.42, ease: "power3.inOut" }, 12.76);
+          tl.to("#chat-composer", { x: 0, scale: 1, duration: 0.42, ease: "power3.inOut" }, 12.76);
+          tl.set(chatState, { opacity: 0 }, 13.18);
+          tl.set(canvasState, { opacity: 1 }, 13.18);
+          tl.set(appShell, { attr: { "data-state": "canvas" } }, 13.18);
+          tl.set(pointer, { opacity: 0 }, 13.18);
+          tl.fromTo(canvasState, { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.62, ease: "power3.out" }, 13.18);
+          tl.fromTo("#canvas-doc-card", { opacity: 0, y: 16, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.46, ease: "back.out(1.3)" }, 13.55);
+          tl.fromTo("#canvas-user-message", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 13.72);
+          tl.fromTo("#canvas-assistant-message", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 13.95);
+          tl.fromTo("#document-title", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.48, ease: "power3.out" }, 13.55);
+          tl.fromTo("#document-deck", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 13.78);
+          tl.fromTo("#document-sections", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 14.0);
+          tl.to(productWorld, { x: 22, y: -6, scale: 1.015, duration: 0.75, ease: "power3.inOut" }, 13.18);
+
+          const refinePrompt = "Make it doable for one Saturday.";
+          const refineDriver = { value: 0 };
+          tl.to(refinePlaceholder, { opacity: 0, duration: 0.16, ease: "power1.in" }, 14.82);
+          tl.to(refineCaret, { opacity: 1, duration: 0.01 }, 14.84);
+          tl.to(refineDriver, {
+            value: refinePrompt.length,
+            duration: 1.62,
+            ease: "none",
+            onUpdate: () => { refineText.textContent = refinePrompt.slice(0, Math.floor(refineDriver.value)); },
+          }, 14.88);
+          const refineBlink = { phase: 0 };
+          tl.to(refineBlink, {
+            phase: Math.PI * 8,
+            duration: 2.0,
+            ease: "none",
+            onUpdate: () => { refineCaret.style.opacity = Math.sin(refineBlink.phase) > -0.15 ? "1" : "0"; },
+          }, 14.84);
+          tl.to(productWorld, { x: 118, y: -28, scale: 1.055, duration: 0.75, ease: "power3.inOut" }, 14.72);
+
+          tl.set(pointer, { opacity: 0, x: -874.8, y: -86.4, scale: 1 }, 15.95);
+          tl.fromTo(pointer, { opacity: 0, x: -874.8, y: -86.4 }, { opacity: 1, x: -778.5, y: 97.8, duration: 0.5, ease: "power3.inOut" }, 16.14);
+          tl.to([pointer, "#refine-send"], { scale: 0.86, duration: 0.08, ease: "power2.in" }, 16.8112);
+          tl.to([pointer, "#refine-send"], { scale: 1, duration: 0.18, ease: "back.out(2)" }, 16.8912);
+          tl.fromTo("#refine-ripple", { opacity: 0.48, scale: 0.18 }, { opacity: 0, scale: 2.3, duration: 0.58, ease: "power3.out", immediateRender: false }, 16.8112);
+          tl.set(refineCaret, { opacity: 0 }, 16.82);
+          tl.set("#canvas-layout", { attr: { "data-state": "updating" } }, 16.82);
+          tl.to(productWorld, { x: -108, y: -36, scale: 1.055, duration: 0.72, ease: "power3.inOut" }, 16.86);
+          tl.fromTo("#rewrite-sweep", { opacity: 0.72, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.62, ease: "power3.out" }, 16.92);
+          const rewriteDriver = { value: 0 };
+          const rewriteParagraph = document.querySelector("#rewrite-paragraph");
+          const originalRewrite = "Hang the string lights first, then place one lantern where people naturally gather.";
+          const updatedRewrite = "Hang the lights, place the lantern, and stop there — the whole step fits inside forty-five minutes.";
+          tl.to(rewriteDriver, {
+            value: 1,
+            duration: 0.7,
+            ease: "none",
+            onUpdate: () => { rewriteParagraph.textContent = rewriteDriver.value >= 0.42 ? updatedRewrite : originalRewrite; },
+          }, 16.96);
+          tl.to("#rewrite-sweep", { opacity: 0, duration: 0.48, ease: "power2.out" }, 17.58);
+          tl.to("#story-root .doc-check", { backgroundColor: "#10a37f", scale: 1.08, duration: 0.28, stagger: 0.12, ease: "back.out(1.35)" }, 17.16);
+          tl.to("#story-root .doc-check", { scale: 1, duration: 0.2, stagger: 0.12, ease: "power2.out" }, 17.72);
+          tl.fromTo("#document-status", { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.38, ease: "power3.out" }, 17.48);
+          tl.set("#canvas-layout", { attr: { "data-state": "updated" } }, 17.82);
+          tl.set(pointer, { opacity: 0 }, 17.82);
+          tl.to(productWorld, { x: 0, y: 0, scale: 0.975, duration: 0.95, ease: "power3.inOut" }, 18.1);
+          tl.to("#document-status", { scale: 1.035, duration: 0.26, yoyo: true, repeat: 1, ease: "sine.inOut" }, 18.88);
+
+          tl.to("#product-viewport", { opacity: 0, duration: 0.35, ease: "power3.in" }, 20.53);
+          tl.to("#ambient-disc-a", { opacity: 0, duration: 0.35, ease: "power2.in" }, 20.53);
+          tl.to("#ambient-disc-b", { opacity: 0, duration: 0.35, ease: "power2.in" }, 20.53);
+          tl.set("#product-viewport", { display: "none", opacity: 0 }, 20.84);
+          tl.set("#product-viewport", { opacity: 0 }, 20.9);
+          tl.set("#ambient-disc-a", { opacity: 0 }, 20.9);
+          tl.set("#ambient-disc-b", { opacity: 0 }, 20.9);
+
+          const sprite = document.querySelector("#end-knot-sprite"); const spriteState = { frame: 0 };
+          const paintSpriteFrame = () => {
+            const frame = Math.max(0, Math.min(24, Math.round(spriteState.frame)));
+            sprite.style.backgroundPosition = `${-(frame % 5) * 208}px ${-Math.floor(frame / 5) * 208}px`;
+          };
+          paintSpriteFrame();
+          tl.fromTo(sprite, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 20.94);
+          tl.to(spriteState, { frame: 24, duration: 0.8, ease: "none", onUpdate: paintSpriteFrame }, 20.94);
+          tl.set(sprite, { opacity: 0 }, 21.75);
+          tl.set("#end-knot-final", { opacity: 1 }, 21.75);
+          tl.fromTo("#end-name", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 21.8);
+          tl.fromTo("#end-tagline", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 22.08);
+          tl.fromTo("#end-lockup-group", { scale: 0.997 }, { scale: 1.006, duration: 1.75, ease: "sine.inOut" }, 22.25);
+
+          window.__timelines["chatgpt-native-story"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

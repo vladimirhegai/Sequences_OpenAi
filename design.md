@@ -1,8 +1,15 @@
 ---
-name: sequences-product-shell
+name: sequences
 kind: web-interface
 version: 1
 scope: repository-shell-only
+description: "A HyperFrames-native creative director and motion-design workspace for turning source material into coherent, reviewable video."
+characteristics:
+  - "Source-faithful"
+  - "Editorial and motion-led"
+  - "Candidate-based and reversible"
+  - "Inspectable and evidence-backed"
+  - "HyperFrames-native"
 colors:
   canvas: "#F4F0E8"
   surface: "#FCFAF5"
@@ -51,15 +58,15 @@ constraints:
   - "Never apply these shell tokens to generated video compositions without their frame.md opting in."
 ---
 
-# Sequences Product Shell Design Specification
+# Sequences Design Specification
 
 ## Product experience thesis
 
-Sequences is an editorial proof desk around the real Hyperframes Studio.
+Sequences is a HyperFrames-native creative director and motion-design workspace.
 
-It turns approved product evidence and creative intent into an editable Hyperframes composition, then makes each AI operation inspectable, testable, reversible, and attributable.
+It turns a brief and source material into a coherent, source-faithful video, then makes each AI-authored change inspectable, testable, reversible, and attributable.
 
-> Scope: this lowercase `design.md` governs the Sequences web shell. Each generated Hyperframes video project owns its own lowercase `frame.md`; never apply the shell palette or layout to a composition unless that project's frame specification explicitly chooses it.
+> Scope: this specification governs the Sequences web shell. Each generated HyperFrames video project owns its own `frame.md`; never apply the shell palette or layout to a composition unless that project's frame specification explicitly chooses it.
 
 The experience is intentionally split into two modes:
 
@@ -1194,7 +1201,7 @@ The following screenshots must be possible to capture from the browser without r
 
 ## Sources and influences
 
-This specification is grounded in the local `HACKATHON_RULES.md` and `OPENAI_HACKATHON_PLAN.md`, especially their requirements for Plan → Build → Verify, candidate isolation, truthful progress, immutable samples, inspectable diffs, real Hyperframes Studio use, and no duplicate editor systems.
+This specification is grounded in the local `HACKATHON_RULES.md` and `ARCHITECTURE.md`, especially their requirements for candidate isolation, truthful progress, immutable samples, inspectable diffs, and no duplicate editor systems.
 
 The Hyperframes contracts in `vendor/hyperframes/AGENTS.md`, `vendor/hyperframes/skills/hyperframes/SKILL.md`, `vendor/hyperframes/skills/hyperframes-creative/SKILL.md`, and `vendor/hyperframes/skills/hyperframes-creative/references/design-spec.md` establish HTML composition ownership, skill routing, frame/design token discipline, and the rule that design specifications define brand rather than layout.
 

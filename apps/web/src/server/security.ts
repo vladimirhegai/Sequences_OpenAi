@@ -35,7 +35,11 @@ export class LocalSecurity {
     return async (c, next) => {
       const host = c.req.header("host")?.toLowerCase();
       if (host !== this.config.expectedHost) {
-        throw new ApiProblem(403, "invalid_host", "This service accepts only its exact loopback Host");
+        throw new ApiProblem(
+          403,
+          "invalid_host",
+          "This service accepts only its exact loopback Host",
+        );
       }
 
       const origin = c.req.header("origin");
@@ -46,18 +50,30 @@ export class LocalSecurity {
 
       const path = c.req.path;
       const isShellRead = !path.startsWith("/api/") && ["GET", "HEAD"].includes(c.req.method);
-      const isPublic = path === "/api/v1/health" || path === "/api/v1/session" || signedStatic || isShellRead;
+      const isPublic =
+        path === "/api/v1/health" || path === "/api/v1/session" || signedStatic || isShellRead;
       if (!isPublic) {
         const session = cookieValue(c.req.header("cookie") ?? null, SESSION_COOKIE);
-        if (!sameSecret(session, this.config.sessionToken) || Date.now() >= this.config.sessionExpiresAt.getTime()) {
-          throw new ApiProblem(401, "session_required", "Create a local browser session before using this API");
+        if (
+          !sameSecret(session, this.config.sessionToken) ||
+          Date.now() >= this.config.sessionExpiresAt.getTime()
+        ) {
+          throw new ApiProblem(
+            401,
+            "session_required",
+            "Create a local browser session before using this API",
+          );
         }
       }
 
       const mutating = new Set(["POST", "PUT", "PATCH", "DELETE"]).has(c.req.method);
       if (mutating) {
         if (origin !== this.config.expectedOrigin) {
-          throw new ApiProblem(403, "origin_required", "State-changing requests require the exact local Origin");
+          throw new ApiProblem(
+            403,
+            "origin_required",
+            "State-changing requests require the exact local Origin",
+          );
         }
         if (path !== "/api/v1/session") {
           const csrf = c.req.header("x-sequences-csrf");
@@ -84,7 +100,10 @@ export class LocalSecurity {
   }
 
   sessionCookie(): string {
-    const maxAge = Math.max(0, Math.floor((this.config.sessionExpiresAt.getTime() - Date.now()) / 1_000));
+    const maxAge = Math.max(
+      0,
+      Math.floor((this.config.sessionExpiresAt.getTime() - Date.now()) / 1_000),
+    );
     return `${SESSION_COOKIE}=${encodeURIComponent(this.config.sessionToken)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}`;
   }
 
@@ -94,7 +113,10 @@ export class LocalSecurity {
 
   private isSignedStaticRequest(path: string, method: string): boolean {
     if (!["GET", "HEAD", "OPTIONS"].includes(method)) return false;
-    const match = /^\/api\/v1\/projects\/release-a\/files\/([^/]+)\/(?:accepted|sample|candidate\/run_[0-9a-f]{32})(?:\/|$)/.exec(path);
+    const match =
+      /^\/api\/v1\/projects\/release-a\/files\/([^/]+)\/(?:accepted|sample|candidate\/run_[0-9a-f]{32})(?:\/|$)/.exec(
+        path,
+      );
     return match ? this.acceptsStaticToken(match[1] ?? "") : false;
   }
 }

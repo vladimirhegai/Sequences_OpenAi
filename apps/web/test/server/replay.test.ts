@@ -22,6 +22,8 @@ async function store() {
     seedRoot: join(workspace, "fixtures", "release-a"),
     candidatesRoot: join(dataRoot, "candidates"),
     runsRoot: join(dataRoot, "runs"),
+    rendersRoot: join(dataRoot, "renders"),
+    renderWorktreesRoot: join(dataRoot, "render-worktrees"),
   });
   const projects = new ProjectStore(config);
   await projects.initialize();
@@ -51,7 +53,11 @@ describe("candidate promotion replay protection", () => {
 
     const acceptedJob = `run_${"3".repeat(32)}`;
     const acceptedCandidate = await projects.createCandidate(acceptedJob, base);
-    writeFileSync(join(acceptedCandidate, "frame.md"), "# Accepted changed independently\n", "utf8");
+    writeFileSync(
+      join(acceptedCandidate, "frame.md"),
+      "# Accepted changed independently\n",
+      "utf8",
+    );
     const acceptedCommit = await projects.createCandidateCommit(acceptedCandidate, acceptedJob);
     await projects.applyCandidate(base, acceptedCommit);
 

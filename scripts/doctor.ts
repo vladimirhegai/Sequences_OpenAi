@@ -11,7 +11,7 @@ interface Check {
 
 const root = resolve(import.meta.dir, "..");
 const expectedHyperframesVersion = "0.7.56";
-const expectedSkillsDigest = "b28d6cffd6a53b4e9783653b8f20b67b01e209eb943085217a25f1ce95ac8ba1";
+const expectedSkillsDigest = "7a1bec50e3c67d07ad84df951849991c54c43c3712e5879cedea5a0336ce86b6";
 const checks: Check[] = [];
 
 function command(args: string[]): { ok: boolean; output: string } {
@@ -33,7 +33,11 @@ function command(args: string[]): { ok: boolean; output: string } {
   return { ok: result.exitCode === 0, output: stdout || stderr };
 }
 
-function addCommandCheck(name: string, args: string[], predicate?: (output: string) => boolean): void {
+function addCommandCheck(
+  name: string,
+  args: string[],
+  predicate?: (output: string) => boolean,
+): void {
   const result = command(args);
   checks.push({
     name,
@@ -66,12 +70,12 @@ for (const packageName of [
   "producer",
   "sdk",
   "shader-transitions",
-  "studio-server",
 ]) {
   const packagePath = join(root, "node_modules", "@hyperframes", packageName, "package.json");
   let version = "missing";
   if (existsSync(packagePath)) {
-    version = (JSON.parse(readFileSync(packagePath, "utf8")) as { version?: string }).version ?? "unknown";
+    version =
+      (JSON.parse(readFileSync(packagePath, "utf8")) as { version?: string }).version ?? "unknown";
   }
   checks.push({
     name: `@hyperframes/${packageName}`,
@@ -80,11 +84,11 @@ for (const packageName of [
   });
 }
 
-const embeddedStudioPath = join(root, "node_modules", "hyperframes", "dist", "studio", "index.html");
+const sequencesStudioPath = join(root, "apps", "web", "src", "client", "SequencesStudio.tsx");
 checks.push({
-  name: "Official embedded Hyperframes Studio",
-  ok: existsSync(embeddedStudioPath),
-  detail: existsSync(embeddedStudioPath) ? "bundled with hyperframes 0.7.56" : "missing",
+  name: "Sequences-owned studio",
+  ok: existsSync(sequencesStudioPath),
+  detail: existsSync(sequencesStudioPath) ? "prompt + player + watch-only timeline" : "missing",
 });
 
 const skillsManifest = join(root, ".agents", "skills-manifest.json");
@@ -94,11 +98,23 @@ if (existsSync(skillsManifest)) {
   const bytes = readFileSync(skillsManifest);
   const digest = createHash("sha256").update(bytes).digest("hex");
   const manifest = JSON.parse(bytes.toString("utf8")) as {
+    version?: string;
+    profileId?: string;
+    hyperframesVersion?: string;
+    defaultWorkflow?: string;
+    requiredSkills?: string[];
+    workflows?: string[];
     skills?: Record<string, unknown>;
   };
-  const skillCount = Object.keys(manifest.skills ?? {}).length;
-  skillsDetail = `${skillCount} skills · sha256:${digest.slice(0, 12)}`;
-  skillsOk = digest === expectedSkillsDigest && skillCount === 8;
+  const skillNames = Object.keys(manifest.skills ?? {});
+  const required = [...(manifest.requiredSkills ?? []), ...(manifest.workflows ?? [])];
+  skillsDetail = `${manifest.profileId ?? "unknown profile"} · ${skillNames.length} skills · sha256:${digest.slice(0, 12)}`;
+  skillsOk =
+    digest === expectedSkillsDigest &&
+    manifest.version === "sequences.skill-profile.v1" &&
+    manifest.hyperframesVersion === expectedHyperframesVersion &&
+    Boolean(manifest.defaultWorkflow && manifest.workflows?.includes(manifest.defaultWorkflow)) &&
+    required.every((skill) => skillNames.includes(skill));
 }
 checks.push({ name: "Pinned Hyperframes skills", ok: skillsOk, detail: skillsDetail });
 
@@ -110,7 +126,8 @@ if (existsSync(registryPath)) {
     items?: Array<{ type?: string }>;
   };
   const counts = new Map<string, number>();
-  for (const item of registry.items ?? []) counts.set(item.type ?? "unknown", (counts.get(item.type ?? "unknown") ?? 0) + 1);
+  for (const item of registry.items ?? [])
+    counts.set(item.type ?? "unknown", (counts.get(item.type ?? "unknown") ?? 0) + 1);
   registryDetail = `${registry.items?.length ?? 0} registered items`;
   registryOk =
     counts.get("hyperframes:block") === 109 &&
@@ -118,6 +135,31 @@ if (existsSync(registryPath)) {
     counts.get("hyperframes:example") === 8;
 }
 checks.push({ name: "Pinned Hyperframes registry", ok: registryOk, detail: registryDetail });
+
+const audioCatalogPath = join(root, "vendor", "audio", "catalog.json");
+let audioDetail = "missing";
+let audioOk = false;
+if (existsSync(audioCatalogPath)) {
+  const catalog = JSON.parse(readFileSync(audioCatalogPath, "utf8")) as {
+    soundtracks?: Array<{ file: string; sha256: string }>;
+    sfx?: Array<{ file: string; sha256: string }>;
+  };
+  const entries = [...(catalog.soundtracks ?? []), ...(catalog.sfx ?? [])];
+  const stale = entries.filter((entry) => {
+    const path = join(root, ...entry.file.split("/"));
+    if (!existsSync(path)) return true;
+    return createHash("sha256").update(readFileSync(path)).digest("hex") !== entry.sha256;
+  });
+  audioDetail =
+    stale.length === 0
+      ? `${catalog.soundtracks?.length ?? 0} soundtracks · ${catalog.sfx?.length ?? 0} sfx · hashes verified`
+      : `${stale.length} stale entr${stale.length === 1 ? "y" : "ies"}: ${stale
+          .map((entry) => entry.file)
+          .join(", ")
+          .slice(0, 120)}`;
+  audioOk = entries.length > 0 && stale.length === 0;
+}
+checks.push({ name: "Vendored audio catalog", ok: audioOk, detail: audioDetail });
 
 const fixtureHtml = [
   join(root, "fixtures", "release-a", "index.html"),

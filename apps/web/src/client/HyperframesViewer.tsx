@@ -5,16 +5,25 @@ export interface HyperframesViewerProps {
   label: string;
   source: string | null;
   badge?: string;
+  controls?: boolean;
+  onPlayer?: (player: HyperframesPlayer | null) => void;
+  onTimeChange?: (time: number) => void;
 }
 
 type ViewerState = "loading" | "ready" | "error";
 
 /**
- * Hosts the official Hyperframes web component without weakening the authored
- * composition boundary. The server-issued source URL is deliberately
- * capability-scoped so relative composition assets remain in the same tree.
+ * Hosts the real HyperFrames player. The surrounding Sequences studio owns the
+ * prompt and timeline chrome; HyperFrames still owns composition playback.
  */
-export function HyperframesViewer({ label, source, badge }: HyperframesViewerProps) {
+export function HyperframesViewer({
+  label,
+  source,
+  badge,
+  controls = true,
+  onPlayer,
+  onTimeChange,
+}: HyperframesViewerProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<ViewerState>("loading");
   const [error, setError] = useState<string | null>(null);
@@ -32,49 +41,60 @@ export function HyperframesViewer({ label, source, badge }: HyperframesViewerPro
 
     const player = document.createElement("hyperframes-player") as HyperframesPlayer;
     const iframe = player.iframeElement;
-
-    // Hyperframes defaults to allow-same-origin for Studio integrations. Review
-    // playback is intentionally less privileged: the runtime communicates with
-    // the real player through its postMessage bridge.
     iframe.setAttribute("sandbox", "allow-scripts");
     iframe.title = label;
 
-    player.setAttribute("controls", "");
+    if (controls) player.setAttribute("controls", "");
     player.setAttribute("width", "1920");
     player.setAttribute("height", "1080");
     player.setAttribute("shader-loading", "player");
     player.setAttribute("aria-label", label);
     player.setAttribute("src", source);
 
-    const onReady = () => setState("ready");
+    const onReady = () => {
+      setState("ready");
+      onPlayer?.(player);
+    };
     const onError = (event: Event) => {
       const detail = (event as CustomEvent<{ message?: string }>).detail;
-      setError(detail?.message ?? "The Hyperframes composition could not be loaded.");
+      setError(
+        detail?.message?.replace(/hyperframes/gi, "video engine") ??
+          "The video preview could not be loaded.",
+      );
       setState("error");
+    };
+    const onTimeUpdate = (event: Event) => {
+      const currentTime = (event as CustomEvent<{ currentTime?: number }>).detail?.currentTime;
+      if (typeof currentTime === "number" && Number.isFinite(currentTime))
+        onTimeChange?.(currentTime);
     };
 
     player.addEventListener("ready", onReady);
     player.addEventListener("error", onError);
+    player.addEventListener("timeupdate", onTimeUpdate);
     host.replaceChildren(player);
 
     return () => {
+      onPlayer?.(null);
       player.removeEventListener("ready", onReady);
       player.removeEventListener("error", onError);
+      player.removeEventListener("timeupdate", onTimeUpdate);
       player.remove();
     };
-  }, [label, source]);
+  }, [controls, label, onPlayer, onTimeChange, source]);
 
   return (
     <section className="viewer" aria-label={label}>
       <div className="viewer__heading">
         <span>{label}</span>
-        {badge ? <span className="status-tag status-tag--neutral">{badge}</span> : null}
+        {badge ? <span className="status-tag">{badge}</span> : null}
+        <span className="viewer__state">{state}</span>
       </div>
       <div className="viewer__frame">
         <div ref={hostRef} className="viewer__host" />
         {state === "loading" ? (
           <div className="viewer__notice" role="status">
-            Loading the Hyperframes runtime…
+            Loading preview…
           </div>
         ) : null}
         {state === "error" ? (

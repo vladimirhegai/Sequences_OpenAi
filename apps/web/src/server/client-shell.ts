@@ -43,7 +43,8 @@ export async function serveClientShell(c: Context, config: ServerConfig): Promis
   const contentType = CLIENT_MIME[extension];
   if (!contentType) throw new ApiProblem(404, "shell_file_not_found", "Client asset not found");
   const metadata = await stat(path);
-  if (metadata.size > 25 * 1_024 * 1_024) throw new ApiProblem(413, "shell_file_too_large", "Client asset exceeds 25 MiB");
+  if (metadata.size > 25 * 1_024 * 1_024)
+    throw new ApiProblem(413, "shell_file_too_large", "Client asset exceeds 25 MiB");
 
   const headers = new Headers({
     "Content-Type": contentType,
@@ -64,7 +65,7 @@ export async function serveClientShell(c: Context, config: ServerConfig): Promis
         "media-src 'self' blob:",
         "font-src 'self' data:",
         `connect-src ${config.expectedOrigin}`,
-        `frame-src ${config.expectedOrigin} http://127.0.0.1:5190`,
+        `frame-src ${config.expectedOrigin}`,
         "worker-src 'self' blob:",
         "base-uri 'none'",
         "form-action 'none'",
@@ -83,7 +84,11 @@ function decodeShellPath(path: string): string {
   } catch {
     throw new ApiProblem(400, "invalid_shell_path", "Client path has invalid URL encoding");
   }
-  if (decoded.includes("\\") || decoded.includes("\0") || decoded.split("/").some((part) => part === "..")) {
+  if (
+    decoded.includes("\\") ||
+    decoded.includes("\0") ||
+    decoded.split("/").some((part) => part === "..")
+  ) {
     throw new ApiProblem(400, "invalid_shell_path", "Client path is unsafe");
   }
   return decoded;
@@ -97,14 +102,16 @@ async function clientBody(path: string): Promise<Blob> {
 }
 
 function missingBuildResponse(): Response {
-  const body = "<!doctype html><meta charset=utf-8><title>Sequences build required</title><p>Run <code>bun run build</code>, then reopen Sequences.</p>";
+  const body =
+    "<!doctype html><meta charset=utf-8><title>Sequences build required</title><p>Run <code>bun run build</code>, then reopen Sequences.</p>";
   return new Response(body, {
     status: 503,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "no-store",
       "Referrer-Policy": "no-referrer",
-      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'",
+      "Content-Security-Policy":
+        "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'",
     },
   });
 }

@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { GitCommitSchema, JobIdSchema, JobStateSchema, ProjectIdSchema } from "./job-contracts";
+import { RenderIdSchema, RenderStateSchema } from "./render-contracts";
+import { SequenceArtifactV1Schema } from "./sequence-contracts";
 
 export const ApiErrorV1Schema = z
   .object({
@@ -36,9 +38,23 @@ export const ProjectSummaryV1Schema = z
     id: ProjectIdSchema,
     title: z.string().min(1).max(200),
     acceptedCommit: GitCommitSchema,
+    acceptedSource: z
+      .object({
+        kind: z.enum(["prepared_sample", "generated_candidate"]),
+        label: z.string().min(1).max(120),
+        runId: JobIdSchema.nullable(),
+      })
+      .strict(),
     acceptedUrl: z.string().min(1),
     sampleUrl: z.string().min(1),
     files: z.array(z.string().min(1).max(300)).max(5_000),
+    sequence: SequenceArtifactV1Schema.nullable(),
+    director: z
+      .object({
+        generation: z.number().int().nonnegative(),
+        active: z.boolean(),
+      })
+      .strict(),
     jobs: z
       .array(
         z
@@ -46,6 +62,18 @@ export const ProjectSummaryV1Schema = z
             id: JobIdSchema,
             state: JobStateSchema,
             kind: z.enum(["plan", "build", "revision"]),
+            createdAt: z.string().datetime(),
+          })
+          .strict(),
+      )
+      .max(500),
+    renders: z
+      .array(
+        z
+          .object({
+            id: RenderIdSchema,
+            state: RenderStateSchema,
+            acceptedCommit: GitCommitSchema,
             createdAt: z.string().datetime(),
           })
           .strict(),
@@ -64,6 +92,7 @@ export const ProjectsResponseV1Schema = z
 const SkillCapabilityV1Schema = z
   .object({
     id: z.string().min(1).max(120),
+    purpose: z.string().min(1).max(300),
     hash: z.string().regex(/^[0-9a-f]{16}$/),
     files: z.number().int().positive(),
   })
@@ -81,8 +110,14 @@ export const CapabilitiesResponseV1Schema = z
     version: z.literal("sequences.capabilities.v1"),
     hyperframesVersion: z.literal("0.7.56"),
     available: z.boolean(),
-    manifestDigest: z.string().regex(/^[0-9a-f]{64}$/).nullable(),
+    manifestDigest: z
+      .string()
+      .regex(/^[0-9a-f]{64}$/)
+      .nullable(),
     manifestSource: z.string().max(300).nullable(),
+    skillProfileVersion: z.literal("sequences.skill-profile.v1").nullable(),
+    skillProfileId: z.string().min(1).max(120).nullable(),
+    defaultWorkflow: z.string().min(1).max(120).nullable(),
     skills: z.array(SkillCapabilityV1Schema).max(100),
     registry: z.array(RegistryCapabilityV1Schema).max(1_000),
     qaCommands: z.array(z.enum(["lint", "check", "keyframes", "snapshot", "render"])),

@@ -1,37 +1,35 @@
 {
+  "version": "sequences.skill-profile.v1",
+  "profileId": "sequences-saas-launch-local-v1",
+  "hyperframesVersion": "0.7.56",
   "source": "heygen-com/hyperframes",
+  "defaultWorkflow": "sequences-saas-launch",
+  "requiredSkills": ["hyperframes", "hyperframes-core", "sequences-saas-launch"],
+  "workflows": ["sequences-saas-launch"],
   "skills": {
-    "general-video": {
-      "hash": "1aed9f4f68414a45",
-      "files": 1
-    },
     "hyperframes": {
       "hash": "fce43b4c3355cde9",
       "files": 1
     },
     "hyperframes-animation": {
-      "hash": "0b137d4d602dda4a",
+      "hash": "25b108d97187b727",
       "files": 84
-    },
-    "hyperframes-cli": {
-      "hash": "797fd624f0b83cb5",
-      "files": 7
     },
     "hyperframes-core": {
       "hash": "690ebb3ba5420b90",
       "files": 14
     },
     "hyperframes-creative": {
-      "hash": "1f321f48a15ebb72",
+      "hash": "ef0c89f15d5315fc",
       "files": 25
     },
     "hyperframes-keyframes": {
       "hash": "040453e302a0e15b",
       "files": 3
     },
-    "hyperframes-registry": {
-      "hash": "5f49178cc43e100b",
-      "files": 10
+    "sequences-saas-launch": {
+      "hash": "66aa08f62928fb12",
+      "files": 31
     }
   }
 }

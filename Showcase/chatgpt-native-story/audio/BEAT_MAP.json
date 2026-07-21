@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "track": {
+    "catalogId": "commercial-jazz",
+    "file": "music/commercial_jazz.mp3",
+    "titleMetadata": "Snap Along",
+    "durationSeconds": 117.0512,
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "sha256": "842a8d072a059d9d9e1280282e9ea24eda04b92c6fe2146f367e6b000ef01d81"
+  },
+  "analysis": {
+    "approximateBpm": 117.5,
+    "beatSeconds": 0.5108,
+    "barSeconds": 2.0434,
+    "firstConfidentBeatSeconds": 0.464,
+    "confidence": 0.36
+  },
+  "composition": {
+    "durationSeconds": 24,
+    "fps": 30,
+    "events": [
+      { "id": "prompt-typing", "seconds": 0.55, "frame": 17 },
+      { "id": "send", "seconds": 2.507, "frame": 75 },
+      { "id": "answer-stream", "seconds": 3.52, "frame": 106 },
+      { "id": "sources-open", "seconds": 8.6376, "frame": 259 },
+      { "id": "canvas-open", "seconds": 12.7244, "frame": 382 },
+      { "id": "refinement-typing", "seconds": 14.88, "frame": 446 },
+      { "id": "refinement-send", "seconds": 16.8112, "frame": 504 },
+      { "id": "rewrite-complete", "seconds": 17.48, "frame": 524 },
+      { "id": "product-clear", "seconds": 20.53, "frame": 616 },
+      { "id": "knot-unfurl", "seconds": 20.94, "frame": 628 },
+      { "id": "canonical-knot", "seconds": 21.75, "frame": 653 },
+      { "id": "lockup-complete", "seconds": 22.5, "frame": 675 }
+    ]
+  }
+}

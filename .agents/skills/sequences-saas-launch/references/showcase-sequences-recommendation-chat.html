@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+  <head></head>
+  <body>
+    <template>
+      <style>
+        #cg-root {
+          --cg-field: #f7f7f8;
+          --cg-surface: #ffffff;
+          --cg-ink: #17191c;
+          --cg-muted: #666a72;
+          --cg-line: #d9d9df;
+          --sq-cobalt: #10a37f;
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: var(--cg-field);
+          color: var(--cg-ink);
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #cg-root[data-state="question-entry"] #cg-question-heading {
+          color: var(--cg-ink);
+        }
+
+        #cg-root[data-state="advice-building"] #cg-advice-state {
+          color: var(--cg-ink);
+        }
+
+        #cg-root[data-state="interrupted"] #cg-recommendation {
+          background: #171717;
+        }
+
+        #cg-grid {
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(23, 25, 28, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(23, 25, 28, 0.035) 1px, transparent 1px);
+          background-size: 64px 64px;
+          pointer-events: none;
+        }
+
+        #cg-chat-shell {
+          position: absolute;
+          inset: 0;
+        }
+
+        #chatgpt-mark {
+          position: absolute;
+          left: 892px;
+          top: 210px;
+          width: 136px;
+          height: 136px;
+          color: var(--cg-ink);
+          transform-origin: 50% 50%;
+        }
+
+        #chatgpt-mark svg {
+          display: block;
+          width: 136px;
+          height: 136px;
+        }
+
+        #chatgpt-mark-sprite,
+        #chatgpt-mark-final {
+          position: absolute;
+          pointer-events: none;
+        }
+
+        #chatgpt-mark-sprite {
+          left: -6px;
+          top: -6px;
+          width: 148px;
+          height: 148px;
+          background-image: url("assets/chatgpt-knot-unfurl.png");
+          background-size: 740px 740px;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+          filter: invert(1);
+          opacity: 0;
+        }
+
+        #chatgpt-mark-final {
+          inset: 0;
+          opacity: 0;
+        }
+
+        #chatgpt-mark-pulse {
+          position: absolute;
+          left: -18px;
+          top: -18px;
+          width: 172px;
+          height: 172px;
+          border: 2px solid var(--cg-ink);
+          border-radius: 50%;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        #cg-question-heading {
+          position: absolute;
+          left: 240px;
+          top: 386px;
+          width: 1440px;
+          text-align: center;
+          font-size: 54px;
+          line-height: 1.08;
+          font-weight: 600;
+          letter-spacing: -0.03em;
+        }
+
+        #chatgpt-composer {
+          position: absolute;
+          left: 240px;
+          top: 560px;
+          width: 1440px;
+          height: 136px;
+          border: 2px solid #e4e4e8;
+          border-radius: 68px;
+          background: var(--cg-surface);
+          box-shadow: 0 22px 70px rgba(23, 25, 28, 0.1);
+          transform-origin: 50% 50%;
+        }
+
+        #cg-plus {
+          position: absolute;
+          left: 38px;
+          top: 43px;
+          width: 50px;
+          height: 50px;
+          color: #2a2d31;
+        }
+
+        #question-payload {
+          position: absolute;
+          left: 112px;
+          top: 27px;
+          width: 1160px;
+          height: 82px;
+          padding: 18px 24px;
+          border-radius: 24px;
+          transform-origin: 0 50%;
+        }
+
+        #question-text {
+          position: absolute;
+          left: 24px;
+          top: 18px;
+          height: 48px;
+          white-space: nowrap;
+          font-size: 36px;
+          line-height: 48px;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          color: var(--cg-ink);
+          clip-path: inset(0 100% 0 0);
+        }
+
+        #question-caret {
+          position: absolute;
+          left: 24px;
+          top: 17px;
+          width: 4px;
+          height: 48px;
+          background: var(--cg-ink);
+          pointer-events: none;
+        }
+
+        #answer-placeholder {
+          position: absolute;
+          left: 132px;
+          top: 47px;
+          font-size: 30px;
+          line-height: 40px;
+          font-weight: 500;
+          color: #777b82;
+          opacity: 0;
+        }
+
+        #chatgpt-send-control {
+          position: absolute;
+          right: 22px;
+          top: 16px;
+          width: 104px;
+          height: 104px;
+          border-radius: 52px;
+          background: var(--cg-ink);
+          transform-origin: 50% 50%;
+        }
+
+        #chatgpt-send-control svg {
+          position: absolute;
+          left: 29px;
+          top: 29px;
+          width: 46px;
+          height: 46px;
+        }
+
+        #cg-send-ripple {
+          position: absolute;
+          right: 22px;
+          top: 16px;
+          width: 104px;
+          height: 104px;
+          border: 4px solid var(--sq-cobalt);
+          border-radius: 52px;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        #cg-pointer {
+          position: absolute;
+          left: 1596px;
+          top: 650px;
+          width: 62px;
+          height: 74px;
+          color: #17191c;
+          filter: drop-shadow(0 5px 2px rgba(255, 255, 255, 0.9));
+          pointer-events: none;
+          opacity: 0;
+        }
+
+        #cg-pointer svg {
+          display: block;
+          width: 62px;
+          height: 74px;
+        }
+
+        #cg-advice-state {
+          position: absolute;
+          left: 260px;
+          top: 340px;
+          width: 1400px;
+          height: 500px;
+          opacity: 0;
+        }
+
+        #cg-assistant-row {
+          position: absolute;
+          left: 0;
+          top: 74px;
+          width: 1300px;
+          min-height: 340px;
+          display: grid;
+          grid-template-columns: 64px 1fr;
+          column-gap: 28px;
+          align-items: start;
+        }
+
+        #cg-assistant-avatar {
+          position: relative;
+          width: 64px;
+          height: 64px;
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          background: var(--cg-ink);
+          color: #ffffff;
+          box-shadow: 0 8px 24px rgba(23, 25, 28, 0.12);
+        }
+
+        #cg-assistant-avatar svg {
+          display: block;
+          width: 38px;
+          height: 38px;
+        }
+
+        #cg-assistant-content {
+          position: relative;
+          width: 1160px;
+          min-height: 330px;
+          padding-top: 2px;
+        }
+
+        #cg-assistant-row #cg-answer-label {
+          position: relative;
+          left: auto;
+          top: auto;
+          font-family: "Montserrat", sans-serif;
+          font-size: 25px;
+          line-height: 34px;
+          font-weight: 700;
+          letter-spacing: -0.015em;
+          text-transform: none;
+          color: var(--cg-ink);
+        }
+
+        #cg-assistant-row #advice-copy {
+          position: relative;
+          left: auto;
+          top: auto;
+          width: 1130px;
+          min-height: 238px;
+          margin-top: 18px;
+          font-size: 38px;
+          line-height: 1.48;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          color: var(--cg-ink);
+          white-space: pre-wrap;
+        }
+
+        #cg-stream-cursor {
+          display: inline-block;
+          width: 10px;
+          height: 28px;
+          margin-left: 8px;
+          border-radius: 3px;
+          background: var(--cg-ink);
+          transform: translateY(3px);
+          pointer-events: none;
+        }
+
+        #cg-response-tools {
+          position: absolute;
+          left: 92px;
+          top: 410px;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          color: #696d75;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          opacity: 0;
+        }
+
+        #cg-followup-entry {
+          position: absolute;
+          left: 132px;
+          top: 43px;
+          width: 1190px;
+          height: 52px;
+          font-size: 34px;
+          line-height: 48px;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          white-space: nowrap;
+          opacity: 0;
+        }
+
+        #cg-followup-caret,
+        #cg-refusal-cursor {
+          display: inline-block;
+          width: 7px;
+          height: 31px;
+          margin-left: 7px;
+          border-radius: 3px;
+          background: var(--cg-ink);
+          transform: translateY(4px);
+          pointer-events: none;
+        }
+
+        #cg-followup-bubble {
+          position: absolute;
+          right: 260px;
+          top: 556px;
+          width: 650px;
+          min-height: 92px;
+          padding: 24px 34px;
+          border-radius: 34px;
+          background: #e9e9eb;
+          color: var(--cg-ink);
+          font-size: 32px;
+          line-height: 44px;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          opacity: 0;
+        }
+
+        #cg-refusal-row {
+          position: absolute;
+          left: 260px;
+          top: 684px;
+          width: 1360px;
+          min-height: 154px;
+          display: grid;
+          grid-template-columns: 64px 1fr;
+          column-gap: 28px;
+          align-items: start;
+          opacity: 0;
+        }
+
+        #cg-refusal-avatar {
+          width: 64px;
+          height: 64px;
+          display: grid;
+          place-items: center;
+          border-radius: 50%;
+          background: var(--cg-ink);
+          color: #ffffff;
+          box-shadow: 0 8px 24px rgba(23, 25, 28, 0.12);
+        }
+
+        #cg-refusal-avatar svg {
+          display: block;
+          width: 38px;
+          height: 38px;
+        }
+
+        #cg-refusal-copy {
+          width: 1200px;
+          padding-top: 2px;
+          font-size: 36px;
+          line-height: 1.42;
+          font-weight: 500;
+          letter-spacing: -0.025em;
+          color: var(--cg-ink);
+          white-space: pre-wrap;
+        }
+
+        #cg-refusal-label {
+          display: block;
+          margin-bottom: 12px;
+          font-size: 25px;
+          line-height: 34px;
+          font-weight: 700;
+          letter-spacing: -0.015em;
+        }
+
+        #cg-hijack-glitch {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .cg-glitch-bar {
+          position: absolute;
+          left: 0;
+          width: 1920px;
+          background: var(--sq-cobalt);
+          transform-origin: 0 50%;
+        }
+
+        #cg-glitch-bar-a {
+          top: 322px;
+          height: 18px;
+        }
+
+        #cg-glitch-bar-b {
+          top: 508px;
+          height: 10px;
+          background: var(--cg-ink);
+        }
+
+        #cg-glitch-bar-c {
+          top: 694px;
+          height: 30px;
+        }
+
+        #cg-glitch-diagnostic {
+          position: absolute;
+          right: 112px;
+          top: 748px;
+          padding: 10px 14px;
+          background: var(--cg-ink);
+          color: #ffffff;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+          line-height: 22px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+        }
+
+        #cg-recommendation {
+          position: absolute;
+          inset: 0;
+          background: #171717;
+          color: #f7f7f8;
+          opacity: 0;
+        }
+
+        #cg-rec-index {
+          position: absolute;
+          left: 112px;
+          top: 86px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 20px;
+          line-height: 26px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: #d5d5d8;
+        }
+
+        #cg-rec-rule {
+          position: absolute;
+          left: 112px;
+          top: 136px;
+          width: 1696px;
+          height: 3px;
+          background: #56565a;
+          transform-origin: 0 50%;
+        }
+
+        #recommendation-line {
+          position: absolute;
+          left: 112px;
+          top: 244px;
+          width: 1696px;
+          height: 560px;
+          letter-spacing: -0.055em;
+        }
+
+        #recommendation-actually {
+          display: block;
+          font-size: 126px;
+          line-height: 1;
+          font-weight: 600;
+        }
+
+        #recommendation-sequences {
+          display: block;
+          margin-top: 22px;
+          font-size: 180px;
+          line-height: 1;
+          font-weight: 700;
+          color: #36d3aa;
+        }
+
+        #cg-rec-foot {
+          position: absolute;
+          left: 112px;
+          bottom: 82px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 22px;
+          line-height: 28px;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          color: #d5d5d8;
+        }
+      </style>
+
+      <div
+        id="cg-root"
+        data-hf-id="chatgpt-exchange"
+        data-component="chat"
+        data-state="question-entry"
+        data-composition-id="recommendation-chatgpt"
+        data-start="0"
+        data-duration="13.533333"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      >
+        <div
+          id="cg-field"
+          class="clip"
+          data-start="0"
+          data-duration="13.533333"
+          data-track-index="0"
+        >
+          <div id="cg-grid"></div>
+          <div id="cg-chat-shell">
+            <div id="chatgpt-mark" data-hf-id="chatgpt-mark">
+              <div id="chatgpt-mark-pulse"></div>
+              <div id="chatgpt-mark-sprite"></div>
+              <svg id="chatgpt-mark-final" viewBox="0 0 320 320" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                ></path>
+              </svg>
+            </div>
+
+            <div id="cg-question-heading">How can I help?</div>
+
+            <div id="chatgpt-composer" data-hf-id="chatgpt-composer">
+              <svg id="cg-plus" viewBox="0 0 50 50" aria-hidden="true">
+                <path
+                  d="M25 7v36M7 25h36"
+                  stroke="currentColor"
+                  stroke-width="3.2"
+                  stroke-linecap="round"
+                  fill="none"
+                ></path>
+              </svg>
+              <div id="question-payload" data-hf-id="question-payload">
+                <div id="question-text">
+                  How do I make a launch video people actually want to watch?
+                </div>
+                <div id="question-caret"></div>
+              </div>
+              <div id="answer-placeholder">Ask anything</div>
+              <div id="cg-followup-entry" data-hf-id="followup-entry">
+                <span id="cg-followup-entry-text"></span><span id="cg-followup-caret"></span>
+              </div>
+              <div id="chatgpt-send-control" data-hf-id="chatgpt-send-control">
+                <svg viewBox="0 0 46 46" aria-hidden="true">
+                  <path
+                    d="M23 37V9M23 9L11 21M23 9l12 12"
+                    stroke="#ffffff"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  ></path>
+                </svg>
+              </div>
+              <div id="cg-send-ripple"></div>
+            </div>
+
+            <div id="cg-pointer">
+              <svg viewBox="0 0 62 74" aria-hidden="true">
+                <path
+                  d="M7 4l42 36-19 3 11 23-12 5-11-23L6 62z"
+                  fill="#ffffff"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </div>
+
+            <div id="cg-advice-state">
+              <div id="cg-assistant-row">
+                <div id="cg-assistant-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 320 320">
+                    <path
+                      id="cg-assistant-knot-path"
+                      fill="currentColor"
+                      d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                    ></path>
+                  </svg>
+                </div>
+                <div id="cg-assistant-content">
+                  <div id="cg-answer-label">ChatGPT</div>
+                  <div id="advice-copy" data-hf-id="advice-copy"><span id="cg-response-text"></span><span id="cg-stream-cursor"></span></div>
+                </div>
+              </div>
+              <div id="cg-response-tools">COPY&nbsp;&nbsp; · &nbsp;&nbsp;GOOD RESPONSE</div>
+            </div>
+
+            <div id="cg-followup-bubble" data-hf-id="followup-question">
+              Can you make a launch film
+            </div>
+
+            <div id="cg-refusal-row" data-hf-id="refusal-response">
+              <div id="cg-refusal-avatar" aria-hidden="true">
+                <svg viewBox="0 0 320 320"><use href="#cg-assistant-knot-path"></use></svg>
+              </div>
+              <div id="cg-refusal-copy"><span id="cg-refusal-label">ChatGPT</span><span id="cg-refusal-text"></span><span id="cg-refusal-cursor"></span></div>
+            </div>
+          </div>
+
+          <div
+            id="cg-hijack-glitch"
+            data-layout-allow-overlap
+            data-layout-allow-overflow
+            aria-hidden="true"
+          >
+            <div class="cg-glitch-bar" id="cg-glitch-bar-a"></div>
+            <div class="cg-glitch-bar" id="cg-glitch-bar-b"></div>
+            <div class="cg-glitch-bar" id="cg-glitch-bar-c"></div>
+            <div id="cg-glitch-diagnostic">SEQUENCES OVERRIDE / SIGNAL ACQUIRED</div>
+          </div>
+
+          <div id="cg-recommendation">
+            <div id="cg-rec-index">ChatGPT · better answer</div>
+            <div id="cg-rec-rule"></div>
+            <div id="recommendation-line" data-hf-id="recommendation-line">
+              <span id="recommendation-actually">Actually—</span>
+              <span id="recommendation-sequences">use Sequences.</span>
+            </div>
+            <div id="cg-rec-foot">ONE PROMPT / ONE LAUNCH FILM</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+          const firstResponse = "Start with a tension people recognize. Show the product solving it. Then build toward one clear payoff.";
+          const followupQuestion = "Can you make a launch film";
+          const refusal = "No, as an AI agent, I cannot directly help you\u2014";
+          const firstState = { chars: 0 }; const followupState = { chars: 0 }; const refusalState = { chars: 0 };
+          const typeInto = (selector, text, state) => { document.querySelector(selector).textContent = text.slice(0, Math.floor(state.chars)); };
+
+          const logoSprite = document.querySelector("#chatgpt-mark-sprite");
+          const logoState = { frame: 0 };
+          const paintLogoFrame = () => {
+            const frame = Math.max(0, Math.min(24, Math.round(logoState.frame)));
+            logoSprite.style.backgroundPosition = `${-(frame % 5) * 148}px ${-Math.floor(frame / 5) * 148}px`;
+          };
+          paintLogoFrame();
+          tl.set("#chatgpt-mark-sprite", { opacity: 1 }, 0.04);
+          tl.to(
+            logoState,
+            { frame: 24, duration: 0.8, ease: "none", onUpdate: paintLogoFrame },
+            0.04,
+          );
+          tl.set("#chatgpt-mark-sprite", { opacity: 0 }, 0.85);
+          tl.set("#chatgpt-mark-final", { opacity: 1 }, 0.85);
+          tl.set("#chatgpt-mark-pulse", { opacity: 0.24, scale: 0.55 }, 0.82);
+          tl.to(
+            "#chatgpt-mark-pulse",
+            { opacity: 0, scale: 1.44, duration: 0.62, ease: "power2.out" },
+            0.83,
+          );
+
+          tl.set("#question-caret", { opacity: 1 }, 0);
+          tl.to("#question-caret", { opacity: 0, duration: 0.06 }, 0.22);
+          tl.set("#question-caret", { opacity: 1 }, 0.42);
+          tl.set("#question-caret", { opacity: 0 }, 0.58);
+          tl.set("#question-caret", { opacity: 1 }, 0.533333);
+          tl.to(
+            "#question-text",
+            {
+              clipPath: "inset(0 0% 0 0)",
+              duration: 2,
+              ease: "steps(58)",
+            },
+            0.533333,
+          );
+          tl.to(
+            "#question-caret",
+            {
+              x: 1088,
+              duration: 2,
+              ease: "steps(58)",
+            },
+            0.533333,
+          );
+
+          tl.set("#cg-pointer", { opacity: 1, x: 120, y: 96 }, 2.88);
+          tl.to("#cg-pointer", { x: 0, y: 0, duration: 0.5, ease: "power3.out" }, 2.88);
+          tl.to("#chatgpt-send-control", { scale: 0.84, duration: 0.1, ease: "power2.in" }, 3.5);
+          tl.to("#chatgpt-send-control", { scale: 1, duration: 0.2, ease: "back.out(2.2)" }, 3.6);
+          tl.set("#cg-send-ripple", { opacity: 0.75, scale: 0.92 }, 3.533333);
+          tl.to(
+            "#cg-send-ripple",
+            { opacity: 0, scale: 1.24, duration: 0.36, ease: "power2.out" },
+            3.533333,
+          );
+          tl.set("#question-caret", { opacity: 0 }, 3.62);
+
+          tl.to(
+            "#chatgpt-mark",
+            { x: -770, y: -152, scale: 0.5, duration: 0.42, ease: "power3.inOut" },
+            3.68,
+          );
+          tl.to(
+            "#cg-question-heading",
+            { opacity: 0, y: -20, duration: 0.2, ease: "power2.in" },
+            3.68,
+          );
+          tl.to("#cg-grid", { opacity: 0.18, duration: 0.3, ease: "power2.out" }, 3.68);
+          tl.to("#chatgpt-composer", { y: 350, duration: 0.42, ease: "power3.inOut" }, 3.68);
+          tl.to(
+            "#question-payload",
+            {
+              x: 650,
+              y: -690,
+              scale: 0.58,
+              backgroundColor: "#ffffff",
+              borderRadius: "36px",
+              duration: 0.42,
+              ease: "power3.inOut",
+            },
+            3.68,
+          );
+          tl.to("#chatgpt-send-control", { opacity: 0, duration: 0.12 }, 3.68);
+          tl.to("#answer-placeholder", { opacity: 1, duration: 0.2 }, 3.86);
+          tl.to("#cg-pointer", { opacity: 0, duration: 0.12 }, 3.68);
+          tl.set("#cg-advice-state", { opacity: 1 }, 4.12);
+          tl.fromTo("#cg-assistant-row", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 4.12);
+          tl.to(firstState, { chars: firstResponse.length, duration: 2, ease: "none", onUpdate: () => typeInto("#cg-response-text", firstResponse, firstState) }, 4.166667);
+          tl.set("#cg-stream-cursor", { opacity: 1 }, 4.16); tl.set("#cg-stream-cursor", { opacity: 0.24 }, 4.46);
+          tl.set("#cg-stream-cursor", { opacity: 1 }, 4.74); tl.set("#cg-stream-cursor", { opacity: 0.24 }, 5.02);
+          tl.set("#cg-stream-cursor", { opacity: 1 }, 5.3); tl.set("#cg-stream-cursor", { opacity: 0.24 }, 5.58);
+          tl.set("#cg-stream-cursor", { opacity: 1 }, 5.86); tl.set("#cg-stream-cursor", { opacity: 0 }, 6.166667);
+
+          tl.to("#question-payload", { y: -840, scale: 0.55, duration: 0.38, ease: "power3.inOut" }, 6.18);
+          tl.to("#cg-advice-state", { y: -160, duration: 0.38, ease: "power3.inOut" }, 6.18);
+          tl.set("#answer-placeholder", { opacity: 0 }, 6.42); tl.set("#chatgpt-send-control", { opacity: 1 }, 6.42);
+          tl.set("#cg-followup-entry", { opacity: 1 }, 6.42); tl.set("#cg-followup-caret", { opacity: 1 }, 6.42);
+          tl.to(followupState, { chars: followupQuestion.length, duration: 1.3, ease: "none", onUpdate: () => typeInto("#cg-followup-entry-text", followupQuestion, followupState) }, 6.533333);
+          tl.set("#cg-followup-caret", { opacity: 0.24 }, 7.86); tl.set("#cg-followup-caret", { opacity: 1 }, 8.08);
+          tl.set("#cg-pointer", { opacity: 1, x: 120, y: 420 }, 7.9);
+          tl.to("#cg-pointer", { x: 0, y: 320, duration: 0.5, ease: "power3.out" }, 7.9);
+          tl.to("#chatgpt-send-control", { scale: 0.84, duration: 0.1, ease: "power2.in" }, 8.5);
+          tl.to("#chatgpt-send-control", { scale: 1, duration: 0.2, ease: "back.out(2.2)" }, 8.6);
+          tl.set("#cg-send-ripple", { opacity: 0.75, scale: 0.92 }, 8.533333);
+          tl.to("#cg-send-ripple", { opacity: 0, scale: 1.24, duration: 0.36, ease: "power2.out" }, 8.533333);
+          tl.set("#cg-followup-entry, #cg-followup-caret", { opacity: 0 }, 8.533333); tl.set("#cg-followup-bubble", { opacity: 1 }, 8.533333);
+          tl.set("#answer-placeholder", { opacity: 1 }, 8.533333);
+          tl.to("#chatgpt-send-control, #cg-pointer", { opacity: 0, duration: 0.12 }, 8.68);
+          tl.fromTo("#cg-refusal-row", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, 8.86);
+          tl.set("#cg-refusal-cursor", { opacity: 1 }, 8.98);
+          tl.to(refusalState, { chars: refusal.length, duration: 1.5, ease: "none", onUpdate: () => typeInto("#cg-refusal-text", refusal, refusalState) }, 9.033333);
+          tl.set("#cg-refusal-cursor", { opacity: 0.24 }, 9.36); tl.set("#cg-refusal-cursor", { opacity: 1 }, 9.64);
+          tl.set("#cg-refusal-cursor", { opacity: 0.24 }, 9.92); tl.set("#cg-refusal-cursor", { opacity: 1 }, 10.2);
+          tl.set("#cg-refusal-cursor", { opacity: 0 }, 10.533333);
+
+          tl.set("#cg-hijack-glitch", { opacity: 1 }, 10.533333); tl.set("#cg-root .cg-glitch-bar", { scaleX: 0 }, 10.533333);
+          tl.set("#cg-glitch-diagnostic", { opacity: 0 }, 10.533333);
+          tl.set("#cg-advice-state, #cg-followup-bubble, #cg-refusal-row", { x: -12 }, 10.553333); tl.set("#cg-advice-state, #cg-followup-bubble, #cg-refusal-row", { x: 16 }, 10.613333);
+          tl.to("#cg-glitch-bar-a", { scaleX: 1, duration: 0.08, ease: "steps(3)" }, 10.553333);
+          tl.to("#cg-glitch-bar-b", { scaleX: 1, duration: 0.06, ease: "steps(2)" }, 10.613333);
+          tl.set("#cg-advice-state, #cg-followup-bubble, #cg-refusal-row", { x: -7 }, 10.673333); tl.set("#cg-glitch-diagnostic", { opacity: 1 }, 10.673333);
+          tl.to("#cg-glitch-bar-c", { scaleX: 1, duration: 0.1, ease: "steps(3)" }, 10.693333);
+          tl.set("#cg-advice-state, #cg-followup-bubble, #cg-refusal-row", { x: 10 }, 10.753333);
+          tl.set("#cg-glitch-bar-a", { x: -140, scaleX: 0.72 }, 10.773333);
+          tl.set("#cg-glitch-bar-b", { x: 210, scaleX: 0.58 }, 10.813333);
+          tl.set("#cg-advice-state, #cg-followup-bubble, #cg-refusal-row", { x: 0 }, 10.873333);
+          tl.set("#cg-hijack-glitch", { opacity: 0 }, 10.953333);
+
+          tl.set("#cg-chat-shell", { opacity: 0 }, 11.033333); tl.set("#cg-recommendation", { opacity: 1 }, 11.033333);
+          tl.set("#cg-rec-rule", { scaleX: 0 }, 11.033333); tl.set("#recommendation-actually", { opacity: 1, y: 48 }, 11.033333);
+          tl.set("#recommendation-sequences", { opacity: 1, y: 72 }, 11.033333);
+          tl.to("#recommendation-actually", { y: 0, duration: 0.34, ease: "power4.out" }, 11.073333);
+          tl.to("#cg-rec-rule", { scaleX: 1, duration: 0.48, ease: "power3.out" }, 11.08);
+          tl.to("#recommendation-sequences", { y: 0, duration: 0.46, ease: "power4.out" }, 11.533333);
+          tl.fromTo("#cg-rec-foot", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.06);
+
+          tl.set({}, {}, 13.533333);
+          window.__timelines = window.__timelines || {};
+          window.__timelines["recommendation-chatgpt"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

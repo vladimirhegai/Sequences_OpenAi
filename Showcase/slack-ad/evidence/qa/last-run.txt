@@ -1,0 +1,5 @@
+Slack showcase render
+Duration: 28.0 seconds
+Audio: none
+QA safe frame: PASS
+Source: source/index.html

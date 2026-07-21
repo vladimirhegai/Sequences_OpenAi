@@ -1,0 +1,174 @@
+{
+  "version": "sequences.sequence.v1",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDuration": 24
+  },
+  "concept": {
+    "summary": "A typed ChatGPT question becomes a coherent searched answer, inspectable sources, an editable Canvas draft, and a finished one-Saturday plan.",
+    "hierarchy": [
+      "Ask a practical question",
+      "Receive a real answer",
+      "Inspect the sources",
+      "Refine in Canvas",
+      "From question to working draft"
+    ],
+    "motionGrammar": [
+      "Deterministic type-on inside real composers and messages",
+      "Operated pointer press with same-instant consequence",
+      "Mild single-owner product camera",
+      "Atomic complete-state handoffs",
+      "Exact knot unfurl and quiet final hold"
+    ],
+    "rejectedChoices": [
+      "Screenshot planes and random frame swaps",
+      "Blue Search branding and full-screen color gradients",
+      "Approximate logo glyphs",
+      "Generic dashboard metrics or claim cards"
+    ]
+  },
+  "beats": [
+    {
+      "id": "ask-and-send",
+      "role": "product-action",
+      "start": 0,
+      "duration": 2.76,
+      "purpose": "Establish a recognizable ChatGPT home, type the practical question, and make one operated send press cause the conversation.",
+      "claims": [],
+      "entities": [
+        { "id": "chatgpt-shell", "role": "Persistent ChatGPT product surface", "parts": ["home-composer", "home-send", "opening-prompt"] }
+      ],
+      "musicAnchors": ["opening-pickup", "send-beat"],
+      "proofTimes": [0.25, 1.5, 2.507],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    },
+    {
+      "id": "streamed-answer",
+      "role": "product-proof",
+      "start": 2.76,
+      "duration": 5.96,
+      "purpose": "Keep the typed prompt as a user bubble while ChatGPT streams one coherent searched answer in reading order.",
+      "claims": [
+        { "id": "claim-practical-answer", "text": "ChatGPT can synthesize a practical answer from web sources.", "sourceIds": [] }
+      ],
+      "entities": [
+        { "id": "chatgpt-shell", "role": "Persistent ChatGPT product surface", "parts": ["user-bubble", "assistant-message", "answer-actions"] }
+      ],
+      "musicAnchors": ["answer-entry", "cards-assemble"],
+      "proofTimes": [3.2, 5.8, 7.6],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    },
+    {
+      "id": "inspect-sources",
+      "role": "product-proof",
+      "start": 8.72,
+      "duration": 4.46,
+      "purpose": "Open the Sources drawer beside the persistent answer, then visibly choose Open in Canvas.",
+      "claims": [
+        { "id": "claim-inspectable-sources", "text": "The searched answer keeps its sources inspectable.", "sourceIds": [] }
+      ],
+      "entities": [
+        { "id": "chatgpt-shell", "role": "Persistent ChatGPT product surface", "parts": ["assistant-message", "sources-drawer", "canvas-control"] }
+      ],
+      "musicAnchors": ["sources-bar", "canvas-click"],
+      "proofTimes": [9.6, 11.2, 12.7244],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    },
+    {
+      "id": "refine-in-canvas",
+      "role": "energy-peak",
+      "start": 13.18,
+      "duration": 7.718,
+      "purpose": "Carry the source-backed answer into Canvas, type a one-Saturday refinement, and make the document visibly rewrite and settle as updated.",
+      "claims": [
+        { "id": "claim-working-draft", "text": "A source-backed answer can continue as an editable working draft.", "sourceIds": [] }
+      ],
+      "entities": [
+        { "id": "chatgpt-shell", "role": "Persistent ChatGPT product surface", "parts": ["canvas-workspace", "refine-composer", "canvas-document", "updated-status"] }
+      ],
+      "musicAnchors": ["canvas-reveal", "refine-type", "rewrite-hit", "result-hold"],
+      "proofTimes": [13.9, 15.8, 17.6, 19.2],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    },
+    {
+      "id": "chatgpt-lockup",
+      "role": "cta",
+      "start": 20.898,
+      "duration": 3.102,
+      "purpose": "Resolve by subtraction to the exact knot, ChatGPT name, and the promise From question to working draft.",
+      "claims": [
+        { "id": "claim-final-promise", "text": "From question to working draft.", "sourceIds": [] }
+      ],
+      "entities": [
+        { "id": "chatgpt-lockup", "role": "Final brand and promise", "parts": ["exact-knot", "product-name", "final-promise"] }
+      ],
+      "musicAnchors": ["lockup-bar", "final-hold"],
+      "proofTimes": [21.8, 23.5],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "home-to-answer",
+      "fromBeatId": "ask-and-send",
+      "toBeatId": "streamed-answer",
+      "kind": "match-cut",
+      "at": 2.76,
+      "duration": 0,
+      "outgoingEntityId": "chatgpt-shell",
+      "incomingEntityId": "chatgpt-shell",
+      "rationale": "The send press atomically moves the same typed payload from composer to user bubble while the application shell remains fixed."
+    },
+    {
+      "id": "answer-to-sources",
+      "fromBeatId": "streamed-answer",
+      "toBeatId": "inspect-sources",
+      "kind": "match-cut",
+      "at": 8.72,
+      "duration": 0.68,
+      "outgoingEntityId": "chatgpt-shell",
+      "incomingEntityId": "chatgpt-shell",
+      "rationale": "The answer remains readable while its Sources drawer arrives from the operated control."
+    },
+    {
+      "id": "sources-to-canvas",
+      "fromBeatId": "inspect-sources",
+      "toBeatId": "refine-in-canvas",
+      "kind": "match-cut",
+      "at": 13.18,
+      "duration": 0.62,
+      "outgoingEntityId": "chatgpt-shell",
+      "incomingEntityId": "chatgpt-shell",
+      "rationale": "The same answer payload continues into the Canvas workspace inside the persistent ChatGPT shell."
+    },
+    {
+      "id": "canvas-to-lockup",
+      "fromBeatId": "refine-in-canvas",
+      "toBeatId": "chatgpt-lockup",
+      "kind": "cut",
+      "at": 20.898,
+      "duration": 0,
+      "outgoingEntityId": "chatgpt-shell",
+      "incomingEntityId": "chatgpt-lockup",
+      "rationale": "The completed product state resolves to a quiet exact-knot lockup on the jazz bar."
+    }
+  ],
+  "overlapIntents": [],
+  "audio": {
+    "soundtrackId": "commercial-jazz",
+    "cues": [
+      { "kind": "typing", "atSec": 0.55, "endSec": 2.25 },
+      { "kind": "mouse-click", "atSec": 2.507 },
+      { "kind": "typing", "atSec": 3.52, "endSec": 6.78 },
+      { "kind": "mouse-click", "atSec": 8.6376 },
+      { "kind": "woosh", "atSec": 13.18 },
+      { "kind": "typing", "atSec": 14.88, "endSec": 16.5 },
+      { "kind": "mouse-click", "atSec": 16.8112 },
+      { "kind": "notification", "atSec": 17.48 },
+      { "kind": "woosh", "atSec": 20.42 }
+    ]
+  },
+  "revision": null
+}

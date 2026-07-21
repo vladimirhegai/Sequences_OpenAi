@@ -1,0 +1,1453 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Montserrat";
+      font-weight: 500;
+      src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Montserrat";
+      font-weight: 600;
+      src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Montserrat";
+      font-weight: 700;
+      src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-weight: 500;
+      src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+    }
+    :root {
+      --field: #f7f7f3;
+      --paper: #ffffff;
+      --ink: #11110f;
+      --guide: #d8d8d0;
+      --green: #10a37f;
+      --sky: #7ecff8;
+      --lilac: #b9adeb;
+      --butter: #f4d96a;
+      --cobalt: #2457d6;
+      --midnight: #122b4a;
+    }
+    * { box-sizing: border-box; }
+    #sequences-component-world {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      background: var(--field);
+      color: var(--ink);
+      font-family: "Montserrat", sans-serif;
+    }
+    .lab-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.38;
+      background-image:
+        linear-gradient(to right, rgba(17, 17, 15, 0.055) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17, 17, 15, 0.055) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .lab-header {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 50px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    .lab-brand {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      font-size: 25px;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+    }
+    .brand-seed {
+      width: 15px;
+      height: 15px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 8px rgba(16, 163, 127, 0.11);
+    }
+    .lab-status,
+    .scene-kicker,
+    .scene-number,
+    .micro-label,
+    .state-chip,
+    .timeline-time,
+    .frame-index,
+    .rail-status,
+    .camera-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lab-status {
+      padding: 11px 16px;
+      border: 1px solid var(--guide);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      color: #66665f;
+    }
+    #lab-stage {
+      position: absolute;
+      left: 80px;
+      top: 126px;
+      width: 1760px;
+      height: 826px;
+      overflow: hidden;
+      border: 1px solid rgba(17, 17, 15, 0.14);
+      border-radius: 38px;
+      background: rgba(255, 255, 255, 0.77);
+      box-shadow: 0 28px 80px rgba(20, 27, 24, 0.09);
+      z-index: 2;
+    }
+    .component-scene {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0;
+      background: var(--field);
+    }
+    #component-01 { opacity: 1; }
+    .scene-heading {
+      position: absolute;
+      left: 52px;
+      top: 42px;
+      width: 450px;
+      z-index: 5;
+    }
+    .scene-kicker {
+      margin-bottom: 15px;
+      color: #0d8165;
+      font-size: 13px;
+    }
+    .scene-title {
+      margin: 0;
+      font-size: 43px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.055em;
+    }
+    .scene-note {
+      margin-top: 15px;
+      width: 400px;
+      color: #686861;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+    .scene-number {
+      position: absolute;
+      right: 50px;
+      top: 46px;
+      color: #66665f;
+      font-size: 14px;
+      z-index: 5;
+    }
+    .component-zone {
+      position: absolute;
+      left: 48px;
+      right: 48px;
+      top: 190px;
+      bottom: 46px;
+    }
+    #component-index {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      bottom: 52px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    .index-dots { display: flex; align-items: center; gap: 12px; }
+    .index-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--guide);
+    }
+    .index-dot:first-child { background: var(--green); }
+    .index-copy {
+      font-family: "IBM Plex Mono", monospace;
+      color: #62625c;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .state-row {
+      position: absolute;
+      left: 52px;
+      bottom: 40px;
+      display: flex;
+      gap: 10px;
+      z-index: 4;
+    }
+    .state-chip {
+      padding: 9px 13px;
+      border: 1px solid var(--guide);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #4f4f4a;
+      font-size: 11px;
+    }
+    .state-chip.active {
+      border-color: #0d8165;
+      background: #0d8165;
+      color: white;
+    }
+    /* 01 — ChatGPT composer */
+    .composer-shell {
+      position: absolute;
+      left: 190px;
+      top: 130px;
+      width: 1280px;
+      height: 292px;
+      border: 1px solid #deded8;
+      border-radius: 42px;
+      background: var(--paper);
+      box-shadow: 0 22px 58px rgba(24, 28, 26, 0.08);
+    }
+    .composer-mark {
+      position: absolute;
+      left: 46px;
+      top: 46px;
+      width: 52px;
+      height: 52px;
+      color: var(--ink);
+    }
+    .composer-label {
+      position: absolute;
+      left: 124px;
+      top: 48px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .composer-input {
+      position: absolute;
+      left: 124px;
+      right: 124px;
+      top: 100px;
+      height: 104px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ecece7;
+      font-size: 38px;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    #composer-prompt {
+      display: inline-block;
+      clip-path: inset(0 100% 0 0);
+    }
+    #composer-caret {
+      position: absolute;
+      left: 124px;
+      top: 133px;
+      width: 12px;
+      height: 38px;
+      border-radius: 4px;
+      background: var(--ink);
+      transform-origin: center;
+    }
+    #composer-send {
+      position: absolute;
+      right: 42px;
+      bottom: 35px;
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+    }
+    .composer-hint {
+      position: absolute;
+      left: 124px;
+      bottom: 40px;
+      color: #777772;
+      font-size: 15px;
+    }
+    /* 02 — knot */
+    .knot-field {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    .knot-orbit {
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      border: 1px solid var(--guide);
+      border-radius: 999px;
+    }
+    .knot-orbit::before,
+    .knot-orbit::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background: var(--guide);
+      transform: translate(-50%, -50%);
+    }
+    .knot-orbit::before { width: 560px; height: 1px; }
+    .knot-orbit::after { width: 1px; height: 560px; }
+    #knot-sprite {
+      position: absolute;
+      width: 208px;
+      height: 208px;
+      background: url("assets/marks/chatgpt-knot-unfurl.png") 0 0 / 1040px 1040px no-repeat;
+      filter: invert(1);
+    }
+    #exact-knot {
+      position: absolute;
+      width: 242px;
+      height: 242px;
+      color: var(--ink);
+      opacity: 0;
+    }
+    #knot-release-seed {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 14px rgba(16,163,127,0.12);
+      opacity: 0;
+    }
+    /* 03 — prompt seed */
+    .seed-path {
+      position: absolute;
+      left: 115px;
+      right: 115px;
+      top: 270px;
+      height: 2px;
+      background: var(--guide);
+    }
+    .seed-path::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--ink) 0 16%, var(--green) 16% 100%);
+      opacity: 0.18;
+    }
+    .seed-role {
+      position: absolute;
+      top: 226px;
+      width: 128px;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+    .seed-stop {
+      width: 26px;
+      height: 26px;
+      margin: 30px auto 20px;
+      border: 2px solid var(--guide);
+      border-radius: 999px;
+      background: var(--paper);
+    }
+    .seed-role:nth-of-type(1) { left: 115px; }
+    .seed-role:nth-of-type(2) { left: 391px; }
+    .seed-role:nth-of-type(3) { left: 667px; }
+    .seed-role:nth-of-type(4) { left: 943px; }
+    .seed-role:nth-of-type(5) { left: 1219px; }
+    .seed-role:nth-of-type(6) { left: 1495px; }
+    .seed-role .micro-label { color: #74746c; font-size: 12px; }
+    #traveling-seed {
+      position: absolute;
+      left: 102px;
+      top: 257px;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 10px rgba(16,163,127,0.12);
+      z-index: 3;
+    }
+    .seed-legend {
+      position: absolute;
+      left: 380px;
+      top: 380px;
+      width: 900px;
+      text-align: center;
+      font-size: 62px;
+      font-weight: 600;
+      letter-spacing: -0.055em;
+    }
+    .seed-legend em { color: var(--green); font-style: normal; }
+    /* 04 — deterministic dot field */
+    #dot-field-wrap {
+      position: absolute;
+      left: 465px;
+      top: -80px;
+      width: 720px;
+      height: 720px;
+    }
+    .field-dot {
+      position: absolute;
+      left: 360px;
+      top: 360px;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+    .field-dot.accent { background: var(--green); }
+    #dot-field-glyph {
+      position: absolute;
+      left: 575px;
+      top: -30px;
+      font-size: 550px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.12em;
+      color: #8b908d;
+    }
+    .field-caption {
+      position: absolute;
+      right: 100px;
+      bottom: 82px;
+      width: 350px;
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: -0.03em;
+    }
+    /* 05 — portal */
+    .portal-field {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    .portal-ring {
+      position: absolute;
+      width: 370px;
+      height: 370px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+    }
+    .portal-ring.ring-2 { width: 510px; height: 510px; border-color: var(--guide); }
+    .portal-ring.ring-3 { width: 650px; height: 650px; border-color: rgba(16,163,127,0.36); }
+    #portal-frame {
+      position: absolute;
+      width: 630px;
+      height: 370px;
+      overflow: hidden;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: var(--midnight);
+    }
+    .portal-frame-world {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 24% 62%, var(--butter) 0 9%, transparent 9.5%),
+        radial-gradient(circle at 66% 34%, var(--lilac) 0 16%, transparent 16.5%),
+        linear-gradient(140deg, var(--midnight), #1d4d6f);
+    }
+    .portal-frame-world::before,
+    .portal-frame-world::after {
+      content: "";
+      position: absolute;
+      border: 2px solid rgba(255,255,255,0.68);
+      border-radius: 999px;
+    }
+    .portal-frame-world::before { left: 92px; top: 74px; width: 260px; height: 260px; }
+    .portal-frame-world::after { right: 70px; top: 125px; width: 130px; height: 130px; }
+    #portal-dot {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 16px rgba(16,163,127,0.14);
+    }
+    /* 06 — prompt rail */
+    .sequences-shell {
+      position: absolute;
+      left: 180px;
+      top: 2px;
+      width: 1295px;
+      height: 555px;
+      overflow: hidden;
+      border: 1px solid #d9d9d3;
+      border-radius: 34px;
+      background: var(--paper);
+      box-shadow: 0 24px 64px rgba(16, 28, 24, 0.1);
+    }
+    .sequences-sidebar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 230px;
+      padding: 32px;
+      border-right: 1px solid #e4e4df;
+      background: #f3f3ef;
+    }
+    .sequences-word {
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+    .sequences-word span:first-child {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+    .rail-step {
+      margin-top: 38px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #77776f;
+      font-size: 14px;
+    }
+    .rail-step + .rail-step { margin-top: 19px; }
+    .rail-step .rail-dot {
+      width: 9px;
+      height: 9px;
+      border: 1px solid #aaa9a2;
+      border-radius: 999px;
+    }
+    .rail-step.done { color: var(--ink); }
+    .rail-step.done .rail-dot { border-color: var(--green); background: var(--green); }
+    .prompt-main {
+      position: absolute;
+      left: 230px;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 42px 48px;
+    }
+    .prompt-main .micro-label { color: #85857e; font-size: 12px; }
+    .prompt-surface {
+      margin-top: 22px;
+      height: 152px;
+      padding: 28px 32px;
+      border: 1px solid #dadad4;
+      border-radius: 24px;
+      background: #fbfbf8;
+      font-size: 34px;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+    }
+    .building-row {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .building-track {
+      position: relative;
+      flex: 1;
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e7e7e1;
+    }
+    #building-progress {
+      position: absolute;
+      inset: 0;
+      background: var(--green);
+      transform-origin: left center;
+    }
+    .rail-status { width: 180px; color: var(--green); font-size: 12px; }
+    .rail-preview-row {
+      margin-top: 38px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    .rail-preview {
+      height: 108px;
+      border: 1px solid #deded8;
+      border-radius: 16px;
+      background: var(--field);
+      opacity: 0;
+    }
+    .rail-preview:nth-child(1) { background: linear-gradient(135deg, var(--paper), var(--sky)); }
+    .rail-preview:nth-child(2) { background: radial-gradient(circle at center, var(--lilac) 0 22%, var(--paper) 23%); }
+    .rail-preview:nth-child(3) { background: linear-gradient(90deg, var(--butter) 0 32%, var(--paper) 32% 66%, var(--green) 66%); }
+    .rail-preview:nth-child(4) { background: radial-gradient(circle, var(--ink) 0 5%, var(--paper) 6% 21%, var(--cobalt) 22% 27%, var(--paper) 28%); }
+    .rail-preview:nth-child(5) { background: linear-gradient(145deg, var(--midnight), var(--cobalt)); }
+    /* 07 — storyboard */
+    .storyboard-stage {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 42px;
+      height: 430px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .story-card {
+      position: relative;
+      flex: 1;
+      height: 318px;
+      overflow: hidden;
+      border: 1px solid #d8d8d2;
+      border-radius: 28px;
+      background: var(--paper);
+      box-shadow: 0 12px 34px rgba(17,17,15,0.07);
+      opacity: 0;
+    }
+    .story-card.selected {
+      border: 3px solid var(--green);
+      box-shadow: 0 0 0 10px rgba(16,163,127,0.1), 0 22px 54px rgba(17,17,15,0.1);
+    }
+    .frame-index {
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      z-index: 3;
+      color: #66665f;
+      font-size: 10px;
+    }
+    .card-word {
+      position: absolute;
+      left: 20px;
+      bottom: 22px;
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: -0.08em;
+      transform: rotate(-5deg);
+    }
+    .card-dot {
+      position: absolute;
+      right: 28px;
+      top: 48px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+    .card-orbit {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 190px;
+      height: 190px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+    }
+    .card-orbit::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -11px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: var(--lilac);
+    }
+    .card-bars {
+      position: absolute;
+      inset: 58px 28px 28px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .card-bars span { flex: 1; border-radius: 9px 9px 2px 2px; }
+    .card-bars span:nth-child(1) { height: 42%; background: var(--sky); }
+    .card-bars span:nth-child(2) { height: 82%; background: var(--cobalt); }
+    .card-bars span:nth-child(3) { height: 58%; background: var(--butter); }
+    .card-bars span:nth-child(4) { height: 92%; background: var(--green); }
+    .card-bars span:nth-child(5) { height: 68%; background: var(--lilac); }
+    .mini-field { position: absolute; inset: 42px 28px 24px; }
+    .mini-field span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+    .mini-player {
+      position: absolute;
+      inset: 40px 24px 22px;
+      overflow: hidden;
+      border-radius: 18px;
+      background: var(--midnight);
+    }
+    .mini-player::before {
+      content: "";
+      position: absolute;
+      left: -30px;
+      top: 70px;
+      width: 270px;
+      height: 160px;
+      border: 18px solid var(--sky);
+      border-radius: 999px;
+      transform: rotate(-20deg);
+    }
+    .mini-player::after {
+      content: "";
+      position: absolute;
+      right: 30px;
+      top: 45px;
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      background: var(--butter);
+    }
+    .story-path {
+      position: absolute;
+      left: 105px;
+      right: 105px;
+      bottom: 55px;
+      height: 3px;
+      background: #d8d8d2;
+    }
+    #story-playhead {
+      position: absolute;
+      left: 102px;
+      bottom: 39px;
+      width: 34px;
+      height: 34px;
+      border: 7px solid var(--field);
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 2px var(--green);
+    }
+    /* 08 — sequence timeline */
+    .timeline-panel {
+      position: absolute;
+      left: 110px;
+      top: 70px;
+      width: 1430px;
+      height: 395px;
+      padding: 46px 55px;
+      border: 1px solid #dadad4;
+      border-radius: 34px;
+      background: var(--paper);
+      box-shadow: 0 20px 52px rgba(20,24,22,0.08);
+    }
+    .timeline-header { display: flex; justify-content: space-between; align-items: center; }
+    .timeline-title { font-size: 28px; font-weight: 600; letter-spacing: -0.04em; }
+    .timeline-time { color: #72726b; font-size: 12px; }
+    .timeline-track {
+      position: absolute;
+      left: 72px;
+      right: 72px;
+      top: 207px;
+      height: 4px;
+      border-radius: 999px;
+      background: #deded8;
+    }
+    #timeline-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--green);
+      transform-origin: left center;
+    }
+    .timeline-node {
+      position: absolute;
+      top: 184px;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #cfcfc8;
+      border-radius: 999px;
+      background: var(--paper);
+      color: #6f6f68;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      transform: translateX(-50%);
+    }
+    .timeline-node:nth-child(3) { left: 72px; }
+    .timeline-node:nth-child(4) { left: 394px; }
+    .timeline-node:nth-child(5) { left: 716px; }
+    .timeline-node:nth-child(6) { left: 1038px; }
+    .timeline-node:nth-child(7) { left: 1358px; }
+    #timeline-playhead {
+      position: absolute;
+      left: 68px;
+      top: 126px;
+      width: 4px;
+      height: 165px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 8px rgba(16,163,127,0.1);
+    }
+    #timeline-verified {
+      position: absolute;
+      right: 54px;
+      bottom: 34px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: var(--green);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    /* 09 — result player */
+    .result-player {
+      position: absolute;
+      left: 260px;
+      top: -10px;
+      width: 1130px;
+      height: 555px;
+      overflow: hidden;
+      border: 3px solid var(--ink);
+      border-radius: 38px;
+      background: var(--midnight);
+      box-shadow: 0 28px 70px rgba(18,43,74,0.22);
+    }
+    .result-topbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(255,255,255,0.92);
+      font-size: 14px;
+    }
+    .result-stage { position: absolute; inset: 54px 0 58px; overflow: hidden; }
+    .result-giant {
+      position: absolute;
+      left: 70px;
+      top: 80px;
+      color: white;
+      font-size: 100px;
+      font-weight: 600;
+      letter-spacing: -0.07em;
+      z-index: 3;
+    }
+    .result-ring {
+      position: absolute;
+      right: 130px;
+      top: 54px;
+      width: 330px;
+      height: 330px;
+      border: 28px solid var(--sky);
+      border-radius: 999px;
+    }
+    .result-ring::after {
+      content: "";
+      position: absolute;
+      left: -66px;
+      bottom: -12px;
+      width: 118px;
+      height: 118px;
+      border-radius: 999px;
+      background: var(--butter);
+    }
+    .result-line {
+      position: absolute;
+      left: -120px;
+      bottom: 62px;
+      width: 770px;
+      height: 4px;
+      background: var(--green);
+    }
+    .result-controls {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0 24px;
+      background: rgba(255,255,255,0.94);
+    }
+    .play-control {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--green);
+      color: white;
+      font-size: 11px;
+    }
+    .scrub-track { position: relative; flex: 1; height: 4px; background: #d8d8d2; }
+    #scrub-progress { position: absolute; inset: 0; background: var(--green); transform-origin: left; }
+    .result-time { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: #6f6f68; }
+    /* 10 — glyph portal */
+    .glyph-world {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--field);
+    }
+    #giant-s {
+      position: absolute;
+      left: 375px;
+      top: -300px;
+      font-size: 1180px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.14em;
+      color: var(--field);
+    }
+    .glyph-target {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 210px;
+      height: 210px;
+      border: 2px solid rgba(126,207,248,0.8);
+      border-radius: 999px;
+    }
+    .glyph-target::before,
+    .glyph-target::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background: rgba(255,255,255,0.36);
+      transform: translate(-50%,-50%);
+    }
+    .glyph-target::before { width: 340px; height: 1px; }
+    .glyph-target::after { width: 1px; height: 340px; }
+    .glyph-copy {
+      position: absolute;
+      right: 110px;
+      bottom: 90px;
+      color: rgba(255,255,255,0.72);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    /* 11 — collage */
+    .collage-stage { position: absolute; inset: -40px 0 0; }
+    .collage-tile {
+      position: absolute;
+      width: 280px;
+      height: 180px;
+      overflow: hidden;
+      border: 2px solid var(--ink);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 18px 36px rgba(17,17,15,0.12);
+      opacity: 0;
+    }
+    .collage-tile:nth-child(1) { left: 110px; top: 160px; background: var(--butter); }
+    .collage-tile:nth-child(2) { left: 355px; top: 55px; background: var(--paper); }
+    .collage-tile:nth-child(3) { left: 590px; top: 230px; background: var(--sky); }
+    .collage-tile:nth-child(4) { left: 845px; top: 70px; background: var(--midnight); color: white; }
+    .collage-tile:nth-child(5) { left: 1095px; top: 235px; background: var(--lilac); }
+    .collage-tile:nth-child(6) { left: 1320px; top: 95px; background: var(--paper); }
+    .tile-glyph {
+      position: absolute;
+      left: 22px;
+      bottom: -42px;
+      font-size: 190px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.1em;
+    }
+    .tile-ring {
+      position: absolute;
+      left: 65px;
+      top: 18px;
+      width: 145px;
+      height: 145px;
+      border: 15px solid currentColor;
+      border-radius: 999px;
+    }
+    .tile-lines { position: absolute; inset: 26px; }
+    .tile-lines i { display: block; height: 2px; margin: 18px 0; background: currentColor; }
+    .collage-seed {
+      position: absolute;
+      left: 805px;
+      top: 270px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 18px rgba(16,163,127,0.12);
+      z-index: 8;
+    }
+    .collage-guide {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 700px;
+      height: 430px;
+      border: 1px solid var(--guide);
+      border-radius: 999px;
+    }
+    /* 12 — lockup */
+    .lockup-field {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+    }
+    #lockup-line {
+      position: absolute;
+      width: 850px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+    .lockup-group {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      opacity: 0;
+    }
+    .lockup-name {
+      font-size: 132px;
+      font-weight: 600;
+      letter-spacing: -0.075em;
+    }
+    .lockup-period {
+      width: 26px;
+      height: 26px;
+      margin-left: 9px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+    .lockup-tagline {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + 115px);
+      font-size: 28px;
+      letter-spacing: -0.035em;
+      opacity: 0;
+    }
+    .provenance {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + 185px);
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: #73736c;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+    }
+    .provenance svg { width: 24px; height: 24px; color: var(--ink); }
+    .provenance-trail { width: 48px; height: 1px; background: var(--guide); position: relative; }
+    .provenance-trail::after { content:""; position:absolute; right:-3px; top:-3px; width:7px; height:7px; border-radius:999px; background:var(--green); }
+    /* 13 — camera world */
+    .camera-viewport {
+      position: absolute;
+      left: 185px;
+      top: -12px;
+      width: 1280px;
+      height: 570px;
+      overflow: hidden;
+      border: 3px solid var(--ink);
+      border-radius: 36px;
+      background: var(--paper);
+      box-shadow: 0 26px 66px rgba(17,17,15,0.12);
+    }
+    #camera-breath,
+    #camera-stage {
+      position: absolute;
+      inset: -170px;
+      transform-origin: 50% 50%;
+    }
+    .camera-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(17,17,15,0.09) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(17,17,15,0.09) 1px, transparent 1px);
+      background-size: 84px 84px;
+    }
+    .camera-back-ring {
+      position: absolute;
+      left: 350px;
+      top: 250px;
+      width: 700px;
+      height: 700px;
+      border: 54px solid var(--sky);
+      border-radius: 999px;
+      opacity: 0.72;
+    }
+    .camera-mid-card {
+      position: absolute;
+      left: 810px;
+      top: 310px;
+      width: 430px;
+      height: 275px;
+      overflow: hidden;
+      border: 3px solid var(--ink);
+      border-radius: 34px;
+      background: var(--midnight);
+      transform: rotate(7deg);
+    }
+    .camera-mid-card::before {
+      content: "S";
+      position: absolute;
+      left: 44px;
+      top: -45px;
+      color: var(--field);
+      font-size: 280px;
+      font-weight: 600;
+      letter-spacing: -0.12em;
+    }
+    .camera-front-dot {
+      position: absolute;
+      left: 650px;
+      top: 480px;
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 28px rgba(16,163,127,0.13);
+    }
+    .camera-label {
+      position: absolute;
+      padding: 8px 12px;
+      border: 1px solid var(--guide);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      color: #6d6d66;
+      font-size: 10px;
+    }
+    .camera-label.back { left: 290px; top: 210px; }
+    .camera-label.mid { left: 1170px; top: 590px; }
+    .camera-label.front { left: 690px; top: 610px; }
+    .camera-reticle {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 230px;
+      height: 230px;
+      border: 1px solid rgba(17,17,15,0.34);
+      border-radius: 999px;
+      transform: translate(-50%,-50%);
+      z-index: 8;
+    }
+    .camera-reticle::before,
+    .camera-reticle::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background: rgba(17,17,15,0.34);
+      transform: translate(-50%,-50%);
+    }
+    .camera-reticle::before { width: 320px; height: 1px; }
+    .camera-reticle::after { width: 1px; height: 320px; }
+  </style>
+  <div
+    id="sequences-component-world"
+    data-hf-id="sequences-component-world"
+    data-composition-id="sequences-components"
+    data-start="0"
+    data-duration="26"
+    data-width="1920"
+    data-height="1080"
+    data-fps="30"
+  >
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+      <defs>
+        <symbol id="chatgpt-knot-symbol" viewBox="0 0 320 320">
+          <path fill="currentColor" d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z" />
+        </symbol>
+      </defs>
+    </svg>
+    <div class="lab-grid"></div>
+    <header class="lab-header">
+      <div class="lab-brand"><span class="brand-seed"></span><span>Sequences / component study</span></div>
+      <div class="lab-status">approval gate · final film not assembled</div>
+    </header>
+    <main id="lab-stage" data-hf-id="component-lab-stage">
+      <section id="component-01" class="component-scene" data-hf-id="chatgpt-composer">
+        <div class="scene-heading"><div class="scene-kicker">Input / grounded product moment</div><h2 class="scene-title">ChatGPT composer</h2><div class="scene-note">Recognizable, aligned, and restrained before the abstraction begins.</div></div><div class="scene-number">01 / 13</div>
+        <div class="component-zone">
+          <div id="composer-shell" class="composer-shell">
+            <svg class="composer-mark" viewBox="0 0 320 320"><use href="#chatgpt-knot-symbol"></use></svg>
+            <div class="composer-label">ChatGPT</div>
+            <div class="composer-input"><span id="composer-prompt">Make the launch feel alive.</span></div>
+            <span id="composer-caret"></span>
+            <div class="composer-hint">Message ChatGPT</div>
+            <div id="composer-send"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+        <div class="state-row"><span class="state-chip">empty</span><span class="state-chip active">typing</span><span class="state-chip">submitted</span></div>
+      </section>
+      <section id="component-02" class="component-scene" data-hf-id="canonical-knot">
+        <div class="scene-heading"><div class="scene-kicker">Brand / handoff</div><h2 class="scene-title">Canonical knot</h2><div class="scene-note">The rose-like unfurl resolves to the exact ChatGPT geometry.</div></div><div class="scene-number">02 / 13</div>
+        <div class="component-zone"><div class="knot-field"><div class="knot-orbit"></div><div id="knot-sprite"></div><svg id="exact-knot" viewBox="0 0 320 320"><use href="#chatgpt-knot-symbol"></use></svg><span id="knot-release-seed"></span></div></div>
+        <div class="state-row"><span class="state-chip">rose</span><span class="state-chip active">unfurl</span><span class="state-chip">exact rest</span></div>
+      </section>
+      <section id="component-03" class="component-scene" data-hf-id="prompt-seed">
+        <div class="scene-heading"><div class="scene-kicker">Continuity / semantic object</div><h2 class="scene-title">Prompt seed</h2><div class="scene-note">One object changes job, never identity.</div></div><div class="scene-number">03 / 13</div>
+        <div class="component-zone">
+          <div class="seed-path"></div>
+          <div class="seed-role"><div class="seed-stop"></div><div class="micro-label">caret</div></div><div class="seed-role"><div class="seed-stop"></div><div class="micro-label">send</div></div><div class="seed-role"><div class="seed-stop"></div><div class="micro-label">keyframe</div></div><div class="seed-role"><div class="seed-stop"></div><div class="micro-label">playhead</div></div><div class="seed-role"><div class="seed-stop"></div><div class="micro-label">control</div></div><div class="seed-role"><div class="seed-stop"></div><div class="micro-label">period</div></div>
+          <span id="traveling-seed"></span><div class="seed-legend">The prompt becomes the <em>motion.</em></div>
+        </div>
+        <div class="state-row"><span class="state-chip active">persistent</span><span class="state-chip">six roles</span><span class="state-chip">one object</span></div>
+      </section>
+      <section id="component-04" class="component-scene" data-hf-id="deterministic-dot-field">
+        <div class="scene-heading"><div class="scene-kicker">System / fixed particles</div><h2 class="scene-title">Deterministic dot field</h2><div class="scene-note">A measured lattice becomes glyph, timeline, collage, and collapse.</div></div><div class="scene-number">04 / 13</div>
+        <div class="component-zone"><div id="dot-field-glyph">S</div><div id="dot-field-wrap"></div><div class="field-caption">Fixed coordinates.<br/>No decorative randomness.</div></div>
+        <div class="state-row"><span class="state-chip">sphere</span><span class="state-chip active">glyph S</span><span class="state-chip">timeline</span><span class="state-chip">collapse</span></div>
+      </section>
+      <section id="component-05" class="component-scene" data-hf-id="shape-portal">
+        <div class="scene-heading"><div class="scene-kicker">Transition / destination</div><h2 class="scene-title">Shape portal</h2><div class="scene-note">The dot expands into the next scene instead of covering it.</div></div><div class="scene-number">05 / 13</div>
+        <div class="component-zone"><div class="portal-field"><div class="portal-ring ring-3"></div><div class="portal-ring ring-2"></div><div class="portal-ring"></div><div id="portal-frame"><div class="portal-frame-world"></div></div><span id="portal-dot"></span></div></div>
+        <div class="state-row"><span class="state-chip">dot</span><span class="state-chip active">ring</span><span class="state-chip">frame</span><span class="state-chip">viewport</span></div>
+      </section>
+      <section id="component-06" class="component-scene" data-hf-id="sequences-prompt-rail">
+        <div class="scene-heading"><div class="scene-kicker">Sequences / prompt custody</div><h2 class="scene-title">Prompt rail</h2><div class="scene-note">The original ask stays visible while the story is built.</div></div><div class="scene-number">06 / 13</div>
+        <div class="component-zone"><div class="sequences-shell"><aside class="sequences-sidebar"><div class="sequences-word"><span></span><span>Sequences</span></div><div class="rail-step done"><span class="rail-dot"></span><span>Prompt</span></div><div class="rail-step done"><span class="rail-dot"></span><span>Direction</span></div><div class="rail-step"><span class="rail-dot"></span><span>Storyboard</span></div><div class="rail-step"><span class="rail-dot"></span><span>Result</span></div></aside><div class="prompt-main"><div class="micro-label">Your direction</div><div class="prompt-surface">Make the launch feel alive.</div><div class="building-row"><div class="building-track"><div id="building-progress"></div></div><div class="rail-status">building sequence</div></div><div class="rail-preview-row"><div class="rail-preview"></div><div class="rail-preview"></div><div class="rail-preview"></div><div class="rail-preview"></div><div class="rail-preview"></div></div></div></div></div>
+        <div class="state-row"><span class="state-chip">prompt</span><span class="state-chip active">building</span><span class="state-chip">storyboard ready</span></div>
+      </section>
+      <section id="component-07" class="component-scene" data-hf-id="storyboard-strip">
+        <div class="scene-heading"><div class="scene-kicker">Sequences / visual plan</div><h2 class="scene-title">Storyboard strip</h2><div class="scene-note">Five genuinely different micro-scenes, connected by one playhead.</div></div><div class="scene-number">07 / 13</div>
+        <div class="component-zone"><div class="storyboard-stage"><div class="story-card"><span class="frame-index">SC 01</span><div class="card-word">ALIVE</div><span class="card-dot"></span></div><div class="story-card"><span class="frame-index">SC 02</span><div class="card-orbit"></div></div><div class="story-card selected"><span class="frame-index">SC 03</span><div class="card-bars"><span></span><span></span><span></span><span></span><span></span></div></div><div class="story-card"><span class="frame-index">SC 04</span><div class="mini-field" id="mini-field"></div></div><div class="story-card"><span class="frame-index">SC 05</span><div class="mini-player"></div></div></div><div class="story-path"></div><span id="story-playhead"></span></div>
+        <div class="state-row"><span class="state-chip">five scenes</span><span class="state-chip active">scene 03 selected</span><span class="state-chip">internal motion</span></div>
+      </section>
+      <section id="component-08" class="component-scene" data-hf-id="sequence-timeline">
+        <div class="scene-heading"><div class="scene-kicker">Sequences / order and progress</div><h2 class="scene-title">Sequence timeline</h2><div class="scene-note">The green seed becomes an explicit playhead across verified scene nodes.</div></div><div class="scene-number">08 / 13</div>
+        <div class="component-zone"><div class="timeline-panel"><div class="timeline-header"><div class="timeline-title">A launch film.</div><div class="timeline-time">00:18.6 / 05 scenes</div></div><div class="timeline-track"><div id="timeline-progress"></div></div><div class="timeline-node">01</div><div class="timeline-node">02</div><div class="timeline-node">03</div><div class="timeline-node">04</div><div class="timeline-node">05</div><div id="timeline-playhead"></div><div id="timeline-verified"><span>●</span><span>verified endpoint</span></div></div></div>
+        <div class="state-row"><span class="state-chip">nodes</span><span class="state-chip">connected</span><span class="state-chip active">playing</span><span class="state-chip">verified</span></div>
+      </section>
+      <section id="component-09" class="component-scene" data-hf-id="result-player">
+        <div class="scene-heading"><div class="scene-kicker">Sequences / product proof</div><h2 class="scene-title">Result player</h2><div class="scene-note">The selected frame expands into the actual moving result.</div></div><div class="scene-number">09 / 13</div>
+        <div class="component-zone"><div class="result-player"><div class="result-topbar"><span>Sequences result</span><span>Launch film / ready</span></div><div class="result-stage"><div class="result-giant">A launch<br/>film.</div><div class="result-ring"></div><div class="result-line"></div></div><div class="result-controls"><span class="play-control">▶</span><div class="scrub-track"><div id="scrub-progress"></div></div><span class="result-time">00:18.6</span></div></div></div>
+        <div class="state-row"><span class="state-chip">selected</span><span class="state-chip active">expanded</span><span class="state-chip">active</span></div>
+      </section>
+      <section id="component-10" class="component-scene" data-hf-id="glyph-portal">
+        <div class="scene-heading"><div class="scene-kicker">Camera / typographic space</div><h2 class="scene-title">Glyph portal</h2><div class="scene-note">The oversized S is tunnel, crop, and destination.</div></div><div class="scene-number">10 / 13</div>
+        <div class="component-zone"><div class="glyph-world"><div id="giant-s">S</div><div class="glyph-target"></div><div class="glyph-copy">push through / 2D camera only</div></div></div>
+        <div class="state-row"><span class="state-chip">distant</span><span class="state-chip active">framing</span><span class="state-chip">through</span></div>
+      </section>
+      <section id="component-11" class="component-scene" data-hf-id="collage-field">
+        <div class="scene-heading"><div class="scene-kicker">Peak / controlled density</div><h2 class="scene-title">Collage field</h2><div class="scene-note">Eighth-note accumulation stays measured around the seed.</div></div><div class="scene-number">11 / 13</div>
+        <div class="component-zone"><div class="collage-stage"><div class="collage-guide"></div><div class="collage-tile"><span class="tile-glyph">S</span></div><div class="collage-tile"><span class="tile-ring"></span></div><div class="collage-tile"><div class="tile-lines"><i></i><i></i><i></i><i></i></div></div><div class="collage-tile"><span class="tile-glyph">→</span></div><div class="collage-tile"><span class="tile-ring"></span></div><div class="collage-tile"><div class="tile-lines"><i></i><i></i><i></i><i></i></div></div><span class="collage-seed"></span></div></div>
+        <div class="state-row"><span class="state-chip">sparse</span><span class="state-chip active">measured density</span><span class="state-chip">converged</span></div>
+      </section>
+      <section id="component-12" class="component-scene" data-hf-id="final-lockup">
+        <div class="scene-heading"><div class="scene-kicker">Close / subtraction</div><h2 class="scene-title">Final lockup</h2><div class="scene-note">The player reduces to product, promise, and visible ChatGPT provenance.</div></div><div class="scene-number">12 / 13</div>
+        <div class="component-zone"><div class="lockup-field"><div id="lockup-line"></div><div class="lockup-group"><span class="lockup-name">Sequences</span><span class="lockup-period"></span></div><div class="lockup-tagline">Make your prompt move.</div><div class="provenance"><svg viewBox="0 0 320 320"><use href="#chatgpt-knot-symbol"></use></svg><span class="provenance-trail"></span><span>prompted with ChatGPT</span></div></div></div>
+        <div class="state-row"><span class="state-chip">line</span><span class="state-chip active">wordmark</span><span class="state-chip">provenance</span></div>
+      </section>
+      <section id="component-13" class="component-scene" data-hf-id="camera-world">
+        <div class="scene-heading"><div class="scene-kicker">System / single owner</div><h2 class="scene-title">Camera world</h2><div class="scene-note">One 2D world transform creates pan, push, slight rotation, and dock.</div></div><div class="scene-number">13 / 13</div>
+        <div class="component-zone"><div class="camera-viewport"><div id="camera-breath"><div id="camera-stage"><div class="camera-grid"></div><div class="camera-back-ring"></div><div class="camera-mid-card"></div><div class="camera-front-dot"></div><span class="camera-label back">back plane</span><span class="camera-label mid">mid plane</span><span class="camera-label front">prompt seed</span></div></div><div class="camera-reticle"></div></div></div>
+        <div class="state-row"><span class="state-chip">pan</span><span class="state-chip active">push</span><span class="state-chip">rotate</span><span class="state-chip">dock</span></div>
+      </section>
+    </main>
+    <footer id="component-index" data-hf-id="component-index">
+      <div class="index-dots"><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span><span class="index-dot"></span></div>
+      <div class="index-copy">13 components · seek-safe · native DOM / SVG</div>
+    </footer>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const dotField = document.querySelector("#dot-field-wrap");
+      const dotCount = 72;
+      const fieldDots = [];
+      for (let i = 0; i < dotCount; i += 1) {
+        const dot = document.createElement("span");
+        dot.className = `field-dot${i % 11 === 0 ? " accent" : ""}`;
+        dotField.appendChild(dot);
+        fieldDots.push(dot);
+      }
+      const miniField = document.querySelector("#mini-field");
+      for (let i = 0; i < 30; i += 1) {
+        const dot = document.createElement("span");
+        const column = i % 6;
+        const row = Math.floor(i / 6);
+        dot.style.left = `${24 + column * 37 + (row % 2) * 8}px`;
+        dot.style.top = `${24 + row * 40}px`;
+        dot.style.opacity = `${0.35 + ((i * 7) % 6) * 0.1}`;
+        if (i % 9 === 0) dot.style.background = "#10A37F";
+        miniField.appendChild(dot);
+      }
+      const spherePositions = fieldDots.map((_, i) => {
+        const ring = 80 + (i % 7) * 30;
+        const angle = i * 2.3999632297;
+        return { x: Math.cos(angle) * ring, y: Math.sin(angle) * ring * 0.83 };
+      });
+      const sPositions = fieldDots.map((_, i) => {
+        if (i < 24) {
+          const t = i / 23;
+          const angle = Math.PI * (0.12 + 1.25 * t);
+          return { x: Math.cos(angle) * 190 + 12, y: Math.sin(angle) * 118 - 145 };
+        }
+        if (i < 48) {
+          const t = (i - 24) / 23;
+          return { x: 176 - 352 * t, y: -90 + 180 * t };
+        }
+        const t = (i - 48) / 23;
+        const angle = Math.PI * (1.12 + 1.25 * t);
+        return { x: Math.cos(angle) * 190 - 12, y: Math.sin(angle) * 118 + 145 };
+      });
+      gsap.set(fieldDots, {
+        x: (i) => spherePositions[i].x,
+        y: (i) => spherePositions[i].y,
+        scale: (i) => 0.65 + (i % 5) * 0.11,
+      });
+      const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+      const scenes = gsap.utils.toArray(".component-scene");
+      const indexDots = gsap.utils.toArray(".index-dot");
+      tl.set(scenes, { autoAlpha: 0 }, 0)
+        .set("#component-01", { autoAlpha: 1 }, 0)
+        .set(indexDots, { backgroundColor: "#D8D8D0", scale: 1 }, 0)
+        .set(indexDots[0], { backgroundColor: "#10A37F", scale: 1.5 }, 0)
+        .set("#knot-sprite", { scale: 1.3 }, 0)
+        .set("#exact-knot", { scale: 0.72, rotation: -18 }, 0)
+        .set("#portal-frame", { scale: 0.26 }, 0)
+        .set("#building-progress", { scaleX: 0 }, 0)
+        .set(".rail-preview", { y: 24 }, 0)
+        .set(".story-card", { y: 38 }, 0)
+        .set(".card-orbit", { xPercent: -50, yPercent: -50 }, 0)
+        .set("#timeline-progress", { scaleX: 0 }, 0)
+        .set(".result-player", { scale: 0.72 }, 0)
+        .set(".result-ring", { rotation: -12 }, 0)
+        .set(".result-line", { rotation: -10 }, 0)
+        .set("#scrub-progress", { scaleX: 0 }, 0)
+        .set("#giant-s", { scale: 0.55, rotation: -4 }, 0)
+        .set(".glyph-target", { xPercent: -50, yPercent: -50 }, 0)
+        .set(".collage-tile", { scale: 0.6, rotation: 8 }, 0)
+        .set(".collage-guide", { xPercent: -50, yPercent: -50, rotation: -9 }, 0)
+        .set("#lockup-line", { scaleX: 0.1 }, 0)
+        .set(".lockup-group", { y: 18 }, 0)
+        .set(".lockup-tagline, .provenance", { xPercent: -50 }, 0);
+      function showScene(number, at) {
+        const previous = number - 1;
+        const current = number;
+        if (previous >= 1) tl.set(`#component-${String(previous).padStart(2, "0")}`, { autoAlpha: 0 }, at);
+        tl.set(`#component-${String(current).padStart(2, "0")}`, { autoAlpha: 1 }, at)
+          .set(indexDots, { backgroundColor: "#D8D8D0", scale: 1 }, at)
+          .set(indexDots[current - 1], { backgroundColor: "#10A37F", scale: 1.5 }, at);
+      }
+      // 01 — composer: clip-path type-on, caret follow, causal submit compression.
+      tl.to("#composer-prompt", { clipPath: "inset(0 0% 0 0)", duration: 0.95, ease: "steps(27)" }, 0.22)
+        .to("#composer-caret", { x: 491, duration: 0.95, ease: "steps(27)" }, 0.22)
+        .to("#composer-caret", { scaleY: 0.18, duration: 0.12, ease: "power2.inOut" }, 1.28)
+        .to("#composer-caret", { scaleY: 1, duration: 0.12, ease: "power2.inOut" }, 1.4)
+        .to("#composer-send", { scale: 0.84, duration: 0.1, ease: "power2.in" }, 1.55)
+        .to("#composer-send", { scale: 1, duration: 0.2, ease: "back.out(2)" }, 1.651)
+        .to("#composer-shell", { scale: 0.985, duration: 0.18, ease: "power2.inOut" }, 1.55)
+        .to("#composer-shell", { scale: 1, duration: 0.25, ease: "power2.out" }, 1.73);
+      // 02 — sprite frames resolve to exact geometry, then release the green seed.
+      showScene(2, 2);
+      const spritePositions = ["0px 0px", "-208px 0px", "-416px -208px", "-624px -416px", "-832px -624px"];
+      spritePositions.forEach((position, i) => tl.set("#knot-sprite", { backgroundPosition: position }, 2 + i * 0.16));
+      tl.to("#knot-sprite", { scale: 0.92, rotation: 24, duration: 0.72, ease: "power2.inOut" }, 2.1)
+        .set("#knot-sprite", { autoAlpha: 0 }, 2.88)
+        .to("#exact-knot", { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.56, ease: "back.out(1.5)" }, 2.76)
+        .set("#knot-release-seed", { x: 140, y: 0, autoAlpha: 1 }, 3.16)
+        .to("#knot-release-seed", { x: 310, y: -75, duration: 0.68, ease: "power2.inOut" }, 3.16);
+      // 03 — one object travels through six named roles.
+      showScene(3, 4);
+      tl.to("#traveling-seed", { x: 276, duration: 0.26, ease: "power2.inOut" }, 4.12)
+        .to("#traveling-seed", { x: 552, duration: 0.26, ease: "power2.inOut" }, 4.42)
+        .to("#traveling-seed", { x: 828, duration: 0.26, ease: "power2.inOut" }, 4.72)
+        .to("#traveling-seed", { x: 1104, duration: 0.26, ease: "power2.inOut" }, 5.02)
+        .to("#traveling-seed", { x: 1380, duration: 0.34, ease: "power2.inOut" }, 5.34)
+        .to("#traveling-seed", { scale: 1.35, duration: 0.18, ease: "back.out(2)" }, 5.7);
+      // 04 — deterministic field becomes an S, then tightens toward timeline order.
+      showScene(4, 6);
+      tl.to(fieldDots, {
+        x: (i) => sPositions[i].x,
+        y: (i) => sPositions[i].y,
+        scale: (i) => 0.72 + (i % 4) * 0.1,
+        duration: 0.84,
+        stagger: { each: 0.006, from: "center" },
+        ease: "power3.inOut",
+      }, 6.08)
+        .to("#dot-field-wrap", { rotation: 3, scale: 1.04, duration: 0.55, ease: "sine.inOut" }, 7.05)
+        .to("#dot-field-wrap", { rotation: 0, scale: 1, duration: 0.4, ease: "sine.inOut" }, 7.6);
+      // 05 — circle grows into a rounded destination viewport.
+      showScene(5, 8);
+      tl.fromTo("#portal-dot", { scale: 0.3 }, { scale: 1, duration: 0.28, ease: "back.out(2)" }, 8.08)
+        .fromTo(".portal-ring", { scale: 0.35, opacity: 0.15 }, { scale: 1, opacity: 1, duration: 0.72, stagger: 0.08, ease: "power3.out" }, 8.18)
+        .to("#portal-frame", { scale: 1, borderRadius: 42, duration: 0.74, ease: "power3.inOut" }, 8.62)
+        .to("#portal-dot", { x: 210, y: -80, scale: 0.66, duration: 0.56, ease: "power2.inOut" }, 9.1)
+        .to(".ring-3", { rotation: 12, scale: 1.08, duration: 0.7, ease: "sine.inOut" }, 9.15);
+      // 06 — Sequences holds the prompt while construction becomes visible.
+      showScene(6, 10);
+      tl.to("#building-progress", { scaleX: 0.78, duration: 1.05, ease: "power2.inOut" }, 10.1)
+        .to(".rail-preview", { autoAlpha: 1, y: 0, duration: 0.44, stagger: 0.11, ease: "power2.out" }, 10.48)
+        .to(".sequences-shell", { y: -6, duration: 0.45, ease: "sine.inOut" }, 11.35)
+        .to(".sequences-shell", { y: 0, duration: 0.45, ease: "sine.inOut" }, 11.8);
+      // 07 — five distinct frames dock, then the prompt seed travels beneath them.
+      showScene(7, 12);
+      tl.to(".story-card", { autoAlpha: 1, y: 0, duration: 0.48, stagger: 0.1, ease: "power3.out" }, 12.05)
+        .to("#story-playhead", { x: 713, duration: 1.05, ease: "power2.inOut" }, 12.28)
+        .to(".card-orbit", { rotation: 52, scale: 1.06, duration: 0.9, ease: "sine.inOut" }, 12.8)
+        .to(".card-bars", { y: -9, duration: 0.44, ease: "sine.inOut" }, 13.15)
+        .to(".mini-player", { scale: 1.04, rotation: -2, duration: 0.55, ease: "sine.inOut" }, 13.3);
+      // 08 — ordered progress with explicit playhead and verified destination.
+      showScene(8, 14);
+      tl.to("#timeline-progress", { scaleX: 0.72, duration: 1.12, ease: "power2.inOut" }, 14.1)
+        .to("#timeline-playhead", { x: 930, duration: 1.12, ease: "power2.inOut" }, 14.1)
+        .to(".timeline-node", { borderColor: "#10A37F", color: "#11110F", duration: 0.18, stagger: 0.18, ease: "none" }, 14.22)
+        .to("#timeline-verified", { autoAlpha: 1, y: -4, duration: 0.34, ease: "power2.out" }, 15.5);
+      // 09 — selected frame expands and begins playing.
+      showScene(9, 16);
+      tl.to(".result-player", { scale: 1, duration: 0.72, ease: "power3.out" }, 16.05)
+        .to("#scrub-progress", { scaleX: 0.63, duration: 1.35, ease: "none" }, 16.48)
+        .to(".result-ring", { rotation: 18, scale: 1.08, duration: 1.05, ease: "sine.inOut" }, 16.52)
+        .to(".result-line", { x: 150, duration: 1.0, ease: "sine.inOut" }, 16.62)
+        .to(".result-giant", { x: 20, duration: 0.9, ease: "sine.inOut" }, 16.72);
+      // 10 — giant S becomes a typographic camera tunnel.
+      showScene(10, 18);
+      tl.to("#giant-s", { scale: 0.85, x: -120, y: 80, rotation: 0, duration: 1.32, ease: "power2.inOut" }, 18.04)
+        .to(".glyph-target", { scale: 1.22, rotation: 24, duration: 1.12, ease: "sine.inOut" }, 18.36);
+      // 11 — controlled eighth-note accumulation around the central seed.
+      showScene(11, 20);
+      tl.to(".collage-tile", { autoAlpha: 1, scale: 1, rotation: (i) => [-8, 5, -3, 7, -6, 4][i], duration: 0.34, stagger: 0.22, ease: "back.out(1.4)" }, 20.05)
+        .to(".collage-guide", { rotation: 9, scale: 1.05, duration: 1.4, ease: "sine.inOut" }, 20.22)
+        .to(".collage-seed", { scale: 1.32, duration: 0.22, repeat: 1, yoyo: true, ease: "power2.inOut" }, 21.35);
+      // 12 — subtract the system into one exact product lockup.
+      showScene(12, 22);
+      tl.to("#lockup-line", { scaleX: 1, duration: 0.46, ease: "power3.out" }, 22.05)
+        .to("#lockup-line", { scaleX: 0.04, duration: 0.42, ease: "power3.inOut" }, 22.55)
+        .to(".lockup-group", { autoAlpha: 1, y: 0, duration: 0.48, ease: "power3.out" }, 22.68)
+        .to(".lockup-tagline", { autoAlpha: 1, y: -4, duration: 0.35, ease: "power2.out" }, 23.12)
+        .to(".provenance", { autoAlpha: 1, y: -4, duration: 0.35, ease: "power2.out" }, 23.42);
+      // 13 — one persistent camera owner demonstrates the final 2D grammar.
+      showScene(13, 24);
+      tl.fromTo("#camera-stage", { x: 180, y: 70, scale: 0.82, rotation: -3 }, { x: -95, y: -35, scale: 1.08, rotation: 2, duration: 1.35, ease: "power2.inOut" }, 24.04)
+        .to("#camera-stage", { x: -30, y: -10, scale: 1, rotation: 0, duration: 0.58, ease: "power2.out" }, 25.39)
+        .to("#camera-breath", { scale: 1.014, duration: 0.61, ease: "sine.inOut" }, 25.39);
+      window.__timelines["sequences-components"] = tl;
+    </script>
+  </div>
+</template>

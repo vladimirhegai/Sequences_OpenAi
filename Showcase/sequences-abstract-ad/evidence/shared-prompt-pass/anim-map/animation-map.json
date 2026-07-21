@@ -1,0 +1,8000 @@
+{
+  "composition": "C:\\dev\\Coding\\Sequences-openai\\Showcase\\sequences-abstract-ad\\source",
+  "duration": 30.333,
+  "totalTweens": 131,
+  "mappedTweens": 90,
+  "skippedMicroTweens": 41,
+  "tweens": [
+    {
+      "index": 1,
+      "selector": "div.chat-head",
+      "targets": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "start": 0.08,
+      "end": 0.6,
+      "duration": 0.52,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 0.123,
+          "x": 49,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.1452,
+          "visible": true
+        },
+        {
+          "t": 0.21,
+          "x": 66,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.6499,
+          "visible": true
+        },
+        {
+          "t": 0.297,
+          "x": 72,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.8311,
+          "visible": true
+        },
+        {
+          "t": 0.383,
+          "x": 77,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.9595,
+          "visible": true
+        },
+        {
+          "t": 0.47,
+          "x": 78,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.9957,
+          "visible": true
+        },
+        {
+          "t": 0.557,
+          "x": 78,
+          "y": 82,
+          "w": 212,
+          "h": 64,
+          "opacity": 0.9997,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.chat-head animates x+autoAlpha over 0.52s (power3.out). moves 29px right. opacity 0.1→1.0. ends at (78, 82) 212×64px."
+    },
+    {
+      "index": 2,
+      "selector": "div.ask-orbit",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 0.1,
+      "end": 2.2,
+      "duration": 2.1,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 0.275,
+          "x": 1415,
+          "y": 715,
+          "w": 690,
+          "h": 690,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 0.625,
+          "x": 1387,
+          "y": 687,
+          "w": 746,
+          "h": 746,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 0.975,
+          "x": 1360,
+          "y": 660,
+          "w": 800,
+          "h": 800,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.325,
+          "x": 1339,
+          "y": 639,
+          "w": 842,
+          "h": 842,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.675,
+          "x": 1320,
+          "y": 620,
+          "w": 879,
+          "h": 879,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.025,
+          "x": 1308,
+          "y": 608,
+          "w": 905,
+          "h": 905,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow"
+      ],
+      "summary": "div.ask-orbit animates rotation over 2.10s (none). moves 107px up and 107px left. width 690→905px. height 690→905px. ends at (1308, 608) 905×905px. FLAGS: paced-slow."
+    },
+    {
+      "index": 3,
+      "selector": "div.ask-line",
+      "targets": 1,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "start": 0.28,
+      "end": 0.92,
+      "duration": 0.64,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 0.333,
+          "x": 272,
+          "y": 353,
+          "w": 780,
+          "h": 93,
+          "opacity": 0.1193,
+          "visible": true
+        },
+        {
+          "t": 0.44,
+          "x": 272,
+          "y": 333,
+          "w": 780,
+          "h": 93,
+          "opacity": 0.6656,
+          "visible": true
+        },
+        {
+          "t": 0.547,
+          "x": 272,
+          "y": 326,
+          "w": 780,
+          "h": 93,
+          "opacity": 0.8668,
+          "visible": true
+        },
+        {
+          "t": 0.653,
+          "x": 272,
+          "y": 322,
+          "w": 780,
+          "h": 93,
+          "opacity": 0.9597,
+          "visible": true
+        },
+        {
+          "t": 0.76,
+          "x": 272,
+          "y": 321,
+          "w": 780,
+          "h": 93,
+          "opacity": 0.9928,
+          "visible": true
+        },
+        {
+          "t": 0.867,
+          "x": 272,
+          "y": 321,
+          "w": 780,
+          "h": 93,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.ask-line animates y+autoAlpha over 0.64s (power3.out). moves 32px up. opacity 0.1→1.0. ends at (272, 321) 780×93px."
+    },
+    {
+      "index": 4,
+      "selector": "div.composer",
+      "targets": 1,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "start": 0.36,
+      "end": 0.98,
+      "duration": 0.62,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 0.412,
+          "x": 270,
+          "y": 574,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.2341,
+          "visible": true
+        },
+        {
+          "t": 0.515,
+          "x": 270,
+          "y": 556,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.6407,
+          "visible": true
+        },
+        {
+          "t": 0.618,
+          "x": 270,
+          "y": 546,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.8589,
+          "visible": true
+        },
+        {
+          "t": 0.722,
+          "x": 270,
+          "y": 542,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.9584,
+          "visible": true
+        },
+        {
+          "t": 0.825,
+          "x": 270,
+          "y": 540,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.9929,
+          "visible": true
+        },
+        {
+          "t": 0.928,
+          "x": 270,
+          "y": 540,
+          "w": 1380,
+          "h": 190,
+          "opacity": 0.9997,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.composer animates y+autoAlpha over 0.62s (power3.out). moves 34px up. opacity 0.2→1.0. ends at (270, 540) 1380×190px."
+    },
+    {
+      "index": 5,
+      "selector": "#composer-prompt",
+      "targets": 1,
+      "props": [
+        "clipPath"
+      ],
+      "start": 0.534,
+      "end": 1.714,
+      "duration": 1.18,
+      "ease": "steps(27)",
+      "bboxes": [
+        {
+          "t": 0.632,
+          "x": 343,
+          "y": 602,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 0.829,
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.026,
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.222,
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.419,
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.616,
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#composer-prompt animates clipPath over 1.18s (steps(27)). moves 6px up. ends at (343, 596) 644×55px."
+    },
+    {
+      "index": 6,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "x"
+      ],
+      "start": 0.534,
+      "end": 1.714,
+      "duration": 1.18,
+      "ease": "steps(27)",
+      "bboxes": [
+        {
+          "t": 0.632,
+          "x": 366,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 0.829,
+          "x": 486,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.026,
+          "x": 606,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.222,
+          "x": 702,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.419,
+          "x": 822,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 1.616,
+          "x": 942,
+          "y": 598,
+          "w": 3,
+          "h": 52,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#seed animates x over 1.18s (steps(27)). moves 576px right. ends at (942, 598) 3×52px."
+    },
+    {
+      "index": 7,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY"
+      ],
+      "start": 2.217,
+      "end": 2.617,
+      "duration": 0.4,
+      "ease": "power4.in",
+      "bboxes": [
+        {
+          "t": 2.25,
+          "x": 1578,
+          "y": 663,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.317,
+          "x": 1578,
+          "y": 663,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.384,
+          "x": 1573,
+          "y": 662,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.45,
+          "x": 1549,
+          "y": 655,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.517,
+          "x": 1466,
+          "y": 631,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.584,
+          "x": 1255,
+          "y": 572,
+          "w": 30,
+          "h": 30,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#seed animates x+y+scaleX+scaleY over 0.40s (power4.in). moves 91px up and 323px left. scales. ends at (1255, 572) 30×30px."
+    },
+    {
+      "index": 8,
+      "selector": "div.handoff-orbit",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "start": 2.27,
+      "end": 2.99,
+      "duration": 0.72,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 2.33,
+          "x": 842,
+          "y": 422,
+          "w": 237,
+          "h": 237,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.45,
+          "x": 753,
+          "y": 333,
+          "w": 414,
+          "h": 414,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.57,
+          "x": 716,
+          "y": 296,
+          "w": 487,
+          "h": 487,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.69,
+          "x": 705,
+          "y": 285,
+          "w": 509,
+          "h": 509,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.81,
+          "x": 701,
+          "y": 281,
+          "w": 519,
+          "h": 519,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 2.93,
+          "x": 700,
+          "y": 280,
+          "w": 520,
+          "h": 520,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.handoff-orbit animates scale+rotation over 0.72s (power3.out). moves 142px up and 142px left. scales. width 237→520px. height 237→520px. ends at (700, 280) 520×520px."
+    },
+    {
+      "index": 9,
+      "selector": "#handoff-sprite",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "start": 3.38,
+      "end": 3.66,
+      "duration": 0.28,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 3.403,
+          "x": 856,
+          "y": 436,
+          "w": 208,
+          "h": 208,
+          "opacity": 0.9985,
+          "visible": true
+        },
+        {
+          "t": 3.45,
+          "x": 856,
+          "y": 436,
+          "w": 209,
+          "h": 209,
+          "opacity": 0.9724,
+          "visible": true
+        },
+        {
+          "t": 3.497,
+          "x": 854,
+          "y": 434,
+          "w": 212,
+          "h": 212,
+          "opacity": 0.8814,
+          "visible": true
+        },
+        {
+          "t": 3.543,
+          "x": 845,
+          "y": 425,
+          "w": 229,
+          "h": 229,
+          "opacity": 0.3703,
+          "visible": true
+        },
+        {
+          "t": 3.59,
+          "x": 842,
+          "y": 422,
+          "w": 237,
+          "h": 237,
+          "opacity": 0.1481,
+          "visible": true
+        },
+        {
+          "t": 3.637,
+          "x": 839,
+          "y": 419,
+          "w": 242,
+          "h": 242,
+          "opacity": 0.0035,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#handoff-sprite animates autoAlpha+scale over 0.28s (power2.inOut). moves 17px up and 17px left. fades out. scales. width 208→242px. height 208→242px. ends at (839, 419) 242×242px. Overlaps another animated element."
+    },
+    {
+      "index": 10,
+      "selector": "#handoff-knot",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "start": 3.38,
+      "end": 3.66,
+      "duration": 0.28,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 3.403,
+          "x": 856,
+          "y": 436,
+          "w": 208,
+          "h": 208,
+          "opacity": 0.0015,
+          "visible": true
+        },
+        {
+          "t": 3.45,
+          "x": 856,
+          "y": 436,
+          "w": 209,
+          "h": 209,
+          "opacity": 0.0276,
+          "visible": true
+        },
+        {
+          "t": 3.497,
+          "x": 854,
+          "y": 434,
+          "w": 212,
+          "h": 212,
+          "opacity": 0.1186,
+          "visible": true
+        },
+        {
+          "t": 3.543,
+          "x": 845,
+          "y": 425,
+          "w": 229,
+          "h": 229,
+          "opacity": 0.6297,
+          "visible": true
+        },
+        {
+          "t": 3.59,
+          "x": 842,
+          "y": 422,
+          "w": 237,
+          "h": 237,
+          "opacity": 0.8519,
+          "visible": true
+        },
+        {
+          "t": 3.637,
+          "x": 839,
+          "y": 419,
+          "w": 242,
+          "h": 242,
+          "opacity": 0.9965,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#handoff-knot animates autoAlpha+scale over 0.28s (power2.inOut). moves 17px up and 17px left. fades in. scales. width 208→242px. height 208→242px. ends at (839, 419) 242×242px. Overlaps another animated element."
+    },
+    {
+      "index": 11,
+      "selector": "#phrase-prompt",
+      "targets": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "start": 3.67,
+      "end": 4.33,
+      "duration": 0.66,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 3.725,
+          "x": 60,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.1698,
+          "visible": true
+        },
+        {
+          "t": 3.835,
+          "x": 96,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.6793,
+          "visible": true
+        },
+        {
+          "t": 3.945,
+          "x": 109,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.8695,
+          "visible": true
+        },
+        {
+          "t": 4.055,
+          "x": 115,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.9592,
+          "visible": true
+        },
+        {
+          "t": 4.165,
+          "x": 117,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.9921,
+          "visible": true
+        },
+        {
+          "t": 4.275,
+          "x": 118,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 0.9999,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#phrase-prompt animates x+autoAlpha over 0.66s (power3.out). moves 58px right. opacity 0.2→1.0. ends at (118, 852) 515×136px."
+    },
+    {
+      "index": 12,
+      "selector": "div.handoff-orbit",
+      "targets": 1,
+      "props": [
+        "rotation",
+        "scale"
+      ],
+      "start": 3.8,
+      "end": 5.8,
+      "duration": 2,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 3.967,
+          "x": 698,
+          "y": 278,
+          "w": 524,
+          "h": 524,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 4.3,
+          "x": 681,
+          "y": 261,
+          "w": 557,
+          "h": 557,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 4.633,
+          "x": 657,
+          "y": 237,
+          "w": 606,
+          "h": 606,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 4.967,
+          "x": 625,
+          "y": 205,
+          "w": 670,
+          "h": 670,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 5.3,
+          "x": 603,
+          "y": 183,
+          "w": 715,
+          "h": 715,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 5.633,
+          "x": 591,
+          "y": 171,
+          "w": 737,
+          "h": 737,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.handoff-orbit animates rotation+scale over 2.00s (sine.inOut). moves 107px up and 107px left. scales. width 524→737px. height 524→737px. ends at (591, 171) 737×737px."
+    },
+    {
+      "index": 13,
+      "selector": "#handoff-knot",
+      "targets": 1,
+      "props": [
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 5.55,
+      "end": 5.97,
+      "duration": 0.42,
+      "ease": "power3.in",
+      "bboxes": [
+        {
+          "t": 5.585,
+          "x": 839,
+          "y": 419,
+          "w": 242,
+          "h": 242,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 5.655,
+          "x": 839,
+          "y": 419,
+          "w": 242,
+          "h": 242,
+          "opacity": 0.9985,
+          "visible": true
+        },
+        {
+          "t": 5.725,
+          "x": 840,
+          "y": 420,
+          "w": 241,
+          "h": 241,
+          "opacity": 0.9837,
+          "visible": true
+        },
+        {
+          "t": 5.795,
+          "x": 841,
+          "y": 421,
+          "w": 237,
+          "h": 237,
+          "opacity": 0.9292,
+          "visible": true
+        },
+        {
+          "t": 5.865,
+          "x": 846,
+          "y": 426,
+          "w": 228,
+          "h": 228,
+          "opacity": 0.7929,
+          "visible": true
+        },
+        {
+          "t": 5.935,
+          "x": 863,
+          "y": 443,
+          "w": 195,
+          "h": 195,
+          "opacity": 0.3061,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#handoff-knot animates scale+autoAlpha over 0.42s (power3.in). moves 24px down and 24px right. opacity 1.0→0.3. scales. width 242→195px. height 242→195px. ends at (863, 443) 195×195px."
+    },
+    {
+      "index": 14,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 6.09,
+      "end": 6.37,
+      "duration": 0.28,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 6.113,
+          "x": 945,
+          "y": 485,
+          "w": 30,
+          "h": 30,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 6.16,
+          "x": 945,
+          "y": 485,
+          "w": 30,
+          "h": 30,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 6.207,
+          "x": 946,
+          "y": 486,
+          "w": 28,
+          "h": 29,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 6.253,
+          "x": 947,
+          "y": 487,
+          "w": 26,
+          "h": 27,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 6.3,
+          "x": 951,
+          "y": 490,
+          "w": 18,
+          "h": 19,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 6.347,
+          "x": 955,
+          "y": 493,
+          "w": 11,
+          "h": 13,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [],
+      "summary": "#seed animates scale+autoAlpha over 0.28s (power2.in). moves 8px down and 10px right. scales. width 30→11px. height 30→13px. ends at (955, 493) 11×13px."
+    },
+    {
+      "index": 15,
+      "selector": "i.sequence-dot",
+      "targets": 72,
+      "props": [
+        "x",
+        "y",
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 6.1,
+      "end": 7.304,
+      "duration": 1.204,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 6.2,
+          "x": 970,
+          "y": 493,
+          "w": 5,
+          "h": 5,
+          "opacity": 0.3689,
+          "visible": true
+        },
+        {
+          "t": 6.401,
+          "x": 982,
+          "y": 485,
+          "w": 10,
+          "h": 10,
+          "opacity": 0.7937,
+          "visible": true
+        },
+        {
+          "t": 6.602,
+          "x": 987,
+          "y": 483,
+          "w": 12,
+          "h": 12,
+          "opacity": 0.9566,
+          "visible": true
+        },
+        {
+          "t": 6.802,
+          "x": 988,
+          "y": 484,
+          "w": 13,
+          "h": 13,
+          "opacity": 0.9967,
+          "visible": true
+        },
+        {
+          "t": 7.003,
+          "x": 988,
+          "y": 486,
+          "w": 14,
+          "h": 14,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 7.204,
+          "x": 989,
+          "y": 487,
+          "w": 14,
+          "h": 14,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "i.sequence-dot animates x+y+scale+autoAlpha over 1.20s (power3.out). moves 6px up and 19px right. opacity 0.4→1.0. scales. width 5→14px. height 5→14px. ends at (989, 487) 14×14px. Overlaps another animated element."
+    },
+    {
+      "index": 16,
+      "selector": "#sequence-dots",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 6.45,
+      "end": 8.08,
+      "duration": 1.63,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 6.586,
+          "x": -17,
+          "y": -29,
+          "w": 1952,
+          "h": 1137,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 6.857,
+          "x": -52,
+          "y": -92,
+          "w": 2017,
+          "h": 1264,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 7.129,
+          "x": -83,
+          "y": -153,
+          "w": 2073,
+          "h": 1384,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 7.401,
+          "x": -112,
+          "y": -217,
+          "w": 2124,
+          "h": 1512,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 7.673,
+          "x": -132,
+          "y": -271,
+          "w": 2159,
+          "h": 1618,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 7.944,
+          "x": -147,
+          "y": -321,
+          "w": 2184,
+          "h": 1717,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#sequence-dots animates rotation over 1.63s (none). moves 292px up and 130px left. width 1952→2184px. height 1137→1717px. ends at (-147, -321) 2184×1717px. Overlaps another animated element."
+    },
+    {
+      "index": 17,
+      "selector": "#phrase-sequence",
+      "targets": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "start": 7.65,
+      "end": 8.15,
+      "duration": 0.5,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 7.692,
+          "x": 155,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.1268,
+          "visible": true
+        },
+        {
+          "t": 7.775,
+          "x": 133,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.6545,
+          "visible": true
+        },
+        {
+          "t": 7.858,
+          "x": 125,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.8391,
+          "visible": true
+        },
+        {
+          "t": 7.942,
+          "x": 119,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.9647,
+          "visible": true
+        },
+        {
+          "t": 8.025,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.9919,
+          "visible": true
+        },
+        {
+          "t": 8.108,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.9999,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#phrase-sequence animates x+autoAlpha over 0.50s (power3.out). moves 37px left. opacity 0.1→1.0. ends at (118, 852) 623×136px. Overlaps another animated element."
+    },
+    {
+      "index": 18,
+      "selector": "i.sequence-dot",
+      "targets": 72,
+      "props": [
+        "x",
+        "y",
+        "scale"
+      ],
+      "start": 8.08,
+      "end": 8.66,
+      "duration": 0.58,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 8.128,
+          "x": 988,
+          "y": 495,
+          "w": 16,
+          "h": 16,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.225,
+          "x": 979,
+          "y": 491,
+          "w": 16,
+          "h": 16,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.322,
+          "x": 882,
+          "y": 460,
+          "w": 14,
+          "h": 14,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.418,
+          "x": 535,
+          "y": 451,
+          "w": 10,
+          "h": 10,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.515,
+          "x": 347,
+          "y": 508,
+          "w": 7,
+          "h": 7,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.612,
+          "x": 317,
+          "y": 521,
+          "w": 7,
+          "h": 7,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "i.sequence-dot animates x+y+scale over 0.58s (power3.inOut). moves 26px down and 671px left. scales. width 16→7px. height 16→7px. ends at (317, 521) 7×7px. Overlaps another animated element."
+    },
+    {
+      "index": 19,
+      "selector": "#sequence-dots",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 8.08,
+      "end": 8.66,
+      "duration": 0.58,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 8.128,
+          "x": -153,
+          "y": -347,
+          "w": 2193,
+          "h": 1768,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.225,
+          "x": -152,
+          "y": -343,
+          "w": 2192,
+          "h": 1759,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.322,
+          "x": -141,
+          "y": -299,
+          "w": 2174,
+          "h": 1672,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.418,
+          "x": -69,
+          "y": -125,
+          "w": 2048,
+          "h": 1329,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.515,
+          "x": -11,
+          "y": -19,
+          "w": 1941,
+          "h": 1117,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.612,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1081,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#sequence-dots animates rotation over 0.58s (power3.inOut). moves 347px down and 153px right. width 2193→1920px. height 1768→1081px. ends at (0, 0) 1920×1081px. Overlaps another animated element."
+    },
+    {
+      "index": 20,
+      "selector": "#sequence-path",
+      "targets": 1,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "start": 8.46,
+      "end": 8.98,
+      "duration": 0.52,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 8.503,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.59,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.677,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.763,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.85,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 8.937,
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#sequence-path animates strokeDashoffset over 0.52s (power2.inOut). ends at (320, 331) 1280×277px. Overlaps another animated element."
+    },
+    {
+      "index": 21,
+      "selector": "i.sequence-dot",
+      "targets": 72,
+      "props": [
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 8.8,
+      "end": 9.282,
+      "duration": 0.482,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 8.84,
+          "x": 317,
+          "y": 522,
+          "w": 6,
+          "h": 6,
+          "opacity": 0.8135,
+          "visible": true
+        },
+        {
+          "t": 8.921,
+          "x": 318,
+          "y": 523,
+          "w": 5,
+          "h": 5,
+          "opacity": 0.4983,
+          "visible": true
+        },
+        {
+          "t": 9.001,
+          "x": 318,
+          "y": 523,
+          "w": 3,
+          "h": 3,
+          "opacity": 0.1696,
+          "visible": true
+        },
+        {
+          "t": 9.081,
+          "x": 319,
+          "y": 524,
+          "w": 3,
+          "h": 3,
+          "opacity": 0.0465,
+          "visible": true
+        },
+        {
+          "t": 9.162,
+          "x": 319,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0.0004,
+          "visible": true
+        },
+        {
+          "t": 9.242,
+          "x": 319,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "i.sequence-dot animates scale+autoAlpha over 0.48s (function(t){return 1-Math.pow(1-t,r)}). fades out. scales. becomes hidden. ends at (319, 524) 2×2px. Overlaps another animated element."
+    },
+    {
+      "index": 22,
+      "selector": "div.sequence-node.active",
+      "targets": 5,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "start": 8.86,
+      "end": 9.72,
+      "duration": 0.86,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 8.932,
+          "x": 220,
+          "y": 443,
+          "w": 190,
+          "h": 138,
+          "opacity": 0.305,
+          "visible": true
+        },
+        {
+          "t": 9.075,
+          "x": 220,
+          "y": 427,
+          "w": 190,
+          "h": 138,
+          "opacity": 0.908,
+          "visible": true
+        },
+        {
+          "t": 9.218,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 0.9954,
+          "visible": true
+        },
+        {
+          "t": 9.362,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 9.505,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 9.648,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.sequence-node.active animates y+autoAlpha over 0.86s (power3.out). moves 19px up. opacity 0.3→1.0. ends at (220, 424) 190×138px. Overlaps another animated element."
+    },
+    {
+      "index": 23,
+      "selector": "div.sequence-node.active",
+      "targets": 5,
+      "props": [
+        "y"
+      ],
+      "start": 10,
+      "end": 10.58,
+      "duration": 0.58,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 10.048,
+          "x": 220,
+          "y": 421,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.145,
+          "x": 220,
+          "y": 416,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.242,
+          "x": 220,
+          "y": 418,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.338,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.435,
+          "x": 220,
+          "y": 425,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.532,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.sequence-node.active animates y over 0.58s (power2.out). ends at (220, 424) 190×138px. Overlaps another animated element."
+    },
+    {
+      "index": 24,
+      "selector": "div.sequence-node.active",
+      "targets": 5,
+      "props": [
+        "y"
+      ],
+      "start": 10.22,
+      "end": 10.88,
+      "duration": 0.66,
+      "ease": "back.out(1.5)",
+      "bboxes": [
+        {
+          "t": 10.275,
+          "x": 220,
+          "y": 421,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.385,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.495,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.605,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.715,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 10.825,
+          "x": 220,
+          "y": 424,
+          "w": 190,
+          "h": 138,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.sequence-node.active animates y over 0.66s (back.out(1.5)). ends at (220, 424) 190×138px. Overlaps another animated element."
+    },
+    {
+      "index": 25,
+      "selector": "#phrase-sequence",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 10.48,
+      "end": 10.72,
+      "duration": 0.24,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 10.5,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.8403,
+          "visible": true
+        },
+        {
+          "t": 10.54,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.6049,
+          "visible": true
+        },
+        {
+          "t": 10.58,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.4082,
+          "visible": true
+        },
+        {
+          "t": 10.62,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.25,
+          "visible": true
+        },
+        {
+          "t": 10.66,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.1304,
+          "visible": true
+        },
+        {
+          "t": 10.7,
+          "x": 118,
+          "y": 852,
+          "w": 623,
+          "h": 136,
+          "opacity": 0.0069,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#phrase-sequence animates autoAlpha over 0.24s (function(t){return 1-Math.pow(1-t,r)}). fades out. ends at (118, 852) 623×136px."
+    },
+    {
+      "index": 26,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "x",
+        "y"
+      ],
+      "start": 10.72,
+      "end": 11.84,
+      "duration": 1.12,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 10.813,
+          "x": 1658,
+          "y": 442,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11,
+          "x": 1614,
+          "y": 455,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.187,
+          "x": 1371,
+          "y": 528,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.373,
+          "x": 601,
+          "y": 757,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.56,
+          "x": 303,
+          "y": 846,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.747,
+          "x": 240,
+          "y": 864,
+          "w": 22,
+          "h": 22,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#seed animates x+y over 1.12s (power3.inOut). moves 422px down and 1418px left. ends at (240, 864) 22×22px."
+    },
+    {
+      "index": 27,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "scaleX",
+        "scaleY",
+        "borderRadius"
+      ],
+      "start": 11.895,
+      "end": 12.115,
+      "duration": 0.22,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 11.913,
+          "x": 240,
+          "y": 861,
+          "w": 20,
+          "h": 28,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.95,
+          "x": 244,
+          "y": 845,
+          "w": 12,
+          "h": 61,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 11.987,
+          "x": 247,
+          "y": 835,
+          "w": 7,
+          "h": 80,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.023,
+          "x": 248,
+          "y": 831,
+          "w": 4,
+          "h": 90,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.06,
+          "x": 248,
+          "y": 829,
+          "w": 3,
+          "h": 94,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.097,
+          "x": 248,
+          "y": 828,
+          "w": 3,
+          "h": 95,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#seed animates scaleX+scaleY+borderRadius over 0.22s (power3.out). moves 33px up and 8px right. scales. width 20→3px. height 28→95px. ends at (248, 828) 3×95px."
+    },
+    {
+      "index": 28,
+      "selector": "article.story-card",
+      "targets": 5,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "start": 12.02,
+      "end": 12.96,
+      "duration": 0.94,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 12.098,
+          "x": 123,
+          "y": 273,
+          "w": 315,
+          "h": 440,
+          "opacity": 0.3135,
+          "visible": true
+        },
+        {
+          "t": 12.255,
+          "x": 123,
+          "y": 247,
+          "w": 315,
+          "h": 440,
+          "opacity": 0.879,
+          "visible": true
+        },
+        {
+          "t": 12.412,
+          "x": 122,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 0.9947,
+          "visible": true
+        },
+        {
+          "t": 12.568,
+          "x": 119,
+          "y": 241,
+          "w": 315,
+          "h": 441,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.725,
+          "x": 114,
+          "y": 240,
+          "w": 316,
+          "h": 441,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.882,
+          "x": 106,
+          "y": 239,
+          "w": 317,
+          "h": 443,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "article.story-card animates y+autoAlpha over 0.94s (power3.out). moves 34px up and 17px left. opacity 0.3→1.0. ends at (106, 239) 317×443px. Overlaps another animated element."
+    },
+    {
+      "index": 29,
+      "selector": "div.prompt-rail",
+      "targets": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "start": 12.04,
+      "end": 12.58,
+      "duration": 0.54,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 12.085,
+          "x": 1016,
+          "y": 106,
+          "w": 820,
+          "h": 58,
+          "opacity": 0.1834,
+          "visible": true
+        },
+        {
+          "t": 12.175,
+          "x": 993,
+          "y": 106,
+          "w": 820,
+          "h": 58,
+          "opacity": 0.6567,
+          "visible": true
+        },
+        {
+          "t": 12.265,
+          "x": 985,
+          "y": 106,
+          "w": 820,
+          "h": 58,
+          "opacity": 0.8301,
+          "visible": true
+        },
+        {
+          "t": 12.355,
+          "x": 979,
+          "y": 106,
+          "w": 820,
+          "h": 58,
+          "opacity": 0.9565,
+          "visible": true
+        },
+        {
+          "t": 12.445,
+          "x": 977,
+          "y": 105,
+          "w": 820,
+          "h": 58,
+          "opacity": 0.9946,
+          "visible": true
+        },
+        {
+          "t": 12.535,
+          "x": 975,
+          "y": 105,
+          "w": 821,
+          "h": 58,
+          "opacity": 0.9999,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.prompt-rail animates x+autoAlpha over 0.54s (power3.out). moves 41px left. opacity 0.2→1.0. ends at (975, 105) 821×58px. Overlaps another animated element."
+    },
+    {
+      "index": 30,
+      "selector": "div.mini-orbit",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 12.1,
+      "end": 16.7,
+      "duration": 4.6,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 12.483,
+          "x": 192,
+          "y": 370,
+          "w": 176,
+          "h": 176,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.25,
+          "x": 145,
+          "y": 358,
+          "w": 198,
+          "h": 198,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.017,
+          "x": 141,
+          "y": 383,
+          "w": 146,
+          "h": 146,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.783,
+          "x": 120,
+          "y": 356,
+          "w": 201,
+          "h": 201,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.55,
+          "x": 180,
+          "y": 371,
+          "w": 174,
+          "h": 174,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.317,
+          "x": 191,
+          "y": 368,
+          "w": 181,
+          "h": 181,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "div.mini-orbit animates rotation over 4.60s (none). ends at (191, 368) 181×181px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 31,
+      "selector": "i",
+      "targets": 4,
+      "props": [
+        "scaleX"
+      ],
+      "start": 12.22,
+      "end": 13.11,
+      "duration": 0.89,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 12.294,
+          "x": 319,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 12.443,
+          "x": 318,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 12.591,
+          "x": 315,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 12.739,
+          "x": 309,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 12.888,
+          "x": 303,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 13.036,
+          "x": 294,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "i animates scaleX over 0.89s (power3.out). moves 25px left. scales. ends at (294, 524) 2×2px. Overlaps another animated element."
+    },
+    {
+      "index": 32,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "x",
+        "y"
+      ],
+      "start": 12.24,
+      "end": 16.54,
+      "duration": 4.3,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 12.598,
+          "x": 359,
+          "y": 828,
+          "w": 3,
+          "h": 95,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.315,
+          "x": 581,
+          "y": 832,
+          "w": 3,
+          "h": 97,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.032,
+          "x": 808,
+          "y": 835,
+          "w": 3,
+          "h": 98,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.748,
+          "x": 1074,
+          "y": 835,
+          "w": 3,
+          "h": 97,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.465,
+          "x": 1348,
+          "y": 830,
+          "w": 3,
+          "h": 96,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.182,
+          "x": 1615,
+          "y": 828,
+          "w": 3,
+          "h": 95,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "#seed animates x+y over 4.30s (none). moves 1256px right. ends at (1615, 828) 3×95px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 33,
+      "selector": "div.mini-player",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "start": 12.3,
+      "end": 14.6,
+      "duration": 2.3,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 12.492,
+          "x": 1526,
+          "y": 400,
+          "w": 219,
+          "h": 200,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.875,
+          "x": 1517,
+          "y": 361,
+          "w": 223,
+          "h": 204,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.258,
+          "x": 1504,
+          "y": 358,
+          "w": 228,
+          "h": 209,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.642,
+          "x": 1490,
+          "y": 354,
+          "w": 235,
+          "h": 215,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.025,
+          "x": 1484,
+          "y": 351,
+          "w": 240,
+          "h": 220,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.408,
+          "x": 1482,
+          "y": 350,
+          "w": 242,
+          "h": 222,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "div.mini-player animates scale+rotation over 2.30s (sine.inOut). moves 50px up and 44px left. scales. width 219→242px. height 200→222px. ends at (1482, 350) 242×222px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 34,
+      "selector": "#film-camera",
+      "targets": 1,
+      "props": [
+        "x",
+        "scale"
+      ],
+      "start": 12.3,
+      "end": 14.05,
+      "duration": 1.75,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 12.446,
+          "x": -1,
+          "y": 0,
+          "w": 1921,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.738,
+          "x": -11,
+          "y": -2,
+          "w": 1927,
+          "h": 1084,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.029,
+          "x": -26,
+          "y": -5,
+          "w": 1937,
+          "h": 1089,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.321,
+          "x": -45,
+          "y": -8,
+          "w": 1949,
+          "h": 1097,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.613,
+          "x": -63,
+          "y": -11,
+          "w": 1961,
+          "h": 1103,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.904,
+          "x": -73,
+          "y": -13,
+          "w": 1967,
+          "h": 1106,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#film-camera animates x+scale over 1.75s (sine.inOut). moves 13px up and 72px left. scales. width 1921→1967px. height 1080→1106px. ends at (-73, -13) 1967×1106px. Overlaps another animated element."
+    },
+    {
+      "index": 35,
+      "selector": "div.mini-letter",
+      "targets": 1,
+      "props": [
+        "rotation",
+        "scale"
+      ],
+      "start": 12.35,
+      "end": 14.55,
+      "duration": 2.2,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 12.533,
+          "x": 887,
+          "y": 349,
+          "w": 122,
+          "h": 190,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.9,
+          "x": 873,
+          "y": 344,
+          "w": 126,
+          "h": 195,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.267,
+          "x": 853,
+          "y": 340,
+          "w": 134,
+          "h": 202,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.633,
+          "x": 836,
+          "y": 336,
+          "w": 142,
+          "h": 209,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14,
+          "x": 824,
+          "y": 332,
+          "w": 150,
+          "h": 215,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.367,
+          "x": 822,
+          "y": 330,
+          "w": 154,
+          "h": 218,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow"
+      ],
+      "summary": "div.mini-letter animates rotation+scale over 2.20s (sine.inOut). moves 19px up and 65px left. scales. width 122→154px. height 190→218px. ends at (822, 330) 154×218px. FLAGS: paced-slow."
+    },
+    {
+      "index": 36,
+      "selector": "path",
+      "targets": 1,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "start": 12.42,
+      "end": 14.52,
+      "duration": 2.1,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 12.595,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 12.945,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.295,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.645,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 13.995,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.345,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "degenerate",
+        "offscreen",
+        "paced-slow"
+      ],
+      "summary": "path animates strokeDashoffset over 2.10s (power2.inOut). ends at (0, 0) 0×0px. FLAGS: degenerate, offscreen, paced-slow."
+    },
+    {
+      "index": 37,
+      "selector": "i",
+      "targets": 4,
+      "props": [
+        "scaleX"
+      ],
+      "start": 13.18,
+      "end": 15.15,
+      "duration": 1.97,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 13.344,
+          "x": 277,
+          "y": 524,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 13.672,
+          "x": 260,
+          "y": 523,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 14.001,
+          "x": 253,
+          "y": 523,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 14.329,
+          "x": 253,
+          "y": 523,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 14.658,
+          "x": 255,
+          "y": 523,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        },
+        {
+          "t": 14.986,
+          "x": 269,
+          "y": 523,
+          "w": 2,
+          "h": 2,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [],
+      "summary": "i animates scaleX over 1.97s (sine.inOut). moves 8px left. scales. ends at (269, 523) 2×2px."
+    },
+    {
+      "index": 38,
+      "selector": "#film-camera",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scale"
+      ],
+      "start": 14.45,
+      "end": 16,
+      "duration": 1.55,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 14.579,
+          "x": -73,
+          "y": -13,
+          "w": 1967,
+          "h": 1107,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 14.837,
+          "x": -63,
+          "y": -12,
+          "w": 1961,
+          "h": 1103,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.096,
+          "x": -49,
+          "y": -9,
+          "w": 1951,
+          "h": 1098,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.354,
+          "x": -29,
+          "y": -5,
+          "w": 1939,
+          "h": 1091,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.613,
+          "x": -12,
+          "y": -2,
+          "w": 1927,
+          "h": 1084,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.871,
+          "x": -1,
+          "y": 0,
+          "w": 1921,
+          "h": 1081,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#film-camera animates x+y+scale over 1.55s (sine.inOut). moves 13px down and 72px right. scales. width 1967→1921px. height 1107→1081px. ends at (-1, 0) 1921×1081px."
+    },
+    {
+      "index": 39,
+      "selector": "article.story-card",
+      "targets": 5,
+      "props": [
+        "y"
+      ],
+      "start": 15.12,
+      "end": 15.74,
+      "duration": 0.62,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 15.172,
+          "x": 83,
+          "y": 232,
+          "w": 319,
+          "h": 446,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.275,
+          "x": 91,
+          "y": 228,
+          "w": 319,
+          "h": 445,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.378,
+          "x": 98,
+          "y": 232,
+          "w": 318,
+          "h": 444,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.482,
+          "x": 104,
+          "y": 239,
+          "w": 317,
+          "h": 443,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.585,
+          "x": 110,
+          "y": 240,
+          "w": 316,
+          "h": 442,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.688,
+          "x": 115,
+          "y": 240,
+          "w": 316,
+          "h": 441,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "article.story-card animates y over 0.62s (power2.out). moves 8px down and 32px right. ends at (115, 240) 316×441px. Overlaps another animated element."
+    },
+    {
+      "index": 40,
+      "selector": "article.story-card",
+      "targets": 5,
+      "props": [
+        "y"
+      ],
+      "start": 15.34,
+      "end": 16.04,
+      "duration": 0.7,
+      "ease": "back.out(1.5)",
+      "bboxes": [
+        {
+          "t": 15.398,
+          "x": 98,
+          "y": 232,
+          "w": 318,
+          "h": 444,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.515,
+          "x": 106,
+          "y": 240,
+          "w": 317,
+          "h": 443,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.632,
+          "x": 112,
+          "y": 240,
+          "w": 316,
+          "h": 442,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.748,
+          "x": 118,
+          "y": 240,
+          "w": 316,
+          "h": 441,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.865,
+          "x": 121,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 15.982,
+          "x": 123,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "article.story-card animates y over 0.70s (back.out(1.5)). moves 9px down and 25px right. ends at (123, 241) 315×440px. Overlaps another animated element."
+    },
+    {
+      "index": 41,
+      "selector": "article.story-card.selected",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 16.26,
+      "end": 16.8,
+      "duration": 0.54,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 16.305,
+          "x": 1479,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.395,
+          "x": 1479,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.485,
+          "x": 1478,
+          "y": 239,
+          "w": 317,
+          "h": 443,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.575,
+          "x": 1475,
+          "y": 236,
+          "w": 322,
+          "h": 450,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.665,
+          "x": 1474,
+          "y": 234,
+          "w": 325,
+          "h": 454,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.755,
+          "x": 1474,
+          "y": 233,
+          "w": 326,
+          "h": 455,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "article.story-card.selected animates scale over 0.54s (power2.inOut). moves 8px up and 5px left. scales. width 315→326px. height 440→455px. ends at (1474, 233) 326×455px."
+    },
+    {
+      "index": 42,
+      "selector": "#seed",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY",
+        "borderRadius"
+      ],
+      "start": 16.54,
+      "end": 16.88,
+      "duration": 0.34,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 16.568,
+          "x": 1744,
+          "y": 828,
+          "w": 3,
+          "h": 95,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.625,
+          "x": 1744,
+          "y": 825,
+          "w": 3,
+          "h": 95,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.682,
+          "x": 1726,
+          "y": 777,
+          "w": 6,
+          "h": 84,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.738,
+          "x": 1658,
+          "y": 588,
+          "w": 17,
+          "h": 42,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.795,
+          "x": 1637,
+          "y": 529,
+          "w": 20,
+          "h": 29,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 16.852,
+          "x": 1626,
+          "y": 497,
+          "w": 22,
+          "h": 22,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#seed animates x+y+scaleX+scaleY+borderRadius over 0.34s (power3.inOut). moves 331px up and 118px left. fades out. scales. width 3→22px. height 95→22px. becomes hidden. ends at (1626, 497) 22×22px. Overlaps another animated element."
+    },
+    {
+      "index": 43,
+      "selector": "#morph-card",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY",
+        "borderRadius"
+      ],
+      "start": 16.8,
+      "end": 18,
+      "duration": 1.2,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 16.9,
+          "x": 1479,
+          "y": 241,
+          "w": 315,
+          "h": 440,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.1,
+          "x": 1441,
+          "y": 237,
+          "w": 349,
+          "h": 452,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.3,
+          "x": 1183,
+          "y": 213,
+          "w": 581,
+          "h": 534,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.5,
+          "x": 546,
+          "y": 153,
+          "w": 1154,
+          "h": 736,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.7,
+          "x": 288,
+          "y": 129,
+          "w": 1385,
+          "h": 818,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.9,
+          "x": 250,
+          "y": 125,
+          "w": 1420,
+          "h": 830,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#morph-card animates x+y+scaleX+scaleY+borderRadius over 1.20s (power3.inOut). moves 116px up and 1229px left. scales. width 315→1420px. height 440→830px. ends at (250, 125) 1420×830px. Overlaps another animated element."
+    },
+    {
+      "index": 44,
+      "selector": "div.morph-thumb",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 16.86,
+      "end": 17.88,
+      "duration": 1.02,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 16.945,
+          "x": 1596,
+          "y": 382,
+          "w": 80,
+          "h": 159,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.115,
+          "x": 1572,
+          "y": 383,
+          "w": 87,
+          "h": 161,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.285,
+          "x": 1452,
+          "y": 390,
+          "w": 122,
+          "h": 172,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.455,
+          "x": 1128,
+          "y": 409,
+          "w": 202,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.625,
+          "x": 903,
+          "y": 426,
+          "w": 247,
+          "h": 213,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 17.795,
+          "x": 839,
+          "y": 431,
+          "w": 257,
+          "h": 215,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.morph-thumb animates scale over 1.02s (power2.inOut). moves 49px down and 757px left. scales. width 80→257px. height 159→215px. ends at (839, 431) 257×215px."
+    },
+    {
+      "index": 45,
+      "selector": "div.morph-copy",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 17.38,
+      "end": 17.78,
+      "duration": 0.4,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 17.413,
+          "x": 922,
+          "y": 264,
+          "w": 99,
+          "h": 15,
+          "opacity": 0.1426,
+          "visible": true
+        },
+        {
+          "t": 17.48,
+          "x": 705,
+          "y": 252,
+          "w": 123,
+          "h": 16,
+          "opacity": 0.5193,
+          "visible": true
+        },
+        {
+          "t": 17.547,
+          "x": 556,
+          "y": 243,
+          "w": 139,
+          "h": 17,
+          "opacity": 0.7655,
+          "visible": true
+        },
+        {
+          "t": 17.613,
+          "x": 458,
+          "y": 238,
+          "w": 150,
+          "h": 18,
+          "opacity": 0.9089,
+          "visible": true
+        },
+        {
+          "t": 17.68,
+          "x": 399,
+          "y": 234,
+          "w": 156,
+          "h": 19,
+          "opacity": 0.9773,
+          "visible": true
+        },
+        {
+          "t": 17.747,
+          "x": 367,
+          "y": 232,
+          "w": 160,
+          "h": 19,
+          "opacity": 0.9984,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.morph-copy animates autoAlpha over 0.40s (power2.out). moves 32px up and 555px left. opacity 0.1→1.0. width 99→160px. ends at (367, 232) 160×19px."
+    },
+    {
+      "index": 46,
+      "selector": "div.result-title",
+      "targets": 1,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "start": 18,
+      "end": 18.54,
+      "duration": 0.54,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 18.045,
+          "x": 377,
+          "y": 372,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.225,
+          "visible": true
+        },
+        {
+          "t": 18.135,
+          "x": 377,
+          "y": 360,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.6784,
+          "visible": true
+        },
+        {
+          "t": 18.225,
+          "x": 377,
+          "y": 356,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.8428,
+          "visible": true
+        },
+        {
+          "t": 18.315,
+          "x": 377,
+          "y": 353,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.961,
+          "visible": true
+        },
+        {
+          "t": 18.405,
+          "x": 377,
+          "y": 352,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.9955,
+          "visible": true
+        },
+        {
+          "t": 18.495,
+          "x": 376,
+          "y": 351,
+          "w": 487,
+          "h": 298,
+          "opacity": 0.9997,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-title animates y+autoAlpha over 0.54s (power3.out). moves 21px up. opacity 0.2→1.0. ends at (376, 351) 487×298px. Overlaps another animated element."
+    },
+    {
+      "index": 47,
+      "selector": "div.result-rings",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "start": 18,
+      "end": 18.8,
+      "duration": 0.8,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 18.067,
+          "x": 1102,
+          "y": 39,
+          "w": 623,
+          "h": 623,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.2,
+          "x": 1090,
+          "y": 27,
+          "w": 648,
+          "h": 648,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.333,
+          "x": 1088,
+          "y": 25,
+          "w": 652,
+          "h": 652,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.467,
+          "x": 1089,
+          "y": 25,
+          "w": 651,
+          "h": 651,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.6,
+          "x": 1089,
+          "y": 24,
+          "w": 651,
+          "h": 651,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.733,
+          "x": 1089,
+          "y": 24,
+          "w": 652,
+          "h": 652,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-rings animates scale+rotation over 0.80s (power3.out). moves 15px up and 13px left. scales. width 623→652px. height 623→652px. ends at (1089, 24) 652×652px. Overlaps another animated element."
+    },
+    {
+      "index": 48,
+      "selector": "#scrub-fill",
+      "targets": 1,
+      "props": [
+        "scaleX"
+      ],
+      "start": 18.04,
+      "end": 21.22,
+      "duration": 3.18,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 18.305,
+          "x": 385,
+          "y": 882,
+          "w": 92,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.835,
+          "x": 383,
+          "y": 882,
+          "w": 283,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.365,
+          "x": 379,
+          "y": 883,
+          "w": 464,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.895,
+          "x": 375,
+          "y": 883,
+          "w": 660,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.425,
+          "x": 371,
+          "y": 883,
+          "w": 858,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.955,
+          "x": 369,
+          "y": 884,
+          "w": 1055,
+          "h": 4,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "#scrub-fill animates scaleX over 3.18s (none). moves 16px left. scales. width 92→1055px. ends at (369, 884) 1055×4px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 49,
+      "selector": "#film-camera",
+      "targets": 1,
+      "props": [
+        "scale",
+        "y"
+      ],
+      "start": 18.08,
+      "end": 21.16,
+      "duration": 3.08,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 18.337,
+          "x": 0,
+          "y": 0,
+          "w": 1921,
+          "h": 1081,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 18.85,
+          "x": -4,
+          "y": -3,
+          "w": 1927,
+          "h": 1084,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.363,
+          "x": -10,
+          "y": -8,
+          "w": 1939,
+          "h": 1091,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.877,
+          "x": -17,
+          "y": -14,
+          "w": 1954,
+          "h": 1099,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.39,
+          "x": -23,
+          "y": -20,
+          "w": 1966,
+          "h": 1106,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.903,
+          "x": -26,
+          "y": -23,
+          "w": 1973,
+          "h": 1110,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "#film-camera animates scale+y over 3.08s (sine.inOut). moves 23px up and 26px left. scales. width 1921→1973px. height 1081→1110px. ends at (-26, -23) 1973×1110px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 50,
+      "selector": "div.result-rings",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 18.8,
+      "end": 21.48,
+      "duration": 2.68,
+      "ease": "none",
+      "bboxes": [
+        {
+          "t": 19.023,
+          "x": 1072,
+          "y": 4,
+          "w": 688,
+          "h": 688,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.47,
+          "x": 1036,
+          "y": -38,
+          "w": 766,
+          "h": 766,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 19.917,
+          "x": 1008,
+          "y": -72,
+          "w": 828,
+          "h": 828,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.363,
+          "x": 985,
+          "y": -99,
+          "w": 878,
+          "h": 878,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 20.81,
+          "x": 968,
+          "y": -121,
+          "w": 917,
+          "h": 917,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.257,
+          "x": 958,
+          "y": -129,
+          "w": 936,
+          "h": 936,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-slow",
+        "collision"
+      ],
+      "summary": "div.result-rings animates rotation over 2.68s (none). moves 133px up and 114px left. width 688→936px. height 688→936px. ends at (958, -129) 936×936px. FLAGS: paced-slow. Overlaps another animated element."
+    },
+    {
+      "index": 51,
+      "selector": "#film-camera",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scale"
+      ],
+      "start": 21.16,
+      "end": 21.52,
+      "duration": 0.36,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 21.19,
+          "x": -27,
+          "y": -23,
+          "w": 1974,
+          "h": 1110,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.25,
+          "x": -24,
+          "y": -21,
+          "w": 1968,
+          "h": 1107,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.31,
+          "x": -18,
+          "y": -16,
+          "w": 1956,
+          "h": 1100,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.37,
+          "x": -10,
+          "y": -9,
+          "w": 1941,
+          "h": 1092,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.43,
+          "x": -7,
+          "y": -6,
+          "w": 1933,
+          "h": 1088,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.49,
+          "x": -1,
+          "y": -1,
+          "w": 1923,
+          "h": 1082,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#film-camera animates x+y+scale over 0.36s (sine.inOut). moves 22px down and 26px right. scales. width 1974→1923px. height 1110→1082px. ends at (-1, -1) 1923×1082px. Overlaps another animated element."
+    },
+    {
+      "index": 52,
+      "selector": "#result-world",
+      "targets": 1,
+      "props": [
+        "backgroundColor",
+        "color"
+      ],
+      "start": 21.572,
+      "end": 21.932,
+      "duration": 0.36,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.602,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.662,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.722,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.842,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.902,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#result-world animates backgroundColor+color over 0.36s (function(t){return 1-Math.pow(1-t,r)}). ends at (0, 0) 1920×1080px. Overlaps another animated element."
+    },
+    {
+      "index": 53,
+      "selector": "div.result-grid",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 21.572,
+      "end": 21.852,
+      "duration": 0.28,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.595,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.642,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 0.6099,
+          "visible": true
+        },
+        {
+          "t": 21.689,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 0.4381,
+          "visible": true
+        },
+        {
+          "t": 21.735,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 0.1796,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 0.0929,
+          "visible": true
+        },
+        {
+          "t": 21.829,
+          "x": -120,
+          "y": -120,
+          "w": 2160,
+          "h": 1320,
+          "opacity": 0.0345,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-grid animates autoAlpha over 0.28s (function(t){return 1-Math.pow(1-t,r)}). fades out. ends at (-120, -120) 2160×1320px. Overlaps another animated element."
+    },
+    {
+      "index": 54,
+      "selector": "#result-player",
+      "targets": 1,
+      "props": [
+        "backgroundColor",
+        "borderColor",
+        "scale"
+      ],
+      "start": 21.572,
+      "end": 21.992,
+      "duration": 0.42,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 21.607,
+          "x": 250,
+          "y": 125,
+          "w": 1420,
+          "h": 830,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.677,
+          "x": 252,
+          "y": 126,
+          "w": 1415,
+          "h": 827,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.747,
+          "x": 270,
+          "y": 137,
+          "w": 1380,
+          "h": 807,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.817,
+          "x": 324,
+          "y": 168,
+          "w": 1272,
+          "h": 744,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.887,
+          "x": 356,
+          "y": 187,
+          "w": 1207,
+          "h": 706,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.957,
+          "x": 363,
+          "y": 191,
+          "w": 1194,
+          "h": 698,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#result-player animates backgroundColor+borderColor+scale over 0.42s (power3.inOut). moves 66px down and 113px right. scales. width 1420→1194px. height 830→698px. ends at (363, 191) 1194×698px. Overlaps another animated element."
+    },
+    {
+      "index": 55,
+      "selector": "div.result-stage",
+      "targets": 1,
+      "props": [
+        "backgroundColor"
+      ],
+      "start": 21.572,
+      "end": 21.932,
+      "duration": 0.36,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.602,
+          "x": 291,
+          "y": 166,
+          "w": 1338,
+          "h": 640,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.662,
+          "x": 291,
+          "y": 166,
+          "w": 1337,
+          "h": 640,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.722,
+          "x": 298,
+          "y": 170,
+          "w": 1323,
+          "h": 633,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": 331,
+          "y": 188,
+          "w": 1259,
+          "h": 602,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.842,
+          "x": 381,
+          "y": 216,
+          "w": 1159,
+          "h": 554,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.902,
+          "x": 396,
+          "y": 225,
+          "w": 1128,
+          "h": 539,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-stage animates backgroundColor over 0.36s (function(t){return 1-Math.pow(1-t,r)}). moves 59px down and 105px right. width 1338→1128px. height 640→539px. ends at (396, 225) 1128×539px. Overlaps another animated element."
+    },
+    {
+      "index": 56,
+      "selector": "div.result-title",
+      "targets": 1,
+      "props": [
+        "color"
+      ],
+      "start": 21.572,
+      "end": 21.932,
+      "duration": 0.36,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.602,
+          "x": 377,
+          "y": 352,
+          "w": 487,
+          "h": 298,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.662,
+          "x": 377,
+          "y": 352,
+          "w": 486,
+          "h": 298,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.722,
+          "x": 383,
+          "y": 354,
+          "w": 481,
+          "h": 295,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": 411,
+          "y": 363,
+          "w": 458,
+          "h": 280,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.842,
+          "x": 455,
+          "y": 377,
+          "w": 422,
+          "h": 258,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.902,
+          "x": 469,
+          "y": 382,
+          "w": 410,
+          "h": 251,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.result-title animates color over 0.36s (function(t){return 1-Math.pow(1-t,r)}). moves 30px down and 92px right. width 487→410px. height 298→251px. ends at (469, 382) 410×251px."
+    },
+    {
+      "index": 57,
+      "selector": "div.result-kicker.micro-label",
+      "targets": 1,
+      "props": [
+        "color"
+      ],
+      "start": 21.572,
+      "end": 21.932,
+      "duration": 0.36,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.602,
+          "x": 383,
+          "y": 276,
+          "w": 454,
+          "h": 15,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.662,
+          "x": 383,
+          "y": 276,
+          "w": 453,
+          "h": 15,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.722,
+          "x": 389,
+          "y": 279,
+          "w": 449,
+          "h": 15,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": 417,
+          "y": 292,
+          "w": 427,
+          "h": 14,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.842,
+          "x": 460,
+          "y": 311,
+          "w": 393,
+          "h": 13,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.902,
+          "x": 474,
+          "y": 317,
+          "w": 382,
+          "h": 13,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.result-kicker.micro-label animates color over 0.36s (function(t){return 1-Math.pow(1-t,r)}). moves 41px down and 91px right. width 454→382px. ends at (474, 317) 382×13px."
+    },
+    {
+      "index": 58,
+      "selector": "div.result-rings",
+      "targets": 1,
+      "props": [
+        "borderColor"
+      ],
+      "start": 21.572,
+      "end": 21.932,
+      "duration": 0.36,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.602,
+          "x": 955,
+          "y": -108,
+          "w": 918,
+          "h": 918,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.662,
+          "x": 955,
+          "y": -108,
+          "w": 917,
+          "h": 917,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.722,
+          "x": 955,
+          "y": -101,
+          "w": 908,
+          "h": 908,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.782,
+          "x": 955,
+          "y": -70,
+          "w": 864,
+          "h": 864,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.842,
+          "x": 956,
+          "y": -21,
+          "w": 795,
+          "h": 795,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 21.902,
+          "x": 956,
+          "y": -6,
+          "w": 774,
+          "h": 774,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-rings animates borderColor over 0.36s (function(t){return 1-Math.pow(1-t,r)}). moves 102px down. width 918→774px. height 918→774px. ends at (956, -6) 774×774px. Overlaps another animated element."
+    },
+    {
+      "index": 59,
+      "selector": "div.dark-label",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 21.78,
+      "end": 22.22,
+      "duration": 0.44,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 21.817,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.0888,
+          "visible": true
+        },
+        {
+          "t": 21.89,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.3551,
+          "visible": true
+        },
+        {
+          "t": 21.963,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.5755,
+          "visible": true
+        },
+        {
+          "t": 22.037,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.82,
+          "visible": true
+        },
+        {
+          "t": 22.11,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.9256,
+          "visible": true
+        },
+        {
+          "t": 22.183,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.9853,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.dark-label animates autoAlpha over 0.44s (function(t){return 1-Math.pow(1-t,r)}). fades in. ends at (84, 84) 161×19px."
+    },
+    {
+      "index": 60,
+      "selector": "#result-player",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "start": 22.02,
+      "end": 23.42,
+      "duration": 1.4,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 22.137,
+          "x": 364,
+          "y": 192,
+          "w": 1191,
+          "h": 697,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 22.37,
+          "x": 369,
+          "y": 194,
+          "w": 1182,
+          "h": 692,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 22.603,
+          "x": 378,
+          "y": 198,
+          "w": 1164,
+          "h": 683,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 22.837,
+          "x": 388,
+          "y": 203,
+          "w": 1144,
+          "h": 674,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 23.07,
+          "x": 397,
+          "y": 208,
+          "w": 1126,
+          "h": 665,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 23.303,
+          "x": 402,
+          "y": 210,
+          "w": 1116,
+          "h": 660,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#result-player animates scale+rotation over 1.40s (sine.inOut). moves 18px down and 38px right. scales. width 1191→1116px. height 697→660px. ends at (402, 210) 1116×660px."
+    },
+    {
+      "index": 61,
+      "selector": "#result-player",
+      "targets": 1,
+      "props": [
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 23.508,
+      "end": 24.008,
+      "duration": 0.5,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 23.55,
+          "x": 430,
+          "y": 226,
+          "w": 1061,
+          "h": 627,
+          "opacity": 0.8423,
+          "visible": true
+        },
+        {
+          "t": 23.633,
+          "x": 482,
+          "y": 258,
+          "w": 955,
+          "h": 565,
+          "opacity": 0.5324,
+          "visible": true
+        },
+        {
+          "t": 23.716,
+          "x": 525,
+          "y": 283,
+          "w": 870,
+          "h": 514,
+          "opacity": 0.2809,
+          "visible": true
+        },
+        {
+          "t": 23.8,
+          "x": 541,
+          "y": 292,
+          "w": 837,
+          "h": 495,
+          "opacity": 0.1852,
+          "visible": true
+        },
+        {
+          "t": 23.883,
+          "x": 545,
+          "y": 294,
+          "w": 830,
+          "h": 491,
+          "opacity": 0.1654,
+          "visible": true
+        },
+        {
+          "t": 23.966,
+          "x": 546,
+          "y": 295,
+          "w": 829,
+          "h": 490,
+          "opacity": 0.1604,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#result-player animates scale+autoAlpha over 0.50s (power3.out). moves 69px down and 116px right. opacity 0.8→0.2. scales. width 1061→829px. height 627→490px. ends at (546, 295) 829×490px."
+    },
+    {
+      "index": 62,
+      "selector": "path",
+      "targets": 1,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "start": 23.508,
+      "end": 24.688,
+      "duration": 1.18,
+      "ease": "power2.inOut",
+      "bboxes": [
+        {
+          "t": 23.606,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 23.803,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.196,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.393,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.59,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "degenerate",
+        "offscreen"
+      ],
+      "summary": "path animates strokeDashoffset over 1.18s (power2.inOut). ends at (0, 0) 0×0px. FLAGS: degenerate, offscreen."
+    },
+    {
+      "index": 63,
+      "selector": "div.peak-core",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation",
+        "autoAlpha"
+      ],
+      "start": 23.58,
+      "end": 24.16,
+      "duration": 0.58,
+      "ease": "back.out(1.45)",
+      "bboxes": [
+        {
+          "t": 23.628,
+          "x": 873,
+          "y": 441,
+          "w": 174,
+          "h": 174,
+          "opacity": 0.1465,
+          "visible": true
+        },
+        {
+          "t": 23.725,
+          "x": 831,
+          "y": 399,
+          "w": 258,
+          "h": 258,
+          "opacity": 0.6898,
+          "visible": true
+        },
+        {
+          "t": 23.822,
+          "x": 812,
+          "y": 380,
+          "w": 297,
+          "h": 297,
+          "opacity": 0.9728,
+          "visible": true
+        },
+        {
+          "t": 23.918,
+          "x": 803,
+          "y": 371,
+          "w": 315,
+          "h": 315,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.015,
+          "x": 804,
+          "y": 372,
+          "w": 312,
+          "h": 312,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.112,
+          "x": 809,
+          "y": 377,
+          "w": 303,
+          "h": 303,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.peak-core animates scale+rotation+autoAlpha over 0.58s (back.out(1.45)). moves 64px up and 64px left. opacity 0.1→1.0. scales. width 174→303px. height 174→303px. ends at (809, 377) 303×303px."
+    },
+    {
+      "index": 64,
+      "selector": "article.peak-card.pc-one",
+      "targets": 5,
+      "props": [
+        "x",
+        "y",
+        "rotation",
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 23.66,
+      "end": 24.52,
+      "duration": 0.86,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 23.732,
+          "x": 747,
+          "y": 458,
+          "w": 98,
+          "h": 59,
+          "opacity": 0.2565,
+          "visible": true
+        },
+        {
+          "t": 23.875,
+          "x": 296,
+          "y": 297,
+          "w": 251,
+          "h": 158,
+          "opacity": 0.8415,
+          "visible": true
+        },
+        {
+          "t": 24.018,
+          "x": 192,
+          "y": 259,
+          "w": 287,
+          "h": 183,
+          "opacity": 0.9762,
+          "visible": true
+        },
+        {
+          "t": 24.162,
+          "x": 174,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 0.9994,
+          "visible": true
+        },
+        {
+          "t": 24.305,
+          "x": 173,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.448,
+          "x": 173,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "article.peak-card.pc-one animates x+y+rotation+scale+autoAlpha over 0.86s (power3.out). moves 206px up and 574px left. opacity 0.3→1.0. scales. width 98→293px. height 59→188px. ends at (173, 252) 293×188px. Overlaps another animated element."
+    },
+    {
+      "index": 65,
+      "selector": "div.peak-core",
+      "targets": 1,
+      "props": [
+        "rotation"
+      ],
+      "start": 24.42,
+      "end": 25.87,
+      "duration": 1.45,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 24.541,
+          "x": 810,
+          "y": 378,
+          "w": 301,
+          "h": 301,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.783,
+          "x": 807,
+          "y": 375,
+          "w": 307,
+          "h": 307,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.024,
+          "x": 801,
+          "y": 369,
+          "w": 318,
+          "h": 318,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.266,
+          "x": 795,
+          "y": 363,
+          "w": 329,
+          "h": 329,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.508,
+          "x": 790,
+          "y": 358,
+          "w": 341,
+          "h": 341,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.749,
+          "x": 787,
+          "y": 355,
+          "w": 347,
+          "h": 347,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.peak-core animates rotation over 1.45s (sine.inOut). moves 23px up and 23px left. width 301→347px. height 301→347px. ends at (787, 355) 347×347px."
+    },
+    {
+      "index": 66,
+      "selector": "article.peak-card.pc-one",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 24.48,
+      "end": 24.66,
+      "duration": 0.18,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 24.495,
+          "x": 173,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.525,
+          "x": 171,
+          "y": 250,
+          "w": 298,
+          "h": 191,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.555,
+          "x": 168,
+          "y": 248,
+          "w": 305,
+          "h": 195,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.585,
+          "x": 166,
+          "y": 247,
+          "w": 308,
+          "h": 197,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.615,
+          "x": 165,
+          "y": 247,
+          "w": 310,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.645,
+          "x": 165,
+          "y": 246,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast",
+        "collision"
+      ],
+      "summary": "article.peak-card.pc-one animates scale over 0.18s (power2.out). moves 6px up and 8px left. scales. width 293→311px. height 188→199px. ends at (165, 246) 311×199px. FLAGS: paced-fast. Overlaps another animated element."
+    },
+    {
+      "index": 67,
+      "selector": "article.peak-card.pc-one",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 24.66,
+      "end": 24.84,
+      "duration": 0.18,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 24.675,
+          "x": 165,
+          "y": 246,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.705,
+          "x": 165,
+          "y": 247,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.735,
+          "x": 165,
+          "y": 247,
+          "w": 310,
+          "h": 198,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.765,
+          "x": 165,
+          "y": 247,
+          "w": 310,
+          "h": 198,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.795,
+          "x": 166,
+          "y": 248,
+          "w": 307,
+          "h": 197,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.825,
+          "x": 169,
+          "y": 249,
+          "w": 303,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-one animates scale over 0.18s (power2.in). moves 4px right. scales. width 311→303px. ends at (169, 249) 303×194px. FLAGS: paced-fast."
+    },
+    {
+      "index": 68,
+      "selector": "article.peak-card.pc-two",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 24.72,
+      "end": 24.9,
+      "duration": 0.18,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 24.735,
+          "x": 513,
+          "y": 93,
+          "w": 294,
+          "h": 185,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.765,
+          "x": 513,
+          "y": 93,
+          "w": 294,
+          "h": 185,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.795,
+          "x": 509,
+          "y": 91,
+          "w": 301,
+          "h": 190,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.825,
+          "x": 507,
+          "y": 90,
+          "w": 305,
+          "h": 192,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.855,
+          "x": 506,
+          "y": 89,
+          "w": 307,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.885,
+          "x": 506,
+          "y": 89,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-two animates scale over 0.18s (power2.out). moves 4px up and 7px left. scales. width 294→308px. height 185→194px. ends at (506, 89) 308×194px. FLAGS: paced-fast."
+    },
+    {
+      "index": 69,
+      "selector": "article.peak-card.pc-two",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 24.9,
+      "end": 25.08,
+      "duration": 0.18,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 24.915,
+          "x": 506,
+          "y": 89,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.945,
+          "x": 506,
+          "y": 89,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 24.975,
+          "x": 506,
+          "y": 89,
+          "w": 307,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.005,
+          "x": 507,
+          "y": 90,
+          "w": 305,
+          "h": 192,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.035,
+          "x": 509,
+          "y": 91,
+          "w": 301,
+          "h": 190,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.065,
+          "x": 509,
+          "y": 91,
+          "w": 301,
+          "h": 190,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-two animates scale over 0.18s (power2.in). scales. width 308→301px. ends at (509, 91) 301×190px. FLAGS: paced-fast."
+    },
+    {
+      "index": 70,
+      "selector": "article.peak-card.pc-three",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 24.96,
+      "end": 25.14,
+      "duration": 0.18,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 24.975,
+          "x": 1192,
+          "y": 192,
+          "w": 295,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.005,
+          "x": 1189,
+          "y": 189,
+          "w": 303,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.035,
+          "x": 1186,
+          "y": 188,
+          "w": 307,
+          "h": 197,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.065,
+          "x": 1186,
+          "y": 188,
+          "w": 307,
+          "h": 197,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.095,
+          "x": 1185,
+          "y": 187,
+          "w": 310,
+          "h": 198,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.125,
+          "x": 1185,
+          "y": 187,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-three animates scale over 0.18s (power2.out). moves 5px up and 7px left. scales. width 295→311px. height 189→199px. ends at (1185, 187) 311×199px. FLAGS: paced-fast."
+    },
+    {
+      "index": 71,
+      "selector": "article.peak-card.pc-three",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 25.14,
+      "end": 25.32,
+      "duration": 0.18,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 25.155,
+          "x": 1185,
+          "y": 186,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.185,
+          "x": 1185,
+          "y": 186,
+          "w": 311,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.215,
+          "x": 1185,
+          "y": 187,
+          "w": 310,
+          "h": 199,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.245,
+          "x": 1186,
+          "y": 187,
+          "w": 308,
+          "h": 197,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.275,
+          "x": 1188,
+          "y": 188,
+          "w": 305,
+          "h": 195,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.305,
+          "x": 1191,
+          "y": 190,
+          "w": 298,
+          "h": 191,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-three animates scale over 0.18s (power2.in). moves 4px down and 6px right. scales. width 311→298px. height 199→191px. ends at (1191, 190) 298×191px. FLAGS: paced-fast."
+    },
+    {
+      "index": 72,
+      "selector": "article.peak-card.pc-four",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 25.2,
+      "end": 25.38,
+      "duration": 0.18,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 25.215,
+          "x": 336,
+          "y": 697,
+          "w": 288,
+          "h": 178,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.245,
+          "x": 332,
+          "y": 694,
+          "w": 296,
+          "h": 183,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.275,
+          "x": 329,
+          "y": 693,
+          "w": 301,
+          "h": 186,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.305,
+          "x": 328,
+          "y": 692,
+          "w": 304,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.335,
+          "x": 327,
+          "y": 692,
+          "w": 305,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.365,
+          "x": 327,
+          "y": 692,
+          "w": 305,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-four animates scale over 0.18s (power2.out). moves 5px up and 9px left. scales. width 288→305px. height 178→189px. ends at (327, 692) 305×189px. FLAGS: paced-fast."
+    },
+    {
+      "index": 73,
+      "selector": "article.peak-card.pc-four",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 25.38,
+      "end": 25.56,
+      "duration": 0.18,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 25.395,
+          "x": 327,
+          "y": 691,
+          "w": 305,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.425,
+          "x": 327,
+          "y": 691,
+          "w": 305,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.455,
+          "x": 327,
+          "y": 692,
+          "w": 305,
+          "h": 189,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.485,
+          "x": 328,
+          "y": 692,
+          "w": 304,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.515,
+          "x": 330,
+          "y": 693,
+          "w": 300,
+          "h": 186,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.545,
+          "x": 333,
+          "y": 695,
+          "w": 295,
+          "h": 183,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-four animates scale over 0.18s (power2.in). moves 4px down and 6px right. scales. width 305→295px. height 189→183px. ends at (333, 695) 295×183px. FLAGS: paced-fast."
+    },
+    {
+      "index": 74,
+      "selector": "article.peak-card.pc-five",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 25.44,
+      "end": 25.62,
+      "duration": 0.18,
+      "ease": "power2.out",
+      "bboxes": [
+        {
+          "t": 25.455,
+          "x": 1245,
+          "y": 704,
+          "w": 291,
+          "h": 183,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.485,
+          "x": 1241,
+          "y": 702,
+          "w": 297,
+          "h": 187,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.515,
+          "x": 1238,
+          "y": 701,
+          "w": 303,
+          "h": 191,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.545,
+          "x": 1237,
+          "y": 700,
+          "w": 306,
+          "h": 193,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.575,
+          "x": 1236,
+          "y": 699,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.605,
+          "x": 1236,
+          "y": 699,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-five animates scale over 0.18s (power2.out). moves 5px up and 9px left. scales. width 291→308px. height 183→194px. ends at (1236, 699) 308×194px. FLAGS: paced-fast."
+    },
+    {
+      "index": 75,
+      "selector": "article.peak-card.pc-five",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 25.62,
+      "end": 25.8,
+      "duration": 0.18,
+      "ease": "power2.in",
+      "bboxes": [
+        {
+          "t": 25.635,
+          "x": 1236,
+          "y": 699,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.665,
+          "x": 1236,
+          "y": 699,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.695,
+          "x": 1236,
+          "y": 699,
+          "w": 308,
+          "h": 194,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.725,
+          "x": 1237,
+          "y": 699,
+          "w": 307,
+          "h": 193,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.755,
+          "x": 1238,
+          "y": 700,
+          "w": 304,
+          "h": 191,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 25.785,
+          "x": 1241,
+          "y": 702,
+          "w": 299,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "paced-fast"
+      ],
+      "summary": "article.peak-card.pc-five animates scale over 0.18s (power2.in). moves 5px right. scales. width 308→299px. height 194→188px. ends at (1241, 702) 299×188px. FLAGS: paced-fast."
+    },
+    {
+      "index": 76,
+      "selector": "article.peak-card.pc-one",
+      "targets": 5,
+      "props": [
+        "x",
+        "y",
+        "scale",
+        "rotation",
+        "autoAlpha"
+      ],
+      "start": 26.411,
+      "end": 27.131,
+      "duration": 0.72,
+      "ease": "power4.in",
+      "bboxes": [
+        {
+          "t": 26.471,
+          "x": 173,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.591,
+          "x": 174,
+          "y": 252,
+          "w": 293,
+          "h": 188,
+          "opacity": 0.999,
+          "visible": true
+        },
+        {
+          "t": 26.711,
+          "x": 190,
+          "y": 258,
+          "w": 287,
+          "h": 184,
+          "opacity": 0.978,
+          "visible": true
+        },
+        {
+          "t": 26.831,
+          "x": 249,
+          "y": 280,
+          "w": 267,
+          "h": 170,
+          "opacity": 0.9028,
+          "visible": true
+        },
+        {
+          "t": 26.951,
+          "x": 501,
+          "y": 371,
+          "w": 180,
+          "h": 111,
+          "opacity": 0.5756,
+          "visible": true
+        },
+        {
+          "t": 27.071,
+          "x": 943,
+          "y": 526,
+          "w": 34,
+          "h": 20,
+          "opacity": 0,
+          "visible": false
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "article.peak-card.pc-one animates x+y+scale+rotation+autoAlpha over 0.72s (power4.in). moves 274px down and 770px right. fades out. scales. width 293→34px. height 188→20px. becomes hidden. ends at (943, 526) 34×20px. Overlaps another animated element."
+    },
+    {
+      "index": 77,
+      "selector": "path",
+      "targets": 1,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "start": 26.44,
+      "end": 27.1,
+      "duration": 0.66,
+      "ease": "power3.in",
+      "bboxes": [
+        {
+          "t": 26.495,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.605,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.715,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.825,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.935,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.045,
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "degenerate",
+        "offscreen"
+      ],
+      "summary": "path animates strokeDashoffset over 0.66s (power3.in). ends at (0, 0) 0×0px. FLAGS: degenerate, offscreen."
+    },
+    {
+      "index": 78,
+      "selector": "div.peak-core",
+      "targets": 1,
+      "props": [
+        "scale",
+        "autoAlpha"
+      ],
+      "start": 26.48,
+      "end": 27.06,
+      "duration": 0.58,
+      "ease": "power4.in",
+      "bboxes": [
+        {
+          "t": 26.528,
+          "x": 786,
+          "y": 354,
+          "w": 348,
+          "h": 348,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.625,
+          "x": 786,
+          "y": 354,
+          "w": 347,
+          "h": 347,
+          "opacity": 0.9996,
+          "visible": true
+        },
+        {
+          "t": 26.722,
+          "x": 787,
+          "y": 355,
+          "w": 345,
+          "h": 345,
+          "opacity": 0.9921,
+          "visible": true
+        },
+        {
+          "t": 26.818,
+          "x": 794,
+          "y": 362,
+          "w": 332,
+          "h": 332,
+          "opacity": 0.9489,
+          "visible": true
+        },
+        {
+          "t": 26.915,
+          "x": 816,
+          "y": 384,
+          "w": 288,
+          "h": 288,
+          "opacity": 0.8009,
+          "visible": true
+        },
+        {
+          "t": 27.012,
+          "x": 873,
+          "y": 441,
+          "w": 174,
+          "h": 174,
+          "opacity": 0.4207,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.peak-core animates scale+autoAlpha over 0.58s (power4.in). moves 87px down and 87px right. opacity 1.0→0.4. scales. width 348→174px. height 348→174px. ends at (873, 441) 174×174px. Overlaps another animated element."
+    },
+    {
+      "index": 79,
+      "selector": "#result-player",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "scaleX",
+        "scaleY",
+        "rotation",
+        "borderRadius",
+        "backgroundColor",
+        "borderColor"
+      ],
+      "start": 26.54,
+      "end": 27.02,
+      "duration": 0.48,
+      "ease": "power4.inOut",
+      "bboxes": [
+        {
+          "t": 26.58,
+          "x": 546,
+          "y": 295,
+          "w": 829,
+          "h": 490,
+          "opacity": 0.16,
+          "visible": true
+        },
+        {
+          "t": 26.66,
+          "x": 546,
+          "y": 296,
+          "w": 828,
+          "h": 488,
+          "opacity": 0.1637,
+          "visible": true
+        },
+        {
+          "t": 26.74,
+          "x": 554,
+          "y": 335,
+          "w": 813,
+          "h": 411,
+          "opacity": 0.3025,
+          "visible": true
+        },
+        {
+          "t": 26.82,
+          "x": 577,
+          "y": 453,
+          "w": 767,
+          "h": 174,
+          "opacity": 0.7282,
+          "visible": true
+        },
+        {
+          "t": 26.9,
+          "x": 590,
+          "y": 525,
+          "w": 740,
+          "h": 30,
+          "opacity": 0.9869,
+          "visible": true
+        },
+        {
+          "t": 26.98,
+          "x": 591,
+          "y": 528,
+          "w": 738,
+          "h": 23,
+          "opacity": 0.9998,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#result-player animates autoAlpha+scaleX+scaleY+rotation+borderRadius+backgroundColor+borderColor over 0.48s (power4.inOut). moves 233px down and 45px right. opacity 0.2→1.0. scales. width 829→738px. height 490→23px. ends at (591, 528) 738×23px. Overlaps another animated element."
+    },
+    {
+      "index": 80,
+      "selector": "div.result-stage",
+      "targets": 2,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 26.54,
+      "end": 26.78,
+      "duration": 0.24,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 26.56,
+          "x": 570,
+          "y": 319,
+          "w": 780,
+          "h": 379,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.6,
+          "x": 570,
+          "y": 319,
+          "w": 780,
+          "h": 379,
+          "opacity": 0.5625,
+          "visible": true
+        },
+        {
+          "t": 26.64,
+          "x": 570,
+          "y": 320,
+          "w": 779,
+          "h": 378,
+          "opacity": 0.3735,
+          "visible": true
+        },
+        {
+          "t": 26.68,
+          "x": 571,
+          "y": 323,
+          "w": 778,
+          "h": 372,
+          "opacity": 0.223,
+          "visible": true
+        },
+        {
+          "t": 26.72,
+          "x": 573,
+          "y": 333,
+          "w": 774,
+          "h": 355,
+          "opacity": 0.1111,
+          "visible": true
+        },
+        {
+          "t": 26.76,
+          "x": 577,
+          "y": 355,
+          "w": 765,
+          "h": 318,
+          "opacity": 0.0378,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.result-stage animates autoAlpha over 0.24s (function(t){return 1-Math.pow(1-t,r)}). moves 36px down and 7px right. fades out. width 780→765px. height 379→318px. ends at (577, 355) 765×318px. Overlaps another animated element."
+    },
+    {
+      "index": 81,
+      "selector": "svg.peak-loop",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 26.72,
+      "end": 27.02,
+      "duration": 0.3,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 26.745,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.9131,
+          "visible": true
+        },
+        {
+          "t": 26.795,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.7131,
+          "visible": true
+        },
+        {
+          "t": 26.845,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.3872,
+          "visible": true
+        },
+        {
+          "t": 26.895,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.2612,
+          "visible": true
+        },
+        {
+          "t": 26.945,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.0835,
+          "visible": true
+        },
+        {
+          "t": 26.995,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 0.0316,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "svg.peak-loop animates autoAlpha over 0.30s (function(t){return 1-Math.pow(1-t,r)}). fades out. ends at (0, 0) 1920×1080px. Overlaps another animated element."
+    },
+    {
+      "index": 82,
+      "selector": "div.dark-label",
+      "targets": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "start": 26.72,
+      "end": 26.94,
+      "duration": 0.22,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 26.738,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.8825,
+          "visible": true
+        },
+        {
+          "t": 26.775,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.6208,
+          "visible": true
+        },
+        {
+          "t": 26.812,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.405,
+          "visible": true
+        },
+        {
+          "t": 26.848,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.2351,
+          "visible": true
+        },
+        {
+          "t": 26.885,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.1111,
+          "visible": true
+        },
+        {
+          "t": 26.922,
+          "x": 84,
+          "y": 84,
+          "w": 161,
+          "h": 19,
+          "opacity": 0.0331,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "div.dark-label animates autoAlpha over 0.22s (function(t){return 1-Math.pow(1-t,r)}). fades out. ends at (84, 84) 161×19px. Overlaps another animated element."
+    },
+    {
+      "index": 83,
+      "selector": "#result-world",
+      "targets": 1,
+      "props": [
+        "backgroundColor",
+        "color"
+      ],
+      "start": 26.78,
+      "end": 27.24,
+      "duration": 0.46,
+      "ease": "function(t){return 1-Math.pow(1-t,r)}",
+      "bboxes": [
+        {
+          "t": 26.818,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.895,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 26.972,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.048,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.125,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.202,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#result-world animates backgroundColor+color over 0.46s (function(t){return 1-Math.pow(1-t,r)}). ends at (0, 0) 1920×1080px. Overlaps another animated element."
+    },
+    {
+      "index": 84,
+      "selector": "#result-player",
+      "targets": 1,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY",
+        "borderWidth",
+        "boxShadow"
+      ],
+      "start": 27.02,
+      "end": 27.36,
+      "duration": 0.34,
+      "ease": "power3.inOut",
+      "bboxes": [
+        {
+          "t": 27.048,
+          "x": 591,
+          "y": 528,
+          "w": 738,
+          "h": 23,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.105,
+          "x": 591,
+          "y": 528,
+          "w": 738,
+          "h": 23,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.162,
+          "x": 592,
+          "y": 528,
+          "w": 737,
+          "h": 21,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.218,
+          "x": 596,
+          "y": 527,
+          "w": 727,
+          "h": 12,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.275,
+          "x": 600,
+          "y": 526,
+          "w": 721,
+          "h": 6,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.332,
+          "x": 600,
+          "y": 526,
+          "w": 720,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [
+        "collision"
+      ],
+      "summary": "#result-player animates x+y+scaleX+scaleY+borderWidth+boxShadow over 0.34s (power3.inOut). moves 9px right. scales. width 738→720px. height 23→5px. ends at (600, 526) 720×5px. Overlaps another animated element."
+    },
+    {
+      "index": 85,
+      "selector": "#lockup-line",
+      "targets": 1,
+      "props": [
+        "scaleX"
+      ],
+      "start": 27.64,
+      "end": 27.9,
+      "duration": 0.26,
+      "ease": "power4.in",
+      "bboxes": [
+        {
+          "t": 27.662,
+          "x": 600,
+          "y": 526,
+          "w": 720,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.705,
+          "x": 600,
+          "y": 526,
+          "w": 720,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.748,
+          "x": 602,
+          "y": 526,
+          "w": 716,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.792,
+          "x": 609,
+          "y": 526,
+          "w": 702,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.835,
+          "x": 674,
+          "y": 526,
+          "w": 571,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 27.878,
+          "x": 765,
+          "y": 526,
+          "w": 390,
+          "h": 5,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#lockup-line animates scaleX over 0.26s (power4.in). moves 165px right. scales. width 720→390px. ends at (765, 526) 390×5px."
+    },
+    {
+      "index": 86,
+      "selector": "#lockup",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "start": 27.88,
+      "end": 28.5,
+      "duration": 0.62,
+      "ease": "back.out(1.5)",
+      "bboxes": [
+        {
+          "t": 27.932,
+          "x": 66,
+          "y": 37,
+          "w": 1788,
+          "h": 1006,
+          "opacity": 0.139,
+          "visible": true
+        },
+        {
+          "t": 28.035,
+          "x": 17,
+          "y": 9,
+          "w": 1887,
+          "h": 1061,
+          "opacity": 0.7837,
+          "visible": true
+        },
+        {
+          "t": 28.138,
+          "x": -1,
+          "y": 0,
+          "w": 1921,
+          "h": 1081,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 28.242,
+          "x": -6,
+          "y": -3,
+          "w": 1932,
+          "h": 1087,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 28.345,
+          "x": -5,
+          "y": -3,
+          "w": 1929,
+          "h": 1085,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 28.448,
+          "x": -1,
+          "y": -1,
+          "w": 1922,
+          "h": 1081,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#lockup animates autoAlpha+scale over 0.62s (back.out(1.5)). moves 38px up and 67px left. opacity 0.1→1.0. scales. width 1788→1922px. height 1006→1081px. ends at (-1, -1) 1922×1081px."
+    },
+    {
+      "index": 87,
+      "selector": "div.lockup-orbit",
+      "targets": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "start": 28.02,
+      "end": 29.16,
+      "duration": 1.14,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 28.115,
+          "x": 592,
+          "y": 172,
+          "w": 735,
+          "h": 735,
+          "opacity": 0.4,
+          "visible": true
+        },
+        {
+          "t": 28.305,
+          "x": 584,
+          "y": 164,
+          "w": 752,
+          "h": 752,
+          "opacity": 0.4,
+          "visible": true
+        },
+        {
+          "t": 28.495,
+          "x": 581,
+          "y": 161,
+          "w": 757,
+          "h": 757,
+          "opacity": 0.4,
+          "visible": true
+        },
+        {
+          "t": 28.685,
+          "x": 580,
+          "y": 160,
+          "w": 759,
+          "h": 759,
+          "opacity": 0.4,
+          "visible": true
+        },
+        {
+          "t": 28.875,
+          "x": 580,
+          "y": 160,
+          "w": 760,
+          "h": 760,
+          "opacity": 0.4,
+          "visible": true
+        },
+        {
+          "t": 29.065,
+          "x": 580,
+          "y": 160,
+          "w": 760,
+          "h": 760,
+          "opacity": 0.4,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "div.lockup-orbit animates scale+rotation over 1.14s (power3.out). moves 12px up and 12px left. scales. width 735→760px. height 735→760px. ends at (580, 160) 760×760px."
+    },
+    {
+      "index": 88,
+      "selector": "#tagline",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "y"
+      ],
+      "start": 28.42,
+      "end": 28.9,
+      "duration": 0.48,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 28.46,
+          "x": 0,
+          "y": 703,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.1066,
+          "visible": true
+        },
+        {
+          "t": 28.54,
+          "x": 0,
+          "y": 690,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.6595,
+          "visible": true
+        },
+        {
+          "t": 28.62,
+          "x": 0,
+          "y": 686,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.8474,
+          "visible": true
+        },
+        {
+          "t": 28.7,
+          "x": 0,
+          "y": 684,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.9699,
+          "visible": true
+        },
+        {
+          "t": 28.78,
+          "x": 0,
+          "y": 683,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.994,
+          "visible": true
+        },
+        {
+          "t": 28.86,
+          "x": 0,
+          "y": 683,
+          "w": 1920,
+          "h": 43,
+          "opacity": 0.9996,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#tagline animates autoAlpha+y over 0.48s (power3.out). moves 20px up. opacity 0.1→1.0. ends at (0, 683) 1920×43px."
+    },
+    {
+      "index": 89,
+      "selector": "#provenance",
+      "targets": 1,
+      "props": [
+        "autoAlpha",
+        "y"
+      ],
+      "start": 28.62,
+      "end": 29.07,
+      "duration": 0.45,
+      "ease": "power3.out",
+      "bboxes": [
+        {
+          "t": 28.658,
+          "x": 742,
+          "y": 801,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.1134,
+          "visible": true
+        },
+        {
+          "t": 28.733,
+          "x": 742,
+          "y": 793,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.543,
+          "visible": true
+        },
+        {
+          "t": 28.808,
+          "x": 742,
+          "y": 787,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.8704,
+          "visible": true
+        },
+        {
+          "t": 28.883,
+          "x": 742,
+          "y": 786,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.9583,
+          "visible": true
+        },
+        {
+          "t": 28.957,
+          "x": 742,
+          "y": 785,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.9915,
+          "visible": true
+        },
+        {
+          "t": 29.032,
+          "x": 742,
+          "y": 785,
+          "w": 436,
+          "h": 68,
+          "opacity": 0.9994,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#provenance animates autoAlpha+y over 0.45s (power3.out). moves 16px up. opacity 0.1→1.0. ends at (742, 785) 436×68px."
+    },
+    {
+      "index": 90,
+      "selector": "#film-camera",
+      "targets": 1,
+      "props": [
+        "scale"
+      ],
+      "start": 29.315,
+      "end": 30.333,
+      "duration": 1.018,
+      "ease": "sine.inOut",
+      "bboxes": [
+        {
+          "t": 29.4,
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 29.57,
+          "x": -2,
+          "y": -1,
+          "w": 1924,
+          "h": 1082,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 29.739,
+          "x": -5,
+          "y": -3,
+          "w": 1930,
+          "h": 1086,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 29.909,
+          "x": -8,
+          "y": -5,
+          "w": 1937,
+          "h": 1089,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 30.079,
+          "x": -11,
+          "y": -6,
+          "w": 1943,
+          "h": 1093,
+          "opacity": 1,
+          "visible": true
+        },
+        {
+          "t": 30.248,
+          "x": -13,
+          "y": -7,
+          "w": 1946,
+          "h": 1095,
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "flags": [],
+      "summary": "#film-camera animates scale over 1.02s (sine.inOut). moves 7px up and 13px left. scales. width 1920→1946px. height 1080→1095px. ends at (-13, -7) 1946×1095px."
+    }
+  ],
+  "choreography": "Timeline (30.3s, each char ≈ 0.51s):\n  0s                                                    30s\n  ┼───────────────────────────────────────────────────────────┤\n  ██                                                            div.chat-head x+autoAlpha\n  █████                                                         div.ask-orbit rotation\n  ██                                                            div.ask-line y+autoAlpha\n  ██                                                            div.composer y+autoAlpha\n   ███                                                          #composer-prompt clipPath\n   ███                                                          #seed x\n      ██                                                        #seed x+y+scaleX+scaleY\n      ██                                                        div.handoff-orbit scale+rotation\n        ██                                                      #handoff-sprite autoAlpha+scale\n        ██                                                      #handoff-knot autoAlpha+scale\n         ██                                                     #phrase-prompt x+autoAlpha\n         █████                                                  div.handoff-orbit rotation+scale\n            ██                                                  #handoff-knot scale+autoAlpha\n              █                                                 #seed scale+autoAlpha\n              ███                                               i.sequence-dot x+y+scale+autoAlpha\n              ████                                              #sequence-dots rotation\n                 ██                                             #phrase-sequence x+autoAlpha\n                 ███                                            i.sequence-dot x+y+scale\n                 ███                                            #sequence-dots rotation\n                  ██                                            #sequence-path strokeDashoffset\n                   ██                                           i.sequence-dot scale+autoAlpha\n                   ███                                          div.sequence-node.active y+autoAlpha\n                     ██                                         div.sequence-node.active y\n                      ██                                        div.sequence-node.active y\n                      ██                                        #phrase-sequence autoAlpha\n                       ███                                      #seed x+y\n                         █                                      #seed scaleX+scaleY+borderRadius\n                         ███                                    article.story-card y+autoAlpha\n                         ██                                     div.prompt-rail x+autoAlpha\n                         ███████████                            div.mini-orbit rotation\n                          ██                                    i scaleX\n                          █████████                             #seed x+y\n                          █████                                 div.mini-player scale+rotation\n                          ████                                  #film-camera x+scale\n                          █████                                 div.mini-letter rotation+scale\n                          █████                                 path strokeDashoffset\n                            ████                                i scaleX\n                              ████                              #film-camera x+y+scale\n                               ███                              article.story-card y\n                                ██                              article.story-card y\n                                  ██                            article.story-card.selected scale\n                                  ██                            #seed x+y+scaleX+scaleY+borderRadius\n                                   ███                          #morph-card x+y+scaleX+scaleY+borderRadius\n                                   ███                          div.morph-thumb scale\n                                    ██                          div.morph-copy autoAlpha\n                                     ██                         div.result-title y+autoAlpha\n                                     ███                        div.result-rings scale+rotation\n                                     ███████                    #scrub-fill scaleX\n                                     ███████                    #film-camera scale+y\n                                       ██████                   div.result-rings rotation\n                                           ██                   #film-camera x+y+scale\n                                            ██                  #result-world backgroundColor+color\n                                            ██                  div.result-grid autoAlpha\n                                            ██                  #result-player backgroundColor+borderColor+scale\n                                            ██                  div.result-stage backgroundColor\n                                            ██                  div.result-title color\n                                            ██                  div.result-kicker.micro-label color\n                                            ██                  div.result-rings borderColor\n                                             █                  div.dark-label autoAlpha\n                                             ████               #result-player scale+rotation\n                                                ██              #result-player scale+autoAlpha\n                                                ███             path strokeDashoffset\n                                                ██              div.peak-core scale+rotation+autoAlpha\n                                                ███             article.peak-card.pc-one x+y+rotation+scale+autoAlpha\n                                                  ████          div.peak-core rotation\n                                                  █             article.peak-card.pc-one scale\n                                                  ██            article.peak-card.pc-one scale\n                                                  ██            article.peak-card.pc-two scale\n                                                   █            article.peak-card.pc-two scale\n                                                   █            article.peak-card.pc-three scale\n                                                   ██           article.peak-card.pc-three scale\n                                                   ██           article.peak-card.pc-four scale\n                                                    █           article.peak-card.pc-four scale\n                                                    █           article.peak-card.pc-five scale\n                                                    ██          article.peak-card.pc-five scale\n                                                      ██        article.peak-card.pc-one x+y+scale+rotation+autoAlpha\n                                                      ██        path strokeDashoffset\n                                                      ██        div.peak-core scale+autoAlpha\n                                                      ██        #result-player autoAlpha+scaleX+scaleY+rotation+borderRadius+backgroundColor+borderColor\n                                                      █         div.result-stage autoAlpha\n                                                      ██        svg.peak-loop autoAlpha\n                                                      ██        div.dark-label autoAlpha\n                                                      ██        #result-world backgroundColor+color\n                                                       ██       #result-player x+y+scaleX+scaleY+borderWidth+boxShadow\n                                                        ██      #lockup-line scaleX\n                                                         ██     #lockup autoAlpha+scale\n                                                         ███    div.lockup-orbit scale+rotation\n                                                          ██    #tagline autoAlpha+y\n                                                          ██    #provenance autoAlpha+y\n                                                           ███  #film-camera scale",
+  "density": [
+    {
+      "t": 0,
+      "activeTweens": 4
+    },
+    {
+      "t": 0.5,
+      "activeTweens": 6
+    },
+    {
+      "t": 1,
+      "activeTweens": 3
+    },
+    {
+      "t": 1.5,
+      "activeTweens": 3
+    },
+    {
+      "t": 2,
+      "activeTweens": 3
+    },
+    {
+      "t": 2.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 3,
+      "activeTweens": 2
+    },
+    {
+      "t": 3.5,
+      "activeTweens": 4
+    },
+    {
+      "t": 4,
+      "activeTweens": 2
+    },
+    {
+      "t": 4.5,
+      "activeTweens": 1
+    },
+    {
+      "t": 5,
+      "activeTweens": 1
+    },
+    {
+      "t": 5.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 6,
+      "activeTweens": 3
+    },
+    {
+      "t": 6.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 7,
+      "activeTweens": 2
+    },
+    {
+      "t": 7.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 8,
+      "activeTweens": 5
+    },
+    {
+      "t": 8.5,
+      "activeTweens": 5
+    },
+    {
+      "t": 9,
+      "activeTweens": 2
+    },
+    {
+      "t": 9.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 10,
+      "activeTweens": 3
+    },
+    {
+      "t": 10.5,
+      "activeTweens": 4
+    },
+    {
+      "t": 11,
+      "activeTweens": 1
+    },
+    {
+      "t": 11.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 12,
+      "activeTweens": 10
+    },
+    {
+      "t": 12.5,
+      "activeTweens": 9
+    },
+    {
+      "t": 13,
+      "activeTweens": 8
+    },
+    {
+      "t": 13.5,
+      "activeTweens": 7
+    },
+    {
+      "t": 14,
+      "activeTweens": 8
+    },
+    {
+      "t": 14.5,
+      "activeTweens": 7
+    },
+    {
+      "t": 15,
+      "activeTweens": 6
+    },
+    {
+      "t": 15.5,
+      "activeTweens": 5
+    },
+    {
+      "t": 16,
+      "activeTweens": 5
+    },
+    {
+      "t": 16.5,
+      "activeTweens": 6
+    },
+    {
+      "t": 17,
+      "activeTweens": 3
+    },
+    {
+      "t": 17.5,
+      "activeTweens": 5
+    },
+    {
+      "t": 18,
+      "activeTweens": 5
+    },
+    {
+      "t": 18.5,
+      "activeTweens": 5
+    },
+    {
+      "t": 19,
+      "activeTweens": 3
+    },
+    {
+      "t": 19.5,
+      "activeTweens": 3
+    },
+    {
+      "t": 20,
+      "activeTweens": 3
+    },
+    {
+      "t": 20.5,
+      "activeTweens": 3
+    },
+    {
+      "t": 21,
+      "activeTweens": 4
+    },
+    {
+      "t": 21.5,
+      "activeTweens": 9
+    },
+    {
+      "t": 22,
+      "activeTweens": 2
+    },
+    {
+      "t": 22.5,
+      "activeTweens": 1
+    },
+    {
+      "t": 23,
+      "activeTweens": 1
+    },
+    {
+      "t": 23.5,
+      "activeTweens": 4
+    },
+    {
+      "t": 24,
+      "activeTweens": 6
+    },
+    {
+      "t": 24.5,
+      "activeTweens": 8
+    },
+    {
+      "t": 25,
+      "activeTweens": 7
+    },
+    {
+      "t": 25.5,
+      "activeTweens": 4
+    },
+    {
+      "t": 26,
+      "activeTweens": 3
+    },
+    {
+      "t": 26.5,
+      "activeTweens": 8
+    },
+    {
+      "t": 27,
+      "activeTweens": 7
+    },
+    {
+      "t": 27.5,
+      "activeTweens": 2
+    },
+    {
+      "t": 28,
+      "activeTweens": 3
+    },
+    {
+      "t": 28.5,
+      "activeTweens": 4
+    },
+    {
+      "t": 29,
+      "activeTweens": 3
+    },
+    {
+      "t": 29.5,
+      "activeTweens": 1
+    },
+    {
+      "t": 30,
+      "activeTweens": 1
+    }
+  ],
+  "staggers": [
+    {
+      "elements": [
+        "article.peak-card.pc-one",
+        "article.peak-card.pc-one",
+        "article.peak-card.pc-two",
+        "article.peak-card.pc-two",
+        "article.peak-card.pc-three",
+        "article.peak-card.pc-three",
+        "article.peak-card.pc-four"
+      ],
+      "props": [
+        "scale"
+      ],
+      "count": 7,
+      "intervals": [
+        0.18,
+        0.06,
+        0.18,
+        0.06,
+        0.18,
+        0.06
+      ],
+      "avgInterval": 0.12,
+      "consistent": false,
+      "note": "7 elements stagger with uneven intervals (180ms, 60ms, 180ms, 60ms, 180ms, 60ms)"
+    },
+    {
+      "elements": [
+        "article.peak-card.pc-four",
+        "article.peak-card.pc-five",
+        "article.peak-card.pc-five"
+      ],
+      "props": [
+        "scale"
+      ],
+      "count": 3,
+      "intervals": [
+        0.06,
+        0.18
+      ],
+      "avgInterval": 0.12,
+      "consistent": false,
+      "note": "3 elements stagger with uneven intervals (60ms, 180ms)"
+    }
+  ],
+  "elements": {
+    "div.chat-head": {
+      "firstAppears": 0.08,
+      "lastAnimates": 0.6,
+      "tweenCount": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 78,
+        "y": 82,
+        "w": 212,
+        "h": 64
+      }
+    },
+    "div.ask-orbit": {
+      "firstAppears": 0.1,
+      "lastAnimates": 2.2,
+      "tweenCount": 1,
+      "props": [
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 1308,
+        "y": 608,
+        "w": 905,
+        "h": 905
+      }
+    },
+    "div.ask-line": {
+      "firstAppears": 0.28,
+      "lastAnimates": 0.92,
+      "tweenCount": 1,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 272,
+        "y": 321,
+        "w": 780,
+        "h": 93
+      }
+    },
+    "div.composer": {
+      "firstAppears": 0.36,
+      "lastAnimates": 0.98,
+      "tweenCount": 1,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 270,
+        "y": 540,
+        "w": 1380,
+        "h": 190
+      }
+    },
+    "#composer-prompt": {
+      "firstAppears": 0.534,
+      "lastAnimates": 1.714,
+      "tweenCount": 1,
+      "props": [
+        "clipPath"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 343,
+        "y": 596,
+        "w": 644,
+        "h": 55
+      }
+    },
+    "#seed": {
+      "firstAppears": 0.534,
+      "lastAnimates": 16.88,
+      "tweenCount": 7,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY",
+        "scale",
+        "autoAlpha",
+        "borderRadius"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 1626,
+        "y": 497,
+        "w": 22,
+        "h": 22
+      }
+    },
+    "div.handoff-orbit": {
+      "firstAppears": 2.27,
+      "lastAnimates": 5.8,
+      "tweenCount": 2,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 591,
+        "y": 171,
+        "w": 737,
+        "h": 737
+      }
+    },
+    "#handoff-sprite": {
+      "firstAppears": 3.38,
+      "lastAnimates": 3.66,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 839,
+        "y": 419,
+        "w": 242,
+        "h": 242
+      }
+    },
+    "#handoff-knot": {
+      "firstAppears": 3.38,
+      "lastAnimates": 5.97,
+      "tweenCount": 2,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 863,
+        "y": 443,
+        "w": 195,
+        "h": 195
+      }
+    },
+    "#phrase-prompt": {
+      "firstAppears": 3.67,
+      "lastAnimates": 4.33,
+      "tweenCount": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 118,
+        "y": 852,
+        "w": 515,
+        "h": 136
+      }
+    },
+    "i.sequence-dot": {
+      "firstAppears": 6.1,
+      "lastAnimates": 9.282,
+      "tweenCount": 3,
+      "props": [
+        "x",
+        "y",
+        "scale",
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 319,
+        "y": 524,
+        "w": 2,
+        "h": 2
+      }
+    },
+    "#sequence-dots": {
+      "firstAppears": 6.45,
+      "lastAnimates": 8.66,
+      "tweenCount": 2,
+      "props": [
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 0,
+        "y": 0,
+        "w": 1920,
+        "h": 1081
+      }
+    },
+    "#phrase-sequence": {
+      "firstAppears": 7.65,
+      "lastAnimates": 10.72,
+      "tweenCount": 2,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 118,
+        "y": 852,
+        "w": 623,
+        "h": 136
+      }
+    },
+    "#sequence-path": {
+      "firstAppears": 8.46,
+      "lastAnimates": 8.98,
+      "tweenCount": 1,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 320,
+        "y": 331,
+        "w": 1280,
+        "h": 277
+      }
+    },
+    "div.sequence-node.active": {
+      "firstAppears": 8.86,
+      "lastAnimates": 10.88,
+      "tweenCount": 3,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 220,
+        "y": 424,
+        "w": 190,
+        "h": 138
+      }
+    },
+    "article.story-card": {
+      "firstAppears": 12.02,
+      "lastAnimates": 16.04,
+      "tweenCount": 3,
+      "props": [
+        "y",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 123,
+        "y": 241,
+        "w": 315,
+        "h": 440
+      }
+    },
+    "div.prompt-rail": {
+      "firstAppears": 12.04,
+      "lastAnimates": 12.58,
+      "tweenCount": 1,
+      "props": [
+        "x",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 975,
+        "y": 105,
+        "w": 821,
+        "h": 58
+      }
+    },
+    "div.mini-orbit": {
+      "firstAppears": 12.1,
+      "lastAnimates": 16.7,
+      "tweenCount": 1,
+      "props": [
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 191,
+        "y": 368,
+        "w": 181,
+        "h": 181
+      }
+    },
+    "i": {
+      "firstAppears": 12.22,
+      "lastAnimates": 15.15,
+      "tweenCount": 2,
+      "props": [
+        "scaleX"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 269,
+        "y": 523,
+        "w": 2,
+        "h": 2
+      }
+    },
+    "div.mini-player": {
+      "firstAppears": 12.3,
+      "lastAnimates": 14.6,
+      "tweenCount": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 1482,
+        "y": 350,
+        "w": 242,
+        "h": 222
+      }
+    },
+    "#film-camera": {
+      "firstAppears": 12.3,
+      "lastAnimates": 30.333,
+      "tweenCount": 5,
+      "props": [
+        "x",
+        "scale",
+        "y"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": -13,
+        "y": -7,
+        "w": 1946,
+        "h": 1095
+      }
+    },
+    "div.mini-letter": {
+      "firstAppears": 12.35,
+      "lastAnimates": 14.55,
+      "tweenCount": 1,
+      "props": [
+        "rotation",
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 822,
+        "y": 330,
+        "w": 154,
+        "h": 218
+      }
+    },
+    "path": {
+      "firstAppears": 12.42,
+      "lastAnimates": 27.1,
+      "tweenCount": 3,
+      "props": [
+        "strokeDashoffset"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      }
+    },
+    "article.story-card.selected": {
+      "firstAppears": 16.26,
+      "lastAnimates": 16.8,
+      "tweenCount": 1,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 1474,
+        "y": 233,
+        "w": 326,
+        "h": 455
+      }
+    },
+    "#morph-card": {
+      "firstAppears": 16.8,
+      "lastAnimates": 18,
+      "tweenCount": 1,
+      "props": [
+        "x",
+        "y",
+        "scaleX",
+        "scaleY",
+        "borderRadius"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 250,
+        "y": 125,
+        "w": 1420,
+        "h": 830
+      }
+    },
+    "div.morph-thumb": {
+      "firstAppears": 16.86,
+      "lastAnimates": 17.88,
+      "tweenCount": 1,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 839,
+        "y": 431,
+        "w": 257,
+        "h": 215
+      }
+    },
+    "div.morph-copy": {
+      "firstAppears": 17.38,
+      "lastAnimates": 17.78,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 367,
+        "y": 232,
+        "w": 160,
+        "h": 19
+      }
+    },
+    "div.result-title": {
+      "firstAppears": 18,
+      "lastAnimates": 21.932,
+      "tweenCount": 2,
+      "props": [
+        "y",
+        "autoAlpha",
+        "color"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 469,
+        "y": 382,
+        "w": 410,
+        "h": 251
+      }
+    },
+    "div.result-rings": {
+      "firstAppears": 18,
+      "lastAnimates": 21.932,
+      "tweenCount": 3,
+      "props": [
+        "scale",
+        "rotation",
+        "borderColor"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 956,
+        "y": -6,
+        "w": 774,
+        "h": 774
+      }
+    },
+    "#scrub-fill": {
+      "firstAppears": 18.04,
+      "lastAnimates": 21.22,
+      "tweenCount": 1,
+      "props": [
+        "scaleX"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 369,
+        "y": 884,
+        "w": 1055,
+        "h": 4
+      }
+    },
+    "#result-world": {
+      "firstAppears": 21.572,
+      "lastAnimates": 27.24,
+      "tweenCount": 2,
+      "props": [
+        "backgroundColor",
+        "color"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 0,
+        "y": 0,
+        "w": 1920,
+        "h": 1080
+      }
+    },
+    "div.result-grid": {
+      "firstAppears": 21.572,
+      "lastAnimates": 21.852,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": -120,
+        "y": -120,
+        "w": 2160,
+        "h": 1320
+      }
+    },
+    "#result-player": {
+      "firstAppears": 21.572,
+      "lastAnimates": 27.36,
+      "tweenCount": 5,
+      "props": [
+        "backgroundColor",
+        "borderColor",
+        "scale",
+        "rotation",
+        "autoAlpha",
+        "scaleX",
+        "scaleY",
+        "borderRadius",
+        "x",
+        "y",
+        "borderWidth",
+        "boxShadow"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 600,
+        "y": 526,
+        "w": 720,
+        "h": 5
+      }
+    },
+    "div.result-stage": {
+      "firstAppears": 21.572,
+      "lastAnimates": 26.78,
+      "tweenCount": 2,
+      "props": [
+        "backgroundColor",
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 577,
+        "y": 355,
+        "w": 765,
+        "h": 318
+      }
+    },
+    "div.result-kicker.micro-label": {
+      "firstAppears": 21.572,
+      "lastAnimates": 21.932,
+      "tweenCount": 1,
+      "props": [
+        "color"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 474,
+        "y": 317,
+        "w": 382,
+        "h": 13
+      }
+    },
+    "div.dark-label": {
+      "firstAppears": 21.78,
+      "lastAnimates": 26.94,
+      "tweenCount": 2,
+      "props": [
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 84,
+        "y": 84,
+        "w": 161,
+        "h": 19
+      }
+    },
+    "div.peak-core": {
+      "firstAppears": 23.58,
+      "lastAnimates": 27.06,
+      "tweenCount": 3,
+      "props": [
+        "scale",
+        "rotation",
+        "autoAlpha"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 873,
+        "y": 441,
+        "w": 174,
+        "h": 174
+      }
+    },
+    "article.peak-card.pc-one": {
+      "firstAppears": 23.66,
+      "lastAnimates": 27.131,
+      "tweenCount": 4,
+      "props": [
+        "x",
+        "y",
+        "rotation",
+        "scale",
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 943,
+        "y": 526,
+        "w": 34,
+        "h": 20
+      }
+    },
+    "article.peak-card.pc-two": {
+      "firstAppears": 24.72,
+      "lastAnimates": 25.08,
+      "tweenCount": 2,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 509,
+        "y": 91,
+        "w": 301,
+        "h": 190
+      }
+    },
+    "article.peak-card.pc-three": {
+      "firstAppears": 24.96,
+      "lastAnimates": 25.32,
+      "tweenCount": 2,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 1191,
+        "y": 190,
+        "w": 298,
+        "h": 191
+      }
+    },
+    "article.peak-card.pc-four": {
+      "firstAppears": 25.2,
+      "lastAnimates": 25.56,
+      "tweenCount": 2,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 333,
+        "y": 695,
+        "w": 295,
+        "h": 183
+      }
+    },
+    "article.peak-card.pc-five": {
+      "firstAppears": 25.44,
+      "lastAnimates": 25.8,
+      "tweenCount": 2,
+      "props": [
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 1241,
+        "y": 702,
+        "w": 299,
+        "h": 188
+      }
+    },
+    "svg.peak-loop": {
+      "firstAppears": 26.72,
+      "lastAnimates": 27.02,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha"
+      ],
+      "endsVisible": false,
+      "finalPosition": {
+        "x": 0,
+        "y": 0,
+        "w": 1920,
+        "h": 1080
+      }
+    },
+    "#lockup-line": {
+      "firstAppears": 27.64,
+      "lastAnimates": 27.9,
+      "tweenCount": 1,
+      "props": [
+        "scaleX"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 765,
+        "y": 526,
+        "w": 390,
+        "h": 5
+      }
+    },
+    "#lockup": {
+      "firstAppears": 27.88,
+      "lastAnimates": 28.5,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha",
+        "scale"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": -1,
+        "y": -1,
+        "w": 1922,
+        "h": 1081
+      }
+    },
+    "div.lockup-orbit": {
+      "firstAppears": 28.02,
+      "lastAnimates": 29.16,
+      "tweenCount": 1,
+      "props": [
+        "scale",
+        "rotation"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 580,
+        "y": 160,
+        "w": 760,
+        "h": 760
+      }
+    },
+    "#tagline": {
+      "firstAppears": 28.42,
+      "lastAnimates": 28.9,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha",
+        "y"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 0,
+        "y": 683,
+        "w": 1920,
+        "h": 43
+      }
+    },
+    "#provenance": {
+      "firstAppears": 28.62,
+      "lastAnimates": 29.07,
+      "tweenCount": 1,
+      "props": [
+        "autoAlpha",
+        "y"
+      ],
+      "endsVisible": true,
+      "finalPosition": {
+        "x": 742,
+        "y": 785,
+        "w": 436,
+        "h": 68
+      }
+    }
+  },
+  "deadZones": [],
+  "snapshots": [
+    {
+      "t": 0,
+      "visibleElements": 6,
+      "animatingNow": [],
+      "elements": [
+        {
+          "id": "root",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "final-film-slot",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "film-camera",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "composer-prompt",
+          "x": 343,
+          "y": 640,
+          "w": 644,
+          "h": 55,
+          "opacity": 1
+        },
+        {
+          "id": "send-control",
+          "x": 1562,
+          "y": 691,
+          "w": 62,
+          "h": 62,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-dots",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        }
+      ]
+    },
+    {
+      "t": 7.58,
+      "visibleElements": 8,
+      "animatingNow": [
+        "#sequence-dots"
+      ],
+      "elements": [
+        {
+          "id": "root",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "final-film-slot",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "film-camera",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "composer-prompt",
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1
+        },
+        {
+          "id": "send-control",
+          "x": 1562,
+          "y": 647,
+          "w": 62,
+          "h": 62,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-world",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-dots",
+          "x": -125,
+          "y": -251,
+          "w": 2147,
+          "h": 1579,
+          "opacity": 1
+        },
+        {
+          "id": "phrase-prompt",
+          "x": 118,
+          "y": 852,
+          "w": 515,
+          "h": 136,
+          "opacity": 1
+        }
+      ]
+    },
+    {
+      "t": 15.17,
+      "visibleElements": 10,
+      "animatingNow": [
+        "div.mini-orbit",
+        "#seed",
+        "#film-camera",
+        "article.story-card"
+      ],
+      "elements": [
+        {
+          "id": "root",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "final-film-slot",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "film-camera",
+          "x": -44,
+          "y": -8,
+          "w": 1948,
+          "h": 1096,
+          "opacity": 1
+        },
+        {
+          "id": "composer-prompt",
+          "x": 304,
+          "y": 597,
+          "w": 653,
+          "h": 56,
+          "opacity": 1
+        },
+        {
+          "id": "send-control",
+          "x": 1541,
+          "y": 649,
+          "w": 63,
+          "h": 63,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-dots",
+          "x": -44,
+          "y": -8,
+          "w": 1948,
+          "h": 1096,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-path",
+          "x": 281,
+          "y": 328,
+          "w": 1299,
+          "h": 281,
+          "opacity": 1
+        },
+        {
+          "id": "build-world",
+          "x": -44,
+          "y": -8,
+          "w": 1948,
+          "h": 1096,
+          "opacity": 1
+        },
+        {
+          "id": "seed",
+          "x": 1230,
+          "y": 832,
+          "w": 3,
+          "h": 97,
+          "opacity": 1
+        },
+        {
+          "id": "seed-cap",
+          "x": 1220,
+          "y": 821,
+          "w": 22,
+          "h": 22,
+          "opacity": 1
+        }
+      ]
+    },
+    {
+      "t": 22.75,
+      "visibleElements": 10,
+      "animatingNow": [
+        "#result-player"
+      ],
+      "elements": [
+        {
+          "id": "root",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "final-film-slot",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "film-camera",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "composer-prompt",
+          "x": 343,
+          "y": 596,
+          "w": 644,
+          "h": 55,
+          "opacity": 1
+        },
+        {
+          "id": "send-control",
+          "x": 1562,
+          "y": 647,
+          "w": 62,
+          "h": 62,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-dots",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-path",
+          "x": 320,
+          "y": 331,
+          "w": 1280,
+          "h": 277,
+          "opacity": 1
+        },
+        {
+          "id": "result-world",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "result-player",
+          "x": 384,
+          "y": 201,
+          "w": 1153,
+          "h": 678,
+          "opacity": 1
+        },
+        {
+          "id": "scrub-fill",
+          "x": 496,
+          "y": 814,
+          "w": 913,
+          "h": 8,
+          "opacity": 1
+        }
+      ]
+    },
+    {
+      "t": 30.23,
+      "visibleElements": 12,
+      "animatingNow": [
+        "#film-camera"
+      ],
+      "elements": [
+        {
+          "id": "root",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "final-film-slot",
+          "x": 0,
+          "y": 0,
+          "w": 1920,
+          "h": 1080,
+          "opacity": 1
+        },
+        {
+          "id": "film-camera",
+          "x": -13,
+          "y": -7,
+          "w": 1946,
+          "h": 1094,
+          "opacity": 1
+        },
+        {
+          "id": "composer-prompt",
+          "x": 335,
+          "y": 597,
+          "w": 652,
+          "h": 56,
+          "opacity": 1
+        },
+        {
+          "id": "send-control",
+          "x": 1570,
+          "y": 648,
+          "w": 63,
+          "h": 63,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-dots",
+          "x": -13,
+          "y": -7,
+          "w": 1946,
+          "h": 1094,
+          "opacity": 1
+        },
+        {
+          "id": "sequence-path",
+          "x": 311,
+          "y": 328,
+          "w": 1297,
+          "h": 280,
+          "opacity": 1
+        },
+        {
+          "id": "result-player",
+          "x": 595,
+          "y": 526,
+          "w": 730,
+          "h": 5,
+          "opacity": 1
+        },
+        {
+          "id": "lockup-world",
+          "x": -13,
+          "y": -7,
+          "w": 1946,
+          "h": 1094,
+          "opacity": 1
+        },
+        {
+          "id": "lockup",
+          "x": -13,
+          "y": -7,
+          "w": 1946,
+          "h": 1094,
+          "opacity": 1
+        },
+        {
+          "id": "tagline",
+          "x": -13,
+          "y": 685,
+          "w": 1946,
+          "h": 44,
+          "opacity": 1
+        },
+        {
+          "id": "provenance",
+          "x": 739,
+          "y": 788,
+          "w": 442,
+          "h": 69,
+          "opacity": 1
+        }
+      ]
+    }
+  ]
+}

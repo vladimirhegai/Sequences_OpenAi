@@ -1,0 +1,377 @@
+{
+  "version": "sequences.sequence.v1",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDuration": 23.6
+  },
+  "concept": {
+    "summary": "ChatGPT answers a launch-video question, the user then asks it to make the film, and its typed refusal is hijacked mid-sentence into a Sequences recommendation before the same request becomes a storyboard and playable result.",
+    "hierarchy": [
+      "The exact user question establishes a familiar ChatGPT interaction",
+      "A credible ChatGPT response types character by character in a recognizable conversation thread",
+      "The user asks Can you make a launch film and ChatGPT begins a typed refusal",
+      "Actually—use Sequences becomes the premise and typographic punchline",
+      "The same question visibly causes storyboard and playable-result states inside a chat-native product surface",
+      "Sequences resolves on one prompt and one launch-film promise"
+    ],
+    "motionGrammar": [
+      "Measured caret typewriters carry both user prompts and both assistant streams",
+      "Readable worlds and complete UI states swap atomically",
+      "One operated Build press causes storyboard docking and playback",
+      "OpenAI-green action and the canonical knot preserve identity from recommendation to product focus",
+      "The ending resolves by subtraction into a near-still breath"
+    ],
+    "rejectedChoices": [
+      "A generic marketing-card slideshow",
+      "Invented performance metrics or customer proof",
+      "A flattened product screenshot",
+      "A decorative dashboard with no visible cause and consequence",
+      "A live superzoom that crops readable UI"
+    ],
+    "energyPeak": {
+      "beatId": "sequences-proof",
+      "atSec": 17.533333,
+      "intent": "Five storyboard frames assemble from the submitted prompt, the selected green frame expands into the player on the music bar, and the same conversation surface settles on a playable verified result."
+    },
+    "finalRestingImage": "The canonical knot, Sequences, and One prompt. A launch film. on a cool ChatGPT-like field with one compact playable and verified proof pill."
+  },
+  "beats": [
+    {
+      "id": "question-operation",
+      "role": "hook",
+      "start": 0,
+      "duration": 3.533333,
+      "purpose": "Type the exact launch-video question in a recognizable ChatGPT composer and visibly submit it.",
+      "claims": [],
+      "entities": [
+        {
+          "id": "chatgpt-exchange",
+          "role": "Persistent ChatGPT product world in its question-entry state.",
+          "parts": ["chatgpt-mark", "chatgpt-composer", "question-payload", "chatgpt-send-control"]
+        },
+        {
+          "id": "question-payload",
+          "role": "The exact user question carried through the film.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["beat-00-type"],
+      "proofTimes": [2.533333, 3.533333],
+      "implementationFiles": ["compositions/chatgpt-answer.html"],
+      "camera": null
+    },
+    {
+      "id": "advice-pressure",
+      "role": "friction",
+      "start": 3.533333,
+      "duration": 3,
+      "purpose": "Let ChatGPT type a concise, plausible answer character by character inside the recognizable user-and-assistant conversation.",
+      "claims": [],
+      "entities": [
+        {
+          "id": "chatgpt-exchange",
+          "role": "The same ChatGPT product world in its advice-building state.",
+          "parts": ["chatgpt-mark", "question-payload", "advice-copy", "chatgpt-composer"]
+        },
+        {
+          "id": "advice-copy",
+          "role": "One coherent ChatGPT response typing naturally inside the assistant message row.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["assistant-type-start", "assistant-type-complete"],
+      "proofTimes": [4.533333, 6.166667],
+      "implementationFiles": ["compositions/chatgpt-answer.html"],
+      "camera": null
+    },
+    {
+      "id": "followup-question",
+      "role": "escalation",
+      "start": 6.533333,
+      "duration": 2,
+      "purpose": "Type Can you make a launch film into the live composer and submit it as a second user message.",
+      "claims": [],
+      "entities": [
+        {
+          "id": "chatgpt-exchange",
+          "role": "The persistent ChatGPT world scrolled to a second composer interaction.",
+          "parts": ["chatgpt-mark", "advice-copy", "followup-entry", "chatgpt-send-control"]
+        },
+        {
+          "id": "followup-question",
+          "role": "The direct request that exposes the limitation and motivates the product turn.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["followup-type-start", "followup-send"],
+      "proofTimes": [7.533333, 8.533333],
+      "implementationFiles": ["compositions/chatgpt-answer.html"],
+      "camera": null
+    },
+    {
+      "id": "refusal-interruption",
+      "role": "friction",
+      "start": 8.533333,
+      "duration": 2.5,
+      "purpose": "Let ChatGPT begin typing No, as an AI agent, I cannot directly help you— and cut it off mid-thought with the Sequences hijack.",
+      "claims": [],
+      "entities": [
+        {
+          "id": "chatgpt-exchange",
+          "role": "The persistent ChatGPT world holding both user turns and the interrupted refusal.",
+          "parts": ["chatgpt-mark", "followup-question", "refusal-response", "chatgpt-composer"]
+        },
+        {
+          "id": "refusal-response",
+          "role": "The typed limitation that is visibly interrupted before it can finish.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["refusal-type-start", "refusal-hijack"],
+      "proofTimes": [9.533333, 10.533333],
+      "implementationFiles": ["compositions/chatgpt-answer.html"],
+      "camera": null
+    },
+    {
+      "id": "recommendation-turn",
+      "role": "story-turn",
+      "start": 11.033333,
+      "duration": 2.5,
+      "purpose": "Interrupt the typed refusal atomically and make Actually—use Sequences the film's largest, longest-held statement.",
+      "claims": [
+        {
+          "id": "recommend-sequences",
+          "text": "Actually—use Sequences.",
+          "sourceIds": []
+        }
+      ],
+      "entities": [
+        {
+          "id": "recommendation-payload",
+          "role": "The green Sequences recommendation that becomes product identity across the cut.",
+          "parts": ["recommendation-line", "sequences-identity"]
+        },
+        {
+          "id": "sequences-identity",
+          "role": "Recurring green Sequences wordmark and action signal.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["sequences-word-hit", "product-cut"],
+      "proofTimes": [11.533333, 12.533333],
+      "implementationFiles": ["compositions/chatgpt-answer.html"],
+      "camera": null
+    },
+    {
+      "id": "sequences-proof",
+      "role": "product-proof",
+      "start": 13.533333,
+      "duration": 7,
+      "purpose": "Carry the exact question into Sequences, operate Build, assemble a polished five-beat storyboard, and settle on a playable verified launch-film result.",
+      "claims": [
+        {
+          "id": "prompt-becomes-launch-film",
+          "text": "One prompt becomes an ordered storyboard and a playable launch-film result.",
+          "sourceIds": []
+        }
+      ],
+      "entities": [
+        {
+          "id": "recommendation-payload",
+          "role": "The recommendation now embodied by the product surface and exact question.",
+          "parts": ["sequences-identity", "question-payload"]
+        },
+        {
+          "id": "sequences-studio",
+          "role": "Persistent ChatGPT-like Sequences conversation changing from prompt-ready through storyboarding to playable and verified.",
+          "parts": [
+            "sequences-header",
+            "sequences-prompt-panel",
+            "build-control",
+            "storyboard-strip",
+            "playable-result",
+            "verified-status"
+          ]
+        },
+        {
+          "id": "storyboard-sequence",
+          "role": "Five ordered launch-film beats visibly assembled from the exact prompt.",
+          "parts": [
+            "story-card-hook",
+            "story-card-answer",
+            "story-card-interrupt",
+            "story-card-build",
+            "story-card-launch"
+          ]
+        },
+        {
+          "id": "playable-result",
+          "role": "The settled player showing the authored launch-film result and 23.6-second duration.",
+          "parts": ["player-frame", "player-progress", "verified-status"]
+        },
+        {
+          "id": "sequences-identity",
+          "role": "Canonical knot and OpenAI-green action signal carried from the recommendation into Build and playback focus.",
+          "parts": []
+        },
+        {
+          "id": "operated-pointer",
+          "role": "One pointer pressing Build at 14.533333 seconds and causing the storyboard state.",
+          "parts": []
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["bar-02-product-entry", "beat-09-build", "bar-03-player", "beat-14-verify"],
+      "proofTimes": [14.533333, 15.533333, 17.533333, 19.533333],
+      "implementationFiles": ["compositions/sequences-world.html"],
+      "camera": null
+    },
+    {
+      "id": "final-promise",
+      "role": "cta",
+      "start": 20.533333,
+      "duration": 3.066667,
+      "purpose": "Remove product chrome and hold on the Sequences name, one promise, and one verified proof line.",
+      "claims": [
+        {
+          "id": "one-prompt-one-film",
+          "text": "One prompt. A launch film.",
+          "sourceIds": []
+        }
+      ],
+      "entities": [
+        {
+          "id": "sequences-identity",
+          "role": "Final Sequences wordmark carried across the product-to-lockup boundary.",
+          "parts": []
+        },
+        {
+          "id": "final-lockup",
+          "role": "Subtractive final hierarchy with brand, promise, green rule, and verified proof.",
+          "parts": ["final-wordmark", "final-promise-copy", "final-proof-line"]
+        }
+      ],
+      "sourceIds": [],
+      "musicAnchors": ["beat-15-lockup", "bar-04-promise"],
+      "proofTimes": [21.533333, 23.2],
+      "implementationFiles": ["compositions/end-lockup.html"],
+      "camera": null
+    }
+  ],
+  "transitions": [
+    {
+      "id": "question-to-advice",
+      "fromBeatId": "question-operation",
+      "toBeatId": "advice-pressure",
+      "kind": "match-cut",
+      "at": 3.533333,
+      "duration": 0,
+      "outgoingEntityId": "chatgpt-exchange",
+      "incomingEntityId": "chatgpt-exchange",
+      "rationale": "Keep the ChatGPT world and exact question mounted while the submitted prompt becomes an answer."
+    },
+    {
+      "id": "advice-to-followup",
+      "fromBeatId": "advice-pressure",
+      "toBeatId": "followup-question",
+      "kind": "match-cut",
+      "at": 6.533333,
+      "duration": 0,
+      "outgoingEntityId": "chatgpt-exchange",
+      "incomingEntityId": "chatgpt-exchange",
+      "rationale": "Scroll the persistent conversation upward while the live composer becomes ready for the second user prompt."
+    },
+    {
+      "id": "followup-to-refusal",
+      "fromBeatId": "followup-question",
+      "toBeatId": "refusal-interruption",
+      "kind": "match-cut",
+      "at": 8.533333,
+      "duration": 0,
+      "outgoingEntityId": "chatgpt-exchange",
+      "incomingEntityId": "chatgpt-exchange",
+      "rationale": "The typed request becomes a submitted user bubble in the same thread before the assistant begins refusing."
+    },
+    {
+      "id": "refusal-to-recommendation",
+      "fromBeatId": "refusal-interruption",
+      "toBeatId": "recommendation-turn",
+      "kind": "cut",
+      "at": 11.033333,
+      "duration": 0,
+      "rationale": "The joke requires one atomic interruption: the typed refusal disappears before the recommendation is visible."
+    },
+    {
+      "id": "recommendation-to-product",
+      "fromBeatId": "recommendation-turn",
+      "toBeatId": "sequences-proof",
+      "kind": "match-cut",
+      "at": 13.533333,
+      "duration": 0,
+      "outgoingEntityId": "recommendation-payload",
+      "incomingEntityId": "recommendation-payload",
+      "rationale": "The Sequences name, canonical knot grammar, OpenAI-green action, and exact question carry the recommendation into its chat-native product proof."
+    },
+    {
+      "id": "product-to-lockup",
+      "fromBeatId": "sequences-proof",
+      "toBeatId": "final-promise",
+      "kind": "match-cut",
+      "at": 20.533333,
+      "duration": 0,
+      "outgoingEntityId": "sequences-identity",
+      "incomingEntityId": "sequences-identity",
+      "rationale": "Keep the Sequences name while all product chrome subtracts into the final resting hierarchy."
+    }
+  ],
+  "overlapIntents": [],
+  "audio": {
+    "soundtrackId": "happy-commercial",
+    "cues": [
+      {
+        "kind": "typing",
+        "startSec": 0.533333,
+        "endSec": 2.533333
+      },
+      {
+        "kind": "mouse-click",
+        "atSec": 3.533333
+      },
+      {
+        "kind": "typing",
+        "startSec": 4.166667,
+        "endSec": 6.166667
+      },
+      {
+        "kind": "typing",
+        "startSec": 6.533333,
+        "endSec": 7.833333
+      },
+      {
+        "kind": "mouse-click",
+        "atSec": 8.533333
+      },
+      {
+        "kind": "typing",
+        "startSec": 9.033333,
+        "endSec": 10.533333
+      },
+      {
+        "kind": "pop",
+        "atSec": 10.533333
+      },
+      {
+        "kind": "mouse-click",
+        "atSec": 14.533333
+      }
+    ]
+  },
+  "revision": null
+}

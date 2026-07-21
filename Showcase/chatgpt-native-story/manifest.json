@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "chatgpt-native-story",
+  "title": "ChatGPT: From question to working draft",
+  "engine": "hyperframes",
+  "format": { "durationSeconds": 24, "width": 1920, "height": 1080, "fps": 30 },
+  "paths": {
+    "source": "source",
+    "entry": "source/index.html",
+    "finalRender": "renders/final.mp4",
+    "silentRender": "renders/silent.mp4",
+    "contactSheet": "renders/contact-sheet.jpg",
+    "audio": "audio",
+    "evidence": "evidence"
+  },
+  "music": {
+    "catalogId": "commercial-jazz",
+    "file": "audio/music/commercial_jazz.mp3",
+    "sha256": "842a8d072a059d9d9e1280282e9ea24eda04b92c6fe2146f367e6b000ef01d81"
+  },
+  "finalAudio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2,
+    "integratedLufs": -15.3,
+    "truePeakDbfs": -1.3
+  },
+  "verification": {
+    "status": "passed",
+    "strict": true,
+    "transitionSamplesDropped": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "sha256": {
+    "finalRender": "1c6390eb6864a974eb95da1126d09735c2daae9073b9df53dafb1a0f8ae4158c",
+    "silentRender": "800a57165eaf89d8a6f4c85feeea265eabf28a0062b37f9af86f01aa2186ce25"
+  }
+}

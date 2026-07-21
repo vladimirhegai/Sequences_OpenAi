@@ -9,10 +9,12 @@ const PLAN_PATHS = [
   "story/STORYBOARD.md",
   "story/SCRIPT.md",
   "story/component-plan.json",
-  "story/frame.md",
+  "story/design-capsule.json",
 ] as const;
 
 const BUILD_PATHS = [
+  ...PLAN_PATHS,
+  "sequence.json",
   "index.html",
   "meta.json",
   "hyperframes.json",
@@ -48,7 +50,7 @@ function assertScopeGrammar(path: string): void {
   if (stars > 0 && !validWildcard) throw new Error(`Unsupported scope wildcard: ${path}`);
 }
 
-function pathMatches(pattern: string, file: string): boolean {
+export function pathMatches(pattern: string, file: string): boolean {
   if (pattern === file) return true;
   if (pattern.endsWith("/**")) {
     const prefix = pattern.slice(0, -2);
@@ -71,7 +73,9 @@ function scopeIsWithin(candidate: string, outer: string): boolean {
 export function allowedPaths(kind: JobKind, requested?: readonly string[]): string[] {
   const maximum = kind === "plan" ? [...PLAN_PATHS] : [...BUILD_PATHS];
   if (kind === "revision" && (!requested || requested.length === 0)) {
-    throw new Error("Revision jobs require at least one explicit scene, component, or metadata scope path");
+    throw new Error(
+      "Revision jobs require at least one explicit scene, component, or metadata scope path",
+    );
   }
   if (!requested || requested.length === 0) return maximum;
   const unique = [...new Set(requested)];
@@ -88,7 +92,11 @@ export function assertChangedPaths(changed: readonly string[], allowed: readonly
   if (changed.length === 0) throw new Error("Codex exited without changing any project files");
   for (const file of changed) {
     assertScopeGrammar(file);
-    if (FORBIDDEN_NAMES.has(basename(file)) || file.startsWith(".agents/") || file.startsWith(".git/")) {
+    if (
+      FORBIDDEN_NAMES.has(basename(file)) ||
+      file.startsWith(".agents/") ||
+      file.startsWith(".git/")
+    ) {
       throw new Error(`Codex changed a protected file: ${file}`);
     }
     if (!allowed.some((pattern) => pathMatches(pattern, file))) {
@@ -97,7 +105,10 @@ export function assertChangedPaths(changed: readonly string[], allowed: readonly
   }
 }
 
-export async function inspectChangedFiles(candidateRoot: string, changed: readonly string[]): Promise<void> {
+export async function inspectChangedFiles(
+  candidateRoot: string,
+  changed: readonly string[],
+): Promise<void> {
   let totalBytes = 0;
   for (const file of changed) {
     const absolute = join(candidateRoot, ...file.split("/"));
@@ -112,13 +123,18 @@ export async function inspectChangedFiles(candidateRoot: string, changed: readon
       throw new Error(`Candidate changes must be regular project files: ${file}`);
     }
     if (metadata.isDirectory()) continue;
-    if (metadata.size > 10 * 1_024 * 1_024) throw new Error(`Candidate file exceeds 10 MiB: ${file}`);
+    if (metadata.size > 10 * 1_024 * 1_024)
+      throw new Error(`Candidate file exceeds 10 MiB: ${file}`);
     totalBytes += metadata.size;
-    if (totalBytes > 50 * 1_024 * 1_024) throw new Error("Candidate changes exceed the 50 MiB job limit");
+    if (totalBytes > 50 * 1_024 * 1_024)
+      throw new Error("Candidate changes exceed the 50 MiB job limit");
     if (/\.(?:html|css|js|mjs|svg)$/i.test(file)) {
       const source = await readFile(absolute, "utf8");
-      const externalAsset = /(?:src|href|url\()\s*[=(]?\s*["']?\s*(?:https?:)?\/\//i.test(source.replace(/xmlns=["'][^"']+["']/gi, ""));
-      if (externalAsset) throw new Error(`Generated compositions cannot load external assets: ${file}`);
+      const externalAsset = /(?:src|href|url\()\s*[=(]?\s*["']?\s*(?:https?:)?\/\//i.test(
+        source.replace(/xmlns=["'][^"']+["']/gi, ""),
+      );
+      if (externalAsset)
+        throw new Error(`Generated compositions cannot load external assets: ${file}`);
     }
   }
 }

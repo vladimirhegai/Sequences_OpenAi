@@ -143,9 +143,22 @@ function replaceDirectory(source: string, destination: string): void {
   assertWorkspacePath(temporary);
   rmSync(temporary, { recursive: true, force: true });
   mkdirSync(dirname(temporary), { recursive: true });
-  cpSync(source, temporary, { recursive: true });
+  copyDirectoryTree(source, temporary);
   rmSync(destination, { recursive: true, force: true });
   renameSync(temporary, destination);
+}
+
+function copyDirectoryTree(source: string, destination: string): void {
+  mkdirSync(destination, { recursive: true });
+  for (const entry of readdirSync(source, { withFileTypes: true })) {
+    const from = join(source, entry.name);
+    const to = join(destination, entry.name);
+    if (entry.isSymbolicLink())
+      throw new Error(`Pinned skill bundles cannot contain symlinks: ${from}`);
+    if (entry.isDirectory()) copyDirectoryTree(from, to);
+    else if (entry.isFile()) copyFileSync(from, to);
+    else throw new Error(`Pinned skill bundles can contain only regular files: ${from}`);
+  }
 }
 
 function syncAgentContext(): boolean {
@@ -167,7 +180,10 @@ function syncAgentContext(): boolean {
   if (existsSync(sourceRegistry)) {
     const destinationRegistry = join(projectAgentsDir, "registry", "registry.json");
     mkdirSync(dirname(destinationRegistry), { recursive: true });
-    if (!existsSync(destinationRegistry) || sha256(sourceRegistry) !== sha256(destinationRegistry)) {
+    if (
+      !existsSync(destinationRegistry) ||
+      sha256(sourceRegistry) !== sha256(destinationRegistry)
+    ) {
       copyFileSync(sourceRegistry, destinationRegistry);
     }
   }
@@ -176,7 +192,7 @@ function syncAgentContext(): boolean {
 }
 
 function runGit(args: string[], cwd: string, allowFailure = false): string {
-  const result = Bun.spawnSync(["git", ...args], {
+  const result = Bun.spawnSync(["git", "-c", `safe.directory=${resolve(cwd)}`, ...args], {
     cwd,
     env: process.env,
     stdout: "pipe",

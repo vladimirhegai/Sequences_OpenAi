@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Sequences · SaaS starter shell</title>
+    <script src="./assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 800;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-800-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #f2f4f9;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+
+      #shell-ground {
+        position: absolute;
+        inset: 0;
+        background-color: #f2f4f9;
+        background-image:
+          radial-gradient(circle at 76% 18%, rgba(49, 87, 246, 0.07), transparent 42%),
+          linear-gradient(rgba(23, 26, 33, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(23, 26, 33, 0.035) 1px, transparent 1px);
+        background-size: auto, 48px 48px, 48px 48px;
+      }
+
+      #root > [data-composition-src] {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-hf-id="fresh-build-root" data-composition-id="fresh-build" data-start="0" data-duration="5" data-width="1920" data-height="1080" data-fps="30">
+      <div id="shell-ground" data-hf-id="fresh-build-ground" class="clip" data-start="0" data-duration="5" data-track-index="0"></div>
+
+      <div id="shell-product-scene" data-hf-id="fresh-build-product-scene" class="clip" data-composition-id="fresh-build-product-world" data-composition-src="compositions/02-compose.html" data-start="0" data-duration="5" data-track-index="1" data-width="1920" data-height="1080"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["fresh-build"] = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+    </script>
+    <script src="./assets/vendor/hyperframe.runtime.iife.js"></script>
+  </body>
+</html>

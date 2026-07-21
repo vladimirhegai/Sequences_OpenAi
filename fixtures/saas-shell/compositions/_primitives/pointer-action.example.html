@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <template>
+      <style>
+        #primitive-pointer-example {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          width: 1920px;
+          height: 1080px;
+          place-items: center;
+          overflow: hidden;
+          background: #f7f8fc;
+          color: #171a21;
+          font-family: Montserrat, sans-serif;
+        }
+
+        #primitive-pointer-example .primitive-pointer-card {
+          position: relative;
+          display: grid;
+          width: 920px;
+          height: 460px;
+          place-items: center;
+          border: 2px solid #d7dbe7;
+          border-radius: 28px;
+          background: #ffffff;
+          box-shadow: 0 28px 82px rgba(23, 26, 33, 0.14);
+        }
+
+        #primitive-pointer-example [data-pointer-action-target] {
+          position: relative;
+          display: grid;
+          width: 340px;
+          height: 96px;
+          place-items: center;
+          border: 0;
+          border-radius: 18px;
+          background: #2745d6;
+          color: #ffffff;
+          font-family: Montserrat, sans-serif;
+          font-size: 30px;
+          font-weight: 700;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        #primitive-pointer-example [data-pointer-action-before],
+        #primitive-pointer-example [data-pointer-action-after] {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          place-items: center;
+        }
+
+        #primitive-pointer-example [data-pointer-action-after] {
+          opacity: 0;
+        }
+
+        #primitive-pointer-example [data-pointer-action-consequence] {
+          position: absolute;
+          top: 318px;
+          padding: 12px 20px;
+          border-radius: 999px;
+          background: #e8edff;
+          color: #2039b8;
+          font-size: 22px;
+          font-weight: 700;
+          opacity: 0;
+        }
+
+        #primitive-pointer-example [data-pointer-action-cursor] {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 38px;
+          height: 46px;
+          z-index: 20;
+          overflow: visible;
+          filter: drop-shadow(0 2px 5px rgba(23, 26, 33, 0.32));
+          pointer-events: none;
+          will-change: transform;
+        }
+
+        #primitive-pointer-example [data-pointer-action-ripple] {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 44px;
+          height: 44px;
+          border: 4px solid #6d84f0;
+          border-radius: 50%;
+          opacity: 0;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div
+        id="primitive-pointer-example"
+        data-composition-id="primitive-pointer-example"
+        data-start="0"
+        data-duration="4"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      >
+        <section class="primitive-pointer-card">
+          <button type="button" data-pointer-action-target data-pointer-action-feedback>
+            <span data-pointer-action-before>Generate</span>
+            <span data-pointer-action-after>Generating...</span>
+          </button>
+          <div data-pointer-action-consequence>Draft queued</div>
+        </section>
+
+        <div data-pointer-action-ripple></div>
+        <!-- System-style arrow. The helper aligns hotspot (3, 2) to the
+             target-relative anchor and scales around that exact point. -->
+        <svg data-pointer-action-cursor viewBox="0 0 32 40" aria-hidden="true" focusable="false">
+          <path
+            d="M3 2 L3 31 L10.5 23.5 L16.2 36.2 L21.1 33.9 L15.4 21.5 L26 21.5 Z"
+            fill="#ffffff"
+            stroke="#171a21"
+            stroke-width="2.4"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+
+        <script src="assets/vendor/gsap-guarded.min.js"></script>
+        <script src="compositions/_primitives/pointer-action.js"></script>
+        <script>
+          (() => {
+            window.__timelines = window.__timelines || {};
+            const root = document.querySelector(
+              '[data-composition-id="primitive-pointer-example"]',
+            );
+            const timeline = gsap.timeline({
+              paused: true,
+              defaults: { overwrite: "auto" },
+            });
+            const pointerAction = window.SequencesMotionPrimitives.createPointerAction({
+              root,
+              timeline,
+              startSec: 0.55,
+              approachOffset: { x: 230, y: 155 },
+              anchorX: 0.5,
+              anchorY: 0.5,
+              hotspotX: 3,
+              hotspotY: 2,
+              approachSec: 0.68,
+              settleSec: 0.14,
+              pressSec: 0.1,
+              releaseSec: 0.22,
+              rippleSec: 0.55,
+            });
+
+            // Copy this exact cue into sequence.audio.cues when click SFX is desired.
+            window.__sequencesAudioMarkers = [
+              ...(window.__sequencesAudioMarkers || []),
+              pointerAction.audioCue,
+            ];
+            window.__timelines["primitive-pointer-example"] = timeline;
+          })();
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

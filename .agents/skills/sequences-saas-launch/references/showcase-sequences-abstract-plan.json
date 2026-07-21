@@ -1,0 +1,101 @@
+{
+  "version": "sequences.sequence.v1",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDuration": 30.333
+  },
+  "concept": {
+    "summary": "A real ChatGPT prompt becomes one persistent seed that Sequences converts into a storyboard, directed timeline, and finished launch film.",
+    "hierarchy": [
+      "The ask",
+      "The handoff",
+      "The sequence",
+      "The build",
+      "The result",
+      "The lockup"
+    ],
+    "motionGrammar": [
+      "semantic prompt-seed continuity",
+      "one 2D camera owner",
+      "shape portals",
+      "fixed particle lattices",
+      "staccato accumulation followed by subtraction"
+    ],
+    "rejectedChoices": [
+      "complex 3D",
+      "character scenes",
+      "generic dashboard montage",
+      "crossfading unrelated frames",
+      "decorative particles"
+    ]
+  },
+  "beats": [
+    {
+      "id": "the-ask",
+      "role": "product-action",
+      "start": 0,
+      "duration": 2.217,
+      "purpose": "Type the launch request in a real ChatGPT composer.",
+      "proofTimes": [0.6, 1.55, 2.1]
+    },
+    {
+      "id": "the-handoff",
+      "role": "brand-handoff",
+      "start": 2.217,
+      "duration": 3.871,
+      "purpose": "Send through the exact knot and release the green prompt seed toward Sequences.",
+      "proofTimes": [2.5, 4.2, 5.8]
+    },
+    {
+      "id": "the-sequence",
+      "role": "concept-reveal",
+      "start": 6.088,
+      "duration": 5.807,
+      "purpose": "Transform the single green seed into a six-arm spiral, reorganize it into five opaque scene cards, then route that same seed toward the timeline.",
+      "proofTimes": [6.6, 9.0, 10.9, 11.5]
+    },
+    {
+      "id": "the-build",
+      "role": "product-proof",
+      "start": 11.895,
+      "duration": 5.806,
+      "purpose": "Morph the arriving seed into the timeline playhead, travel through five storyboard frames, and dock in the selected result card.",
+      "proofTimes": [12.4, 14.6, 16.6, 17.3]
+    },
+    {
+      "id": "the-result",
+      "role": "energy-peak",
+      "start": 17.701,
+      "duration": 9.678,
+      "purpose": "Expand the selected card into the playable result, invert, release five designed orbital modules on staccato attacks, and converge into the lockup line.",
+      "proofTimes": [18.3, 21.8, 23.8, 25.2, 26.8]
+    },
+    {
+      "id": "the-lockup",
+      "role": "cta",
+      "start": 27.379,
+      "duration": 2.954,
+      "purpose": "Collapse the player into the Sequences wordmark, period, promise, and ChatGPT provenance.",
+      "proofTimes": [27.8, 29.315, 30.1]
+    }
+  ],
+  "audio": {
+    "soundtrackId": "cinematic-fast-violin",
+    "anchors": [
+      { "id": "pickup", "atSec": 0.534 },
+      { "id": "first-downbeat", "atSec": 2.217 },
+      { "id": "phrase-b", "atSec": 9.959 },
+      { "id": "thin-passage", "atSec": 17.701 },
+      { "id": "staccato", "atSec": 21.572 },
+      { "id": "cadence", "atSec": 27.379 },
+      { "id": "final-hit", "atSec": 29.315 }
+    ]
+  },
+  "revision": {
+    "id": "continuity-and-sfx-polish",
+    "date": "2026-07-20",
+    "notes": "Measured cursor targets, one-object seed continuity, exact node/playhead/card morphs, redesigned five-card peak system, and a cue-synced SFX mix."
+  }
+}

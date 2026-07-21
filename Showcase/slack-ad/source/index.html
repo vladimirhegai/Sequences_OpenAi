@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1920,height=1080,initial-scale=1" />
+  <title>Slack — From noise to momentum</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="polish.css" />
+</head>
+<body>
+  <main id="stage" aria-label="From noise to momentum">
+    <div class="noise" data-layout-ignore></div>
+    <div class="vignette" data-layout-ignore></div>
+
+    <section class="scene overload" id="overload" data-scene="overload" data-part="tool-overload">
+      <div class="tool-cloud" data-component-root="tool-cloud">
+        <article class="tool-card chat" data-tool="chat"><i>●</i><b>Chat</b><small>12 unread</small></article>
+        <article class="tool-card video" data-tool="video"><i>◉</i><b>Video call</b><small>Starting now</small></article>
+        <article class="tool-card files" data-tool="files"><i>◆</i><b>Files</b><small>final_v7.pdf</small></article>
+        <article class="tool-card docs" data-tool="docs"><i>▤</i><b>Docs</b><small>3 comments</small></article>
+        <article class="tool-card tasks" data-tool="tasks"><i>✓</i><b>Tasks</b><small>2 overdue</small></article>
+        <article class="tool-card mail" data-tool="mail"><i>✦</i><b>Inbox</b><small>24 new</small></article>
+        <div class="notification n1"><span></span>Can you resend the link?</div>
+        <div class="notification n2"><span></span>Where’s the final file?</div>
+        <div class="notification n3"><span></span>Meeting moved again</div>
+      </div>
+      <div class="problem-copy" data-component-root="problem-copy">
+        <div id="too-tools">Too many tools.</div>
+        <div id="too-handoffs">Too many handoffs.</div>
+        <div id="no-momentum">No <span class="slack-gradient">momentum.</span></div>
+      </div>
+    </section>
+
+    <section class="scene unify" id="unify" data-scene="unify" data-part="consolidation">
+      <div class="shockwave" id="shockwave" aria-hidden="true"></div>
+      <div class="shockwave two" id="shockwave2" aria-hidden="true"></div>
+      <svg id="hero-mark" class="slack-svg hero-mark" viewBox="0 0 122.8 122.8" data-component-root="slack-mark" aria-label="Slack">
+        <path class="mk" fill="#e01e5a" d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z"/>
+        <path class="mk" fill="#e01e5a" d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"/>
+        <path class="mk" fill="#36c5f0" d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z"/>
+        <path class="mk" fill="#36c5f0" d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z"/>
+        <path class="mk" fill="#2eb67d" d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z"/>
+        <path class="mk" fill="#2eb67d" d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z"/>
+        <path class="mk" fill="#ecb22e" d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z"/>
+        <path class="mk" fill="#ecb22e" d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"/>
+      </svg>
+      <h1 id="messy"><span class="typewrap"><span class="typed"></span><span class="caret"></span></span></h1>
+      <svg class="cursor" id="cursor" viewBox="0 0 19 28" aria-hidden="true"><path d="M1.5 1.2 L1.5 24 L7 18.7 L10.9 27 L14.9 25.1 L10.9 16.9 L18 16.9 Z" fill="#0b0b0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </section>
+
+    <section class="scene channel-scene" id="channel-scene" data-scene="channel" data-part="create-channel">
+      <div class="wallpaper" aria-hidden="true"></div>
+      <div class="dim" aria-hidden="true"></div>
+      <div class="modal" id="channel-modal" data-component-root="channel-dialog">
+        <header><h2>Create a channel</h2><button>×</button></header>
+        <label>Name</label>
+        <div class="channel-input"><b>#</b><span id="channel-type"></span><i></i><em id="char-count">80</em></div>
+        <p>Channels are where conversations happen around a topic. Use a name that is easy to find and understand.</p>
+        <footer><span>Step 1 of 2</span><button id="next-button">Next</button></footer>
+      </div>
+      <svg class="cursor" id="cursor2" viewBox="0 0 19 28" aria-hidden="true"><path d="M1.5 1.2 L1.5 24 L7 18.7 L10.9 27 L14.9 25.1 L10.9 16.9 L18 16.9 Z" fill="#0b0b0e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+    </section>
+
+    <section class="scene workspace-scene" id="workspace-scene" data-scene="workspace" data-part="slack-workspace">
+      <div class="wallpaper" aria-hidden="true"></div>
+      <div class="workspace-camera" id="workspace-camera" data-camera-world>
+        <div class="slack-window" id="slack-window" data-component-root="slack-workspace">
+          <div class="topbar"><span>‹</span><span>›</span><span>◷</span><div class="search">⌕ &nbsp; Search Acme Launch</div><span>?</span></div>
+          <aside class="rail"><b>AL</b><i>⌂</i><i>◌</i><i>♧</i><i>□</i><i>•••</i></aside>
+          <aside class="sidebar">
+            <header>Acme Launch <span>⌄</span></header>
+            <div class="explore">✦ &nbsp; Explore AI in Slack</div>
+            <div class="find">⌕ &nbsp; Find a conversation…</div>
+            <nav><span>☵ &nbsp; Threads</span><span>♧ &nbsp; Huddles</span><span>✧ &nbsp; Recap</span><span>▷ &nbsp; Drafts & sent</span></nav>
+            <hr><small>Channels</small>
+            <nav class="channels"><span># &nbsp; campaign</span><span># &nbsp; design</span><b># &nbsp; launch</b><span># &nbsp; product</span><span># &nbsp; random</span></nav>
+            <small>Direct messages</small><nav><span><i class="mini-avatar">S</i> &nbsp; Sarah Bennett</span><span><i class="mini-avatar teal">M</i> &nbsp; Marcus Webb</span></nav>
+          </aside>
+          <article class="channel-main">
+            <header><b># launch</b><div>Messages &nbsp;&nbsp; Add canvas &nbsp; +</div></header>
+            <div class="channel-intro"><h2># launch</h2><p>Everything the launch team needs, in one place.</p></div>
+            <div class="message-list" id="message-list">
+              <div class="message first" id="message-one"><i class="avatar u1">S</i><div><b>Sarah Bennett</b><small> 10:14 AM</small><p><span class="t"></span><i class="tcaret"></i></p></div></div>
+              <div class="message second" id="message-two"><i class="avatar u2">M</i><div><b>Marcus Webb</b><small> 10:15 AM</small><p><span class="t"></span><i class="tcaret"></i></p><div class="reaction">✨ &nbsp; 3</div></div></div>
+            </div>
+            <div class="composer"><div class="format">B &nbsp; <i>I</i> &nbsp; U &nbsp; S &nbsp; 🔗 &nbsp; ☷ &nbsp; ≡</div><span>Message #launch</span><footer>＋ &nbsp; Aa &nbsp; ☺ &nbsp; @ <b>▶</b></footer></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene proof" id="proof" data-scene="proof" data-part="slack-proof">
+      <div class="proof-card decision" data-component-root="decision-card"><span>01</span><h2>Every Decision</h2><div class="mini-msg"><i>S</i><p>Move the launch review to <b>2:30?</b></p><em>✓ Approved</em></div></div>
+      <div class="proof-card conversation" data-component-root="conversation-card"><span>02</span><h2>Every Conversation</h2><div class="channel-stack"><b># launch</b><i># product</i><i># campaign</i><i># design</i></div></div>
+    </section>
+
+    <section class="scene promise" id="promise" data-scene="promise" data-part="promise">
+      <div class="promise-copy"><div id="all-place">All in one place.</div><div id="all-slack">All in<span class="mark-slot" aria-hidden="true"></span><span class="slack-gradient">Slack.</span></div><div id="all-slack-guard" aria-hidden="true">All in<span class="mark-slot"></span><span class="slack-gradient">Slack.</span></div></div>
+      <svg class="slack-svg orbit-mark" viewBox="0 0 122.8 122.8" aria-hidden="true">
+        <path class="mk" fill="#e01e5a" d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z"/>
+        <path class="mk" fill="#e01e5a" d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"/>
+        <path class="mk" fill="#36c5f0" d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z"/>
+        <path class="mk" fill="#36c5f0" d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z"/>
+        <path class="mk" fill="#2eb67d" d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z"/>
+        <path class="mk" fill="#2eb67d" d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z"/>
+        <path class="mk" fill="#ecb22e" d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z"/>
+        <path class="mk" fill="#ecb22e" d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"/>
+      </svg>
+    </section>
+
+    <section class="scene end" id="end" data-scene="end" data-part="lockup">
+      <div class="lockup" data-component-root="slack-lockup">
+        <svg class="slack-svg lockup-mark" viewBox="0 0 122.8 122.8" aria-label="Slack">
+          <path class="mk" fill="#e01e5a" d="M25.8 77.6c0 7.1-5.8 12.9-12.9 12.9S0 84.7 0 77.6s5.8-12.9 12.9-12.9h12.9v12.9z"/>
+          <path class="mk" fill="#e01e5a" d="M32.3 77.6c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9v32.3c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V77.6z"/>
+          <path class="mk" fill="#36c5f0" d="M45.2 25.8c-7.1 0-12.9-5.8-12.9-12.9S38.1 0 45.2 0s12.9 5.8 12.9 12.9v12.9H45.2z"/>
+          <path class="mk" fill="#36c5f0" d="M45.2 32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H12.9C5.8 58.1 0 52.3 0 45.2s5.8-12.9 12.9-12.9h32.3z"/>
+          <path class="mk" fill="#2eb67d" d="M97 45.2c0-7.1 5.8-12.9 12.9-12.9s12.9 5.8 12.9 12.9-5.8 12.9-12.9 12.9H97V45.2z"/>
+          <path class="mk" fill="#2eb67d" d="M90.5 45.2c0 7.1-5.8 12.9-12.9 12.9s-12.9-5.8-12.9-12.9V12.9C64.7 5.8 70.5 0 77.6 0s12.9 5.8 12.9 12.9v32.3z"/>
+          <path class="mk" fill="#ecb22e" d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9z"/>
+          <path class="mk" fill="#ecb22e" d="M77.6 90.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"/>
+        </svg>
+        <div class="wordmark">slack</div>
+      </div>
+      <p id="tagline"><span>Where</span> <span>work</span> <span>happens.</span></p>
+    </section>
+  </main>
+  <script src="assets/vendor/gsap.min.js"></script>
+  <script src="config.js"></script>
+  <script src="timeline.js"></script>
+</body>
+</html>

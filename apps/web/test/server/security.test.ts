@@ -22,6 +22,8 @@ async function runtime() {
     seedRoot: join(root, "fixtures", "release-a"),
     candidatesRoot: join(workspace, "candidates"),
     runsRoot: join(workspace, "runs"),
+    rendersRoot: join(workspace, "renders"),
+    renderWorktreesRoot: join(workspace, "render-worktrees"),
     skillsRoot: join(root, ".agents", "skills"),
     skillsManifestPath: join(root, ".agents", "skills-manifest.json"),
     registryManifestPath: join(root, ".agents", "registry", "registry.json"),
@@ -107,6 +109,18 @@ describe("localhost security boundary", () => {
     expect(policy).toContain("sandbox allow-scripts");
     expect(policy).not.toContain("allow-same-origin");
     expect(await response.text()).toContain('data-composition-id="release-a"');
+  });
+
+  it("serves nested composition assets instead of substituting the project index", async () => {
+    const { app } = await runtime();
+    const response = await app.request(
+      `/api/v1/projects/release-a/files/${"f".repeat(43)}/sample/assets/vendor/gsap.min.js`,
+      { headers: headers({ Origin: "null" }) },
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toBe("text/javascript; charset=utf-8");
+    expect(await response.text()).toContain("GreenSock");
   });
 
   it("rejects an alternate host before routing", async () => {

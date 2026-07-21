@@ -1,0 +1,66 @@
+{
+  "version": "sequences.design-capsule.v1",
+  "id": "chatgpt-native-working-draft",
+  "name": "ChatGPT-native Working Draft",
+  "thesis": "One real ChatGPT conversation moves from typed question to streamed answer, inspectable sources, editable Canvas draft, and a quiet exact-knot lockup.",
+  "origin": {
+    "kind": "reference-derived",
+    "imagePaths": [],
+    "rationale": "The rebuild uses the recovered native-DOM story, the user's ChatGPT screenshots, the repository OpenAI launch grammar, and the exact canonical knot while removing the earlier blue gradients, oversized Search pill, and approximate logo glyphs."
+  },
+  "basis": "light",
+  "palette": {
+    "field": "#F7F7F8",
+    "surface": "#FFFFFF",
+    "sidebar": "#F3F3F3",
+    "ink": "#0D0D0D",
+    "body": "#262626",
+    "muted": "#5D5D5D",
+    "border": "#DEDEDE",
+    "green": "#10A37F"
+  },
+  "typography": {
+    "display": { "family": "Montserrat", "weights": [600, 700] },
+    "body": { "family": "Montserrat", "weights": [500, 600] },
+    "mono": { "family": "IBM Plex Mono", "weights": [500] }
+  },
+  "geometry": {
+    "radiusPx": 34,
+    "borderPx": 1,
+    "shadow": "soft-product"
+  },
+  "density": "dynamic",
+  "compositionDialect": "one-chat-to-working-draft",
+  "motionVerbs": [
+    "type-and-send",
+    "stream-and-assemble",
+    "inspect-and-continue",
+    "rewrite-and-resolve"
+  ],
+  "rules": {
+    "do": [
+      "Use the exact canonical knot for every ChatGPT mark",
+      "Align avatar, label, response, user bubbles, and composers to a real chat column",
+      "Make Search, Sources, Canvas, and the rewrite visibly causal",
+      "Land the major operations on the commercial-jazz beat grid"
+    ],
+    "avoid": [
+      "Blue Search branding or full-screen color gradients",
+      "Approximate logo glyphs, screenshot planes, and random frame swaps",
+      "Generic metrics, unsupported claims, or invented integrations",
+      "Crossfading complete readable UI states"
+    ]
+  },
+  "rootHfId": "chatgpt-app-shell",
+  "tokenBindings": {
+    "field": "--paper",
+    "surface": "--surface",
+    "sidebar": "--sidebar",
+    "ink": "--ink",
+    "body": "--body",
+    "muted": "--muted",
+    "border": "--hairline",
+    "green": "--green"
+  },
+  "implementationFiles": ["compositions/chatgpt-native-story.html"]
+}

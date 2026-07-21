@@ -1,0 +1,86 @@
+{
+  "version": "sequences.design-capsule.v1",
+  "id": "chatgpt-native-recommendation",
+  "name": "ChatGPT-native Recommendation",
+  "thesis": "A familiar two-turn ChatGPT exchange types a helpful answer and then a launch-film refusal, is hijacked mid-sentence, and continues into a ChatGPT-like Sequences workflow where the request becomes storyboard, playback, and verified proof.",
+  "origin": {
+    "kind": "reference-derived",
+    "imagePaths": [],
+    "rationale": "The redesign follows the repository OpenAI launch grammar, exact canonical knot treatment, the familiar ChatGPT composer/message geometry, and the user's request for a product world that feels more OpenAI-made without making an authorship claim."
+  },
+  "basis": "light",
+  "palette": {
+    "field": "#F7F7F8",
+    "surface": "#FFFFFF",
+    "soft": "#F1F1F3",
+    "ink": "#171717",
+    "dark": "#202123",
+    "muted": "#6A6A6A",
+    "border": "#D9D9DE",
+    "green": "#10A37F",
+    "greenDark": "#087A5E",
+    "greenSoft": "#E7F6F1"
+  },
+  "typography": {
+    "display": {
+      "family": "Montserrat",
+      "weights": [600, 700]
+    },
+    "body": {
+      "family": "Montserrat",
+      "weights": [500, 600, 700]
+    },
+    "mono": {
+      "family": "IBM Plex Mono",
+      "weights": [500, 600, 700]
+    }
+  },
+  "geometry": {
+    "radiusPx": 30,
+    "borderPx": 2,
+    "shadow": "soft-product"
+  },
+  "density": "dynamic",
+  "compositionDialect": "chat-to-chat-native-tool",
+  "motionVerbs": [
+    "type-on-beat",
+    "scroll-and-type-again",
+    "interrupt-on-beat",
+    "assemble-and-morph",
+    "resolve-by-subtraction"
+  ],
+  "rules": {
+    "do": [
+      "Make the exact question the semantic payload across ChatGPT and Sequences",
+      "Use the exact canonical knot wherever the ChatGPT OpenAI mark appears",
+      "Use OpenAI green only for action, progress, selection, and verification",
+      "Keep one Sequences conversation surface mounted from prompt through playable proof",
+      "Land major motion on the happy-commercial beat grid"
+    ],
+    "avoid": [
+      "Cobalt poster graphics or an editorial dashboard aesthetic",
+      "Explicitly claiming Sequences is made by OpenAI",
+      "Generic metrics, unsupported customer claims, or invented integrations",
+      "Crossfading complete readable UI states",
+      "Decorative gradients, glass, neon, or particle spectacle"
+    ]
+  },
+  "rootHfId": "sequences-studio",
+  "tokenBindings": {
+    "field": "--oa-field",
+    "surface": "--oa-surface",
+    "soft": "--oa-soft",
+    "ink": "--oa-ink",
+    "dark": "--oa-dark",
+    "muted": "--oa-muted",
+    "border": "--oa-border",
+    "green": "--oa-green",
+    "greenDark": "--oa-green-dark",
+    "greenSoft": "--oa-green-soft"
+  },
+  "implementationFiles": [
+    "compositions/chatgpt-answer.html",
+    "compositions/sequences-world.html",
+    "compositions/end-lockup.html"
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "version": "sequences.component-plan.v2",
+  "designCapsuleId": "chatgpt-native-recommendation",
+  "mode": "synthetic",
+  "name": "Chat-native recommendation-to-result kit",
+  "visualThesis": "A familiar two-turn ChatGPT exchange types both sides of the conversation, exposes a launch-film limitation, and is hijacked into one persistent ChatGPT-like Sequences surface whose prompt becomes storyboard, playback, and verified proof.",
+  "sourceImages": [],
+  "sourceImageBindings": [],
+  "sourceEvidence": "No product screenshots are flattened into the film. The redesign uses the repository OpenAI launch grammar, exact canonical knot, familiar ChatGPT composer and message geometry, and local beat analysis for happy_comercial.mp3; every rendered component remains code-native and editable.",
+  "tokens": {
+    "color-field": "#F7F7F8",
+    "color-surface": "#FFFFFF",
+    "color-soft": "#F1F1F3",
+    "color-ink": "#171717",
+    "color-dark": "#202123",
+    "color-muted": "#6A6A6A",
+    "color-border": "#D9D9DE",
+    "color-green": "#10A37F",
+    "color-green-dark": "#087A5E",
+    "color-green-soft": "#E7F6F1",
+    "radius-product": 30,
+    "radius-composer": 44
+  },
+  "components": [
+    {
+      "id": "chatgpt-exchange",
+      "archetype": "chat",
+      "continuity": "persistent",
+      "purpose": "A recognizable ChatGPT composer and conversation thread that carries two typed user questions into a helpful answer and then a typed refusal before the interruption.",
+      "rootHfId": "chatgpt-exchange",
+      "stateAttribute": "data-state",
+      "states": [
+        {
+          "id": "question-entry",
+          "description": "The exact question types inside the composer and becomes ready to send."
+        },
+        {
+          "id": "advice-building",
+          "description": "The submitted user bubble and one credible character-typed assistant response share the persistent chat surface."
+        },
+        {
+          "id": "followup-entry",
+          "description": "The first exchange scrolls upward while Can you make a launch film types in the live composer."
+        },
+        {
+          "id": "refusal-building",
+          "description": "The second user bubble holds while ChatGPT types its limitation and is cut off mid-thought."
+        },
+        {
+          "id": "interrupted",
+          "description": "The readable answer has been removed atomically and the recommendation owns the frame."
+        }
+      ],
+      "parts": [
+        {
+          "id": "chatgpt-mark",
+          "hfId": "chatgpt-mark",
+          "purpose": "Uses the exact canonical ChatGPT knot geometry to identify the familiar product world.",
+          "morphAnchor": false
+        },
+        {
+          "id": "chatgpt-composer",
+          "hfId": "chatgpt-composer",
+          "purpose": "Video-scale composer holding the exact question and send control.",
+          "morphAnchor": true
+        },
+        {
+          "id": "question-payload",
+          "hfId": "question-payload",
+          "purpose": "Carries the exact question from the composer into the submitted bubble and later Sequences.",
+          "morphAnchor": true
+        },
+        {
+          "id": "chatgpt-send-control",
+          "hfId": "chatgpt-send-control",
+          "purpose": "Visible cause that submits the question and reveals the answer state.",
+          "morphAnchor": false
+        },
+        {
+          "id": "advice-copy",
+          "hfId": "advice-copy",
+          "purpose": "A concise, coherent ChatGPT response typing character by character inside a real assistant message row.",
+          "morphAnchor": false
+        },
+        {
+          "id": "followup-entry",
+          "hfId": "followup-entry",
+          "purpose": "Types the direct launch-film request in the persistent composer.",
+          "morphAnchor": false
+        },
+        {
+          "id": "followup-question",
+          "hfId": "followup-question",
+          "purpose": "Holds the submitted second request as a genuine user bubble.",
+          "morphAnchor": true
+        },
+        {
+          "id": "refusal-response",
+          "hfId": "refusal-response",
+          "purpose": "Types the assistant limitation until the hijack cuts it off after the em dash.",
+          "morphAnchor": false
+        },
+        {
+          "id": "recommendation-line",
+          "hfId": "recommendation-line",
+          "purpose": "The largest typographic beat: Actually—use Sequences.",
+          "morphAnchor": true
+        }
+      ],
+      "slots": [
+        {
+          "id": "question-copy",
+          "hfId": "question-payload",
+          "kind": "text"
+        },
+        {
+          "id": "answer-copy",
+          "hfId": "advice-copy",
+          "kind": "text"
+        },
+        {
+          "id": "followup-copy",
+          "hfId": "followup-question",
+          "kind": "text"
+        },
+        {
+          "id": "refusal-copy",
+          "hfId": "refusal-response",
+          "kind": "text"
+        },
+        {
+          "id": "recommendation-copy",
+          "hfId": "recommendation-line",
+          "kind": "text"
+        }
+      ],
+      "interactions": [
+        {
+          "id": "submit-question",
+          "kind": "submit",
+          "cause": "The send orb compresses under the pointer.",
+          "result": "The exact question becomes a submitted bubble and advice begins.",
+          "fromState": "question-entry",
+          "toState": "advice-building"
+        },
+        {
+          "id": "submit-followup",
+          "kind": "submit",
+          "cause": "Can you make a launch film finishes typing and the send orb compresses again.",
+          "result": "The request becomes a second user bubble and ChatGPT starts its refusal.",
+          "fromState": "followup-entry",
+          "toState": "refusal-building"
+        },
+        {
+          "id": "interrupt-refusal",
+          "kind": "resolve",
+          "cause": "ChatGPT is still typing its limitation when the signal fault arrives.",
+          "result": "The refusal is removed atomically and the recommendation becomes the only readable thought.",
+          "fromState": "refusal-building",
+          "toState": "interrupted"
+        }
+      ],
+      "usedInBeatIds": ["question-operation", "advice-pressure", "followup-question", "refusal-interruption", "recommendation-turn"],
+      "implementationFiles": ["compositions/chatgpt-answer.html"]
+    },
+    {
+      "id": "sequences-studio",
+      "archetype": "workflow",
+      "continuity": "persistent",
+      "purpose": "The single ChatGPT-like Sequences conversation surface that turns the exact prompt into storyboard, playback, and verified proof without re-entering.",
+      "rootHfId": "sequences-studio",
+      "stateAttribute": "data-state",
+      "states": [
+        {
+          "id": "prompt-ready",
+          "description": "The exact question is present and Build launch film is ready."
+        },
+        {
+          "id": "storyboarding",
+          "description": "Five ordered launch beats assemble from the submitted prompt."
+        },
+        {
+          "id": "playable",
+          "description": "One storyboard card has become the playable result inside the same product surface."
+        },
+        {
+          "id": "verified",
+          "description": "The result is playable, the timecode is at rest, and the verification status is visible."
+        }
+      ],
+      "parts": [
+        {
+          "id": "sequences-header",
+          "hfId": "sequences-header",
+          "purpose": "Carries the knot, Sequences identity, and restrained chat-product chrome across every workflow state.",
+          "morphAnchor": true
+        },
+        {
+          "id": "sequences-prompt-panel",
+          "hfId": "sequences-prompt-panel",
+          "purpose": "Shows the exact question as a familiar user message and causal source.",
+          "morphAnchor": true
+        },
+        {
+          "id": "build-control",
+          "hfId": "build-control",
+          "purpose": "The single operated ChatGPT-style send control that starts storyboard construction.",
+          "morphAnchor": true
+        },
+        {
+          "id": "storyboard-strip",
+          "hfId": "storyboard-strip",
+          "purpose": "Presents five ordered 16:9 storyboard frames as the assistant response.",
+          "morphAnchor": true
+        },
+        {
+          "id": "playable-result",
+          "hfId": "playable-result",
+          "purpose": "Shows the authored launch film inside a dark, rounded player with real duration and OpenAI-green progress.",
+          "morphAnchor": true
+        },
+        {
+          "id": "verified-status",
+          "hfId": "verified-status",
+          "purpose": "Uses green only when the playable result has visibly passed verification.",
+          "morphAnchor": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "prompt-copy",
+          "hfId": "sequences-prompt-panel",
+          "kind": "text"
+        },
+        {
+          "id": "storyboard-items",
+          "hfId": "storyboard-strip",
+          "kind": "list"
+        },
+        {
+          "id": "result-player",
+          "hfId": "playable-result",
+          "kind": "image"
+        },
+        {
+          "id": "verification-copy",
+          "hfId": "verified-status",
+          "kind": "text"
+        }
+      ],
+      "interactions": [
+        {
+          "id": "build-launch-film",
+          "kind": "submit",
+          "cause": "The pointer presses Build launch film.",
+          "result": "Five storyboard cards assemble from the exact prompt.",
+          "fromState": "prompt-ready",
+          "toState": "storyboarding"
+        },
+        {
+          "id": "play-storyboard-result",
+          "kind": "resolve",
+          "cause": "The interrupt card expands into the persistent preview area.",
+          "result": "The product surface changes into a playable 23.6-second result.",
+          "fromState": "storyboarding",
+          "toState": "playable"
+        },
+        {
+          "id": "verify-playable-result",
+          "kind": "resolve",
+          "cause": "Playback reaches the authored resting frame.",
+          "result": "The verified status appears beside the settled result.",
+          "fromState": "playable",
+          "toState": "verified"
+        }
+      ],
+      "usedInBeatIds": ["sequences-proof"],
+      "implementationFiles": ["compositions/sequences-world.html"]
+    },
+    {
+      "id": "final-lockup",
+      "archetype": "custom",
+      "customArchetypeReason": "The final resting hierarchy is a brand lockup rather than an interactive SaaS control, but it still needs stable semantic identity and evidence.",
+      "continuity": "beat-local",
+      "purpose": "A subtractive chat-native lockup with the canonical knot, Sequences name, one promise, and one verification proof pill.",
+      "rootHfId": "end-brand-lockup",
+      "stateAttribute": "data-state",
+      "states": [
+        {
+          "id": "arriving",
+          "description": "Brand, rule, and promise assemble into the final hierarchy."
+        },
+        {
+          "id": "resting",
+          "description": "The complete lockup holds with a near-invisible bounded breath."
+        }
+      ],
+      "parts": [
+        {
+          "id": "final-wordmark",
+          "hfId": "final-wordmark",
+          "purpose": "Names Sequences in the resting hierarchy.",
+          "morphAnchor": true
+        },
+        {
+          "id": "final-promise-copy",
+          "hfId": "final-promise-copy",
+          "purpose": "Carries One prompt. A launch film. at decisive launch-copy scale.",
+          "morphAnchor": false
+        },
+        {
+          "id": "final-proof-line",
+          "hfId": "final-proof-line",
+          "purpose": "Retains the single verified product consequence without restoring product chrome.",
+          "morphAnchor": false
+        }
+      ],
+      "slots": [
+        {
+          "id": "brand-copy",
+          "hfId": "final-wordmark",
+          "kind": "text"
+        },
+        {
+          "id": "promise-copy",
+          "hfId": "final-promise-copy",
+          "kind": "text"
+        },
+        {
+          "id": "proof-copy",
+          "hfId": "final-proof-line",
+          "kind": "text"
+        }
+      ],
+      "interactions": [
+        {
+          "id": "settle-lockup",
+          "kind": "resolve",
+          "cause": "The product world cuts away while Sequences identity remains.",
+          "result": "The final promise and proof line settle for the long hold.",
+          "fromState": "arriving",
+          "toState": "resting"
+        }
+      ],
+      "usedInBeatIds": ["final-promise"],
+      "implementationFiles": ["compositions/end-lockup.html"]
+    }
+  ]
+}

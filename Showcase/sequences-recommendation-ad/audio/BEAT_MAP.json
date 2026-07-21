@@ -1,0 +1,46 @@
+{
+  "version": "sequences.audio-sync.v1",
+  "soundtrackId": "happy-commercial",
+  "source": "music/happy_comercial.mp3",
+  "sha256": "4e6182ef59452bf0ab01646af3d86480f10e9d71173cadac6623636374860bed",
+  "catalogAnalysis": {
+    "bpm": 60.1,
+    "beatSec": 0.9985,
+    "barSec": 3.9938,
+    "firstBeatSec": 0.534,
+    "confidence": 0.52
+  },
+  "editGrid": {
+    "fps": 30,
+    "rationale": "Catalog onsets are snapped to the nearest 30fps frame. The accumulated difference remains below one frame across the 23.6-second cut.",
+    "beatsSec": [
+      0.533333, 1.533333, 2.533333, 3.533333, 4.533333, 5.533333, 6.533333, 7.533333,
+      8.533333, 9.533333, 10.533333, 11.533333, 12.533333, 13.533333, 14.533333,
+      15.533333, 16.533333, 17.533333, 18.533333, 19.533333, 20.533333, 21.533333,
+      22.533333, 23.533333
+    ],
+    "barsSec": [0.533333, 4.533333, 8.533333, 12.533333, 16.533333, 20.533333]
+  },
+  "events": [
+    { "id": "question-type-start", "atSec": 0.533333, "kind": "visual+sfx", "sync": "beat" },
+    { "id": "question-type-complete", "atSec": 2.533333, "kind": "visual", "sync": "beat" },
+    { "id": "chatgpt-send", "atSec": 3.533333, "kind": "visual+sfx", "sync": "beat" },
+    { "id": "assistant-type-start", "atSec": 4.166667, "kind": "visual+sfx", "sync": "pickup" },
+    { "id": "assistant-type-complete", "atSec": 6.166667, "kind": "visual", "sync": "pickup" },
+    { "id": "followup-type-start", "atSec": 6.533333, "kind": "visual+sfx", "sync": "beat" },
+    { "id": "followup-type-complete", "atSec": 7.833333, "kind": "visual", "sync": "pickup" },
+    { "id": "followup-send", "atSec": 8.533333, "kind": "visual+sfx", "sync": "bar" },
+    { "id": "refusal-type-start", "atSec": 9.033333, "kind": "visual+sfx", "sync": "pickup" },
+    { "id": "refusal-hijack", "atSec": 10.533333, "kind": "visual+sfx", "sync": "beat" },
+    { "id": "sequences-word-hit", "atSec": 11.533333, "kind": "visual", "sync": "beat" },
+    { "id": "product-cut", "atSec": 13.533333, "kind": "visual", "sync": "beat" },
+    { "id": "build-press", "atSec": 14.533333, "kind": "visual+sfx", "sync": "beat" },
+    { "id": "storyboard-lock", "atSec": 15.533333, "kind": "visual", "sync": "beat" },
+    { "id": "player-morph-start", "atSec": 16.533333, "kind": "visual", "sync": "bar" },
+    { "id": "player-reveal", "atSec": 17.533333, "kind": "visual", "sync": "beat" },
+    { "id": "player-recommendation", "atSec": 18.533333, "kind": "visual", "sync": "beat" },
+    { "id": "verified-result", "atSec": 19.533333, "kind": "visual", "sync": "beat" },
+    { "id": "lockup-cut", "atSec": 20.533333, "kind": "visual", "sync": "bar" },
+    { "id": "promise-hit", "atSec": 21.533333, "kind": "visual", "sync": "beat" }
+  ]
+}

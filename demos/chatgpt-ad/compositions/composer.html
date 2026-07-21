@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        /*
+         * ChatGPT launch film · scene 3 sub-composition: the voice composer.
+         * Heading + pill hierarchy, finite yoyo waveform, caret typewriter,
+         * then an atomic match cut to a 2x close-up of the same pill for the
+         * operated press (cuts between zoom levels, never live overflow).
+         * Mounted by the host at 8.2s; every time below is local.
+         */
+        #cp-root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: #fbfbfd;
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #cp-stage {
+          position: absolute;
+          inset: 0;
+        }
+
+        #composer-heading {
+          position: absolute;
+          left: 0;
+          top: 340px;
+          width: 1920px;
+          text-align: center;
+          font-size: 64px;
+          font-weight: 700;
+          letter-spacing: -0.015em;
+          color: #101216;
+          opacity: 0;
+        }
+
+        #composer-pill {
+          position: absolute;
+          left: 380px;
+          top: 478px;
+          width: 1160px;
+          height: 108px;
+          border-radius: 54px;
+          background: #ffffff;
+          border: 1px solid #e4e6ee;
+          box-shadow: 0 18px 60px rgba(16, 18, 22, 0.1);
+          opacity: 0;
+        }
+
+        #composer-plus {
+          position: absolute;
+          left: 40px;
+          top: 40px;
+          width: 28px;
+          height: 28px;
+          color: #4a4e5a;
+        }
+
+        #composer-placeholder {
+          position: absolute;
+          left: 100px;
+          top: 36px;
+          font-size: 30px;
+          font-weight: 500;
+          color: #5c616e;
+        }
+
+        #composer-line {
+          position: absolute;
+          left: 100px;
+          top: 34px;
+          height: 42px;
+        }
+
+        #composer-typed {
+          position: absolute;
+          left: 0;
+          top: 0;
+          white-space: nowrap;
+          font-size: 30px;
+          font-weight: 600;
+          line-height: 42px;
+          color: #14161c;
+          clip-path: inset(0 100% 0 0);
+        }
+
+        #composer-caret {
+          position: absolute;
+          left: 0;
+          top: 3px;
+          width: 3px;
+          height: 36px;
+          background: #5b53e8;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        #model-chip {
+          position: absolute;
+          left: 800px;
+          top: 39px;
+          height: 30px;
+          font-size: 22px;
+          font-weight: 600;
+          line-height: 30px;
+          color: #6b7080;
+          white-space: nowrap;
+        }
+
+        #model-chevron {
+          position: absolute;
+          left: 90px;
+          top: 8px;
+          width: 14px;
+          height: 14px;
+        }
+
+        #composer-wave {
+          position: absolute;
+          left: 924px;
+          top: 42px;
+          width: 44px;
+          height: 24px;
+        }
+
+        .wave-bar {
+          position: absolute;
+          top: 0;
+          width: 4px;
+          height: 24px;
+          border-radius: 2px;
+          background: #5b53e8;
+          transform-origin: 50% 50%;
+        }
+
+        #composer-mic {
+          position: absolute;
+          left: 988px;
+          top: 38px;
+          width: 32px;
+          height: 32px;
+          color: #4a4e5a;
+        }
+
+        #composer-orb {
+          position: absolute;
+          left: 1064px;
+          top: 22px;
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: #0d0f14;
+        }
+
+        #orb-arrow {
+          position: absolute;
+          left: 18px;
+          top: 18px;
+          width: 28px;
+          height: 28px;
+        }
+
+        /* Close-up state: the same pill, magnified 2x for the operated press.
+           Authored at natural size and fully inside the frame — a cut between
+           zoom levels, exactly how the reference gets its close-up energy. */
+        #composer-closeup {
+          position: absolute;
+          inset: 0;
+          background: #fbfbfd;
+          opacity: 0;
+        }
+
+        #cu-pill {
+          position: absolute;
+          left: 40px;
+          top: 430px;
+          width: 1840px;
+          height: 220px;
+          border-radius: 110px;
+          background: #ffffff;
+          border: 1px solid #e4e6ee;
+          box-shadow: 0 30px 90px rgba(16, 18, 22, 0.12);
+        }
+
+        #cu-plus {
+          position: absolute;
+          left: 76px;
+          top: 82px;
+          width: 56px;
+          height: 56px;
+          color: #4a4e5a;
+        }
+
+        #cu-text {
+          position: absolute;
+          left: 170px;
+          top: 76px;
+          white-space: nowrap;
+          font-size: 62px;
+          font-weight: 600;
+          line-height: 66px;
+          color: #14161c;
+        }
+
+        #cu-caret {
+          position: absolute;
+          left: 1322px;
+          top: 78px;
+          width: 6px;
+          height: 66px;
+          background: #5b53e8;
+          pointer-events: none;
+        }
+
+        #cu-mic {
+          position: absolute;
+          left: 1520px;
+          top: 74px;
+          width: 72px;
+          height: 72px;
+          color: #4a4e5a;
+        }
+
+        #cu-orb {
+          position: absolute;
+          left: 1656px;
+          top: 42px;
+          width: 136px;
+          height: 136px;
+          border-radius: 50%;
+          background: #0d0f14;
+        }
+
+        #cu-arrow {
+          position: absolute;
+          left: 38px;
+          top: 38px;
+          width: 60px;
+          height: 60px;
+        }
+
+        #press-ripple {
+          position: absolute;
+          left: 1656px;
+          top: 42px;
+          width: 136px;
+          height: 136px;
+          border-radius: 50%;
+          border: 3px solid #5b53e8;
+          opacity: 0;
+          pointer-events: none;
+        }
+      </style>
+      <div data-hf-id="chatgpt-composer-root" id="cp-root" data-composition-id="chatgpt-composer" data-start="0" data-duration="4.4" data-width="1920" data-height="1080" data-fps="30">
+        <div id="cp-stage" data-hf-id="cp-stage" class="clip" data-start="0" data-duration="4.4" data-track-index="0">
+          <div id="composer-heading" data-hf-id="composer-heading">You just ask.</div>
+          <div id="composer-pill" data-hf-id="composer-pill">
+            <svg id="composer-plus" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="M14 5v18M5 14h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"></path>
+            </svg>
+            <div id="composer-placeholder">Ask anything</div>
+            <div id="composer-line">
+              <div id="composer-typed" data-hf-id="composer-typed">Plan my week around my deadlines</div>
+              <div id="composer-caret"></div>
+            </div>
+            <div id="model-chip" data-hf-id="model-chip">5.5 Auto
+              <svg id="model-chevron" viewBox="0 0 14 14" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="#6b7080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+              </svg>
+            </div>
+            <div id="composer-wave" data-hf-id="composer-wave">
+              <div class="wave-bar" style="left: 0;"></div>
+              <div class="wave-bar" style="left: 10px;"></div>
+              <div class="wave-bar" style="left: 20px;"></div>
+              <div class="wave-bar" style="left: 30px;"></div>
+              <div class="wave-bar" style="left: 40px;"></div>
+            </div>
+            <svg id="composer-mic" viewBox="0 0 30 30" aria-hidden="true">
+              <rect x="11" y="4" width="8" height="14" rx="4" fill="currentColor"></rect>
+              <path d="M7 14v1a8 8 0 0 0 16 0v-1M15 23v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"></path>
+            </svg>
+            <div id="composer-orb" data-hf-id="composer-orb">
+              <svg id="orb-arrow" viewBox="0 0 26 26" aria-hidden="true">
+                <path d="M13 21V5M13 5l-6.5 6.5M13 5l6.5 6.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+              </svg>
+            </div>
+          </div>
+          <div id="composer-closeup" data-hf-id="composer-closeup">
+            <div id="cu-pill" data-hf-id="cu-pill">
+              <svg id="cu-plus" viewBox="0 0 28 28" aria-hidden="true">
+                <path d="M14 5v18M5 14h18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"></path>
+              </svg>
+              <div id="cu-text">Plan my week around my deadlines</div>
+              <div id="cu-caret"></div>
+              <svg id="cu-mic" viewBox="0 0 30 30" aria-hidden="true">
+                <rect x="11" y="4" width="8" height="14" rx="4" fill="currentColor"></rect>
+                <path d="M7 14v1a8 8 0 0 0 16 0v-1M15 23v4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"></path>
+              </svg>
+              <div id="cu-orb" data-hf-id="cu-orb">
+                <svg id="cu-arrow" viewBox="0 0 26 26" aria-hidden="true">
+                  <path d="M13 21V5M13 5l-6.5 6.5M13 5l6.5 6.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                </svg>
+              </div>
+              <!-- Keep the operated-state ring in the pill's coordinate space,
+                   exactly aligned to the send orb at every seek. -->
+              <div id="press-ripple"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          // Stage opening states once, before the paused timeline registers.
+          gsap.set("#composer-wave .wave-bar", { scaleY: 0.3 });
+
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+
+          tl.fromTo(
+            "#composer-heading",
+            { opacity: 0, y: 22 },
+            { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+            0.15,
+          );
+          tl.fromTo(
+            "#composer-pill",
+            { opacity: 0, y: 44, scale: 0.97 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.4)" },
+            0.22,
+          );
+          // waveform pulse: finite, deterministic, then rests
+          const waveBars = gsap.utils.toArray("#composer-wave .wave-bar");
+          const wavePeaks = [0.95, 0.6, 1, 0.7, 0.85];
+          waveBars.forEach((bar, index) => {
+            tl.fromTo(
+              bar,
+              { scaleY: 0.3 },
+              { scaleY: wavePeaks[index], duration: 0.18, ease: "sine.inOut", repeat: 5, yoyo: true },
+              0.65 + index * 0.045,
+            );
+          });
+          // placeholder yields to the typed request
+          tl.to("#composer-placeholder", { opacity: 0, duration: 0.18, ease: "power1.in" }, 0.92);
+          tl.set("#composer-caret", { opacity: 1 }, 0.96);
+          const composerChars = 32; // "Plan my week around my deadlines"
+          const composerAdvance = 17.3; // Montserrat 600 30px average advance, tuned against the rendered frame
+          tl.to("#composer-typed", { clipPath: "inset(0 0% 0 0)", duration: 1.6, ease: `steps(${composerChars})` }, 1.1)
+            .to("#composer-caret", { x: composerAdvance * composerChars, duration: 1.6, ease: `steps(${composerChars})` }, 1.1);
+          tl.set("#composer-caret", { opacity: 0 }, 2.82)
+            .set("#composer-caret", { opacity: 1 }, 3.06);
+          // atomic match cut to the 2x close-up of the same pill: the reference
+          // gets its close-up energy from cuts between zoom levels, never from
+          // a live camera pushing readable UI past the frame edge
+          tl.set("#composer-heading", { opacity: 0 }, 3.22);
+          tl.set("#composer-pill", { opacity: 0 }, 3.22);
+          tl.set("#composer-closeup", { opacity: 1 }, 3.22);
+          tl.fromTo(
+            "#composer-closeup",
+            { scale: 1.035 },
+            { scale: 1, duration: 0.4, ease: "power2.out" },
+            3.22,
+          );
+          // caret blinks once at the close-up scale, then the operated press
+          tl.set("#cu-caret", { opacity: 0 }, 3.32)
+            .set("#cu-caret", { opacity: 1 }, 3.52);
+          tl.to("#cu-orb", { scale: 0.86, duration: 0.1, ease: "power2.in" }, 3.58)
+            .to("#cu-orb", { scale: 1, duration: 0.22, ease: "back.out(2)" }, 3.68);
+          // set + to (not fromTo): a parked visible from-state would show the
+          // ripple ring on the orb long before the press under arbitrary seeks
+          tl.set("#press-ripple", { opacity: 0.85, scale: 1 }, 3.65);
+          tl.to("#press-ripple", { opacity: 0, scale: 2.0, duration: 0.5, ease: "power2.out" }, 3.66);
+          // the answered request exits as one readable unit before the cut
+          tl.to("#composer-closeup", { opacity: 0, filter: "blur(8px)", scale: 0.99, duration: 0.26, ease: "power2.in" }, 4.1);
+          tl.set("#composer-closeup", { opacity: 0 }, 4.38);
+
+          // pin the sub-composition's full duration
+          tl.set({}, {}, 4.4);
+
+          window.__timelines = window.__timelines || {};
+          window.__timelines["chatgpt-composer"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

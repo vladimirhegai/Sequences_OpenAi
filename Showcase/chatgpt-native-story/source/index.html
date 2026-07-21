@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920,height=1080" />
+    <title>ChatGPT — From question to working draft</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        font-weight: 500;
+        src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Montserrat";
+        font-weight: 600;
+        src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Montserrat";
+        font-weight: 700;
+        src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-weight: 500;
+        src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f8;
+      }
+      #root,
+      #root > [data-composition-src] {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-hf-id="chatgpt-native-film-root"
+      data-composition-id="chatgpt-native-film"
+      data-start="0"
+      data-duration="24"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <div
+        id="chatgpt-native-story-slot"
+        class="clip"
+        data-hf-id="chatgpt-native-story-slot"
+        data-composition-id="chatgpt-native-story"
+        data-composition-src="compositions/chatgpt-native-story.html"
+        data-start="0"
+        data-duration="24"
+        data-track-index="0"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      ></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["chatgpt-native-film"] = gsap.timeline({
+        paused: true,
+        defaults: { overwrite: "auto" },
+      });
+    </script>
+    <script src="assets/vendor/hyperframe.runtime.iife.js"></script>
+  </body>
+</html>

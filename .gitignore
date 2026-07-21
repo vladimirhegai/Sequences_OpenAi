@@ -4,21 +4,34 @@ bun.lockb
 .env.*
 !.env.example
 
-# The inspected Hyperframes source snapshot is local reference material only.
-vendor/
-
+# Build and test output.
 apps/web/dist/
 coverage/
 test-results/
+*.tsbuildinfo
+.vite/
 
+# Local runtime state and generated delivery output.
 artifacts/*
 !artifacts/.gitkeep
+data/
+renders/
+workbench/
 
-data/candidates/
-data/runs/
-data/projects/
-fixtures/**/assets/vendor/
+# Local creative inputs and superseded showcase renders are not source assets.
+Video References/
+Showcase/**/archive/
+
+# Fixture-local generated output. Bundled vendor runtimes are intentionally
+# committed because the offline fixtures and doctor check require them.
 fixtures/**/renders/
 fixtures/**/snapshots/
 fixtures/**/.hyperframes/
+
+# Logs, temporary files, and common editor/OS metadata.
 *.log
+*.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

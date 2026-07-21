@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "id": "sequences-recommendation-ad",
+  "title": "Sequences Recommendation Launch Film",
+  "designRevision": "chatgpt-native-openai-green",
+  "soundtrackId": "happy-commercial",
+  "durationSeconds": 23.6,
+  "frameRate": 30,
+  "frameCount": 708,
+  "width": 1920,
+  "height": 1080,
+  "render": {
+    "videoCodec": "h264",
+    "videoProfile": "High",
+    "pixelFormat": "yuv420p",
+    "audioCodec": "aac",
+    "audioProfile": "LC",
+    "audioSampleRate": 48000,
+    "audioChannels": 2,
+    "integratedLufs": -17.4,
+    "loudnessRangeLu": 2.1,
+    "truePeakDbfs": -1.6
+  },
+  "verification": {
+    "strictGate": "passed",
+    "lintErrors": 0,
+    "lintWarnings": 0,
+    "runtimeErrors": 0,
+    "runtimeWarnings": 0,
+    "layoutErrors": 0,
+    "layoutWarnings": 0,
+    "motionErrors": 0,
+    "motionWarnings": 0,
+    "contrastErrors": 0,
+    "contrastWarnings": 0,
+    "contrastChecksPassed": 24,
+    "motionSamples": 300,
+    "encodedDecode": "passed",
+    "encodedVisualInspection": "passed"
+  },
+  "files": [
+    {
+      "path": "renders/sequences-recommendation-ad-final.mp4",
+      "role": "final",
+      "bytes": 3023375,
+      "sha256": "1b14de2f8d64f8762d093a79460a2fbeb3784240bd5c59fe7ec450ec6fc286a9"
+    },
+    {
+      "path": "renders/sequences-recommendation-ad-silent.mp4",
+      "role": "silent-master",
+      "bytes": 2412239,
+      "sha256": "4ad002e8fbf73569453f28b4d0eaa1de3b19cc87156ebcc4ab25260903237b5a"
+    },
+    {
+      "path": "renders/sequences-recommendation-ad-final-contact-sheet.jpg",
+      "role": "encoded-contact-sheet",
+      "bytes": 123788,
+      "sha256": "4d7ac1a1a8a7540d2afcb27176910e8b924ab0298846bf8d82916453784de89a"
+    },
+    {
+      "path": "audio/final-mix.m4a",
+      "role": "final-audio",
+      "bytes": 598318,
+      "sha256": "80e857a325c1aca073588978aa064f3434c1870e1da514ec86146aa60d8c215a"
+    },
+    {
+      "path": "audio/music/happy_comercial.mp3",
+      "role": "requested-music-master",
+      "bytes": 1204781,
+      "sha256": "4e6182ef59452bf0ab01646af3d86480f10e9d71173cadac6623636374860bed"
+    },
+    {
+      "path": "audio/BEAT_MAP.json",
+      "role": "audio-sync-map",
+      "bytes": 2724,
+      "sha256": "791ab5645163ad3d9effdd29a0eb2697d0e5c6045036ca52bb253b3fd11230a1"
+    },
+    {
+      "path": "source/index.html",
+      "role": "hyperframes-host",
+      "bytes": 4496,
+      "sha256": "3592aff3eb6977381481ffed83e01fddd06753cb7b9a57bf0f5fb16a0e7cb424"
+    },
+    {
+      "path": "source/sequence.json",
+      "role": "sequence-contract",
+      "bytes": 13681,
+      "sha256": "3d6deaefef73be91f7fc04012db06ed786f18f4adc467e6e5568db3142758356"
+    },
+    {
+      "path": "source/story/component-plan.json",
+      "role": "component-plan",
+      "bytes": 12694,
+      "sha256": "7d50cb018afd3859e9071315fac050b9de44929b73cfb72efd1846ed63d87a76"
+    },
+    {
+      "path": "source/story/design-capsule.json",
+      "role": "design-capsule",
+      "bytes": 2868,
+      "sha256": "294b19e5a675a6ea851ec9d9fe6a8461801a3a42ffd1db09e265bd79be27fb57"
+    }
+  ]
+}

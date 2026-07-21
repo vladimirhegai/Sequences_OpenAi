@@ -144,7 +144,7 @@ Rules below came out of two independent website capture builds (2026-04-20) wher
 
   ```js
   tl.to(el, { opacity: 0, duration: 0.3 }, beatEnd);
-  tl.set(el, { opacity: 0, visibility: "hidden" }, beatEnd + 0.3); // deterministic kill
+  tl.set(el, { opacity: 0 }, beatEnd + 0.3); // deterministic timeline-owned kill
   ```
 
 These are the exact rules with the exact code examples — don't summarize or shorten them. They exist because compositions that lint clean still ship broken without them.

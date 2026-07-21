@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "chatgpt-ad",
+  "title": "This is ChatGPT",
+  "engine": "hyperframes",
+  "format": {
+    "durationSeconds": 27.6,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "paths": {
+    "source": "source",
+    "entry": "source/index.html",
+    "finalRender": "renders/final.mp4",
+    "silentRender": "renders/silent.mp4",
+    "contactSheet": "renders/contact-sheet.jpg",
+    "audio": "audio",
+    "evidence": "evidence"
+  },
+  "finalAudio": {
+    "codec": "aac",
+    "sampleRateHz": 48000,
+    "channels": 2
+  },
+  "verification": {
+    "status": "passed",
+    "errors": 0,
+    "warnings": 0
+  }
+}

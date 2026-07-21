@@ -1,0 +1,121 @@
+{
+  "version": "sequences.component-plan.v2",
+  "designCapsuleId": "sequences-abstract-prompt-motion",
+  "mode": "synthetic",
+  "name": "Sequences abstract prompt-motion kit",
+  "visualThesis": "Thirteen reusable seek-safe components prove that one prompt seed can carry the complete ChatGPT-to-Sequences story.",
+  "sourceImages": [],
+  "sourceImageBindings": [],
+  "sourceEvidence": "All component surfaces are native DOM, CSS, and inline SVG. The only raster asset is the locally frozen canonical knot unfurl sprite.",
+  "tokens": {
+    "color-field": "#F7F7F3",
+    "color-paper": "#FFFFFF",
+    "color-ink": "#11110F",
+    "color-guide": "#D8D8D0",
+    "color-green": "#10A37F",
+    "color-sky": "#7ECFF8",
+    "color-lilac": "#B9ADEB",
+    "color-butter": "#F4D96A",
+    "color-cobalt": "#2457D6",
+    "color-midnight": "#122B4A",
+    "radius-product": 38
+  },
+  "components": [
+    {
+      "id": "chatgpt-composer",
+      "archetype": "composer",
+      "continuity": "opening",
+      "purpose": "Ground the film in a recognizable ChatGPT ask.",
+      "states": ["empty", "typing", "submitted"]
+    },
+    {
+      "id": "canonical-knot",
+      "archetype": "brand-mark",
+      "continuity": "handoff",
+      "purpose": "Unfurl from rose sprite to exact SVG rest.",
+      "states": ["rose", "unfurl", "exact-rest"]
+    },
+    {
+      "id": "prompt-seed",
+      "archetype": "continuity-object",
+      "continuity": "persistent",
+      "purpose": "Carry one object through every semantic role.",
+      "states": ["caret", "send", "keyframe", "playhead", "control", "period"]
+    },
+    {
+      "id": "deterministic-dot-field",
+      "archetype": "particle-system",
+      "continuity": "transforming",
+      "purpose": "Expand the prompt seed into a fixed six-arm spiral and cluster it behind five authored cards without random noise.",
+      "states": ["seed", "spiral", "node-clusters", "fade"]
+    },
+    {
+      "id": "shape-portal",
+      "archetype": "transition",
+      "continuity": "transforming",
+      "purpose": "Turn one measured seed into the next scene's ring, playhead, selected card, and lockup line.",
+      "states": ["dot", "destination-ring", "playhead", "result-card", "line"]
+    },
+    {
+      "id": "sequences-prompt-rail",
+      "archetype": "product-ui",
+      "continuity": "persistent",
+      "purpose": "Keep the originating prompt visible while Sequences builds.",
+      "states": ["prompt", "building", "storyboard-ready"]
+    },
+    {
+      "id": "storyboard-strip",
+      "archetype": "product-ui",
+      "continuity": "persistent",
+      "purpose": "Show five distinct moving launch-film scenes.",
+      "states": ["scene-01", "scene-02", "scene-03", "scene-04", "scene-05"]
+    },
+    {
+      "id": "sequence-timeline",
+      "archetype": "product-ui",
+      "continuity": "persistent",
+      "purpose": "Make ordering and progress explicit.",
+      "states": ["nodes", "connected", "playing", "verified"]
+    },
+    {
+      "id": "result-player",
+      "archetype": "product-proof",
+      "continuity": "transforming",
+      "purpose": "Use a measured card-to-player morph so the selected result becomes the playable launch film.",
+      "states": ["selected", "expanding", "resolved", "active"]
+    },
+    {
+      "id": "card-morph",
+      "archetype": "transition",
+      "continuity": "transforming",
+      "purpose": "Preserve the selected card's identity through the build-to-result boundary.",
+      "states": ["card", "expanding", "player"]
+    },
+    {
+      "id": "peak-orbital-system",
+      "archetype": "energy-peak",
+      "continuity": "transforming",
+      "purpose": "Release five designed launch modules around the central S, pulse them on the violin, and converge cleanly on cadence.",
+      "states": ["core", "release", "orbit", "pulse", "converge"]
+    },
+    {
+      "id": "final-lockup",
+      "archetype": "brand-lockup",
+      "continuity": "closing",
+      "purpose": "Resolve to product, promise, and ChatGPT provenance.",
+      "states": ["line", "wordmark", "tagline", "provenance"]
+    },
+    {
+      "id": "camera-world",
+      "archetype": "camera-system",
+      "continuity": "persistent",
+      "purpose": "Demonstrate one transform owner with layered parallax.",
+      "states": ["pan", "push", "rotate", "dock"]
+    }
+  ],
+  "implementationFiles": [
+    "compositions/component-lab.html",
+    "compositions/final-film.html",
+    "compositions/final-film-motion.js"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "version": "sequences.sequence.v1",
+  "format": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "targetDuration": 15
+  },
+  "concept": {
+    "summary": "Approved evidence becomes a verified release story that appears directly on the Sequences timeline.",
+    "hierarchy": [
+      "Evidence custody",
+      "Stable composition identity",
+      "Automatic verified promotion"
+    ],
+    "motionGrammar": [
+      "Measured editorial reveals",
+      "Persistent UI identity across state changes",
+      "Decisive held landings"
+    ],
+    "rejectedChoices": ["Generic dashboard montage", "Untraceable generated screenshots"]
+  },
+  "beats": [
+    {
+      "id": "evidence-intake",
+      "role": "hook",
+      "start": 0,
+      "duration": 4.6,
+      "purpose": "Separate owned, approved, and unsupported evidence before composition.",
+      "claims": [
+        {
+          "id": "evidence-has-custody",
+          "text": "Evidence carries status, dimensions, hash, and human approval.",
+          "sourceIds": ["source-owned-html"]
+        }
+      ],
+      "entities": [
+        {
+          "id": "evidence-meter",
+          "role": "Shows three evidence ownership states.",
+          "parts": ["meter-count", "meter-ticks"]
+        }
+      ],
+      "sourceIds": ["source-owned-html"],
+      "musicAnchors": [],
+      "proofTimes": [2],
+      "implementationFiles": ["compositions/01-evidence.html"]
+    },
+    {
+      "id": "compose-workspace",
+      "role": "product-proof",
+      "start": 4.6,
+      "duration": 6.2,
+      "purpose": "Keep one selected UI card identifiable while its state changes from many tabs to one story.",
+      "claims": [
+        {
+          "id": "stable-editable-identity",
+          "text": "The edited card retains stable HyperFrames identity and source ownership.",
+          "sourceIds": ["source-owned-html"]
+        }
+      ],
+      "entities": [
+        {
+          "id": "compose-morph-card",
+          "role": "The persistent selected card that changes state.",
+          "parts": ["card-label", "card-value", "selection-tag"]
+        }
+      ],
+      "sourceIds": ["source-owned-html"],
+      "musicAnchors": [],
+      "proofTimes": [8],
+      "implementationFiles": ["compositions/02-compose.html"]
+    },
+    {
+      "id": "verified-receipt",
+      "role": "cta",
+      "start": 10.8,
+      "duration": 4.2,
+      "purpose": "Resolve host verification evidence and hold on the result ready in the timeline.",
+      "claims": [
+        {
+          "id": "verified-to-timeline",
+          "text": "A passing generation is promoted automatically and remains inspectable in Sequences.",
+          "sourceIds": ["source-owned-html"]
+        }
+      ],
+      "entities": [
+        {
+          "id": "generation-receipt",
+          "role": "The durable verification and automatic-promotion receipt.",
+          "parts": ["qa-status", "timeline-status", "promotion-status"]
+        }
+      ],
+      "sourceIds": ["source-owned-html"],
+      "musicAnchors": [],
+      "proofTimes": [13],
+      "implementationFiles": ["compositions/03-receipt.html"]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "evidence-to-compose",
+      "fromBeatId": "evidence-intake",
+      "toBeatId": "compose-workspace",
+      "kind": "cut",
+      "at": 4.6,
+      "duration": 0,
+      "rationale": "A clean editorial cut separates evidence custody from the product workspace."
+    },
+    {
+      "id": "compose-to-receipt",
+      "fromBeatId": "compose-workspace",
+      "toBeatId": "verified-receipt",
+      "kind": "cut",
+      "at": 10.8,
+      "duration": 0,
+      "rationale": "The product action resolves directly into its verification outcome."
+    }
+  ]
+}

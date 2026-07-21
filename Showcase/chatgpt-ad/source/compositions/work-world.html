@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        /*
+         * ChatGPT launch film · scene 5 sub-composition.
+         * The typed request from the composer scene lands in a real ChatGPT
+         * window floating over a photographic backdrop; the week planner
+         * assembles panel by panel as the direct consequence, peaks with a
+         * double shockwave and a solved 1.08 camera push, then rests on one
+         * visible state change (Planning… -> Week planned).
+         * Mounted by the host at 14.0s; every time below is local.
+         */
+        #ww-root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: #aebfd4;
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #ww-backdrop {
+          position: absolute;
+          inset: 0;
+          background-image: url("assets/backdrops/wallpaper18.jpg");
+          background-size: cover;
+          background-position: 50% 22%;
+        }
+
+        #ww-veil {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(250, 251, 255, 0.22), rgba(250, 251, 255, 0.06) 45%, rgba(250, 251, 255, 0.02));
+          pointer-events: none;
+        }
+
+        /* Padded camera reserve: the world box is smaller than the root, so
+           its largest pose (scale 1.08, x -96, y -15) never crosses the
+           root's clipping bounds. */
+        #ww-world {
+          position: absolute;
+          left: 280px;
+          top: 140px;
+          width: 1360px;
+          height: 800px;
+          transform-origin: 50% 50%;
+        }
+
+        #ww-window {
+          position: absolute;
+          left: 60px;
+          top: 60px;
+          width: 1240px;
+          height: 680px;
+          border-radius: 20px;
+          background: #ffffff;
+          box-shadow: 0 60px 140px rgba(20, 24, 40, 0.38);
+          overflow: hidden;
+        }
+
+        #ww-header {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 64px;
+          background: #ffffff;
+          border-bottom: 1px solid #ebedf3;
+        }
+
+        #ww-title {
+          position: absolute;
+          left: 28px;
+          top: 18px;
+          font-size: 22px;
+          font-weight: 700;
+          color: #14161c;
+        }
+
+        #ww-model-chip {
+          position: absolute;
+          left: 152px;
+          top: 17px;
+          height: 30px;
+          padding: 0 14px;
+          border-radius: 15px;
+          background: #f1f2f8;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 30px;
+          color: #555b68;
+        }
+
+        .ww-hdr-dot {
+          position: absolute;
+          top: 28px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #d6d9e4;
+        }
+
+        #ww-rail {
+          position: absolute;
+          left: 0;
+          top: 64px;
+          width: 400px;
+          height: 616px;
+          background: #fafbfe;
+          border-right: 1px solid #e9ebf2;
+        }
+
+        #ww-bubble {
+          position: absolute;
+          left: 76px;
+          top: 96px;
+          width: 300px;
+          border-radius: 16px 16px 4px 16px;
+          background: #e8eaf4;
+          padding: 14px 18px;
+          font-size: 19px;
+          font-weight: 600;
+          line-height: 26px;
+          color: #191b22;
+        }
+
+        #ww-thought {
+          position: absolute;
+          left: 28px;
+          top: 212px;
+          font-size: 16px;
+          font-weight: 600;
+          color: #6e7482;
+          opacity: 0;
+        }
+
+        #ww-assist {
+          position: absolute;
+          left: 28px;
+          top: 248px;
+          width: 344px;
+          font-size: 19px;
+          font-weight: 500;
+          line-height: 27px;
+          color: #343946;
+          opacity: 0;
+        }
+
+        #ww-planner {
+          position: absolute;
+          left: 400px;
+          top: 64px;
+          width: 840px;
+          height: 616px;
+          background: #ffffff;
+        }
+
+        #ww-plan-title {
+          position: absolute;
+          left: 36px;
+          top: 26px;
+          font-size: 24px;
+          font-weight: 700;
+          color: #14161c;
+          opacity: 0;
+        }
+
+        #ww-status-wrap {
+          position: absolute;
+          left: 560px;
+          top: 24px;
+          width: 244px;
+          height: 40px;
+        }
+
+        #ww-status-a,
+        #ww-status-b {
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 40px;
+          padding: 0 18px;
+          border-radius: 20px;
+          white-space: nowrap;
+          line-height: 40px;
+          font-size: 16px;
+        }
+
+        #ww-status-a {
+          background: #eef0f6;
+          color: #555b68;
+          font-weight: 600;
+        }
+
+        #ww-status-b {
+          background: #5b53e8;
+          color: #ffffff;
+          font-weight: 700;
+          opacity: 0;
+        }
+
+        #ww-day-grid {
+          position: absolute;
+          left: 36px;
+          top: 92px;
+          width: 768px;
+          height: 496px;
+        }
+
+        .ww-col-head {
+          position: absolute;
+          top: 0;
+          width: 144px;
+          height: 34px;
+          font-size: 16px;
+          font-weight: 700;
+          color: #6e7482;
+          border-bottom: 2px solid #eef0f6;
+          clip-path: inset(0 100% 0 0);
+        }
+
+        .ww-col-date {
+          font-weight: 600;
+          color: #727682;
+          margin-left: 7px;
+        }
+
+        .ww-task {
+          position: absolute;
+          width: 144px;
+          border-radius: 10px;
+          background: #f1f2f8;
+          transform: scale(0);
+        }
+
+        .ww-task.due {
+          background: #eae7fc;
+          border: 1px solid #cfc9f7;
+        }
+
+        .ww-task-bar {
+          position: absolute;
+          left: 14px;
+          height: 10px;
+          border-radius: 5px;
+          background: #dfe2ee;
+        }
+
+        .ww-task.due .ww-task-bar {
+          background: #cdc7f2;
+        }
+
+        .ww-due-tag {
+          position: absolute;
+          right: 10px;
+          top: 12px;
+          height: 22px;
+          padding: 0 8px;
+          border-radius: 6px;
+          background: #5b53e8;
+          color: #ffffff;
+          font-size: 13px;
+          font-weight: 700;
+          line-height: 22px;
+        }
+
+        #ww-shock-1,
+        #ww-shock-2 {
+          position: absolute;
+          left: 820px;
+          top: 372px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          border: 2px solid rgba(91, 83, 232, 0.8);
+          opacity: 0;
+          pointer-events: none;
+        }
+      </style>
+      <div data-hf-id="chatgpt-work-world-root" id="ww-root" data-composition-id="chatgpt-work-world" data-start="0" data-duration="7.4" data-width="1920" data-height="1080" data-fps="30">
+        <div id="ww-backdrop" data-hf-id="ww-backdrop" class="clip" data-start="0" data-duration="7.4" data-track-index="0"></div>
+        <div id="ww-veil"></div>
+        <div id="ww-world" data-hf-id="ww-world" class="clip" data-start="0" data-duration="7.4" data-track-index="1">
+          <div id="ww-window" data-hf-id="ww-window">
+            <div id="ww-header">
+              <div id="ww-title">ChatGPT</div>
+              <div id="ww-model-chip">5.5 Auto</div>
+              <div class="ww-hdr-dot" style="right: 28px;"></div>
+              <div class="ww-hdr-dot" style="right: 44px;"></div>
+              <div class="ww-hdr-dot" style="right: 60px;"></div>
+            </div>
+            <div id="ww-rail">
+              <div id="ww-bubble" data-hf-id="ww-bubble">Plan my week around my deadlines</div>
+              <div id="ww-thought" data-hf-id="ww-thought">Thought for 6s</div>
+              <div id="ww-assist" data-hf-id="ww-assist">Here&rsquo;s your week &mdash; planned around all three deadlines.</div>
+            </div>
+            <div id="ww-planner" data-hf-id="ww-planner">
+              <div id="ww-plan-title">This week</div>
+              <div id="ww-status-wrap">
+                <div id="ww-status-a" data-hf-id="ww-status-a">Planning your week&hellip;</div>
+                <div id="ww-status-b" data-hf-id="ww-status-b">Week planned &check;</div>
+              </div>
+              <div id="ww-day-grid" data-hf-id="ww-day-grid"></div>
+            </div>
+          </div>
+          <div id="ww-shock-1"></div>
+          <div id="ww-shock-2"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          // The week is fixed, never random: 5 columns, 3 accent deadlines.
+          const grid = document.getElementById("ww-day-grid");
+          const columns = [
+            { day: "Mon", date: "14", tasks: [{ h: 88 }, { h: 64 }, { h: 96 }, { h: 72 }] },
+            { day: "Tue", date: "15", tasks: [{ h: 96, due: true }, { h: 72 }, { h: 88 }, { h: 56 }] },
+            { day: "Wed", date: "16", tasks: [{ h: 64 }, { h: 96 }, { h: 72 }, { h: 88 }] },
+            { day: "Thu", date: "17", tasks: [{ h: 88, due: true }, { h: 96 }, { h: 64 }, { h: 72 }] },
+            { day: "Fri", date: "18", tasks: [{ h: 96, due: true }, { h: 72 }, { h: 88 }] },
+          ];
+          const heads = [];
+          const blocks = [];
+          columns.forEach((col, ci) => {
+            const x = ci * 156;
+            const head = document.createElement("div");
+            head.className = "ww-col-head";
+            head.style.left = `${x}px`;
+            head.innerHTML = `${col.day}<span class="ww-col-date">${col.date}</span>`;
+            grid.appendChild(head);
+            heads.push(head);
+            let y = 50;
+            col.tasks.forEach((task) => {
+              const el = document.createElement("div");
+              el.className = task.due ? "ww-task due" : "ww-task";
+              el.style.left = `${x}px`;
+              el.style.top = `${y}px`;
+              el.style.height = `${task.h}px`;
+              const bar1 = document.createElement("div");
+              bar1.className = "ww-task-bar";
+              bar1.style.top = "16px";
+              bar1.style.width = task.due ? "72px" : "100px";
+              el.appendChild(bar1);
+              if (task.h >= 56) {
+                const bar2 = document.createElement("div");
+                bar2.className = "ww-task-bar";
+                bar2.style.top = "36px";
+                bar2.style.width = "62px";
+                el.appendChild(bar2);
+              }
+              if (task.due) {
+                const tag = document.createElement("div");
+                tag.className = "ww-due-tag";
+                tag.textContent = "Due";
+                el.appendChild(tag);
+              }
+              grid.appendChild(el);
+              blocks.push(el);
+              y += task.h + 13;
+            });
+          });
+
+          // Stage the bubble's opening state once, before the paused timeline
+          // registers (seek-safe; CSS transforms would conflict with GSAP).
+          gsap.set("#ww-bubble", { scale: 0 });
+
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+
+          // The window floats in as one piece; its panels then assemble
+          // causally with clip-path wipes (never slide-ins past a clip edge).
+          tl.fromTo(
+            "#ww-window",
+            { opacity: 0, y: 46, scale: 0.965 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" },
+            0.25,
+          );
+          tl.fromTo("#ww-header", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.4, ease: "power3.out" }, 0.55);
+          tl.fromTo("#ww-rail", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.44, ease: "power3.out" }, 0.66);
+
+          // The carried payload: the exact sentence typed in the composer
+          // lands as the user's message — cause, restated.
+          tl.to("#ww-bubble", { scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 0.95);
+          tl.fromTo("#ww-thought", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 1.55);
+          tl.fromTo(
+            "#ww-assist",
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+            2.05,
+          );
+
+          // The planner assembles: title, day headers, then task blocks.
+          tl.fromTo(
+            "#ww-plan-title",
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+            0.85,
+          );
+          tl.fromTo(
+            "#ww-status-a",
+            { opacity: 0 },
+            { opacity: 1, duration: 0.3, ease: "power1.out" },
+            1.0,
+          );
+          heads.forEach((head, index) => {
+            tl.to(head, { clipPath: "inset(0 0% 0 0)", duration: 0.34, ease: "power3.out" }, 1.25 + index * 0.06);
+          });
+          blocks.forEach((block, index) => {
+            tl.to(block, { scale: 1, duration: 0.38, ease: "back.out(1.5)" }, 2.6 + index * 0.05);
+          });
+
+          // The peak: double shockwave from the planner's heart plus a solved
+          // 1.08 camera push (focal point: planner center -> 1080, 560).
+          // set + to (not fromTo): a parked visible from-state would show the
+          // rings at the planner's center before the peak under arbitrary seeks.
+          tl.set("#ww-shock-1", { opacity: 0.9, scale: 0.2 }, 3.94);
+          tl.to("#ww-shock-1", { opacity: 0, scale: 6.5, duration: 0.8, ease: "power2.out" }, 3.95);
+          tl.set("#ww-shock-2", { opacity: 0.6, scale: 0.2 }, 4.09);
+          tl.to("#ww-shock-2", { opacity: 0, scale: 9, duration: 0.95, ease: "power2.out" }, 4.1);
+          tl.to("#ww-world", { x: -96, y: -15, scale: 1.08, duration: 0.9, ease: "power2.inOut" }, 4.0)
+            .to("#ww-world", { scale: 1.06, duration: 0.5, ease: "sine.out" }, 4.95);
+
+          // Consequence at rest: the status pill advances Planning… -> Week
+          // planned as one atomic match cut (two readable states must never
+          // crossfade), then the incoming pill settles with a local pop.
+          tl.set("#ww-status-a", { opacity: 0 }, 5.5);
+          tl.set("#ww-status-b", { opacity: 1 }, 5.5);
+          tl.fromTo("#ww-status-b", { scale: 0.85 }, { scale: 1, duration: 0.3, ease: "back.out(2)" }, 5.5);
+          blocks.forEach((block) => {
+            if (block.classList.contains("due")) {
+              tl.to(block, { scale: 1.06, duration: 0.16, ease: "power2.in" }, 5.62);
+              tl.to(block, { scale: 1, duration: 0.3, ease: "back.out(2)" }, 5.78);
+            }
+          });
+
+          // Hold the settled frame; the host cuts to the dusk lockup at 7.4.
+          tl.set({}, {}, 7.4);
+
+          window.__timelines = window.__timelines || {};
+          window.__timelines["chatgpt-work-world"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

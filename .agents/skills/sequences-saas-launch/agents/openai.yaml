@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sequences SaaS Launch"
+  short_description: "Direct fast-paced SaaS launch videos"
+  default_prompt: "Use $sequences-saas-launch to direct a polished SaaS launch video."

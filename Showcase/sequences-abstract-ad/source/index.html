@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920,height=1080" />
+    <title>Sequences — Make your prompt move</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body,
+      #root,
+      #root > [data-composition-src] {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f3;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-hf-id="sequences-abstract-film-root"
+      data-composition-id="sequences-abstract-film"
+      data-start="0"
+      data-duration="30.333"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <div
+        id="final-film-slot"
+        class="clip"
+        data-hf-id="final-film-slot"
+        data-composition-id="sequences-abstract-film"
+        data-composition-src="compositions/final-film.html"
+        data-start="0"
+        data-duration="30.333"
+        data-track-index="0"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      ></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["sequences-abstract-film"] = gsap.timeline({
+        paused: true,
+        defaults: { overwrite: "auto" },
+      });
+    </script>
+    <script src="assets/vendor/hyperframe.runtime.iife.js"></script>
+  </body>
+</html>

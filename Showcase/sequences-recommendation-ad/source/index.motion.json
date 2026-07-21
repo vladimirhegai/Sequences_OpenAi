@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "duration": 23.6,
+  "assertions": [
+    {
+      "kind": "appearsBy",
+      "selector": "#chatgpt-composer",
+      "bySec": 0.1
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#question-payload",
+      "bySec": 0.8
+    },
+    {
+      "kind": "before",
+      "a": "#question-payload",
+      "b": "#advice-copy"
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#advice-copy",
+      "bySec": 4.5
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#cg-followup-entry",
+      "bySec": 6.8
+    },
+    {
+      "kind": "before",
+      "a": "#advice-copy",
+      "b": "#cg-followup-entry"
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#cg-followup-bubble",
+      "bySec": 8.7
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#cg-refusal-copy",
+      "bySec": 9.3
+    },
+    {
+      "kind": "before",
+      "a": "#cg-followup-bubble",
+      "b": "#cg-refusal-copy"
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#recommendation-line",
+      "bySec": 11.7
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#sq-app",
+      "bySec": 13.8
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#story-card-hook",
+      "bySec": 15.2
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#playable-result",
+      "bySec": 17.7
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#verified-status",
+      "bySec": 19.8
+    },
+    {
+      "kind": "appearsBy",
+      "selector": "#final-promise-copy",
+      "bySec": 21.8
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": "#sq-app"
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": "#final-promise-copy"
+    }
+  ]
+}

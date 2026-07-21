@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "duration": 30.333,
+  "assertions": [
+    { "kind": "appearsBy", "selector": "#ask-world", "bySec": 0.2 },
+    { "kind": "appearsBy", "selector": "#handoff-world", "bySec": 2.4 },
+    { "kind": "before", "a": "#ask-world", "b": "#handoff-world" },
+    { "kind": "appearsBy", "selector": "#sequence-world", "bySec": 6.2 },
+    { "kind": "appearsBy", "selector": "#build-world", "bySec": 12.0 },
+    { "kind": "appearsBy", "selector": "#result-world", "bySec": 17.8 },
+    { "kind": "appearsBy", "selector": "#lockup-world", "bySec": 27.5 },
+    { "kind": "staysInFrame", "selector": "#provenance" }
+  ]
+}

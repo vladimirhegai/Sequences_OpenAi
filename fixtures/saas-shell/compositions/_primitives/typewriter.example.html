@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <template>
+      <style>
+        #primitive-typewriter-example {
+          position: absolute;
+          inset: 0;
+          display: grid;
+          width: 1920px;
+          height: 1080px;
+          place-items: center;
+          overflow: hidden;
+          background: #f7f8fc;
+          color: #171a21;
+          font-family: Montserrat, sans-serif;
+        }
+
+        #primitive-typewriter-example .primitive-typewriter-field {
+          width: 1120px;
+          min-height: 132px;
+          padding: 34px 42px;
+          border: 2px solid #d7dbe7;
+          border-radius: 22px;
+          background: #ffffff;
+          box-shadow: 0 24px 70px rgba(23, 26, 33, 0.12);
+        }
+
+        /* Keep the text and caret as adjacent inline-layout siblings. The
+           browser places the caret after the rendered prefix even when the
+           font is proportional; do not absolutely position it. */
+        #primitive-typewriter-example .primitive-typewriter-line {
+          display: inline-flex;
+          align-items: baseline;
+          max-width: 100%;
+          white-space: pre;
+          font-size: 54px;
+          font-weight: 600;
+          letter-spacing: -0.025em;
+          line-height: 1.15;
+        }
+
+        #primitive-typewriter-example [data-typewriter-text] {
+          display: inline;
+        }
+
+        #primitive-typewriter-example [data-typewriter-caret] {
+          display: block;
+          flex: 0 0 4px;
+          width: 4px;
+          height: 54px;
+          margin-left: 7px;
+          border-radius: 2px;
+          background: #2745d6;
+          opacity: 1;
+        }
+      </style>
+
+      <div
+        id="primitive-typewriter-example"
+        data-composition-id="primitive-typewriter-example"
+        data-start="0"
+        data-duration="4"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      >
+        <div class="primitive-typewriter-field">
+          <div class="primitive-typewriter-line">
+            <span data-typewriter-text></span><span data-typewriter-caret></span>
+          </div>
+        </div>
+
+        <script src="assets/vendor/gsap-guarded.min.js"></script>
+        <script src="compositions/_primitives/typewriter.js"></script>
+        <script>
+          (() => {
+            window.__timelines = window.__timelines || {};
+            const root = document.querySelector(
+              '[data-composition-id="primitive-typewriter-example"]',
+            );
+            const timeline = gsap.timeline({
+              paused: true,
+              defaults: { overwrite: "auto" },
+            });
+            const typing = window.SequencesMotionPrimitives.createTypewriter({
+              root,
+              timeline,
+              text: "Generate a launch film for our new workflow",
+              startSec: 0.45,
+              endSec: 2.75,
+              caretRemoveSec: 3.45,
+              driveUntilSec: 3.45,
+            });
+
+            // Copy this exact cue into sequence.audio.cues when typing SFX is desired.
+            window.__sequencesAudioMarkers = [
+              ...(window.__sequencesAudioMarkers || []),
+              typing.audioCue,
+            ];
+            window.__timelines["primitive-typewriter-example"] = timeline;
+          })();
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

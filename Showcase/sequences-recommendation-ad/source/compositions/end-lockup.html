@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head></head>
+  <body>
+    <template>
+      <style>
+        #end-root {
+          --oa-field: #f7f7f8;
+          --oa-surface: #ffffff;
+          --oa-soft: #f1f1f3;
+          --oa-ink: #171717;
+          --oa-muted: #6a6a6a;
+          --oa-border: #d9d9de;
+          --oa-green: #10a37f;
+          --oa-green-dark: #087a5e;
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: var(--oa-field);
+          color: var(--oa-ink);
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #end-film-clip {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: var(--oa-field);
+        }
+
+        #end-dot-field {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(23, 23, 23, 0.1) 1.2px, transparent 1.2px);
+          background-size: 36px 36px;
+          opacity: 0.22;
+          pointer-events: none;
+        }
+
+        #end-orbit-a,
+        #end-orbit-b {
+          position: absolute;
+          border: 2px solid rgba(16, 163, 127, 0.16);
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        #end-orbit-a {
+          left: 32px;
+          bottom: 32px;
+          width: 360px;
+          height: 360px;
+        }
+
+        #end-orbit-b {
+          right: 32px;
+          top: 32px;
+          width: 300px;
+          height: 300px;
+        }
+
+        #end-lockup-group {
+          position: absolute;
+          left: 80px;
+          top: 64px;
+          width: 1760px;
+          height: 952px;
+          transform-origin: 50% 50%;
+        }
+
+        #final-wordmark {
+          position: absolute;
+          left: 670px;
+          top: 104px;
+          width: 420px;
+          height: 96px;
+          color: var(--oa-ink);
+          transform-origin: 50% 50%;
+        }
+
+        #end-mark {
+          position: absolute;
+          left: 0;
+          top: 8px;
+          width: 80px;
+          height: 80px;
+        }
+
+        #end-mark svg {
+          display: block;
+          width: 80px;
+          height: 80px;
+        }
+
+        #end-word {
+          position: absolute;
+          left: 104px;
+          top: 10px;
+          height: 76px;
+          font-size: 54px;
+          line-height: 76px;
+          font-weight: 600;
+          letter-spacing: -0.045em;
+        }
+
+        #final-promise-copy {
+          position: absolute;
+          left: 80px;
+          top: 296px;
+          width: 1600px;
+          text-align: center;
+          color: var(--oa-ink);
+          letter-spacing: -0.06em;
+        }
+
+        #final-promise-copy span {
+          display: block;
+          font-size: 126px;
+          line-height: 1.02;
+          font-weight: 700;
+          opacity: 0;
+        }
+
+        #final-promise-copy span:last-child {
+          margin-top: 10px;
+          color: var(--oa-green-dark);
+        }
+
+        #end-proof-tile {
+          position: absolute;
+          left: 570px;
+          top: 690px;
+          width: 620px;
+          height: 104px;
+          overflow: hidden;
+          border: 2px solid var(--oa-border);
+          border-radius: 52px;
+          background: var(--oa-surface);
+          box-shadow: 0 18px 52px rgba(23, 23, 23, 0.1);
+          opacity: 0;
+        }
+
+        #end-play {
+          position: absolute;
+          left: 16px;
+          top: 16px;
+          width: 72px;
+          height: 72px;
+          border-radius: 36px;
+          background: var(--oa-ink);
+        }
+
+        #end-play::after {
+          content: "";
+          position: absolute;
+          left: 29px;
+          top: 23px;
+          width: 0;
+          height: 0;
+          border-top: 13px solid transparent;
+          border-bottom: 13px solid transparent;
+          border-left: 20px solid #ffffff;
+        }
+
+        #end-tile-time {
+          position: absolute;
+          left: 116px;
+          top: 20px;
+          height: 34px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 22px;
+          line-height: 34px;
+          font-weight: 700;
+          color: var(--oa-ink);
+        }
+
+        #end-tile-label {
+          position: absolute;
+          left: 116px;
+          top: 54px;
+          height: 28px;
+          font-size: 18px;
+          line-height: 28px;
+          font-weight: 600;
+          color: var(--oa-muted);
+        }
+
+        #end-verified {
+          position: absolute;
+          right: 18px;
+          top: 27px;
+          height: 50px;
+          padding: 0 18px;
+          border-radius: 25px;
+          background: #e7f6f1;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 50px;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          color: var(--oa-green-dark);
+        }
+
+        #end-verified::before {
+          content: "\2713";
+          display: inline-block;
+          margin-right: 9px;
+        }
+
+        #final-proof-line {
+          position: absolute;
+          left: 480px;
+          bottom: 92px;
+          width: 800px;
+          height: 38px;
+          text-align: center;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+          line-height: 38px;
+          font-weight: 700;
+          letter-spacing: 0.09em;
+          color: var(--oa-muted);
+          opacity: 0;
+        }
+
+        #end-index {
+          position: absolute;
+          left: 760px;
+          bottom: 44px;
+          width: 240px;
+          text-align: center;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          line-height: 24px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          color: var(--oa-muted);
+        }
+      </style>
+
+      <div
+        id="end-root"
+        data-hf-id="end-brand-lockup"
+        data-component="custom"
+        data-state="arriving"
+        data-composition-id="recommendation-end"
+        data-start="0"
+        data-duration="3.066667"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      >
+        <div
+          id="end-film-clip"
+          class="clip"
+          data-start="0"
+          data-duration="3.066667"
+          data-track-index="0"
+        >
+          <div id="end-dot-field"></div>
+          <div id="end-orbit-a"></div>
+          <div id="end-orbit-b"></div>
+
+          <div id="end-lockup-group">
+            <div id="final-wordmark" data-hf-id="final-wordmark">
+              <div id="end-mark" aria-hidden="true">
+                <svg viewBox="0 0 320 320">
+                  <path
+                    fill="currentColor"
+                    d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                  ></path>
+                </svg>
+              </div>
+              <div id="end-word">Sequences</div>
+            </div>
+
+            <div id="final-promise-copy" data-hf-id="final-promise-copy">
+              <span>One prompt.</span>
+              <span>A launch film.</span>
+            </div>
+
+            <div id="end-proof-tile">
+              <div id="end-play"></div>
+              <div id="end-tile-time">00:23.6</div>
+              <div id="end-tile-label">Playable launch film</div>
+              <div id="end-verified">VERIFIED</div>
+            </div>
+
+            <div id="final-proof-line" data-hf-id="final-proof-line">
+              STORY / DESIGN / MOTION / SOUND / FINAL
+            </div>
+            <div id="end-index">SEQUENCES / 01</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+          const promiseLines = gsap.utils.toArray("#final-promise-copy span");
+
+          tl.fromTo(
+            "#final-wordmark",
+            { scale: 0.96 },
+            {
+              scale: 1,
+              duration: 0.46,
+              ease: "power3.out",
+            },
+            0.04,
+          );
+          tl.fromTo(
+            promiseLines[0],
+            { opacity: 0, y: 42 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.48,
+              ease: "power4.out",
+            },
+            0.18,
+          );
+          tl.fromTo(
+            promiseLines[1],
+            { opacity: 0, y: 52 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: "power4.out",
+            },
+            1.0,
+          );
+          tl.fromTo(
+            "#end-proof-tile",
+            { opacity: 0, y: 24, scale: 0.97 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.44,
+              ease: "power3.out",
+            },
+            1.5,
+          );
+          tl.fromTo(
+            "#final-proof-line",
+            { opacity: 0, y: 12 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.34,
+              ease: "power2.out",
+            },
+            1.94,
+          );
+          tl.to(
+            "#end-play",
+            {
+              scale: 1.08,
+              duration: 0.18,
+              ease: "power2.out",
+              yoyo: true,
+              repeat: 1,
+            },
+            2.06,
+          );
+          tl.to("#end-lockup-group", { scale: 1.006, duration: 0.82, ease: "sine.inOut" }, 2.2);
+          tl.set({}, {}, 3.066667);
+          window.__timelines = window.__timelines || {};
+          window.__timelines["recommendation-end"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

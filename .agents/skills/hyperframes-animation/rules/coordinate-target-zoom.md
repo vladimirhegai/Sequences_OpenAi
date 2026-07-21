@@ -32,23 +32,22 @@ Note: the formula does NOT depend on S. The translate amount is the same whether
 
 ## Getting the offset
 
-`T = -offset` is only as good as `offset`. The #1 way this pattern ships broken is hand-computing `offset` from a layout formula, getting the **sign** or magnitude wrong, and letting the zoom amplify a small error off-screen. **Default to measuring the target's real laid-out center; reserve the formula for symmetric rows.**
+`T = -offset` is only as good as `offset`. The #1 way this pattern ships broken is hand-computing `offset` from a layout formula, getting the **sign** or magnitude wrong, and letting the zoom amplify a small error off-screen. In a deterministic render composition, author and bake the target center as constants; use equal-width arithmetic only when its assumptions are true.
 
-### Default — measure the target's actual center (works for ANY layout)
+### Default — bake the authored target center
 
-Read where the target actually is, once, at setup. This is immune to sign errors because it's derived from the rendered DOM, not a mental model:
+Use the fixed canvas layout to record the target center during authoring, then keep timeline registration synchronous:
 
 ```js
-await document.fonts.ready; // metrics final; fallback fonts are 10–30px off → tens of px after a 3×+ zoom
 const W = 1920,
   H = 1080;
-const r = document.getElementById("target-card").getBoundingClientRect();
-const TARGET_OFFSET_X = r.left + r.width / 2 - W / 2;
-const TARGET_OFFSET_Y = r.top + r.height / 2 - H / 2;
-// bake these; feed counterX/Y = -TARGET_OFFSET_X/Y to the inner tween
+const TARGET_CENTER_X = 1320; // authored fixed-layout coordinate
+const TARGET_CENTER_Y = 540;
+const TARGET_OFFSET_X = TARGET_CENTER_X - W / 2;
+const TARGET_OFFSET_Y = TARGET_CENTER_Y - H / 2;
 ```
 
-This `getBoundingClientRect` runs **once at setup**, before timeline registration — NOT per-frame (per-frame DOM reads desync under the renderer's parallel sampling; see SKILL universal constraints). Because the measurement is async (`fonts.ready`), build and register the timeline inside the same `async` setup so the baked offset is ready before `window.__timelines[id]` is published.
+Do not await fonts or publish the timeline from an async callback. HyperFrames discovers timelines synchronously. If the target geometry is not knowable from the fixed layout, simplify the layout or bake coordinates after visual authoring and verify them with host snapshots.
 
 ### Shortcut — symmetric equal-width row ONLY
 
@@ -177,16 +176,14 @@ A target that fills 97%+ of the frame reads as cut-off the instant its center is
 ## GSAP Timeline
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
 <script>
   window.__timelines = window.__timelines || {};
   const tl = gsap.timeline({ paused: true });
 
   // TARGET_OFFSET_X / TARGET_OFFSET_Y and ZOOM_SCALE come from the "Getting the
-  // offset" section above — MEASURED at setup (after fonts.ready) and baked. Do NOT
-  // hand-derive the offset for a non-symmetric layout (wrong sign → the zoom shoves
-  // the target off-frame). For a measured target, build the timeline inside that
-  // async setup so the offset is ready before window.__timelines[id] is published.
+  // offset" section above — authored as fixed constants and baked. Keep this setup
+  // synchronous so window.__timelines[id] exists when HyperFrames discovers it.
 
   // Counter-translation = -offset (inner translate cancels target offset BEFORE outer scales)
   const counterX = -TARGET_OFFSET_X;
@@ -238,9 +235,9 @@ A target that fills 97%+ of the frame reads as cut-off the instant its center is
 
 ## Variations
 
-### Dynamic target lookup via `getBoundingClientRect`
+### Author-time target measurement
 
-This is now the **default**, not a variation — see [Getting the offset](#getting-the-offset). Always `await document.fonts.ready` before measuring (fallback-font metrics are off by 10–30px, which a 3×+ zoom magnifies into tens of visible px) and measure **once at setup**, never per-frame.
+You may inspect `getBoundingClientRect()` interactively while authoring, then copy the resulting center into fixed constants. Do not make timeline publication asynchronous and never measure per frame.
 
 ### Zoom out (target → wide view)
 
@@ -301,7 +298,7 @@ Chain multiple zooms: target A (1.5-2.5s) → pause → target B (3-4s) → pull
 
 ## Key Principles
 
-- **Measure the offset, don't hand-derive it** — for any layout that isn't a symmetric equal-width row, read the target's real center with `getBoundingClientRect` at setup (after `fonts.ready`) and bake it (see [Getting the offset](#getting-the-offset)). Hand-computed offsets silently get the **sign** wrong on asymmetric layouts, and the zoom amplifies the error off-screen — the single most common way this pattern ships broken.
+- **Bake the authored offset** — for any layout that isn't a symmetric equal-width row, record the target's fixed center during authoring and bake it (see [Getting the offset](#getting-the-offset)). Hand-computed offsets silently get the **sign** wrong on asymmetric layouts, and the zoom amplifies the error off-screen.
 - **Transform order — outer scales, inner translates** — DO NOT put scale and translate on the SAME element. The transform math becomes tangled (`translate * scale` ≠ `scale * translate` in CSS transform composition). Nested wrappers cleanly separate concerns.
 - **Counter-translate = -offset** — independent of scale. Derive from: outer scale around center maps `(offset + T)` to `S × (offset + T)`. Setting that to zero gives `T = -offset`. A common wrong intuition is `T = -offset × (S - 1)` — it happens to give the same answer at S=2 but is wrong for any other S.
 - **`transform-origin: 50% 50%` on outer wrapper** — non-center origin causes unpredictable inner offset; always center.
@@ -316,7 +313,7 @@ Chain multiple zooms: target A (1.5-2.5s) → pause → target B (3-4s) → pull
 - **No CSS `transition` on `.zoom-outer` or `.zoom-inner`** — competes with GSAP
 - **`will-change: transform`** on both wrappers — the transforms update every frame during the zoom phase
 - **`transform-origin: 50% 50%` on `.zoom-outer`** — center-based scaling is what the counter-translate math assumes
-- **Target offset baked once, at setup, from measurement** — measure the target center after `fonts.ready` and bake (see [Getting the offset](#getting-the-offset)); never recompute per-frame in onUpdate, and never hand-estimate the offset for a non-symmetric layout
+- **Target offset is a fixed authored constant** — never recompute it per-frame in `onUpdate`, never publish the timeline asynchronously, and never hand-estimate the offset for a non-symmetric layout
 - **Scale within the headroom budget** — keep the target ≤ ~88% of the canvas at peak, derived from the measured size (`maxScale = 0.88 × W / measuredWidth`); a target that fills the frame is cut off the instant the center is slightly off
 
 ## Combinations

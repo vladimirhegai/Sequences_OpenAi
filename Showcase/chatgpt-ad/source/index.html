@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>This is ChatGPT · launch film</title>
+    <script src="./assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-500-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-600-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-700-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "Montserrat";
+        font-style: normal;
+        font-weight: 800;
+        font-display: block;
+        src: url("assets/fonts/montserrat-latin-800-normal.woff2") format("woff2");
+      }
+
+      @font-face {
+        font-family: "IBM Plex Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #fbfbfd;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #fbfbfd;
+      }
+
+      /* ---------- Scene 1 · dark self-typing editor hook ---------- */
+
+      #scene-editor {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        background: #fbfbfd;
+      }
+
+      /* Padded camera reserve: the world is smaller than the root, so the
+         1.13 push never drags the window across the root's clipping bounds. */
+      #editor-world {
+        position: absolute;
+        left: 200px;
+        top: 110px;
+        width: 1520px;
+        height: 860px;
+        transform-origin: 50% 50%;
+      }
+
+      #editor-window {
+        position: absolute;
+        left: 30px;
+        top: 100px;
+        width: 1460px;
+        height: 660px;
+        border-radius: 22px;
+        background: #14111c;
+        box-shadow: 0 50px 120px rgba(12, 12, 24, 0.38);
+        overflow: hidden;
+      }
+
+      #ed-chrome {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 64px;
+        background: #f3f3f6;
+        border-bottom: 1px solid #e2e2e8;
+      }
+
+      .ed-dot {
+        position: absolute;
+        top: 24px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+
+      .ed-line {
+        position: absolute;
+        left: 84px;
+        height: 62px;
+        white-space: nowrap;
+        font-family: "IBM Plex Mono", monospace;
+        font-weight: 500;
+        font-size: 44px;
+        line-height: 62px;
+        color: #eef0f6;
+        clip-path: inset(0 100% 0 0);
+      }
+
+      #ed-line1 {
+        top: 220px;
+      }
+
+      #ed-line2 {
+        top: 296px;
+      }
+
+      #ed-line2 .kw {
+        color: #b57edc;
+      }
+
+      #ed-line2 .str {
+        color: #8adf9c;
+      }
+
+      #ed-caret {
+        position: absolute;
+        left: 84px;
+        top: 226px;
+        width: 26px;
+        height: 52px;
+        background: #8a92a6;
+        /* cursors are text-free decoration: keep them out of the hit-test
+           stack so occlusion proofs sample the code text beneath */
+        pointer-events: none;
+      }
+
+      /* ---------- Scene 2 · huge kinetic typography ---------- */
+
+      #scene-type {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: #fbfbfd;
+      }
+
+      .kinetic-word {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: #101216;
+        letter-spacing: -0.02em;
+        opacity: 0;
+      }
+
+      #word-anything {
+        font-size: 190px;
+      }
+
+      #word-plans {
+        font-size: 150px;
+      }
+
+      #word-plans .accent {
+        color: #5b53e8;
+        margin-left: 0.28em;
+      }
+
+      #word-work {
+        font-size: 200px;
+      }
+
+      #word-work .accent {
+        color: #5b53e8;
+      }
+
+      /* ---------- Scene 3 mount · voice composer (sub-composition) ---------- */
+
+      #scene-composer {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 30;
+      }
+
+      /* ---------- Scene 4 · "and it gets to work." interstitial ---------- */
+
+      #scene-work-inter {
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        background: #fbfbfd;
+      }
+
+      #inter-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 100px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #101216;
+        opacity: 0;
+      }
+
+      #inter-line .accent {
+        color: #5b53e8;
+        margin-left: 0.26em;
+      }
+
+      /* ---------- Scene 5 mount · ChatGPT works (sub-composition) ---------- */
+
+      #scene-work {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 50;
+      }
+
+      /* ---------- Scene 6 mount · dusk lockup (sub-composition) ---------- */
+
+      #scene-end {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 60;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-hf-id="chatgpt-ad-root" data-composition-id="chatgpt-ad" data-start="0" data-duration="27.6" data-width="1920" data-height="1080" data-fps="30">
+      <!-- Scene 1 · dark self-typing editor hook (0 - 4.4) -->
+      <div id="scene-editor" data-hf-id="scene-editor" class="clip" data-start="0" data-duration="4.4" data-track-index="1">
+        <div id="editor-world" data-hf-id="editor-world">
+          <div id="editor-window" data-hf-id="editor-window">
+            <div id="ed-chrome">
+              <div class="ed-dot" style="left: 28px; background: #ff5f57;"></div>
+              <div class="ed-dot" style="left: 56px; background: #febc2e;"></div>
+              <div class="ed-dot" style="left: 84px; background: #28c840;"></div>
+            </div>
+            <div id="ed-line1" class="ed-line" data-hf-id="ed-line1">// what if you could just</div>
+            <div id="ed-line2" class="ed-line" data-hf-id="ed-line2"><span class="kw">ask</span>("<span class="str">anything</span>")</div>
+            <div id="ed-caret" data-hf-id="ed-caret"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 · huge kinetic typography (4.4 - 8.2) -->
+      <div id="scene-type" data-hf-id="scene-type" class="clip" data-start="4.4" data-duration="3.8" data-track-index="2">
+        <div id="word-anything" class="kinetic-word">anything.</div>
+        <div id="word-plans" class="kinetic-word">plans,<span class="accent">ideas,</span></div>
+        <div id="word-work" class="kinetic-word">real work<span class="accent">?</span></div>
+      </div>
+
+      <!-- Scene 3 · voice composer (8.2 - 12.6) -->
+      <div id="scene-composer" data-hf-id="scene-composer" class="clip" data-composition-id="chatgpt-composer" data-composition-src="compositions/composer.html" data-start="8.2" data-duration="4.4" data-track-index="3" data-width="1920" data-height="1080"></div>
+
+      <!-- Scene 4 · consequence interstitial (12.6 - 14.0) -->
+      <div id="scene-work-inter" data-hf-id="scene-work-inter" class="clip" data-start="12.6" data-duration="1.4" data-track-index="4">
+        <div id="inter-line" data-hf-id="inter-line">and it<span class="accent">gets to work.</span></div>
+      </div>
+
+      <!-- Scene 5 · ChatGPT does the work over a photographic backdrop (14.0 - 21.4) -->
+      <div id="scene-work" data-hf-id="scene-work" class="clip" data-composition-id="chatgpt-work-world" data-composition-src="compositions/work-world.html" data-start="14.0" data-duration="7.4" data-track-index="5" data-width="1920" data-height="1080"></div>
+
+      <!-- Scene 6 · dusk-backdrop lockup (21.4 - 27.6) -->
+      <div id="scene-end" data-hf-id="scene-end" class="clip" data-composition-id="chatgpt-end-lockup" data-composition-src="compositions/end-lockup.html" data-start="21.4" data-duration="6.2" data-track-index="6" data-width="1920" data-height="1080"></div>
+    </div>
+
+    <script>
+      (() => {
+        const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+
+        // ================= Scene 1 · editor hook (0 - 4.4) =================
+        // IBM Plex Mono advance is exactly 0.6em: 44px type -> 26.4px per glyph.
+        const ADV = 26.4;
+        const line1Chars = 25; // "// what if you could just"
+        const line2Chars = 15; // ask("anything")
+        // the window settles in as the caret wakes: a quiet, styled opening
+        tl.fromTo(
+          "#editor-window",
+          { scale: 0.985 },
+          { scale: 1, duration: 0.55, ease: "power2.out" },
+          0.02,
+        );
+        // caret blinks alone in the empty editor: anticipation
+        tl.set("#ed-caret", { opacity: 0 }, 0.25)
+          .set("#ed-caret", { opacity: 1 }, 0.5)
+          .set("#ed-caret", { opacity: 0 }, 0.72)
+          .set("#ed-caret", { opacity: 1 }, 0.92);
+        tl.to("#ed-line1", { clipPath: "inset(0 0% 0 0)", duration: 1.0, ease: `steps(${line1Chars})` }, 1.0)
+          .to("#ed-caret", { x: ADV * line1Chars, duration: 1.0, ease: `steps(${line1Chars})` }, 1.0);
+        // return: the caret drops to the next line and pauses for a breath
+        tl.set("#ed-caret", { x: 0, y: 76 }, 2.1);
+        tl.to("#ed-line2", { clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: `steps(${line2Chars})` }, 2.25)
+          .to("#ed-caret", { x: ADV * line2Chars, duration: 0.8, ease: `steps(${line2Chars})` }, 2.25);
+        // read hold: a mild solved push toward the typed thought (padded reserve)
+        tl.to("#editor-world", { scale: 1.13, x: 40, y: 6, duration: 1.3, ease: "power2.inOut" }, 3.0);
+        tl.set("#ed-caret", { opacity: 0 }, 3.35)
+          .set("#ed-caret", { opacity: 1 }, 3.65)
+          .set("#ed-caret", { opacity: 0 }, 3.98);
+
+        // ================= Scene 2 · kinetic typography (4.4 - 8.2) =================
+        const wordBeats = [
+          { id: "#word-anything", at: 4.55, out: 5.62 },
+          { id: "#word-plans", at: 5.86, out: 6.86 },
+          { id: "#word-work", at: 7.1, out: -1 },
+        ];
+        for (const w of wordBeats) {
+          tl.fromTo(
+            w.id,
+            { opacity: 0, filter: "blur(16px)", scale: 1.06 },
+            { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.42, ease: "power3.out" },
+            w.at,
+          );
+          if (w.out > 0) {
+            // one readable thought at a time: finish the exit before the next entrance
+            tl.to(w.id, { opacity: 0, filter: "blur(12px)", scale: 0.97, duration: 0.18, ease: "power2.in" }, w.out);
+            tl.set(w.id, { opacity: 0 }, w.out + 0.2);
+          }
+        }
+        // "real work?" drifts slightly larger through its hold, then blurs out inside its clip
+        tl.to("#word-work", { scale: 1.035, duration: 0.5, ease: "sine.out" }, 7.55);
+        tl.to("#word-work", { opacity: 0, filter: "blur(10px)", duration: 0.16, ease: "power2.in" }, 8.0);
+        tl.set("#word-work", { opacity: 0 }, 8.18);
+
+        // Scene 3 (8.2 - 12.6) lives in compositions/composer.html with local times.
+
+        // ================= Scene 4 · "and it gets to work." (12.6 - 14.0) =================
+        tl.fromTo(
+          "#inter-line",
+          { opacity: 0, filter: "blur(16px)", scale: 1.05 },
+          { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.4, ease: "power3.out" },
+          12.68,
+        );
+        tl.to("#inter-line", { opacity: 0, filter: "blur(10px)", duration: 0.18, ease: "power2.in" }, 13.74);
+        tl.set("#inter-line", { opacity: 0 }, 13.94);
+
+        // Scene 5 (14.0 - 21.4) lives in compositions/work-world.html with local times.
+        // Scene 6 (21.4 - 27.6) lives in compositions/end-lockup.html with local times.
+
+        // pin the timeline's full duration
+        tl.set({}, {}, 27.6);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines["chatgpt-ad"] = tl;
+      })();
+    </script>
+    <script src="./assets/vendor/hyperframe.runtime.iife.js"></script>
+  </body>
+</html>

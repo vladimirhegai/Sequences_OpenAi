@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "sequences-abstract-ad",
+  "title": "Sequences — Make your prompt move",
+  "engine": "hyperframes",
+  "phase": "final-polished",
+  "format": {
+    "durationSeconds": 30.333,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "componentLab": {
+    "durationSeconds": 26,
+    "composition": "sequences-component-lab"
+  },
+  "paths": {
+    "plan": "PLAN.md",
+    "source": "source",
+    "entry": "source/index.html",
+    "reference": "reference",
+    "componentReview": "components/strip/component-review-strip.jpg",
+    "audio": "audio",
+    "evidence": "evidence",
+    "render": "renders/sequences-abstract-ad.mp4",
+    "contactSheet": "renders/sequences-abstract-ad-contact-sheet.jpg"
+  },
+  "music": {
+    "catalogId": "cinematic-fast-violin",
+    "file": "audio/music/cinematic_fast_violin.mp3",
+    "sha256": "003af09eb2d0853daed58564b69f6c88ea3f3c9021710827dfb2fd13a1540601",
+    "durationSeconds": 30.3314,
+    "tempoBpm": 124
+  },
+  "sfx": {
+    "ledger": ".media/manifest.jsonl",
+    "cueSheet": "source/story/sfx-cue-sheet.md",
+    "assets": ["sfx_001", "sfx_002", "sfx_003", "sfx_004", "sfx_005"]
+  },
+  "verification": {
+    "componentLabStatus": "passed",
+    "strict": true,
+    "errors": 0,
+    "warnings": 0,
+    "proofFrames": 128,
+    "finalFilmStatus": "passed-polished-render",
+    "renderDurationSeconds": 30.333333,
+    "renderSizeBytes": 10866770,
+    "audioIntegratedLufs": -16.5,
+    "audioTruePeakDbfs": -1.5
+  }
+}

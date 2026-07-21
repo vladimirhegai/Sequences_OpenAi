@@ -1,0 +1,61 @@
+{
+  "version": "sequences.component-plan.v2",
+  "designCapsuleId": "chatgpt-native-working-draft",
+  "mode": "synthetic",
+  "name": "ChatGPT question-to-draft product kit",
+  "visualThesis": "One persistent ChatGPT shell carries a typed request through a real assistant response, a source inspection, and a Canvas rewrite before resolving to the exact knot.",
+  "sourceImages": [],
+  "sourceImageBindings": [],
+  "sourceEvidence": "Every product surface is native DOM, CSS, and inline SVG. The composition reuses the recovered story and local exact-knot asset but renders no screenshot plane or network media.",
+  "tokens": {
+    "color-field": "#F7F7F8",
+    "color-surface": "#FFFFFF",
+    "color-sidebar": "#F3F3F3",
+    "color-ink": "#0D0D0D",
+    "color-body": "#262626",
+    "color-muted": "#5D5D5D",
+    "color-border": "#DEDEDE",
+    "color-green": "#10A37F",
+    "radius-product": 34,
+    "radius-composer": 31
+  },
+  "components": [
+    {
+      "id": "chatgpt-app-shell",
+      "archetype": "app-window",
+      "continuity": "persistent",
+      "purpose": "The persistent ChatGPT application shell shared by the home, conversation, sources, Canvas, and updated states.",
+      "rootHfId": "chatgpt-app-shell",
+      "stateAttribute": "data-state",
+      "states": [
+        { "id": "home", "description": "The typed prompt is ready in the ChatGPT composer." },
+        { "id": "chat", "description": "The submitted user bubble and streaming assistant response share one conversation." },
+        { "id": "sources", "description": "The response remains readable while its source drawer is open." },
+        { "id": "canvas", "description": "The same payload becomes an editable Canvas document." }
+      ],
+      "parts": [
+        { "id": "home-composer", "hfId": "home-composer", "purpose": "Accepts the practical backyard request.", "morphAnchor": true },
+        { "id": "home-send", "hfId": "home-send", "purpose": "Visible cause that submits the prompt.", "morphAnchor": false },
+        { "id": "user-bubble", "hfId": "user-bubble", "purpose": "Preserves the exact typed payload inside the conversation.", "morphAnchor": true },
+        { "id": "assistant-message", "hfId": "assistant-message", "purpose": "Streams one coherent ChatGPT answer in reading order.", "morphAnchor": false },
+        { "id": "sources-drawer", "hfId": "sources-drawer", "purpose": "Makes the answer's sources inspectable.", "morphAnchor": false },
+        { "id": "canvas-workspace", "hfId": "canvas-workspace", "purpose": "Turns the source-backed answer into an editable draft.", "morphAnchor": true },
+        { "id": "refine-composer", "hfId": "refine-composer", "purpose": "Accepts the one-Saturday refinement.", "morphAnchor": false },
+        { "id": "canvas-document", "hfId": "canvas-document", "purpose": "Shows the revised working document at rest.", "morphAnchor": true }
+      ],
+      "slots": [
+        { "id": "opening-prompt", "hfId": "home-prompt-text", "kind": "text" },
+        { "id": "assistant-answer", "hfId": "answer-summary", "kind": "text" },
+        { "id": "refinement-prompt", "hfId": "refine-text", "kind": "text" },
+        { "id": "working-document", "hfId": "canvas-document", "kind": "container" }
+      ],
+      "interactions": [
+        { "id": "submit-question", "kind": "submit", "cause": "The send control and pointer compress together.", "result": "The prompt becomes a user bubble and ChatGPT streams an answer.", "fromState": "home", "toState": "chat" },
+        { "id": "inspect-sources", "kind": "open", "cause": "The Sources control is pressed.", "result": "The source drawer opens beside the persistent answer.", "fromState": "chat", "toState": "sources" },
+        { "id": "continue-in-canvas", "kind": "open", "cause": "Open in Canvas is pressed.", "result": "The answer becomes a split chat-and-document Canvas workspace.", "fromState": "sources", "toState": "canvas" }
+      ],
+      "usedInBeatIds": ["ask-and-send", "streamed-answer", "inspect-sources", "refine-in-canvas"],
+      "implementationFiles": ["compositions/chatgpt-native-story.html"]
+    }
+  ]
+}

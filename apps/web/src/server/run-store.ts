@@ -16,7 +16,7 @@ const ALLOWED_TRANSITIONS: Record<JobState, readonly JobState[]> = {
   queued: ["preparing", "cancelled", "failed"],
   preparing: ["authoring", "cancelled", "failed"],
   authoring: ["verifying", "cancelled", "timed_out", "failed"],
-  verifying: ["review_ready", "cancelled", "timed_out", "failed"],
+  verifying: ["review_ready", "applying", "cancelled", "timed_out", "failed"],
   review_ready: ["applying", "rejected", "stale"],
   applying: ["applied", "stale", "failed"],
   applied: [],
@@ -48,7 +48,10 @@ export class RunStore {
   async get(jobId: string): Promise<RunReceiptV1> {
     const cached = this.receiptCache.get(jobId);
     if (cached) return cached;
-    const receipt = await readJson(join(this.projects.runRoot(jobId), "receipt.json"), RunReceiptV1Schema);
+    const receipt = await readJson(
+      join(this.projects.runRoot(jobId), "receipt.json"),
+      RunReceiptV1Schema,
+    );
     this.receiptCache.set(jobId, receipt);
     return receipt;
   }
@@ -80,7 +83,14 @@ export class RunStore {
         throw new Error(`Invalid job state transition: ${current.state} -> ${state}`);
       }
       const now = new Date().toISOString();
-      const finished = ["applied", "rejected", "stale", "failed", "timed_out", "cancelled"].includes(state);
+      const finished = [
+        "applied",
+        "rejected",
+        "stale",
+        "failed",
+        "timed_out",
+        "cancelled",
+      ].includes(state);
       return {
         ...current,
         ...patch,
@@ -147,7 +157,10 @@ export class RunStore {
   ): Promise<T> {
     const previous = tails.get(key) ?? Promise.resolve();
     const next = previous.catch(() => undefined).then(operation);
-    tails.set(key, next.catch(() => undefined));
+    tails.set(
+      key,
+      next.catch(() => undefined),
+    );
     return next;
   }
 }

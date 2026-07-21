@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        /*
+         * Codex reference film · scene 4 sub-composition.
+         * A habit-tracker product window assembles panel by panel over a
+         * drifting starfield, peaks with a double shockwave and a mild solved
+         * camera push, then shows one consequence at rest (streak 12 -> 13).
+         * Mounted by the host at 11.3s; every time below is local.
+         */
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: #080a18;
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #stars-far {
+          position: absolute;
+          inset: 0;
+          background-image:
+            radial-gradient(1px 1px at 23px 41px, rgba(255, 255, 255, 0.75), transparent 60%),
+            radial-gradient(1px 1px at 141px 187px, rgba(255, 255, 255, 0.5), transparent 60%),
+            radial-gradient(1px 1px at 258px 96px, rgba(255, 255, 255, 0.65), transparent 60%),
+            radial-gradient(1px 1px at 62px 233px, rgba(255, 255, 255, 0.4), transparent 60%),
+            radial-gradient(1px 1px at 197px 288px, rgba(255, 255, 255, 0.55), transparent 60%),
+            radial-gradient(1px 1px at 311px 214px, rgba(255, 255, 255, 0.45), transparent 60%);
+          background-repeat: repeat;
+          background-size: 340px 320px;
+        }
+
+        #stars-near {
+          position: absolute;
+          inset: 0;
+          background-image:
+            radial-gradient(1.6px 1.6px at 74px 52px, rgba(255, 255, 255, 0.95), transparent 60%),
+            radial-gradient(1.4px 1.4px at 226px 161px, rgba(214, 224, 255, 0.85), transparent 60%),
+            radial-gradient(1.8px 1.8px at 388px 258px, rgba(255, 255, 255, 0.8), transparent 60%),
+            radial-gradient(1.3px 1.3px at 158px 331px, rgba(214, 224, 255, 0.7), transparent 60%);
+          background-repeat: repeat;
+          background-size: 460px 420px;
+        }
+
+        /* Padded camera reserve: the world box is smaller than the root, so its
+           largest pose (scale 1.07) never crosses the root's clipping bounds. */
+        #app-world {
+          position: absolute;
+          left: 300px;
+          top: 160px;
+          width: 1320px;
+          height: 760px;
+          transform-origin: 50% 50%;
+        }
+
+        #app-window {
+          position: absolute;
+          left: 40px;
+          top: 40px;
+          width: 1240px;
+          height: 680px;
+          border-radius: 18px;
+          background: #101226;
+          border: 1px solid rgba(255, 255, 255, 0.09);
+          box-shadow: 0 60px 140px rgba(0, 0, 0, 0.6);
+          overflow: hidden;
+        }
+
+        #app-header {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 64px;
+          background: #14162e;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        #app-title {
+          position: absolute;
+          left: 28px;
+          top: 18px;
+          font-size: 22px;
+          font-weight: 700;
+          color: #eef0ff;
+        }
+
+        #app-sidebar {
+          position: absolute;
+          left: 0;
+          top: 64px;
+          width: 240px;
+          height: 616px;
+          background: #0d0f20;
+          border-right: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .side-item {
+          position: absolute;
+          left: 24px;
+          width: 192px;
+          height: 40px;
+          border-radius: 9px;
+          font-size: 17px;
+          font-weight: 600;
+          color: #aeb6d8;
+          line-height: 40px;
+          padding-left: 14px;
+        }
+
+        #side-active {
+          background: rgba(75, 90, 228, 0.28);
+          color: #ffffff;
+        }
+
+        .stat-card {
+          position: absolute;
+          top: 104px;
+          width: 288px;
+          height: 148px;
+          border-radius: 14px;
+          background: #171a33;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-label {
+          position: absolute;
+          left: 24px;
+          top: 22px;
+          font-size: 16px;
+          font-weight: 600;
+          color: #aeb6d8;
+        }
+
+        .stat-value {
+          position: absolute;
+          left: 24px;
+          top: 56px;
+          font-size: 52px;
+          font-weight: 800;
+          color: #ffffff;
+          line-height: 62px;
+        }
+
+        #streak-values {
+          position: absolute;
+          left: 24px;
+          top: 56px;
+          width: 200px;
+          height: 62px;
+          overflow: hidden;
+        }
+
+        .streak-value {
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-size: 52px;
+          font-weight: 800;
+          color: #ffffff;
+          line-height: 62px;
+        }
+
+        #streak-13 {
+          clip-path: inset(0 100% 0 0);
+        }
+
+        #week-grid {
+          position: absolute;
+          left: 288px;
+          top: 296px;
+          width: 640px;
+          height: 336px;
+        }
+
+        .week-cell {
+          position: absolute;
+          width: 76px;
+          height: 66px;
+          border-radius: 10px;
+          background: #171a33;
+          border: 1px solid rgba(255, 255, 255, 0.07);
+          transform: scale(0);
+        }
+
+        .week-cell.done {
+          background: #4b5ae4;
+          border-color: #5c6af0;
+        }
+
+        #chart-panel {
+          position: absolute;
+          left: 960px;
+          top: 296px;
+          width: 248px;
+          height: 336px;
+          border-radius: 14px;
+          background: #171a33;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        #chart-label {
+          position: absolute;
+          left: 22px;
+          top: 20px;
+          font-size: 16px;
+          font-weight: 600;
+          color: #aeb6d8;
+        }
+
+        #chart-clip {
+          position: absolute;
+          left: 22px;
+          top: 74px;
+          width: 204px;
+          height: 226px;
+          clip-path: inset(0 100% 0 0);
+        }
+
+        #shockwave,
+        #shockwave-2 {
+          position: absolute;
+          left: 600px;
+          top: 320px;
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          border: 2px solid rgba(122, 136, 245, 0.8);
+          opacity: 0;
+          transform: scale(0.2);
+        }
+      </style>
+      <div data-hf-id="codex-app-world-root" id="root" data-composition-id="codex-app-world" data-start="0" data-duration="5.2" data-width="1920" data-height="1080" data-fps="30">
+        <div id="stars-far" data-hf-id="stars-far" class="clip" data-start="0" data-duration="5.2" data-track-index="0"></div>
+        <div id="stars-near" data-hf-id="stars-near" class="clip" data-start="0" data-duration="5.2" data-track-index="1"></div>
+        <div id="app-world" data-hf-id="app-world" class="clip" data-start="0" data-duration="5.2" data-track-index="2">
+          <div id="app-window" data-hf-id="app-window">
+            <div id="app-header">
+              <div id="app-title">Habit tracker</div>
+            </div>
+            <div id="app-sidebar">
+              <div class="side-item" id="side-active" style="top: 24px;">Today</div>
+              <div class="side-item" style="top: 76px;">Habits</div>
+              <div class="side-item" style="top: 128px;">Progress</div>
+              <div class="side-item" style="top: 180px;">Settings</div>
+            </div>
+            <div class="stat-card" id="stat-streak" style="left: 288px;">
+              <div class="stat-label">Current streak</div>
+              <div id="streak-values">
+                <div class="streak-value" id="streak-12">12 days</div>
+                <div class="streak-value" id="streak-13">13 days</div>
+              </div>
+            </div>
+            <div class="stat-card" id="stat-completion" style="left: 608px;">
+              <div class="stat-label">Completion</div>
+              <div class="stat-value">86%</div>
+            </div>
+            <div class="stat-card" id="stat-habits" style="left: 928px;">
+              <div class="stat-label">Active habits</div>
+              <div class="stat-value">6</div>
+            </div>
+            <div id="week-grid" data-hf-id="week-grid"></div>
+            <div id="chart-panel">
+              <div id="chart-label">Momentum</div>
+              <div id="chart-clip">
+                <svg width="204" height="226" viewBox="0 0 204 226" aria-hidden="true">
+                  <path d="M6 198 L40 172 L74 180 L108 132 L142 118 L176 64 L198 46" stroke="#7a88f5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                  <path d="M6 198 L40 172 L74 180 L108 132 L142 118 L176 64 L198 46 L198 226 L6 226 Z" fill="rgba(122, 136, 245, 0.14)" stroke="none"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div id="shockwave"></div>
+          <div id="shockwave-2"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          // Week grid: 7 columns x 4 rows; the "done" pattern is fixed, never random.
+          const grid = document.getElementById("week-grid");
+          const donePattern = [
+            1, 1, 0, 1, 1, 1, 0,
+            1, 0, 1, 1, 0, 1, 1,
+            1, 1, 1, 0, 1, 0, 1,
+            1, 1, 0, 1, 1, 1, 0,
+          ];
+          const cells = [];
+          for (let row = 0; row < 4; row += 1) {
+            for (let col = 0; col < 7; col += 1) {
+              const cell = document.createElement("div");
+              cell.className = donePattern[row * 7 + col] ? "week-cell done" : "week-cell";
+              cell.style.left = `${col * 92}px`;
+              cell.style.top = `${row * 84}px`;
+              grid.appendChild(cell);
+              cells.push(cell);
+            }
+          }
+
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+
+          // Starfield drifts very slowly via tiled background position: the layout
+          // box never moves, so nothing ever overflows a clipping container.
+          tl.fromTo("#stars-far", { backgroundPosition: "0px 0px" }, { backgroundPosition: "-26px 0px", duration: 5.1, ease: "none" }, 0);
+          tl.fromTo("#stars-near", { backgroundPosition: "0px 0px" }, { backgroundPosition: "-44px 0px", duration: 5.1, ease: "none" }, 0);
+
+          // The window assembles panel by panel: causal, staggered, measured.
+          tl.fromTo(
+            "#app-window",
+            { opacity: 0, y: 46, scale: 0.965 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" },
+            0.32,
+          );
+          // Panels reveal with clip-path wipes: boxes stay inside the window's
+          // clipping bounds at every sampled frame (no slide-in overflow).
+          tl.fromTo("#app-header", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.4, ease: "power3.out" }, 0.56);
+          tl.fromTo("#app-sidebar", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.44, ease: "power3.out" }, 0.68);
+          ["#stat-streak", "#stat-completion", "#stat-habits"].forEach((id, index) => {
+            tl.fromTo(
+              id,
+              { opacity: 0, scale: 0.6 },
+              { opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.6)" },
+              0.88 + index * 0.12,
+            );
+          });
+          cells.forEach((cell, index) => {
+            tl.to(cell, { scale: 1, duration: 0.3, ease: "back.out(1.5)" }, 1.3 + index * 0.014);
+          });
+          tl.to("#chart-clip", { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power2.inOut" }, 1.7);
+
+          // The peak: double shockwave plus a mild camera push on the world.
+          tl.fromTo("#shockwave", { opacity: 0.9, scale: 0.2 }, { opacity: 0, scale: 6.5, duration: 0.8, ease: "power2.out" }, 2.25);
+          tl.fromTo("#shockwave-2", { opacity: 0.6, scale: 0.2 }, { opacity: 0, scale: 9, duration: 0.95, ease: "power2.out" }, 2.4);
+          tl.to("#app-world", { scale: 1.07, duration: 0.9, ease: "power2.inOut" }, 2.3)
+            .to("#app-world", { scale: 1.05, duration: 0.5, ease: "sine.out" }, 3.2);
+
+          // Consequence at rest: today's cell completes and the streak advances 12 -> 13.
+          const todayCell = cells[20];
+          tl.to(todayCell, { backgroundColor: "#4b5ae4", borderColor: "#5c6af0", duration: 0.24, ease: "power1.inOut" }, 3.7)
+            .to(todayCell, { scale: 1.16, duration: 0.14, ease: "power2.in" }, 3.7)
+            .to(todayCell, { scale: 1, duration: 0.26, ease: "back.out(2.2)" }, 3.84);
+          tl.to("#streak-12", { clipPath: "inset(0 0 0 100%)", duration: 0.28, ease: "power2.inOut" }, 4.0)
+            .to("#streak-13", { clipPath: "inset(0 0% 0 0)", duration: 0.28, ease: "power2.inOut" }, 4.0);
+
+          // Hold the settled frame; the host cuts to the white lockup at 5.2.
+          tl.set({}, {}, 5.2);
+
+          window.__timelines = window.__timelines || {};
+          window.__timelines["codex-app-world"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

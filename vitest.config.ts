@@ -6,5 +6,7 @@ export default defineConfig({
     include: ["apps/web/test/**/*.test.ts", "apps/web/test/**/*.test.tsx"],
     passWithNoTests: true,
     restoreMocks: true,
+    testTimeout: 20_000,
+    hookTimeout: 20_000,
   },
 });

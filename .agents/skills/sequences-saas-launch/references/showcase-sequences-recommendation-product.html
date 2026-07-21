@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="en">
+  <head></head>
+  <body>
+    <template>
+      <style>
+        #sq-root {
+          --oa-field: #f7f7f8;
+          --oa-surface: #ffffff;
+          --oa-soft: #f1f1f3;
+          --oa-ink: #171717;
+          --oa-dark: #202123;
+          --oa-muted: #6a6a6a;
+          --oa-border: #d9d9de;
+          --oa-green: #10a37f;
+          --oa-green-dark: #087a5e;
+          --oa-green-soft: #e7f6f1;
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          background: var(--oa-field);
+          color: var(--oa-ink);
+          font-family: "Montserrat", sans-serif;
+        }
+
+        #sq-field-dots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(
+            circle,
+            rgba(23, 23, 23, 0.11) 1.2px,
+            transparent 1.2px
+          );
+          background-size: 34px 34px;
+          opacity: 0.28;
+          pointer-events: none;
+        }
+
+        #sq-field-orbit {
+          position: absolute;
+          right: 24px;
+          top: 24px;
+          width: 460px;
+          height: 460px;
+          border: 2px solid rgba(16, 163, 127, 0.16);
+          border-radius: 50%;
+          pointer-events: none;
+        }
+
+        #sq-app {
+          position: absolute;
+          left: 160px;
+          top: 92px;
+          width: 1600px;
+          height: 896px;
+          overflow: hidden;
+          border: 2px solid var(--oa-border);
+          border-radius: 30px;
+          background: var(--oa-surface);
+          box-shadow: 0 28px 90px rgba(23, 23, 23, 0.13);
+          transform-origin: 50% 50%;
+        }
+
+        #sequences-header {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 80px;
+          border-bottom: 2px solid var(--oa-border);
+          background: var(--oa-surface);
+        }
+
+        #sq-brand-knot {
+          position: absolute;
+          left: 28px;
+          top: 20px;
+          width: 40px;
+          height: 40px;
+          color: var(--oa-ink);
+        }
+
+        #sq-brand-knot svg {
+          display: block;
+          width: 40px;
+          height: 40px;
+        }
+
+        #sq-wordmark {
+          position: absolute;
+          left: 82px;
+          top: 17px;
+          height: 46px;
+          font-size: 29px;
+          line-height: 46px;
+          font-weight: 600;
+          letter-spacing: -0.035em;
+          color: var(--oa-ink);
+        }
+
+        #sq-product-label {
+          position: absolute;
+          left: 232px;
+          top: 25px;
+          height: 30px;
+          padding: 0 12px;
+          border: 2px solid var(--oa-border);
+          border-radius: 15px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          line-height: 26px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--oa-muted);
+          text-transform: uppercase;
+        }
+
+        #sq-mode {
+          position: absolute;
+          right: 30px;
+          top: 22px;
+          height: 36px;
+          padding: 0 18px;
+          border-radius: 18px;
+          background: var(--oa-soft);
+          font-size: 17px;
+          line-height: 36px;
+          font-weight: 600;
+          color: #505050;
+        }
+
+        #sq-thread {
+          position: absolute;
+          left: 0;
+          top: 80px;
+          width: 1600px;
+          height: 688px;
+          overflow: hidden;
+          background: #fafafa;
+        }
+
+        #sequences-prompt-panel {
+          position: absolute;
+          right: 122px;
+          top: 34px;
+          width: 1080px;
+          min-height: 116px;
+          padding: 28px 36px;
+          border: 2px solid #e3e3e7;
+          border-radius: 34px;
+          background: var(--oa-soft);
+        }
+
+        #sq-prompt-kicker {
+          margin-bottom: 10px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 22px;
+          font-weight: 700;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
+          color: var(--oa-muted);
+        }
+
+        #sq-prompt-copy {
+          width: 1000px;
+          font-size: 30px;
+          line-height: 1.25;
+          font-weight: 600;
+          letter-spacing: -0.03em;
+          color: var(--oa-ink);
+        }
+
+        #sq-assistant-avatar {
+          position: absolute;
+          left: 122px;
+          top: 184px;
+          width: 52px;
+          height: 52px;
+          border-radius: 26px;
+          background: var(--oa-dark);
+          color: #ffffff;
+        }
+
+        #sq-assistant-avatar svg {
+          position: absolute;
+          left: 11px;
+          top: 11px;
+          width: 30px;
+          height: 30px;
+        }
+
+        #sq-assistant-name {
+          position: absolute;
+          left: 190px;
+          top: 184px;
+          height: 30px;
+          font-size: 22px;
+          line-height: 30px;
+          font-weight: 700;
+          color: var(--oa-ink);
+        }
+
+        #sq-assistant-status {
+          position: absolute;
+          left: 190px;
+          top: 220px;
+          height: 24px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 24px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          color: var(--oa-green-dark);
+          width: 460px;
+        }
+
+        #sq-assistant-status::before {
+          content: "";
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-right: 10px;
+          border-radius: 50%;
+          background: var(--oa-green);
+        }
+
+        #sq-assistant-status span {
+          position: absolute;
+          left: 20px;
+          top: 0;
+          width: 420px;
+          white-space: nowrap;
+        }
+
+        #sq-status-building,
+        #sq-status-storyboard,
+        #sq-status-rendering,
+        #sq-status-playable,
+        #sq-status-checked {
+          opacity: 0;
+        }
+
+        #storyboard-strip {
+          position: absolute;
+          left: 190px;
+          top: 276px;
+          width: 1290px;
+          height: 356px;
+          overflow: visible;
+          border: 2px solid var(--oa-border);
+          border-radius: 24px;
+          background: var(--oa-surface);
+        }
+
+        #storyboard-title {
+          position: absolute;
+          left: 30px;
+          top: 24px;
+          height: 34px;
+          font-size: 24px;
+          line-height: 34px;
+          font-weight: 700;
+          letter-spacing: -0.025em;
+          color: var(--oa-ink);
+        }
+
+        #storyboard-subtitle {
+          position: absolute;
+          right: 30px;
+          top: 28px;
+          height: 28px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 28px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          color: var(--oa-muted);
+        }
+
+        #sq-ready-state {
+          position: absolute;
+          left: 30px;
+          top: 84px;
+          width: 1230px;
+          height: 234px;
+        }
+
+        #sq-ready-copy {
+          position: absolute;
+          left: 0;
+          top: 4px;
+          width: 960px;
+          font-size: 56px;
+          line-height: 1.08;
+          font-weight: 600;
+          letter-spacing: -0.05em;
+          color: var(--oa-ink);
+        }
+
+        #sq-ready-copy span {
+          color: var(--oa-green-dark);
+        }
+
+        #sq-ready-steps {
+          position: absolute;
+          left: 0;
+          bottom: 8px;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+
+        .sq-ready-chip {
+          height: 42px;
+          padding: 0 18px;
+          border: 2px solid var(--oa-border);
+          border-radius: 21px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 38px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          color: #505050;
+        }
+
+        .sq-ready-arrow {
+          font-size: 24px;
+          line-height: 42px;
+          color: var(--oa-muted);
+        }
+
+        #storyboard-rail {
+          position: absolute;
+          left: 26px;
+          top: 104px;
+          width: 1238px;
+          height: 132px;
+          opacity: 0;
+        }
+
+        .story-card {
+          position: absolute;
+          top: 0;
+          width: 232px;
+          height: 132px;
+          overflow: hidden;
+          border: 2px solid var(--oa-border);
+          border-radius: 18px;
+          background: var(--oa-surface);
+          opacity: 0;
+          transform-origin: 50% 50%;
+          box-shadow: 0 12px 34px rgba(23, 23, 23, 0.08);
+        }
+
+        .story-card.selected {
+          border-color: var(--oa-green);
+          background: var(--oa-green-soft);
+          box-shadow: 0 0 0 4px rgba(16, 163, 127, 0.11);
+        }
+
+        .story-num {
+          position: absolute;
+          left: 16px;
+          top: 14px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 700;
+          color: var(--oa-muted);
+        }
+
+        .story-title {
+          position: absolute;
+          left: 16px;
+          bottom: 14px;
+          width: 196px;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 700;
+          letter-spacing: -0.025em;
+          color: var(--oa-ink);
+        }
+
+        .story-art {
+          position: absolute;
+          right: 16px;
+          top: 14px;
+          width: 84px;
+          height: 48px;
+          border-radius: 12px;
+          background: var(--oa-soft);
+        }
+
+        .story-art::before,
+        .story-art::after {
+          content: "";
+          position: absolute;
+          left: 10px;
+          height: 6px;
+          border-radius: 3px;
+          background: #9a9a9f;
+        }
+
+        .story-art::before {
+          top: 12px;
+          width: 54px;
+        }
+
+        .story-art::after {
+          top: 26px;
+          width: 36px;
+          background: var(--oa-green);
+        }
+
+        #sq-build-summary {
+          position: absolute;
+          left: 30px;
+          bottom: 26px;
+          height: 30px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 30px;
+          font-weight: 700;
+          letter-spacing: 0.07em;
+          color: var(--oa-green-dark);
+          opacity: 0;
+        }
+
+        #playable-result {
+          position: absolute;
+          left: 268px;
+          top: 82px;
+          width: 1064px;
+          height: 606px;
+          overflow: hidden;
+          border: 2px solid var(--oa-dark);
+          border-radius: 28px;
+          background: var(--oa-dark);
+          box-shadow: 0 26px 70px rgba(23, 23, 23, 0.18);
+          opacity: 0;
+        }
+
+        #player-frame {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1064px;
+          height: 536px;
+          overflow: hidden;
+          background: var(--oa-surface);
+        }
+
+        #player-frame-question,
+        #player-frame-advice,
+        #player-frame-recommendation {
+          position: absolute;
+          inset: 0;
+        }
+
+        #player-frame-question {
+          background: var(--oa-field);
+          color: var(--oa-ink);
+          opacity: 0;
+        }
+
+        #player-frame-advice {
+          background: var(--oa-surface);
+          color: var(--oa-ink);
+          opacity: 0;
+        }
+
+        #player-frame-recommendation {
+          background: var(--oa-dark);
+          color: #ffffff;
+          opacity: 0;
+        }
+
+        .player-knot {
+          position: absolute;
+          left: 58px;
+          top: 48px;
+          width: 44px;
+          height: 44px;
+          color: var(--oa-ink);
+        }
+
+        .player-knot svg {
+          display: block;
+          width: 44px;
+          height: 44px;
+        }
+
+        .player-frame-kicker {
+          position: absolute;
+          left: 120px;
+          top: 56px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 28px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--oa-green-dark);
+        }
+
+        #player-question-copy {
+          position: absolute;
+          left: 60px;
+          top: 148px;
+          width: 930px;
+          font-size: 48px;
+          line-height: 1.12;
+          font-weight: 650;
+          letter-spacing: -0.045em;
+        }
+
+        #player-question-line {
+          position: absolute;
+          left: 60px;
+          bottom: 54px;
+          width: 944px;
+          height: 74px;
+          border: 2px solid var(--oa-border);
+          border-radius: 37px;
+          background: var(--oa-surface);
+        }
+
+        #player-question-line::before {
+          content: "Prompt carried into Sequences";
+          position: absolute;
+          left: 26px;
+          top: 21px;
+          font-size: 18px;
+          line-height: 30px;
+          font-weight: 600;
+          color: var(--oa-muted);
+        }
+
+        #player-question-line::after {
+          content: "\2191";
+          position: absolute;
+          right: 10px;
+          top: 9px;
+          width: 52px;
+          height: 52px;
+          border-radius: 26px;
+          background: var(--oa-dark);
+          color: #ffffff;
+          text-align: center;
+          font-size: 30px;
+          line-height: 50px;
+          font-weight: 700;
+        }
+
+        #player-advice-copy {
+          position: absolute;
+          left: 64px;
+          top: 106px;
+          width: 930px;
+        }
+
+        #player-advice-heading {
+          margin-bottom: 28px;
+          font-size: 28px;
+          line-height: 36px;
+          font-weight: 700;
+          color: var(--oa-ink);
+        }
+
+        .player-advice-line {
+          height: 86px;
+          border-top: 2px solid var(--oa-border);
+          font-size: 38px;
+          line-height: 86px;
+          font-weight: 600;
+          letter-spacing: -0.03em;
+        }
+
+        .player-advice-line::before {
+          content: "\2713";
+          display: inline-block;
+          width: 48px;
+          color: var(--oa-green-dark);
+        }
+
+        #player-preview-copy {
+          position: absolute;
+          left: 64px;
+          top: 126px;
+          width: 760px;
+          letter-spacing: -0.05em;
+        }
+
+        #player-preview-copy span:first-child {
+          display: block;
+          font-size: 76px;
+          line-height: 1;
+          font-weight: 600;
+          color: #ffffff;
+        }
+
+        #player-preview-copy span:last-child {
+          display: block;
+          margin-top: 14px;
+          font-size: 94px;
+          line-height: 1;
+          font-weight: 700;
+          white-space: nowrap;
+          color: #36d3aa;
+        }
+
+        #player-preview-meta {
+          position: absolute;
+          left: 66px;
+          bottom: 48px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 16px;
+          line-height: 26px;
+          font-weight: 700;
+          letter-spacing: 0.09em;
+          color: #d5d5d8;
+        }
+
+        #verified-status {
+          position: absolute;
+          right: 36px;
+          top: 34px;
+          height: 48px;
+          padding: 0 18px;
+          border: 2px solid #53d7b5;
+          border-radius: 24px;
+          background: rgba(16, 163, 127, 0.15);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          line-height: 44px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          color: #9ef0d8;
+          opacity: 0;
+        }
+
+        #verified-status::before {
+          content: "\2713";
+          display: inline-block;
+          margin-right: 9px;
+        }
+
+        #player-controls {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 1064px;
+          height: 70px;
+          background: #19191a;
+        }
+
+        #player-play {
+          position: absolute;
+          left: 24px;
+          top: 15px;
+          width: 40px;
+          height: 40px;
+          border: 2px solid #ffffff;
+          border-radius: 20px;
+        }
+
+        #player-play::after {
+          content: "";
+          position: absolute;
+          left: 14px;
+          top: 10px;
+          width: 0;
+          height: 0;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          border-left: 13px solid #ffffff;
+        }
+
+        #player-progress {
+          position: absolute;
+          left: 88px;
+          top: 31px;
+          width: 760px;
+          height: 8px;
+          overflow: hidden;
+          border-radius: 4px;
+          background: #55555a;
+        }
+
+        #player-progress-fill {
+          width: 100%;
+          height: 8px;
+          border-radius: 4px;
+          background: var(--oa-green);
+          transform-origin: 0 50%;
+        }
+
+        #player-time {
+          position: absolute;
+          right: 24px;
+          top: 20px;
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 17px;
+          line-height: 30px;
+          font-weight: 600;
+          color: #e8e8ea;
+        }
+
+        #sq-composer {
+          position: absolute;
+          left: 88px;
+          bottom: 22px;
+          width: 1424px;
+          height: 88px;
+          border: 2px solid var(--oa-border);
+          border-radius: 44px;
+          background: var(--oa-surface);
+          box-shadow: 0 18px 52px rgba(23, 23, 23, 0.1);
+        }
+
+        #sq-composer-copy {
+          position: absolute;
+          left: 30px;
+          top: 18px;
+          width: 1160px;
+          height: 52px;
+          font-size: 22px;
+          line-height: 52px;
+          font-weight: 500;
+          color: #4d4d4f;
+        }
+
+        #build-control {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          width: 66px;
+          height: 66px;
+          border: 0;
+          border-radius: 33px;
+          background: var(--oa-dark);
+          color: #ffffff;
+          transform-origin: 50% 50%;
+        }
+
+        #build-control svg {
+          position: absolute;
+          left: 18px;
+          top: 18px;
+          width: 30px;
+          height: 30px;
+        }
+
+        #sq-build-ripple {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          width: 66px;
+          height: 66px;
+          border: 3px solid var(--oa-green);
+          border-radius: 33px;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        #sq-build-pointer {
+          position: absolute;
+          right: 84px;
+          bottom: 28px;
+          width: 58px;
+          height: 70px;
+          color: var(--oa-ink);
+          filter: drop-shadow(0 4px 2px rgba(255, 255, 255, 0.95));
+          pointer-events: none;
+          opacity: 0;
+        }
+
+        #sq-build-pointer svg {
+          display: block;
+          width: 58px;
+          height: 70px;
+        }
+      </style>
+
+      <div
+        id="sq-root"
+        data-hf-id="sequences-studio"
+        data-component="workflow"
+        data-state="prompt-ready"
+        data-composition-id="recommendation-sequences"
+        data-start="0"
+        data-duration="7"
+        data-width="1920"
+        data-height="1080"
+        data-fps="30"
+      >
+        <div id="sq-film-clip" class="clip" data-start="0" data-duration="7" data-track-index="0">
+          <div id="sq-field-dots"></div>
+          <div id="sq-field-orbit"></div>
+
+          <div id="sq-app">
+            <div id="sequences-header" data-hf-id="sequences-header">
+              <div id="sq-brand-knot" aria-hidden="true">
+                <svg viewBox="0 0 320 320">
+                  <path
+                    fill="currentColor"
+                    d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                  ></path>
+                </svg>
+              </div>
+              <div id="sq-wordmark">Sequences</div>
+              <div id="sq-product-label">Video</div>
+              <div id="sq-mode">One prompt &rarr; launch film</div>
+            </div>
+
+            <div id="sq-thread">
+              <div id="sequences-prompt-panel" data-hf-id="sequences-prompt-panel">
+                <div id="sq-prompt-kicker">You</div>
+                <div id="sq-prompt-copy">
+                  How do I make a launch video people actually want to watch?
+                </div>
+              </div>
+
+              <div id="sq-assistant-avatar" aria-hidden="true">
+                <svg viewBox="0 0 320 320">
+                  <path
+                    fill="currentColor"
+                    d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                  ></path>
+                </svg>
+              </div>
+              <div id="sq-assistant-name">Sequences</div>
+              <div id="sq-assistant-status">
+                <span id="sq-status-ready">READY TO BUILD</span>
+                <span id="sq-status-building">BUILDING 05-BEAT STORYBOARD</span>
+                <span id="sq-status-storyboard">STORYBOARD READY</span>
+                <span id="sq-status-rendering">RENDERING PLAYABLE RESULT</span>
+                <span id="sq-status-playable">PLAYABLE RESULT</span>
+                <span id="sq-status-checked">CHECKED / READY TO SHARE</span>
+              </div>
+
+              <div id="storyboard-strip" data-hf-id="storyboard-strip">
+                <div id="storyboard-title">Launch-film plan</div>
+                <div id="storyboard-subtitle">05 BEATS / 00:23.6</div>
+
+                <div id="sq-ready-state">
+                  <div id="sq-ready-copy">One question in. <span>A watchable story out.</span></div>
+                  <div id="sq-ready-steps">
+                    <div class="sq-ready-chip">STORY</div>
+                    <div class="sq-ready-arrow">&rarr;</div>
+                    <div class="sq-ready-chip">MOTION</div>
+                    <div class="sq-ready-arrow">&rarr;</div>
+                    <div class="sq-ready-chip">SOUND</div>
+                    <div class="sq-ready-arrow">&rarr;</div>
+                    <div class="sq-ready-chip">FINAL FILM</div>
+                  </div>
+                </div>
+
+                <div id="storyboard-rail">
+                  <div
+                    class="story-card"
+                    id="story-card-hook"
+                    data-hf-id="story-card-hook"
+                    style="left: 0"
+                  >
+                    <div class="story-num">01</div>
+                    <div class="story-art"></div>
+                    <div class="story-title">The question</div>
+                  </div>
+                  <div
+                    class="story-card"
+                    id="story-card-answer"
+                    data-hf-id="story-card-answer"
+                    style="left: 252px"
+                  >
+                    <div class="story-num">02</div>
+                    <div class="story-art"></div>
+                    <div class="story-title">Useful advice</div>
+                  </div>
+                  <div
+                    class="story-card selected"
+                    id="story-card-interrupt"
+                    data-hf-id="story-card-interrupt"
+                    data-layout-allow-overlap
+                    data-layout-allow-overflow
+                    style="left: 504px"
+                  >
+                    <div class="story-num">03</div>
+                    <div class="story-art"></div>
+                    <div class="story-title">Actually&mdash;</div>
+                  </div>
+                  <div
+                    class="story-card"
+                    id="story-card-build"
+                    data-hf-id="story-card-build"
+                    style="left: 756px"
+                  >
+                    <div class="story-num">04</div>
+                    <div class="story-art"></div>
+                    <div class="story-title">Build the film</div>
+                  </div>
+                  <div
+                    class="story-card"
+                    id="story-card-launch"
+                    data-hf-id="story-card-launch"
+                    style="left: 1008px"
+                  >
+                    <div class="story-num">05</div>
+                    <div class="story-art"></div>
+                    <div class="story-title">Launch</div>
+                  </div>
+                </div>
+
+                <div id="sq-build-summary">STORYBOARD LOCKED / READY TO PLAY</div>
+              </div>
+
+              <div id="playable-result" data-hf-id="playable-result">
+                <div id="player-frame" data-hf-id="player-frame">
+                  <div id="player-frame-question">
+                    <div class="player-knot" aria-hidden="true">
+                      <svg viewBox="0 0 320 320">
+                        <path
+                          fill="currentColor"
+                          d="m297.06 130.97c7.26-21.79 4.76-45.66-6.85-65.48-17.46-30.4-52.56-46.04-86.84-38.68-15.25-17.18-37.16-26.95-60.13-26.81-35.04-.08-66.13 22.48-76.91 55.82-22.51 4.61-41.94 18.7-53.31 38.67-17.59 30.32-13.58 68.54 9.92 94.54-7.26 21.79-4.76 45.66 6.85 65.48 17.46 30.4 52.56 46.04 86.84 38.68 15.24 17.18 37.16 26.95 60.13 26.8 35.06.09 66.16-22.49 76.94-55.86 22.51-4.61 41.94-18.7 53.31-38.67 17.57-30.32 13.55-68.51-9.94-94.51zm-120.28 168.11c-14.03.02-27.62-4.89-38.39-13.88.49-.26 1.34-.73 1.89-1.07l63.72-36.8c3.26-1.85 5.26-5.32 5.24-9.07v-89.83l26.93 15.55c.29.14.48.42.52.74v74.39c-.04 33.08-26.83 59.9-59.91 59.97zm-128.84-55.03c-7.03-12.14-9.56-26.37-7.15-40.18.47.28 1.3.79 1.89 1.13l63.72 36.8c3.23 1.89 7.23 1.89 10.47 0l77.79-44.92v31.1c.02.32-.13.63-.38.83l-64.41 37.19c-28.69 16.52-65.33 6.7-81.92-21.95zm-16.77-139.09c7-12.16 18.05-21.46 31.21-26.29 0 .55-.03 1.52-.03 2.2v73.61c-.02 3.74 1.98 7.21 5.23 9.06l77.79 44.91-26.93 15.55c-.27.18-.61.21-.91.08l-64.42-37.22c-28.63-16.58-38.45-53.21-21.95-81.89zm221.26 51.49-77.79-44.92 26.93-15.54c.27-.18.61-.21.91-.08l64.42 37.19c28.68 16.57 38.51 53.26 21.94 81.94-7.01 12.14-18.05 21.44-31.2 26.28v-75.81c.03-3.74-1.96-7.2-5.2-9.06zm26.8-40.34c-.47-.29-1.3-.79-1.89-1.13l-63.72-36.8c-3.23-1.89-7.23-1.89-10.47 0l-77.79 44.92v-31.1c-.02-.32.13-.63.38-.83l64.41-37.16c28.69-16.55 65.37-6.7 81.91 22 6.99 12.12 9.52 26.31 7.15 40.1zm-168.51 55.43-26.94-15.55c-.29-.14-.48-.42-.52-.74v-74.39c.02-33.12 26.89-59.96 60.01-59.94 14.01 0 27.57 4.92 38.34 13.88-.49.26-1.33.73-1.89 1.07l-63.72 36.8c-3.26 1.85-5.26 5.31-5.24 9.06l-.04 89.79zm14.63-31.54 34.65-20.01 34.65 20v40.01l-34.65 20-34.65-20z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div class="player-frame-kicker">Source prompt / 01</div>
+                    <div id="player-question-copy">
+                      How do I make a launch video people actually want to watch?
+                    </div>
+                    <div id="player-question-line"></div>
+                  </div>
+
+                  <div id="player-frame-advice">
+                    <div id="player-advice-copy">
+                      <div id="player-advice-heading">A useful answer becomes a story.</div>
+                      <div class="player-advice-line">Start with a hook.</div>
+                      <div class="player-advice-line">Show the product.</div>
+                      <div class="player-advice-line">Build momentum.</div>
+                    </div>
+                  </div>
+
+                  <div id="player-frame-recommendation">
+                    <div id="player-preview-copy">
+                      <span>Actually&mdash;</span>
+                      <span>use Sequences.</span>
+                    </div>
+                    <div id="player-preview-meta">ONE PROMPT / ONE LAUNCH FILM / FRAME 406</div>
+                  </div>
+
+                  <div id="verified-status" data-hf-id="verified-status">VERIFIED RESULT</div>
+                </div>
+
+                <div id="player-controls">
+                  <div id="player-play"></div>
+                  <div id="player-progress" data-hf-id="player-progress">
+                    <div id="player-progress-fill"></div>
+                  </div>
+                  <div id="player-time">00:23.6</div>
+                </div>
+              </div>
+            </div>
+
+            <div id="sq-composer">
+              <div id="sq-composer-copy">Build a complete launch film from this prompt</div>
+              <button id="build-control" data-hf-id="build-control" aria-label="Build launch film">
+                <svg viewBox="0 0 30 30" aria-hidden="true">
+                  <path
+                    d="M15 25V5M15 5L7 13M15 5l8 8"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    fill="none"
+                  ></path>
+                </svg>
+              </button>
+              <div id="sq-build-ripple"></div>
+            </div>
+
+            <div id="sq-build-pointer">
+              <svg viewBox="0 0 58 70" aria-hidden="true">
+                <path
+                  d="M7 4l39 34-18 3 10 21-11 5-10-22L6 58z"
+                  fill="#ffffff"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+          const cards = gsap.utils.toArray(".story-card");
+          const otherCards = cards.filter((card) => card.id !== "story-card-interrupt");
+
+          tl.fromTo("#sq-app", { scale: 0.984 }, { scale: 1, duration: 0.46, ease: "power3.out" }, 0.04);
+          tl.fromTo("#sq-build-pointer", { opacity: 0, x: 92, y: 74 }, { opacity: 1, x: 0, y: 0, duration: 0.5, ease: "power3.out" }, 0.42);
+          tl.to("#build-control", { scale: 0.86, duration: 0.1, ease: "power2.in" }, 0.96);
+          tl.to("#build-control", { scale: 1, duration: 0.22, ease: "back.out(2.1)" }, 1.06);
+          tl.fromTo("#sq-build-ripple", { opacity: 0.8, scale: 0.88 }, { opacity: 0, scale: 1.28, duration: 0.38, ease: "power2.out" }, 1);
+          tl.to("#sq-build-pointer", { opacity: 0, duration: 0.12, ease: "power1.in" }, 1.08);
+
+          tl.set("#sq-ready-state", { opacity: 0 }, 1.06);
+          tl.set("#sq-status-ready", { opacity: 0 }, 1.08);
+          tl.set("#sq-status-building", { opacity: 1 }, 1.08);
+          tl.set("#storyboard-rail", { opacity: 1 }, 1.1);
+          tl.fromTo(cards, { opacity: 0, y: 24, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, stagger: 0.11, ease: "power3.out" }, 1.14);
+          tl.fromTo("#sq-build-summary", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 1.78);
+          tl.set("#sq-status-building", { opacity: 0 }, 1.96);
+          tl.set("#sq-status-storyboard", { opacity: 1 }, 1.96);
+          tl.to("#story-card-interrupt", { scale: 1.06, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 2);
+
+          tl.to("#storyboard-title, #storyboard-subtitle, #sq-build-summary", { opacity: 0, duration: 0.2, ease: "power1.in" }, 2.82);
+          tl.to(otherCards, { opacity: 0, scale: 0.95, duration: 0.22, ease: "power2.in" }, 2.84);
+          tl.to("#story-card-interrupt > *", { opacity: 0, duration: 0.14, ease: "power1.in" }, 2.9);
+          tl.set("#sq-status-storyboard", { opacity: 0 }, 2.94);
+          tl.set("#sq-status-rendering", { opacity: 1 }, 2.94);
+          tl.to("#story-card-interrupt", { x: -36, y: -136, scale: 4.586, borderRadius: "6px", backgroundColor: "#202123", borderColor: "#10a37f", boxShadow: "0 28px 80px rgba(23,23,23,0.2)", duration: 1, ease: "power4.inOut" }, 3);
+
+          tl.set("#story-card-interrupt", { opacity: 0, x: 0, y: 0, scale: 1 }, 4);
+          tl.set("#storyboard-strip", { opacity: 0 }, 4);
+          tl.set("#sequences-prompt-panel, #sq-assistant-avatar, #sq-assistant-name, #sq-assistant-status", { opacity: 0 }, 4);
+          tl.set("#playable-result, #player-frame-question", { opacity: 1 }, 4);
+          tl.set("#player-frame-advice, #player-frame-recommendation", { opacity: 0 }, 4);
+          tl.fromTo("#player-progress-fill", { scaleX: 0 }, { scaleX: 1, duration: 1.55, ease: "none" }, 4);
+          tl.set("#player-frame-question", { opacity: 0 }, 4.5);
+          tl.set("#player-frame-advice", { opacity: 1 }, 4.5);
+          tl.set("#player-frame-advice", { opacity: 0 }, 5);
+          tl.set("#player-frame-recommendation", { opacity: 1 }, 5);
+          tl.fromTo("#player-preview-copy", { y: 28 }, { y: 0, duration: 0.34, ease: "power3.out" }, 5);
+          tl.set("#sq-status-rendering", { opacity: 0 }, 5.12);
+          tl.set("#sq-status-playable", { opacity: 1 }, 5.12);
+
+          tl.fromTo("#verified-status", { opacity: 0, y: -12, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, 6);
+          tl.set("#sq-status-playable", { opacity: 0 }, 6.08);
+          tl.set("#sq-status-checked", { opacity: 1 }, 6.08);
+          tl.to("#player-play", { scale: 1.08, duration: 0.18, ease: "power2.out", yoyo: true, repeat: 1 }, 6.18);
+
+          tl.set({}, {}, 7);
+          window.__timelines = window.__timelines || {};
+          window.__timelines["recommendation-sequences"] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

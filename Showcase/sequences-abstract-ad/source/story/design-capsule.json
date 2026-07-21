@@ -1,0 +1,64 @@
+{
+  "version": "sequences.design-capsule.v1",
+  "id": "sequences-abstract-prompt-motion",
+  "name": "Make your prompt move",
+  "thesis": "One ChatGPT prompt seed becomes the storyboard, timeline, player, and final period of a Sequences launch film.",
+  "origin": {
+    "kind": "reference-derived",
+    "imagePaths": [
+      "../../reference/abstract-openai-reference-strip.jpg",
+      "../../reference/abstract-motion-reference-strip.jpg"
+    ],
+    "rationale": "The system combines OpenAI's sparse semantic dot and glyph language with the supplied motion film's portal and 2D camera grammar, while keeping the story centered on native ChatGPT and Sequences product components."
+  },
+  "basis": "light",
+  "palette": {
+    "field": "#F7F7F3",
+    "paper": "#FFFFFF",
+    "ink": "#11110F",
+    "guide": "#D8D8D0",
+    "green": "#10A37F",
+    "sky": "#7ECFF8",
+    "lilac": "#B9ADEB",
+    "butter": "#F4D96A",
+    "cobalt": "#2457D6",
+    "midnight": "#122B4A"
+  },
+  "typography": {
+    "display": { "family": "Montserrat", "weights": [500, 600, 700] },
+    "mono": { "family": "IBM Plex Mono", "weights": [500] }
+  },
+  "geometry": {
+    "radiusPx": 38,
+    "borderPx": 2,
+    "shadow": "restrained-product"
+  },
+  "density": "crescendo",
+  "compositionDialect": "semantic-prompt-seed-continuity",
+  "motionVerbs": ["orbit", "unfurl", "dock"],
+  "rules": {
+    "do": [
+      "Use one prompt seed through every semantic role",
+      "Use the exact canonical ChatGPT knot",
+      "Keep Sequences visually dominant after the handoff",
+      "Keep the world in constant but calm 2D motion",
+      "Reserve eighth-note density for the staccato passage"
+    ],
+    "avoid": [
+      "Complex 3D scenes, characters, cities, or vehicles",
+      "Glass, neon, holograms, and generic particle noise",
+      "Unrelated cards or screenshot-frame popping",
+      "Pulsing readable text"
+    ]
+  },
+  "rootHfId": "sequences-component-world",
+  "tokenBindings": {
+    "field": "--field",
+    "paper": "--paper",
+    "ink": "--ink",
+    "guide": "--guide",
+    "green": "--green",
+    "midnight": "--midnight"
+  },
+  "implementationFiles": ["compositions/component-lab.html"]
+}

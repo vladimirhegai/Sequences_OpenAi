@@ -13,8 +13,6 @@
         "@hyperframes/producer": "0.7.56",
         "@hyperframes/sdk": "0.7.56",
         "@hyperframes/shader-transitions": "0.7.56",
-        "@hyperframes/studio-server": "0.7.56",
-        "@phosphor-icons/react": "2.1.10",
         "gsap": "3.13.0",
         "hono": "4.12.30",
         "hyperframes": "0.7.56",
@@ -30,6 +28,7 @@
         "concurrently": "10.0.3",
         "oxfmt": "0.59.0",
         "oxlint": "1.74.0",
+        "puppeteer": "25.3.0",
         "typescript": "7.0.2",
         "vite": "8.1.4",
         "vitest": "4.1.10",
@@ -45,8 +44,6 @@
     "@hyperframes/producer": "0.7.56",
     "@hyperframes/sdk": "0.7.56",
     "@hyperframes/shader-transitions": "0.7.56",
-    "@hyperframes/studio": "0.7.56",
-    "@hyperframes/studio-server": "0.7.56",
   },
   "packages": {
     "@babel/helper-string-parser": ["@babel/helper-string-parser@7.29.7", "", {}, "sha512-Pb5ijPrZ89GDH8223L4UP8i6QApWxs04RbPQJTeWDV0/keR2E36MeKnyr6LYmUUvqRRI+Iv87SuF1W6ErINzYw=="],
@@ -292,8 +289,6 @@
     "@oxlint/binding-win32-ia32-msvc": ["@oxlint/binding-win32-ia32-msvc@1.74.0", "", { "os": "win32", "cpu": "ia32" }, "sha512-yyXXJyYYSXL4I8K8jAWjJs+J3fa9gH2JmEbo4f5adm+1tNC9itseicBNuwK7BDHvqQ5J534s+yDULu89vYL2ZQ=="],
 
     "@oxlint/binding-win32-x64-msvc": ["@oxlint/binding-win32-x64-msvc@1.74.0", "", { "os": "win32", "cpu": "x64" }, "sha512-VTC9IYTIMrVUk/i6Ms1ohzzDKZFkWn0KU2OBbPBzgmVZ2V30165T/zK4LztTr0Xgp9fZ1qQZ1rsZAu/rEmySlA=="],
-
-    "@phosphor-icons/react": ["@phosphor-icons/react@2.1.10", "", { "peerDependencies": { "react": ">= 16.8", "react-dom": ">= 16.8" } }, "sha512-vt8Tvq8GLjheAZZYa+YG/pW7HDbov8El/MANW8pOAz4eGxrwhnbfrQZq0Cp4q8zBEu8NIhHdnr+r8thnfRSNYA=="],
 
     "@protobufjs/aspromise": ["@protobufjs/aspromise@1.1.2", "", {}, "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="],
 

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en"><head></head>
+  <body>
+    <template>
+      <style>
+        /*
+         * Generic SaaS starter shell. Brand-neutral by design: rebrand through
+         * the tokens below, rewrite the copy, and choreograph the stable
+         * regions (lockup, product window, sidebar, canvas panels) instead of
+         * rebuilding the HTML foundation from nothing.
+         */
+        #root {
+          --shell-brand: #2745d6;
+          --shell-brand-soft: #c9d4ff;
+          --shell-ink: #171a21;
+          --shell-ink-muted: #454c5c;
+          --shell-label: #5a6274;
+          --shell-surface: #ffffff;
+          --shell-surface-dim: #f7f8fc;
+          --shell-line: #e3e6ee;
+
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          color: var(--shell-ink);
+          font-family: Montserrat, sans-serif;
+        }
+
+        #shell-lockup {
+          position: absolute;
+          top: 306px;
+          left: 128px;
+          width: 600px;
+        }
+
+        #shell-kicker {
+          margin: 0 0 26px;
+          color: var(--shell-brand);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 20px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+        }
+
+        #shell-headline {
+          margin: 0 0 26px;
+          font-size: 84px;
+          font-weight: 800;
+          line-height: 1.04;
+          letter-spacing: -0.02em;
+        }
+
+        #shell-subline {
+          margin: 0 0 42px;
+          width: 520px;
+          color: var(--shell-ink-muted);
+          font-size: 25px;
+          font-weight: 500;
+          line-height: 1.5;
+        }
+
+        #shell-cta {
+          display: inline-block;
+          padding: 20px 40px;
+          border-radius: 14px;
+          background: var(--shell-ink);
+          color: #ffffff;
+          font-size: 21px;
+          font-weight: 700;
+        }
+
+        #shell-window {
+          position: absolute;
+          top: 150px;
+          left: 822px;
+          width: 978px;
+          height: 780px;
+          overflow: hidden;
+          border: 1px solid var(--shell-line);
+          border-radius: 22px;
+          background: var(--shell-surface);
+          box-shadow: 0 34px 80px rgba(23, 26, 33, 0.16);
+        }
+
+        #shell-chrome {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          height: 56px;
+          padding: 0 22px;
+          border-bottom: 1px solid var(--shell-line);
+          background: var(--shell-surface-dim);
+        }
+
+        .shell-dot {
+          width: 13px;
+          height: 13px;
+          border-radius: 50%;
+        }
+
+        .shell-dot.red { background: #ff5f57; }
+        .shell-dot.amber { background: #febc2e; }
+        .shell-dot.green { background: #28c840; }
+
+        #shell-address {
+          margin-left: 24px;
+          padding: 7px 26px;
+          border-radius: 9px;
+          background: #eceef6;
+          color: var(--shell-ink-muted);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 15px;
+          font-weight: 500;
+        }
+
+        #shell-body {
+          display: grid;
+          grid-template-columns: 216px minmax(0, 1fr);
+          height: 723px;
+        }
+
+        #shell-sidebar {
+          padding: 24px 18px;
+          border-right: 1px solid var(--shell-line);
+          background: var(--shell-surface-dim);
+        }
+
+        #shell-logo-row {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 30px;
+        }
+
+        #shell-logo-mark {
+          width: 30px;
+          height: 30px;
+          border-radius: 9px;
+          background: var(--shell-brand);
+        }
+
+        #shell-logo-bar {
+          width: 96px;
+          height: 14px;
+          border-radius: 7px;
+          background: #d5d9e6;
+        }
+
+        .shell-nav-item {
+          height: 38px;
+          margin-bottom: 12px;
+          border-radius: 10px;
+          background: #e6e9f2;
+        }
+
+        .shell-nav-item.active {
+          background: var(--shell-brand-soft);
+        }
+
+        #shell-main {
+          padding: 28px 30px;
+        }
+
+        #shell-main-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 26px;
+        }
+
+        #shell-main-title {
+          margin: 0;
+          font-size: 27px;
+          font-weight: 700;
+        }
+
+        #shell-new-project {
+          padding: 13px 26px;
+          border-radius: 11px;
+          background: var(--shell-brand);
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        #shell-stats {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+          margin-bottom: 24px;
+        }
+
+        .shell-stat {
+          padding: 20px 22px;
+          border: 1px solid var(--shell-line);
+          border-radius: 16px;
+          background: var(--shell-surface);
+        }
+
+        .shell-stat-label {
+          margin: 0 0 10px;
+          color: var(--shell-label);
+          font-family: "IBM Plex Mono", monospace;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .shell-stat-value {
+          margin: 0;
+          font-size: 40px;
+          font-weight: 800;
+        }
+
+        #shell-chart {
+          display: flex;
+          align-items: flex-end;
+          gap: 14px;
+          height: 236px;
+          margin-bottom: 24px;
+          padding: 24px 24px 20px;
+          border: 1px solid var(--shell-line);
+          border-radius: 16px;
+          background: var(--shell-surface);
+        }
+
+        .shell-bar {
+          flex: 1;
+          border-radius: 7px 7px 3px 3px;
+          background: linear-gradient(180deg, var(--shell-brand) 0%, #7a92f0 100%);
+        }
+
+        .shell-bar.b1 { height: 44%; }
+        .shell-bar.b2 { height: 62%; }
+        .shell-bar.b3 { height: 50%; }
+        .shell-bar.b4 { height: 78%; }
+        .shell-bar.b5 { height: 58%; }
+        .shell-bar.b6 { height: 88%; }
+        .shell-bar.b7 { height: 70%; }
+        .shell-bar.b8 { height: 96%; }
+
+        .shell-activity-row {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          height: 44px;
+          margin-bottom: 12px;
+          padding: 0 18px;
+          border: 1px solid var(--shell-line);
+          border-radius: 12px;
+          background: var(--shell-surface);
+        }
+
+        .shell-activity-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #28c840;
+        }
+
+        .shell-activity-bar {
+          height: 12px;
+          border-radius: 6px;
+          background: #e6e9f2;
+        }
+
+        .shell-activity-bar.wide { width: 340px; }
+        .shell-activity-bar.mid { width: 210px; }
+        .shell-activity-bar.thin { width: 120px; }
+
+        /*
+         * Single pointer owner for the whole composition. Decorative and
+         * text-free, so pointer-events:none is correct here. Keep exactly one
+         * cursor; never add a second pointer element.
+         */
+        #shell-pointer {
+          position: absolute;
+          top: 268px;
+          left: 1706px;
+          width: 26px;
+          height: 30px;
+          background: var(--shell-ink);
+          clip-path: polygon(0 0, 100% 62%, 58% 70%, 76% 100%, 62% 100%, 46% 74%, 0 92%);
+          filter: drop-shadow(0 2px 6px rgba(23, 26, 33, 0.35));
+          pointer-events: none;
+        }
+      </style>
+      <div data-hf-id="fresh-build-product-world-root" id="root" data-composition-id="fresh-build-product-world" data-start="0" data-duration="5" data-width="1920" data-height="1080" data-fps="30">
+        <header id="shell-lockup" data-hf-id="hf-shell-lockup">
+          <p id="shell-kicker" data-hf-id="hf-shell-kicker">Product launch</p>
+          <h1 id="shell-headline" data-hf-id="hf-shell-headline">A calmer way to ship work.</h1>
+          <p id="shell-subline" data-hf-id="hf-shell-subline">This is the starter story. Rebrand the shell, rewrite the copy, and choreograph the product world for the launch at hand.</p>
+          <span id="shell-cta" data-hf-id="hf-shell-cta">Get started</span>
+        </header>
+
+        <section id="shell-window" data-hf-id="hf-shell-window">
+          <div id="shell-chrome" data-hf-id="hf-shell-chrome">
+            <span class="shell-dot red" data-hf-id="hf-shell-dot-red"></span>
+            <span class="shell-dot amber" data-hf-id="hf-shell-dot-amber"></span>
+            <span class="shell-dot green" data-hf-id="hf-shell-dot-green"></span>
+            <span id="shell-address" data-hf-id="hf-shell-address">acme.app/overview</span>
+          </div>
+          <div id="shell-body" data-hf-id="hf-shell-body">
+            <aside id="shell-sidebar" data-hf-id="hf-shell-sidebar">
+              <div id="shell-logo-row" data-hf-id="hf-shell-logo-row">
+                <span id="shell-logo-mark" data-hf-id="hf-shell-logo-mark"></span>
+                <span id="shell-logo-bar" data-hf-id="hf-shell-logo-bar"></span>
+              </div>
+              <div class="shell-nav-item active" data-hf-id="hf-shell-nav-1"></div>
+              <div class="shell-nav-item" data-hf-id="hf-shell-nav-2"></div>
+              <div class="shell-nav-item" data-hf-id="hf-shell-nav-3"></div>
+              <div class="shell-nav-item" data-hf-id="hf-shell-nav-4"></div>
+              <div class="shell-nav-item" data-hf-id="hf-shell-nav-5"></div>
+            </aside>
+            <div id="shell-main" data-hf-id="hf-shell-main">
+              <div id="shell-main-header" data-hf-id="hf-shell-main-header">
+                <h2 id="shell-main-title" data-hf-id="hf-shell-main-title">Overview</h2>
+                <span id="shell-new-project" data-hf-id="hf-shell-new-project">New project</span>
+              </div>
+              <div id="shell-stats" data-hf-id="hf-shell-stats">
+                <div class="shell-stat" data-hf-id="hf-shell-stat-projects">
+                  <p class="shell-stat-label" data-hf-id="hf-shell-stat-projects-label">Projects</p>
+                  <p class="shell-stat-value" id="shell-stat-value-projects" data-hf-id="hf-shell-stat-projects-value">128</p>
+                </div>
+                <div class="shell-stat" data-hf-id="hf-shell-stat-uptime">
+                  <p class="shell-stat-label" data-hf-id="hf-shell-stat-uptime-label">Uptime</p>
+                  <p class="shell-stat-value" data-hf-id="hf-shell-stat-uptime-value">99.98%</p>
+                </div>
+                <div class="shell-stat" data-hf-id="hf-shell-stat-rating">
+                  <p class="shell-stat-label" data-hf-id="hf-shell-stat-rating-label">Rating</p>
+                  <p class="shell-stat-value" data-hf-id="hf-shell-stat-rating-value">4.9</p>
+                </div>
+              </div>
+              <div id="shell-chart" data-hf-id="hf-shell-chart">
+                <div class="shell-bar b1" data-hf-id="hf-shell-bar-1"></div>
+                <div class="shell-bar b2" data-hf-id="hf-shell-bar-2"></div>
+                <div class="shell-bar b3" data-hf-id="hf-shell-bar-3"></div>
+                <div class="shell-bar b4" data-hf-id="hf-shell-bar-4"></div>
+                <div class="shell-bar b5" data-hf-id="hf-shell-bar-5"></div>
+                <div class="shell-bar b6" data-hf-id="hf-shell-bar-6"></div>
+                <div class="shell-bar b7" data-hf-id="hf-shell-bar-7"></div>
+                <div class="shell-bar b8" data-hf-id="hf-shell-bar-8"></div>
+              </div>
+              <div class="shell-activity-row" data-hf-id="hf-shell-activity-1">
+                <span class="shell-activity-dot" data-hf-id="hf-shell-activity-1-dot"></span>
+                <span class="shell-activity-bar wide" data-hf-id="hf-shell-activity-1-main"></span>
+                <span class="shell-activity-bar thin" data-hf-id="hf-shell-activity-1-meta"></span>
+              </div>
+              <div class="shell-activity-row" data-hf-id="hf-shell-activity-2">
+                <span class="shell-activity-dot" data-hf-id="hf-shell-activity-2-dot"></span>
+                <span class="shell-activity-bar mid" data-hf-id="hf-shell-activity-2-main"></span>
+                <span class="shell-activity-bar thin" data-hf-id="hf-shell-activity-2-meta"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div id="shell-pointer" data-hf-id="hf-shell-pointer"></div>
+
+        <script src="assets/vendor/gsap-guarded.min.js"></script>
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto", ease: "power3.out" } });
+
+          tl.fromTo("#shell-kicker", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5 }, 0.1);
+          tl.fromTo("#shell-headline", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.6 }, 0.22);
+          tl.fromTo("#shell-subline", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5 }, 0.42);
+          tl.fromTo("#shell-cta", { opacity: 0, y: 22, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.4)" }, 0.62);
+
+          tl.fromTo("#shell-window", { opacity: 0, y: 64, scale: 0.965 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power4.out" }, 0.55);
+          tl.fromTo("[data-composition-id=\"fresh-build-product-world\"] .shell-nav-item", { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.07 }, 1.15);
+          tl.fromTo("[data-composition-id=\"fresh-build-product-world\"] .shell-stat", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 }, 1.35);
+          tl.fromTo("#shell-stat-value-projects", { innerText: 0 }, { innerText: 128, snap: { innerText: 1 }, duration: 0.8, ease: "none" }, 1.55);
+          tl.fromTo("[data-composition-id=\"fresh-build-product-world\"] .shell-bar", { scaleY: 0.12, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.6, stagger: 0.05, ease: "power2.out" }, 1.9);
+          tl.fromTo("[data-composition-id=\"fresh-build-product-world\"] .shell-activity-row", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.1 }, 2.55);
+
+          tl.fromTo("#shell-pointer", { opacity: 0, x: 150, y: 210 }, { opacity: 1, x: 0, y: 0, duration: 0.7, ease: "power3.inOut" }, 3.1);
+          tl.to("#shell-pointer", { scale: 0.85, duration: 0.1, ease: "power2.in" }, 3.95);
+          tl.to("#shell-pointer", { scale: 1, duration: 0.22, ease: "back.out(2)" }, 4.05);
+          tl.to("#shell-new-project", { scale: 0.94, duration: 0.1, ease: "power2.in" }, 3.95);
+          tl.to("#shell-new-project", { scale: 1, duration: 0.22, ease: "back.out(2)" }, 4.05);
+          tl.to({}, { duration: 0.1 }, 4.9);
+
+          window.__timelines["fresh-build-product-world"] = tl;
+        </script>
+      </div>
+    </template>
+  </body>
+</html>

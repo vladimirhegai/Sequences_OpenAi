@@ -1,0 +1,452 @@
+{
+  "title": "From noise to momentum",
+  "generatedAt": "2026-07-20T01:43:22.324Z",
+  "durationSec": 28,
+  "fps": 30,
+  "deterministic": true,
+  "localOnly": true,
+  "audio": "none",
+  "personalInformation": "fictional names and initials only",
+  "render": null,
+  "safeFrame": {
+    "insetX": 48,
+    "insetY": 38,
+    "ok": true
+  },
+  "samples": [
+    {
+      "time": 0.45,
+      "scene": "overload",
+      "focus": ".chat",
+      "bounds": {
+        "left": 130.99937438964844,
+        "top": 97.9959716796875,
+        "right": 481.6946258544922,
+        "bottom": 290.12799072265625,
+        "width": 350.69525146484375,
+        "height": 192.13201904296875
+      },
+      "safe": true
+    },
+    {
+      "time": 1.35,
+      "scene": "overload",
+      "focus": "#too-tools",
+      "bounds": {
+        "left": 576.03125,
+        "top": 466.52398681640625,
+        "right": 1343.953125,
+        "bottom": 615.5239868164062,
+        "width": 767.921875,
+        "height": 149
+      },
+      "safe": true
+    },
+    {
+      "time": 2.35,
+      "scene": "overload",
+      "focus": "#too-handoffs",
+      "bounds": {
+        "left": 481.1875,
+        "top": 468.40740966796875,
+        "right": 1438.8125,
+        "bottom": 617.4074096679688,
+        "width": 957.625,
+        "height": 149
+      },
+      "safe": true
+    },
+    {
+      "time": 3.7,
+      "scene": "overload",
+      "focus": "#no-momentum",
+      "bounds": {
+        "left": 485.84375,
+        "top": 448,
+        "right": 1434.140625,
+        "bottom": 632,
+        "width": 948.296875,
+        "height": 184
+      },
+      "safe": true
+    },
+    {
+      "time": 5.72,
+      "scene": "overload",
+      "focus": "#hero-mark",
+      "bounds": {
+        "left": 829.136474609375,
+        "top": 376.730224609375,
+        "right": 1090.863525390625,
+        "bottom": 638.457275390625,
+        "width": 261.72705078125,
+        "height": 261.72705078125
+      },
+      "safe": true
+    },
+    {
+      "time": 6.45,
+      "scene": "unify",
+      "focus": "#hero-mark",
+      "bounds": {
+        "left": 807.1810913085938,
+        "top": 354.77484130859375,
+        "right": 1112.8189697265625,
+        "bottom": 660.4126586914062,
+        "width": 305.63787841796875,
+        "height": 305.6378173828125
+      },
+      "safe": true
+    },
+    {
+      "time": 7.85,
+      "scene": "unify",
+      "focus": "#messy .typed",
+      "bounds": {
+        "left": 454,
+        "top": 669.59375,
+        "right": 712,
+        "bottom": 765.59375,
+        "width": 258,
+        "height": 96
+      },
+      "safe": true
+    },
+    {
+      "time": 9.25,
+      "scene": "unify",
+      "focus": "#messy .typed",
+      "bounds": {
+        "left": 454,
+        "top": 669.59375,
+        "right": 1452,
+        "bottom": 765.59375,
+        "width": 998,
+        "height": 96
+      },
+      "safe": true
+    },
+    {
+      "time": 10.2,
+      "scene": "channel",
+      "focus": "#channel-modal",
+      "bounds": {
+        "left": 578.5560302734375,
+        "top": 306.6489562988281,
+        "right": 1341.444091796875,
+        "bottom": 776.709716796875,
+        "width": 762.8880615234375,
+        "height": 470.0607604980469
+      },
+      "safe": true
+    },
+    {
+      "time": 11.15,
+      "scene": "channel",
+      "focus": "#channel-modal",
+      "bounds": {
+        "left": 580,
+        "top": 310,
+        "right": 1340,
+        "bottom": 778.28125,
+        "width": 760,
+        "height": 468.28125
+      },
+      "safe": true
+    },
+    {
+      "time": 12.35,
+      "scene": "workspace",
+      "focus": "#slack-window",
+      "bounds": {
+        "left": 111.36004638671875,
+        "top": 76.93011474609375,
+        "right": 1808.6398315429688,
+        "bottom": 1005.4420776367188,
+        "width": 1697.27978515625,
+        "height": 928.511962890625
+      },
+      "safe": true
+    },
+    {
+      "time": 13.72,
+      "scene": "workspace",
+      "focus": "#message-one p",
+      "bounds": {
+        "left": 653.4397583007812,
+        "top": 462.3800048828125,
+        "right": 1050.066162109375,
+        "bottom": 492.6816101074219,
+        "width": 396.62640380859375,
+        "height": 30.301605224609375
+      },
+      "safe": true
+    },
+    {
+      "time": 14.45,
+      "scene": "workspace",
+      "focus": "#message-two p",
+      "bounds": {
+        "left": 669.8348999023438,
+        "top": 560.2388916015625,
+        "right": 869.6612548828125,
+        "bottom": 593.0941162109375,
+        "width": 199.82635498046875,
+        "height": 32.855224609375
+      },
+      "safe": true
+    },
+    {
+      "time": 15.3,
+      "scene": "workspace",
+      "focus": "#message-two p",
+      "bounds": {
+        "left": 601.91357421875,
+        "top": 507.7999267578125,
+        "right": 993.5963134765625,
+        "bottom": 572.199951171875,
+        "width": 391.6827392578125,
+        "height": 64.4000244140625
+      },
+      "safe": true
+    },
+    {
+      "time": 17.45,
+      "scene": "workspace",
+      "focus": "#message-two p",
+      "bounds": {
+        "left": 620,
+        "top": 574,
+        "right": 806.5,
+        "bottom": 602,
+        "width": 186.5,
+        "height": 28
+      },
+      "safe": true
+    },
+    {
+      "time": 18.75,
+      "scene": "proof",
+      "focus": ".decision",
+      "bounds": {
+        "left": 140,
+        "top": 95,
+        "right": 840,
+        "bottom": 625,
+        "width": 700,
+        "height": 530
+      },
+      "safe": true
+    },
+    {
+      "time": 19.65,
+      "scene": "proof",
+      "focus": ".conversation",
+      "bounds": {
+        "left": 1080,
+        "top": 443.08660888671875,
+        "right": 1780,
+        "bottom": 973.0866088867188,
+        "width": 700,
+        "height": 530
+      },
+      "safe": true
+    },
+    {
+      "time": 20.7,
+      "scene": "promise",
+      "focus": "#all-place",
+      "bounds": {
+        "left": 587.53125,
+        "top": 465.531494140625,
+        "right": 1332.453125,
+        "bottom": 614.531494140625,
+        "width": 744.921875,
+        "height": 149
+      },
+      "safe": true
+    },
+    {
+      "time": 21.6,
+      "scene": "promise",
+      "focus": "#all-place",
+      "bounds": {
+        "left": 587.53125,
+        "top": 465.5,
+        "right": 1332.453125,
+        "bottom": 614.5,
+        "width": 744.921875,
+        "height": 149
+      },
+      "safe": true
+    },
+    {
+      "time": 22.4,
+      "scene": "promise",
+      "focus": "#all-slack",
+      "bounds": {
+        "left": 625.8873291015625,
+        "top": 463.14239501953125,
+        "right": 1294.112548828125,
+        "bottom": 612.6192016601562,
+        "width": 668.2252197265625,
+        "height": 149.476806640625
+      },
+      "safe": true
+    },
+    {
+      "time": 23.55,
+      "scene": "promise",
+      "focus": "#all-slack",
+      "bounds": {
+        "left": 626.953125,
+        "top": 465.5,
+        "right": 1293.046875,
+        "bottom": 614.5,
+        "width": 666.09375,
+        "height": 149
+      },
+      "safe": true
+    },
+    {
+      "time": 24.4,
+      "scene": "end",
+      "focus": ".lockup",
+      "bounds": {
+        "left": 569.453125,
+        "top": 390,
+        "right": 1350.53125,
+        "bottom": 690,
+        "width": 781.078125,
+        "height": 300
+      },
+      "safe": true
+    },
+    {
+      "time": 25.15,
+      "scene": "end",
+      "focus": ".lockup",
+      "bounds": {
+        "left": 569.453125,
+        "top": 390,
+        "right": 1350.53125,
+        "bottom": 690,
+        "width": 781.078125,
+        "height": 300
+      },
+      "safe": true
+    },
+    {
+      "time": 27.1,
+      "scene": "end",
+      "focus": ".lockup",
+      "bounds": {
+        "left": 565.3524780273438,
+        "top": 388.42498779296875,
+        "right": 1354.6318359375,
+        "bottom": 691.574951171875,
+        "width": 789.2793579101562,
+        "height": 303.14996337890625
+      },
+      "safe": true
+    }
+  ],
+  "representativeHashes": [
+    {
+      "file": "frame-00.png",
+      "sha256": "2162930a4b7e402d"
+    },
+    {
+      "file": "frame-01.png",
+      "sha256": "8cf8dcb983d74cb5"
+    },
+    {
+      "file": "frame-02.png",
+      "sha256": "6f679f462c17a74a"
+    },
+    {
+      "file": "frame-03.png",
+      "sha256": "c3f4e7d379e3407f"
+    },
+    {
+      "file": "frame-04.png",
+      "sha256": "2422971d9581a1c2"
+    },
+    {
+      "file": "frame-05.png",
+      "sha256": "ad328cc2c16e8d88"
+    },
+    {
+      "file": "frame-06.png",
+      "sha256": "d7c1c5259599155a"
+    },
+    {
+      "file": "frame-07.png",
+      "sha256": "6a2a8398ef83747d"
+    },
+    {
+      "file": "frame-08.png",
+      "sha256": "271342c9041d7783"
+    },
+    {
+      "file": "frame-09.png",
+      "sha256": "c5fe2d8eb0ede9f4"
+    },
+    {
+      "file": "frame-10.png",
+      "sha256": "c12a4f9bb2a99770"
+    },
+    {
+      "file": "frame-11.png",
+      "sha256": "ec635dbe00833958"
+    },
+    {
+      "file": "frame-12.png",
+      "sha256": "6f660d1c54624a26"
+    },
+    {
+      "file": "frame-13.png",
+      "sha256": "2eb1e3f42180b457"
+    },
+    {
+      "file": "frame-14.png",
+      "sha256": "a0b6c360be71cbae"
+    },
+    {
+      "file": "frame-15.png",
+      "sha256": "ae4e85e133b0be18"
+    },
+    {
+      "file": "frame-16.png",
+      "sha256": "3dbe945acb3d082f"
+    },
+    {
+      "file": "frame-17.png",
+      "sha256": "d55976ddb6e6eb40"
+    },
+    {
+      "file": "frame-18.png",
+      "sha256": "e48c702e66c6ea86"
+    },
+    {
+      "file": "frame-19.png",
+      "sha256": "946fcfa39fed64ea"
+    },
+    {
+      "file": "frame-20.png",
+      "sha256": "fca4f626c3f66039"
+    },
+    {
+      "file": "frame-21.png",
+      "sha256": "c1f0cfb196893044"
+    },
+    {
+      "file": "frame-22.png",
+      "sha256": "86313fce7ae11a95"
+    },
+    {
+      "file": "frame-23.png",
+      "sha256": "e5572478cea86a05"
+    }
+  ]
+}

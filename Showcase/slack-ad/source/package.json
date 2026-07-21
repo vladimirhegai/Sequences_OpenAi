@@ -1,0 +1,13 @@
+{
+  "name": "@sequences/showcase-slack-ad",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "snapshot": "bun x tsx render.ts",
+    "render": "bun x tsx render.ts --render"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.43.1",
+    "tsx": "^4.22.4"
+  }
+}

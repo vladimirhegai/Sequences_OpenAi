@@ -4,6 +4,7 @@ import type { CapabilitiesResponseV1 } from "../shared";
 import type { ServerConfig } from "./config";
 import { errorMessage } from "./errors";
 import { SkillBundle } from "./skills";
+import { HYPERFRAMES_SKILLS } from "./skill-catalog";
 
 const RegistryManifestSchema = z
   .object({
@@ -36,11 +37,13 @@ export class CapabilityCatalog {
     } catch (error) {
       failures.push(`skills: ${errorMessage(error)}`);
     }
-    try {
-      const raw = await readFile(this.config.registryManifestPath, "utf8");
-      registry = RegistryManifestSchema.parse(JSON.parse(raw) as unknown);
-    } catch (error) {
-      failures.push(`registry: ${errorMessage(error)}`);
+    if (manifest?.manifest.skills["hyperframes-registry"]) {
+      try {
+        const raw = await readFile(this.config.registryManifestPath, "utf8");
+        registry = RegistryManifestSchema.parse(JSON.parse(raw) as unknown);
+      } catch (error) {
+        failures.push(`registry: ${errorMessage(error)}`);
+      }
     }
     return {
       version: "sequences.capabilities.v1",
@@ -48,13 +51,25 @@ export class CapabilityCatalog {
       available: failures.length === 0,
       manifestDigest: manifest?.digest ?? null,
       manifestSource: manifest?.manifest.source ?? null,
+      skillProfileVersion: manifest?.manifest.version ?? null,
+      skillProfileId: manifest?.manifest.profileId ?? null,
+      defaultWorkflow: manifest?.manifest.defaultWorkflow ?? null,
       skills: manifest
         ? Object.entries(manifest.manifest.skills)
-            .map(([id, value]) => ({ id, hash: value.hash, files: value.files }))
+            .map(([id, value]) => ({
+              id,
+              purpose:
+                HYPERFRAMES_SKILLS.find((skill) => skill.id === id)?.purpose ??
+                "Project-local HyperFrames skill.",
+              hash: value.hash,
+              files: value.files,
+            }))
             .sort((a, b) => a.id.localeCompare(b.id))
         : [],
       registry: registry
-        ? registry.items.map((item) => ({ id: item.name, type: item.type })).sort((a, b) => a.id.localeCompare(b.id))
+        ? registry.items
+            .map((item) => ({ id: item.name, type: item.type }))
+            .sort((a, b) => a.id.localeCompare(b.id))
         : [],
       qaCommands: ["lint", "check", "keyframes", "snapshot", "render"],
       unavailableReason: failures.length > 0 ? failures.join("; ").slice(0, 1_000) : null,
