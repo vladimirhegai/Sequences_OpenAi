@@ -16,6 +16,12 @@ video editor.
 _Five moments from the Sequences abstract launch film. The included ChatGPT
 showcase is also ready to watch when the app starts._
 
+## Contributors
+
+- **Vladimir Hegai** — creator, product direction, design, and creative review.
+- **Codex by OpenAI (GPT-5.6)** — AI co-builder across implementation,
+  debugging, live QA, and documentation.
+
 ## Why Sequences
 
 Good launch videos are expensive in two ways: they need strong creative taste,
