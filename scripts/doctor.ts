@@ -96,7 +96,9 @@ let skillsDetail = "missing";
 let skillsOk = false;
 if (existsSync(skillsManifest)) {
   const bytes = readFileSync(skillsManifest);
-  const digest = createHash("sha256").update(bytes).digest("hex");
+  const digest = createHash("sha256")
+    .update(bytes.toString("utf8").replace(/\r\n/g, "\n"))
+    .digest("hex");
   const manifest = JSON.parse(bytes.toString("utf8")) as {
     version?: string;
     profileId?: string;
