@@ -134,6 +134,11 @@ describe("candidate-local motion primitives", () => {
     const approach = action.stateAt(action.timing.approachEndSec - 0.1);
     const contact = action.render(action.timing.contactSec);
     const released = action.render(action.timing.releaseEndSec);
+    const done = action.render(action.timing.endSec);
+    expect(action.stateAt(0).pointerOpacity).toBe(0);
+    expect(contact.pointerOpacity).toBe(1);
+    expect(pointer.style.opacity).toBe("0");
+    expect(done).toMatchObject({ phase: "done", pointerOpacity: 0 });
     expect(approach.phase).toBe("approach");
     expect(contact.phase).toBe("press");
     expect(contact.cursorX + action.geometry.hotspot.x).toBeCloseTo(

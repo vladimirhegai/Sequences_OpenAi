@@ -40,6 +40,7 @@
     const releaseSec = finiteNumber(options.releaseSec ?? 0.22, "releaseSec");
     const rippleSec = finiteNumber(options.rippleSec ?? 0.55, "rippleSec");
     const consequenceSec = finiteNumber(options.consequenceSec ?? 0.18, "consequenceSec");
+    const pointerFadeSec = finiteNumber(options.pointerFadeSec ?? 0.24, "pointerFadeSec");
     if (
       startSec < 0 ||
       approachSec <= 0 ||
@@ -47,7 +48,8 @@
       pressSec <= 0 ||
       releaseSec <= 0 ||
       rippleSec <= 0 ||
-      consequenceSec <= 0
+      consequenceSec <= 0 ||
+      pointerFadeSec < 0
     ) {
       throw new Error("Pointer timing values must be finite and positive (settleSec may be zero)");
     }
@@ -56,6 +58,7 @@
     const contactSec = pressStartSec + pressSec;
     const releaseStartSec = contactSec;
     const releaseEndSec = releaseStartSec + releaseSec;
+    const pointerFadeEndSec = releaseEndSec + pointerFadeSec;
     return {
       startSec,
       approachSec,
@@ -67,11 +70,13 @@
       releaseStartSec,
       releaseSec,
       releaseEndSec,
+      pointerFadeSec,
+      pointerFadeEndSec,
       rippleSec,
       rippleEndSec: contactSec + rippleSec,
       consequenceSec,
       consequenceEndSec: contactSec + consequenceSec,
-      endSec: Math.max(releaseEndSec, contactSec + rippleSec, contactSec + consequenceSec),
+      endSec: Math.max(pointerFadeEndSec, contactSec + rippleSec, contactSec + consequenceSec),
     };
   }
 
@@ -110,12 +115,21 @@
           : 0.42 * (1 - (rippleProgress - rippleAttack) / (1 - rippleAttack));
     const consequenceProgress =
       at < timing.contactSec ? 0 : easeOutCubic((at - timing.contactSec) / timing.consequenceSec);
+    const pointerOpacity =
+      at < timing.startSec
+        ? 0
+        : at <= timing.releaseEndSec
+          ? 1
+          : timing.pointerFadeSec === 0 || at >= timing.pointerFadeEndSec
+            ? 0
+            : 1 - clamp01((at - timing.releaseEndSec) / timing.pointerFadeSec);
 
     return {
       atSec: at,
       cursorX,
       cursorY,
       pointerScale,
+      pointerOpacity,
       targetScale,
       rippleScale: lerp(0.35, 2.8, rippleProgress),
       rippleOpacity,
@@ -132,7 +146,9 @@
                 ? "press"
                 : at < timing.releaseEndSec
                   ? "release"
-                  : "consequence",
+                  : at < timing.endSec
+                    ? "consequence"
+                    : "done",
       timing,
     };
   }
@@ -209,7 +225,7 @@
     const render = (atSec) => {
       const state = pointerActionState(stateOptions, atSec);
       pointer.style.transform = `translate3d(${state.cursorX}px, ${state.cursorY}px, 0) scale(${state.pointerScale})`;
-      pointer.style.opacity = "1";
+      pointer.style.opacity = String(state.pointerOpacity);
       feedback.style.transform = `scale(${state.targetScale})`;
       ripple.style.transform = `translate3d(${geometry.targetPoint.x - rippleRect.width / 2}px, ${geometry.targetPoint.y - rippleRect.height / 2}px, 0) scale(${state.rippleScale})`;
       ripple.style.opacity = String(state.rippleOpacity);
