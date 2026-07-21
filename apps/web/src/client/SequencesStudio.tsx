@@ -12,7 +12,25 @@ export interface TimelineClip {
 
 const CLIP_COLORS = ["#8da5ff", "#6f86ea", "#b9c5ff", "#9bd8c0"];
 
-export function SequencesStudio({ source, label }: { source: string; label: string }) {
+export type SequencesStudioProps =
+  | { mode: "composition"; source: string; label: string }
+  | { mode: "video"; label: string; mediaSource: string; poster?: string; clipLabel: string };
+
+export function SequencesStudio(props: SequencesStudioProps) {
+  if (props.mode === "video") {
+    return (
+      <NativeVideoStudio
+        mediaSource={props.mediaSource}
+        poster={props.poster ?? null}
+        label={props.label}
+        clipLabel={props.clipLabel}
+      />
+    );
+  }
+  return <CompositionStudio source={props.source} label={props.label} />;
+}
+
+function CompositionStudio({ source, label }: { source: string; label: string }) {
   const playerRef = useRef<HyperframesPlayer | null>(null);
   const sceneSignatureRef = useRef("");
   const [playerReady, setPlayerReady] = useState<HyperframesPlayer | null>(null);
@@ -124,6 +142,110 @@ export function SequencesStudio({ source, label }: { source: string; label: stri
 
       <StudioTimeline
         ready={Boolean(playerReady)}
+        duration={duration}
+        time={time}
+        clips={clips}
+        onSeek={seek}
+      />
+    </section>
+  );
+}
+
+function NativeVideoStudio({
+  mediaSource,
+  poster,
+  label,
+  clipLabel,
+}: {
+  mediaSource: string;
+  poster: string | null;
+  label: string;
+  clipLabel: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const sync = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (Number.isFinite(video.duration) && video.duration > 0) setDuration(video.duration);
+    setTime(Number.isFinite(video.currentTime) ? video.currentTime : 0);
+    setPlaying(!video.paused && !video.ended);
+  }, []);
+
+  const togglePlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) void video.play();
+    else video.pause();
+  }, []);
+
+  const seek = useCallback(
+    (nextTime: number) => {
+      const bounded = Math.max(0, Math.min(duration, nextTime));
+      if (videoRef.current) videoRef.current.currentTime = bounded;
+      setTime(bounded);
+    },
+    [duration],
+  );
+
+  const clips: TimelineClip[] =
+    duration > 0
+      ? [{ id: "featured-showcase", label: clipLabel, start: 0, duration, color: CLIP_COLORS[0]! }]
+      : [];
+
+  return (
+    <section className="sequences-studio sequences-studio--native">
+      <div className="studio-toolbar">
+        <button
+          className="transport-button"
+          type="button"
+          aria-label={playing ? "Pause" : "Play"}
+          disabled={failed}
+          onClick={togglePlayback}
+        >
+          {playing ? "Ⅱ" : "▶"}
+        </button>
+        <span className="studio-time">
+          {formatTime(time)} <span>/</span> {formatTime(duration)}
+        </span>
+        <span className="studio-toolbar__hint">Verified showcase · drag the playhead to seek</span>
+      </div>
+
+      <section className="viewer" aria-label={label}>
+        <div className="viewer__frame viewer__frame--video">
+          <video
+            ref={videoRef}
+            src={mediaSource}
+            {...(poster ? { poster } : {})}
+            preload="metadata"
+            playsInline
+            aria-label={label}
+            onLoadedMetadata={sync}
+            onDurationChange={sync}
+            onTimeUpdate={sync}
+            onPlay={sync}
+            onPause={sync}
+            onEnded={sync}
+            onError={() => {
+              setFailed(true);
+              setPlaying(false);
+            }}
+          />
+          {failed ? (
+            <div className="viewer__notice viewer__notice--error" role="alert">
+              <strong>Showcase unavailable</strong>
+              <span>The verified showcase video could not be loaded.</span>
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      <StudioTimeline
+        ready={!failed && duration > 0}
         duration={duration}
         time={time}
         clips={clips}

@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { JobCard, QaFailureDetails } from "../../src/client/App";
 import type { JobResponse } from "../../src/client/api";
-import { StudioTimeline } from "../../src/client/SequencesStudio";
+import { SequencesStudio, StudioTimeline } from "../../src/client/SequencesStudio";
 
 describe("Phase 0 studio UI", () => {
   it("shows an honest empty timeline before the player reports real timing", () => {
@@ -25,6 +25,23 @@ describe("Phase 0 studio UI", () => {
     expect(markup).toContain('type="range"');
     expect(markup).toContain('aria-valuetext="0:03 of 0:12"');
     expect(markup).toContain("No scene markers in this video");
+  });
+
+  it("renders the featured ChatGPT MP4 through the real viewer transport", () => {
+    const markup = renderToStaticMarkup(
+      <SequencesStudio
+        mode="video"
+        mediaSource="/api/v1/showcases/chatgpt-native-story/video"
+        poster="/api/v1/showcases/chatgpt-native-story/poster"
+        clipLabel="ChatGPT native story"
+        label="ChatGPT: From question to working draft"
+      />,
+    );
+
+    expect(markup).toContain('<video src="/api/v1/showcases/chatgpt-native-story/video"');
+    expect(markup).toContain('aria-label="ChatGPT: From question to working draft"');
+    expect(markup).toContain('aria-label="Play"');
+    expect(markup).toContain("Verified showcase");
   });
 
   it("does not expose fake workflow tabs or the underlying engine name", () => {
@@ -68,7 +85,19 @@ describe("Phase 0 studio UI", () => {
     expect(mainFlow).toContain('setLibraryTab("showcase")');
     expect(mainFlow).toContain('setLibraryTab("recent")');
     expect(mainFlow).toContain("/api/v1/showcases/chatgpt-native-story/video");
-    expect(mainFlow).toContain("workspace.project.jobs.slice(0, 8)");
+    expect(mainFlow).toContain('useState<ViewerSource>("featured")');
+    expect(mainFlow).toContain("!HIDDEN_RECENT_STATES.has(recentJob.state)");
+    expect(mainFlow).toContain("recentJobs.map((recentJob)");
+  });
+
+  it("uses the beige editorial skin and sizes the complete viewer against the first viewport", () => {
+    const styles = readFileSync(resolve("apps/web/src/client/styles.css"), "utf8");
+
+    expect(styles).toContain("color-scheme: light");
+    expect(styles).not.toContain("color-scheme: dark");
+    expect(styles).toContain("calc((100vh - 380px) * 1.7778)");
+    expect(styles).toContain("font-size: clamp(46px, 6vw, 64px)");
+    expect(styles).toContain("background: #eee7db");
   });
 
   it("streams Luna activity only while the current job is active", () => {

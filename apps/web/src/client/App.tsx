@@ -18,6 +18,13 @@ const PROJECT_ID = "release-a";
 const LIVE_STATES = new Set<JobState>(["queued", "preparing", "authoring", "verifying"]);
 const STREAMING_JOB_STATES = new Set<JobState>([...LIVE_STATES, "applying"]);
 const LIVE_RENDER_STATES = new Set<RenderState>(["queued", "preparing", "rendering", "verifying"]);
+const HIDDEN_RECENT_STATES = new Set<JobState>([
+  "failed",
+  "timed_out",
+  "cancelled",
+  "rejected",
+  "stale",
+]);
 
 const STATE_LABELS: Record<JobState, string> = {
   queued: "Queued",
@@ -37,6 +44,7 @@ const STATE_LABELS: Record<JobState, string> = {
 type LoadState = "loading" | "ready" | "error";
 type PendingAction = "build" | "cancel" | "render" | "cancel-render" | null;
 type LibraryTab = "showcase" | "recent";
+type ViewerSource = "featured" | "latest";
 
 export function App() {
   const [loadState, setLoadState] = useState<LoadState>("loading");
@@ -54,7 +62,9 @@ export function App() {
   const [pending, setPending] = useState<PendingAction>(null);
   const [error, setError] = useState<ApiRequestError | null>(null);
   const [libraryTab, setLibraryTab] = useState<LibraryTab>("showcase");
+  const [viewerSource, setViewerSource] = useState<ViewerSource>("featured");
   const promptRef = useRef<HTMLTextAreaElement>(null);
+  const launchedJobIdRef = useRef<string | null>(null);
   const startupRef = useRef<Promise<{ api: SequencesApi; workspace: WorkspaceBootstrap }> | null>(
     null,
   );
@@ -253,6 +263,7 @@ export function App() {
       }
       setJob(nextJob);
       setVisibleJobId(nextJob.receipt.jobId);
+      launchedJobIdRef.current = nextJob.receipt.jobId;
       setImagePaths([]);
       setAttachmentsBlocked(false);
       setAttachmentBatch((value) => value + 1);
@@ -262,6 +273,17 @@ export function App() {
       setPending(null);
     }
   }, [api, imagePaths, pending, prompt, workspace]);
+
+  useEffect(() => {
+    if (
+      job?.receipt.state === "applied" &&
+      launchedJobIdRef.current === job.receipt.jobId &&
+      job.receipt.acceptedCommit === workspace?.project.acceptedCommit
+    ) {
+      launchedJobIdRef.current = null;
+      setViewerSource("latest");
+    }
+  }, [job?.receipt.acceptedCommit, job?.receipt.jobId, job?.receipt.state, workspace]);
 
   const cancelJob = useCallback(async () => {
     if (!api || !job || pending) return;
@@ -319,6 +341,9 @@ export function App() {
   );
   const currentStatus = generationInProgress ? "Generating…" : "Ready";
   const acceptedRunId = workspace.project.acceptedSource.runId;
+  const recentJobs = workspace.project.jobs
+    .filter((recentJob) => !HIDDEN_RECENT_STATES.has(recentJob.state))
+    .slice(0, 8);
 
   return (
     <div className="app">
@@ -350,13 +375,36 @@ export function App() {
               <span className="eyebrow">Timeline</span>
               <h2>{generationInProgress ? "Luna is building" : "Your latest sequence"}</h2>
             </div>
-            <span className="studio-panel__meta">
-              {workspace.project.acceptedSource.kind === "generated_candidate"
-                ? "Generated"
-                : "Prepared sample"}
-            </span>
+            <div className="viewer-source" role="group" aria-label="Viewer source">
+              <button
+                type="button"
+                className={viewerSource === "featured" ? "is-active" : ""}
+                aria-pressed={viewerSource === "featured"}
+                onClick={() => setViewerSource("featured")}
+              >
+                Featured
+              </button>
+              <button
+                type="button"
+                className={viewerSource === "latest" ? "is-active" : ""}
+                aria-pressed={viewerSource === "latest"}
+                onClick={() => setViewerSource("latest")}
+              >
+                Latest
+              </button>
+            </div>
           </header>
-          <SequencesStudio source={source} label="Video preview" />
+          {viewerSource === "featured" ? (
+            <SequencesStudio
+              mode="video"
+              mediaSource="/api/v1/showcases/chatgpt-native-story/video"
+              poster="/api/v1/showcases/chatgpt-native-story/poster"
+              clipLabel="ChatGPT native story"
+              label="ChatGPT: From question to working draft"
+            />
+          ) : (
+            <SequencesStudio mode="composition" source={source} label="Latest generated video" />
+          )}
         </section>
 
         <section className="create-panel" aria-labelledby="create-heading">
@@ -479,7 +527,7 @@ export function App() {
                 onClick={() => setLibraryTab("recent")}
               >
                 Recent
-                <span>{workspace.project.jobs.length}</span>
+                <span>{recentJobs.length}</span>
               </button>
             </div>
           </div>
@@ -511,8 +559,8 @@ export function App() {
             </div>
           ) : (
             <div className="recent-grid" role="tabpanel" aria-label="Recent videos">
-              {workspace.project.jobs.length > 0 ? (
-                workspace.project.jobs.slice(0, 8).map((recentJob) => (
+              {recentJobs.length > 0 ? (
+                recentJobs.map((recentJob) => (
                   <article
                     className={`recent-card${recentJob.id === acceptedRunId ? " recent-card--current" : ""}`}
                     key={recentJob.id}
