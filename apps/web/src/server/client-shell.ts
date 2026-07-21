@@ -65,7 +65,7 @@ export async function serveClientShell(c: Context, config: ServerConfig): Promis
         "media-src 'self' blob:",
         "font-src 'self' data:",
         `connect-src ${config.expectedOrigin}`,
-        `frame-src ${config.expectedOrigin} ${config.previewOrigin}`,
+        `frame-src ${config.expectedOrigin}`,
         "worker-src 'self' blob:",
         "base-uri 'none'",
         "form-action 'none'",

@@ -7,8 +7,6 @@ import { createSequencesRuntime } from "../../src/server/app";
 const workspaces: string[] = [];
 const ORIGIN = "http://127.0.0.1:4317";
 const HOST = "127.0.0.1:4317";
-const PREVIEW_ORIGIN = "http://localhost:4317";
-const PREVIEW_HOST = "localhost:4317";
 
 afterEach(() => {
   for (const path of workspaces.splice(0)) rmSync(path, { recursive: true, force: true });
@@ -49,7 +47,8 @@ describe("localhost security boundary", () => {
     expect(shell.status).toBe(200);
     const policy = shell.headers.get("content-security-policy") ?? "";
     expect(policy).toContain("frame-ancestors 'none'");
-    expect(policy).toContain(`frame-src ${ORIGIN} ${PREVIEW_ORIGIN}`);
+    expect(policy).toContain(`frame-src ${ORIGIN}`);
+    expect(policy).not.toContain("localhost:4317");
     expect(await shell.text()).toContain('<div id="root"></div>');
 
     const bootstrap = await app.request("/api/v1/bootstrap", { headers: headers() });
@@ -101,32 +100,30 @@ describe("localhost security boundary", () => {
     await expect(response.json()).resolves.toMatchObject({ error: { code: "invalid_csrf" } });
   });
 
-  it("serves signed composition files on an isolated origin with the player sandbox contract", async () => {
+  it("serves signed composition files from the IPv4 listener in an opaque sandbox", async () => {
     const { app } = await runtime();
     const response = await app.request(
       `/api/v1/projects/release-a/files/${"f".repeat(43)}/sample/index.html`,
-      { headers: { Host: PREVIEW_HOST, Origin: PREVIEW_ORIGIN } },
+      { headers: headers({ Origin: ORIGIN }) },
     );
     expect(response.status).toBe(200);
-    expect(response.headers.get("access-control-allow-origin")).toBe(PREVIEW_ORIGIN);
+    expect(response.headers.get("access-control-allow-origin")).toBe(ORIGIN);
     const policy = response.headers.get("content-security-policy") ?? "";
-    expect(policy).toContain("sandbox allow-scripts allow-same-origin");
+    expect(policy).toContain("sandbox allow-scripts");
+    expect(policy).not.toContain("allow-same-origin");
     expect(policy).toContain("script-src 'self'");
-    expect(policy).not.toContain(ORIGIN);
     const bundled = await response.text();
     expect(bundled).toContain('data-composition-id="release-a"');
     expect(bundled).toContain('data-hf-inner-root="true"');
     expect(bundled).not.toMatch(/<[^>]*\sdata-composition-src=/);
   });
 
-  it("does not expose the app shell or authenticated API on the preview origin", async () => {
+  it("does not expose authenticated APIs to a signed preview request", async () => {
     const { app } = await runtime();
-    const shell = await app.request("/", { headers: { Host: PREVIEW_HOST } });
     const bootstrap = await app.request("/api/v1/bootstrap", {
-      headers: { Host: PREVIEW_HOST, Origin: PREVIEW_ORIGIN },
+      headers: headers({ Origin: "null" }),
     });
 
-    expect(shell.status).toBe(403);
     expect(bootstrap.status).toBe(403);
   });
 

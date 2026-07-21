@@ -303,6 +303,9 @@ async function verifyLatestViewer(page: Page, screenshotStem: string) {
   ) {
     throw new Error(`Latest composition failed website playback parity: ${JSON.stringify(viewer)}`);
   }
+  if (new URL(viewer.url).origin !== new URL(page.url()).origin) {
+    throw new Error(`Latest composition left the IPv4 website origin: ${viewer.url}`);
+  }
 
   const viewerScreenshot = resolve(root, "artifacts", `${screenshotStem}.png`);
   await page.screenshot({ path: viewerScreenshot });

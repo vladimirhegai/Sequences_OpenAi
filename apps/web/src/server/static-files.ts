@@ -110,10 +110,11 @@ function applyProjectContentSecurityPolicy(headers: Headers): void {
   headers.set(
     "Content-Security-Policy",
     [
-      // Match the HyperFrames player's iframe sandbox. Preview files use a
-      // separate loopback origin, so preserving their origin does not expose
-      // the authenticated app document.
-      "sandbox allow-scripts allow-same-origin",
+      // The player requests allow-same-origin, but this stricter response
+      // sandbox makes signed author HTML opaque. Bundled previews need no
+      // nested same-origin fetches, and the runtime/player bridge communicates
+      // through postMessage.
+      "sandbox allow-scripts",
       "default-src 'none'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' data:",
       "style-src 'self' 'unsafe-inline'",

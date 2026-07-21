@@ -192,9 +192,11 @@ export function createServerConfig(overrides: ServerConfigOverrides = {}): Serve
   if (origin.protocol !== "http:" || origin.hostname !== "127.0.0.1" || origin.pathname !== "/") {
     throw new Error("The Sequences server origin must be an http://127.0.0.1 loopback origin");
   }
-  const previewOriginUrl = new URL(expectedOrigin);
-  previewOriginUrl.hostname = "localhost";
-  const previewOrigin = previewOriginUrl.origin;
+  // Keep previews on the exact IPv4 listener. Using `localhost` as a second
+  // origin is unreliable on hosts where the browser resolves it to ::1 while
+  // the Sequences server intentionally listens only on 127.0.0.1. The signed
+  // preview response is isolated with an opaque CSP sandbox instead.
+  const previewOrigin = expectedOrigin;
 
   const dataRoot = resolve(workspaceRoot, "data");
   const base: ServerConfig = {
